@@ -1,10 +1,747 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.embed.swing.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="540.0" prefWidth="960.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-	<!-- TODO Add Nodes -->
+<BorderPane prefHeight="732.0" prefWidth="1230.0" styleClass="main" stylesheets="@../stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <AnchorPane prefHeight="73.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField layoutX="14.0" layoutY="159.0" prefHeight="27.0" prefWidth="896.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="127.0" prefHeight="32.0" prefWidth="932.0" text="Previous command has been undone: &quot;add Compile finance records by Friday&quot;" textFill="#16a085" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+               <padding>
+                  <Insets bottom="7.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font name="Open Sans Semibold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <GridPane hgap="7.0" vgap="7.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <padding>
+            <Insets left="14.0" right="14.0" top="14.0" />
+         </padding>
+         <children>
+            <VBox disable="true" prefHeight="0.0" prefWidth="301.0" spacing="3.5">
+               <children>
+                  <HBox prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Overdue" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="1">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Today" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Friday, 9 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font></Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="15">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox disable="true" prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Sunday" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(11 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="2">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Tomorrow" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Saturday, 10 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="16">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Lunch with poly friends">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="1.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Monday" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(12 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="17">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Developer Guide Submission">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="11.59pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="18">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="User Guide Submission">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="11.59pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Tuesday" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(13 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="19">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="GEK1901 Midterm">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="2.00pm to 4.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="20">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="MC Meeting">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.30pm to 9.30pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Wednesday" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(14 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="21">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Core Team Meeting">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="7.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox prefHeight="0.0" prefWidth="301.0" spacing="3.5" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <children>
+                  <HBox prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Floating" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="1">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Clean pencil box">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Get a hair cut">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="3">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Bring laptop to service">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="4">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Cut finger nails">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="5">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Clean pencil box">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="6">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Buy birthday present">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="7">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Buy lighter">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="8">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Buy / borrow a blazer">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="9">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Recontract mobile phone">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="10">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Place order on amazon">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="11">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Buy Yakult">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="12">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Clean pencil box">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="13">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Clean pencil box">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="14">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Clean pencil box">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="0.0" prefWidth="300.0" spacing="3.5" GridPane.columnIndex="3" GridPane.valignment="TOP">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Coming Soon..." textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="22">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="23">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Brandon's Birthday">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Monday, 19 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="24">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Amanda's Birthday">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Friday, 23 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="25">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Ray Yan's Birthday">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Monday, 2 November)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="26">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="MC Meeting">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="(Tuesday, 15 October 3.00pm)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="27">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="28">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="29">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="30">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="31">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="32">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="IT Cell Dinner">
+                           <font>
+                              <Font name="Open Sans Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="6.00pm" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox disable="true" prefHeight="200.0" prefWidth="100.0" spacing="3.5" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="19.0" prefWidth="296.0" spacing="3.5">
+                     <children>
+                        <Label text="Thursday" textFill="#16a085">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="(15 October)" textFill="#aaaaaa">
+                           <font>
+                              <Font name="Open Sans Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children></VBox>
+         </children>
+      </GridPane>
+   </center>
 </BorderPane>
