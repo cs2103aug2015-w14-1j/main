@@ -1,3 +1,108 @@
 .main {
 	-fx-background-color:#FFFFFF;
 }
+
+.text-field {
+	-fx-text-box-border:#16A085;
+	-fx-focus-color:#16A085;
+}
+
+
+
+/**************** overdue styling ****************/
+.overdue-scrollpane, .overdue-panel {
+	-fx-background-color:rgb(255, 138, 128);
+}
+
+.overdue-scrollpane > .scroll-bar:vertical .thumb {
+	-fx-background-color:#99534D;
+}
+
+.overdue-panel .check-box > .box {
+	-fx-border-color:#7E443F;
+}
+
+
+
+/**************** floating styling ****************/
+.floating-scrollpane, .floating-panel {
+	-fx-background-color:rgb(128, 216, 255);
+}
+
+.floating-scrollpane > .scroll-bar:vertical .thumb {
+	-fx-background-color:#406C7F;
+}
+
+.floating-panel .check-box > .box {
+	-fx-border-color:#406C7F;
+}
+
+
+
+/**************** comingsoon styling ****************/
+.comingsoon-scrollpane, .comingsoon-panel {
+	-fx-background-color:rgb(204, 255, 144);
+}
+
+.comingsoon-scrollpane > .scroll-bar:vertical .thumb {
+	-fx-background-color:#657E47;
+}
+
+.comingsoon-panel .check-box > .box {
+	-fx-border-color:#657E47;
+}
+
+
+
+/**************** daily styling ****************/
+.daily-scrollpane, .daily-panel {
+	-fx-background-color:rgb(255, 255, 141);
+}
+
+.daily-scrollpane > .scroll-bar:vertical .thumb {
+	-fx-background-color:#7E7E45;
+}
+
+.daily-panel .check-box > .box {
+	-fx-border-color:#7E7E45;
+}
+
+
+
+.check-box > .box {
+	-fx-background-color:transparent;
+	-fx-border-radius:3px;
+	-fx-border-style:dashed;
+}
+
+.scroll-pane > .scroll-bar:vertical {
+	-fx-background-color:transparent;
+    -fx-background-radius:2em;
+    -fx-border-radius:2em;
+}
+
+.scroll-pane > .scroll-bar:vertical .track {
+	-fx-background-color:transparent;
+    -fx-background-radius:0em;
+    -fx-border-color:transparent;
+    -fx-border-radius:2em;
+}
+
+.scroll-pane > .scroll-bar:vertical .thumb {
+	-fx-background-insets:4, 5, 6;
+    -fx-background-radius:2em;
+    -fx-border-radius:2em;
+}
+
+.scroll-pane > .scroll-bar > .increment-button, 
+.scroll-pane > .scroll-bar > .decrement-button {
+    -fx-background-color:transparent; 
+    -fx-background-radius:0em;
+    -fx-padding:0 0 10 0;
+}
+
+.scroll-pane > .scroll-bar > .increment-button > .increment-arrow,
+.scroll-pane > .scroll-bar > .decrement-button > .decrement-arrow {
+	-fx-shape:" ";
+	-fx-padding:0;
+}
