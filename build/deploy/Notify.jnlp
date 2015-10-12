@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Notify.jnlp">
+  <information>
+    <title>Notify</title>
+    <vendor>notify.cs</vendor>
+    <description>Sample JavaFX 2.0 application.</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+  </resources>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Notify.jar" size="19741" download="eager" />
+    <jar href="libs/gson-2.2.2.jar" size="189285" download="eager" />
+    <jar href="libs/jackson-all-1.9.0.jar" size="1105958" download="eager" />
+    <jar href="libs/java-json.jar" size="84697" download="eager" />
+    <jar href="lib/gson-2.2.2.jar" size="189285" download="eager" />
+    <jar href="lib/jackson-all-1.9.0.jar" size="1105958" download="eager" />
+    <jar href="lib/java-json.jar" size="84697" download="eager" />
+  </resources>
+  <applet-desc  width="0" height="0" main-class="com.javafx.main.NoJavaFXFallback"  name="Notify" >
+    <param name="requiredFXVersion" value="2.2+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="0" height="0" main-class="cs.notify.controller.Main"  name="Notify" />
+  <update check="background"/>
+</jnlp>

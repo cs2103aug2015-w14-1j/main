@@ -91,9 +91,9 @@ public class MainViewHandler {
 	@FXML
 	public void initialize() {
 		initDailyView();
-		//populateOverdueTask();
+		populateOverdueTask();
 		populateFloatingTask();
-		//populateComingSoonTask();
+		populateComingSoonTask();
 	}
 	
 	public void initDailyView() {
@@ -105,40 +105,13 @@ public class MainViewHandler {
 		
 		// format the date
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM");
-		
-
-		// temporary dummy tasks
-		String[] tasksMonday = {"CS2103T Group Meeting", "User Guide Submission", "Developer Guide Submission"};
-		String[] timingsMonday = {"6.00pm", "11.59pm", "11.59pm"};
-		
-		String[] tasksTuesday = {"GEK1901 Midterms", "MC Meeting"};
-		String[] timingsTuesday = {"2.00pm to 4.00pm", "6.30pm to 8.30pm"};
-		
-		String[] tasksWednesday = {"IT Cell Core Meeting"};
-		String[] timingsWednesday = {"6.30pm to 7.30pm"};
-
-		String[] tasksThursday = {};
-		String[] timingsThursday = {};
-		
-		String[] tasksFriday = {"CS2102 Project Meeting", "Collect Parcel", "Dinner with Jim", "Supper with Jim's Mother"};
-		String[] timingsFriday = {"12.00pm", "4.00pm", "7.00pm", "11.00pm"};
-		
-		String[] tasksSaturday = {"Startup Hackathon", "Hair cut"};
-		String[] timingsSaturday = {"9.00am to 12.00pm", "3.00pm"};
-		
-		String[] tasksSunday = {};
-		String[] timingsSunday = {};
-		
-
-		String[][] tasks = {tasksMonday, tasksTuesday, tasksWednesday, tasksThursday, tasksFriday, tasksSaturday, tasksSunday};
-		String[][] timings = {timingsMonday, timingsTuesday, timingsWednesday, timingsThursday, timingsFriday, timingsSaturday, timingsSunday};
 
 		// set up the view for today and the next 6 days
 		for(int i = 0; i < vboxes.length; i++) {
 			// create and add the header to the current vbox
 			// and populate the current vbox
 			initDailyTaskHeader(vboxes[i], calendar, sdf);
-			populateDailyTask(vboxes[i], tasks[i], timings[i]);
+			populateDailyTask(vboxes[i]);
 			
 			// increase the day by 1
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -182,9 +155,12 @@ public class MainViewHandler {
 		vbox.getChildren().add(hbox);
 	}
 	
-	public void populateDailyTask(VBox vbox, String[] tasks, String[] timings) {
+	public void populateDailyTask(VBox vbox) {
+		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "Cut Nails", "IT Cell Core Team Meeting", "User Guide Submission", "Developer Guide Submission"};
+		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
+		
 		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 14 + tasks.length) + "", CHECKBOX_FONT, DAILY_TEXT_FILL);
+			CheckBox checkbox = createCheckbox((i + 1) + "", CHECKBOX_FONT, DAILY_TEXT_FILL);
 			Label task = createLabel(tasks[i], TASK_FONT, DAILY_TEXT_FILL);
 			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, DAILY_SUBTEXT_FILL);
 			
@@ -194,11 +170,11 @@ public class MainViewHandler {
 	}
 	
 	public void populateOverdueTask() {
-		String[] tasks = {"IT Cell Meeting"};
-		String[] timings = {"(Friday 9 October, 6.00pm to 8.00pm)"};
+		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "User Guide Submission", "Developer Guide Submission", "Cut Nails", "IT Cell Core Team Meeting"};
+		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
 		
 		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 21) + "", CHECKBOX_FONT, OVERDUE_TEXT_FILL);
+			CheckBox checkbox = createCheckbox((i + 1) + "", CHECKBOX_FONT, OVERDUE_TEXT_FILL);
 			Label task = createLabel(tasks[i], TASK_FONT, OVERDUE_TEXT_FILL);
 			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, OVERDUE_SUBTEXT_FILL);
 			
@@ -209,15 +185,15 @@ public class MainViewHandler {
 	
 	
 	public void populateFloatingTask() {
-		String[] tasks = {"Bake brownie", "Buy Birthday Present", "Source for Blazer"};
-		//String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
+		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "User Guide Submission", "Developer Guide Submission", "Cut Nails", "IT Cell Core Team Meeting"};
+		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
 		
 		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
+			CheckBox checkbox = createCheckbox((i + 1) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
 			Label task = createLabel(tasks[i], TASK_FONT, FLOATING_TEXT_FILL);
-			//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
+			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
 			
-			HBox hbox = createItem(checkbox, task);
+			HBox hbox = createItem(checkbox, task, time);
 			vboxFloating.getChildren().add(hbox);
 		}
 	}
@@ -227,7 +203,7 @@ public class MainViewHandler {
 		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
 		
 		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 16) + "", CHECKBOX_FONT, COMING_SOON_TEXT_FILL);
+			CheckBox checkbox = createCheckbox((i + 1) + "", CHECKBOX_FONT, COMING_SOON_TEXT_FILL);
 			Label label = createLabel(tasks[i], TASK_FONT, COMING_SOON_TEXT_FILL);
 			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, COMING_SOON_SUBTEXT_FILL);
 			

@@ -58,32 +58,27 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
+                        <HBox prefHeight="17.0" prefWidth="297.0" spacing="3.5">
                            <children>
-                              <CheckBox mnemonicParsing="false" text="2">
+                              <CheckBox mnemonicParsing="false" text="44" textFill="#5d322e">
                                  <font>
                                     <Font name="Roboto Bold" size="10.0" />
                                  </font>
                               </CheckBox>
-                              <Label text="Get a hair cut">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="1">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label fx:id="random1" text="Clean pencil box">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
+                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="IT Cell Meeting" textFill="#5d322e">
+                                       <font>
+                                          <Font name="Roboto Slab Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="(Monday, 19 October)" textFill="#b26059">
+                                       <font>
+                                          <Font name="Roboto Condensed Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>
@@ -131,116 +126,21 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="31">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="30">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="29">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="28">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="27">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
                         <HBox prefHeight="17.0" prefWidth="297.0" spacing="3.5">
                            <children>
-                              <CheckBox mnemonicParsing="false" text="25">
+                              <CheckBox mnemonicParsing="false" text="23">
                                  <font>
                                     <Font name="Roboto Bold" size="10.0" />
                                  </font>
                               </CheckBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Ray Yan's Birthday">
+                                    <Label text="Brandon's Birthday">
                                        <font>
                                           <Font name="Roboto Slab Regular" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="(Monday, 2 November)" textFill="#8eb264">
+                                    <Label text="(Monday, 19 October)" textFill="#8eb264">
                                        <font>
                                           <Font name="Roboto Condensed Bold" size="11.0" />
                                        </font>
@@ -274,196 +174,25 @@
                         </HBox>
                         <HBox prefHeight="17.0" prefWidth="297.0" spacing="3.5">
                            <children>
-                              <CheckBox mnemonicParsing="false" text="23">
+                              <CheckBox mnemonicParsing="false" text="25">
                                  <font>
                                     <Font name="Roboto Bold" size="10.0" />
                                  </font>
                               </CheckBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Brandon's Birthday">
+                                    <Label text="Ray Yan's Birthday">
                                        <font>
                                           <Font name="Roboto Slab Regular" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="(Monday, 19 October)" textFill="#8eb264">
+                                    <Label text="(Monday, 2 November)" textFill="#8eb264">
                                        <font>
                                           <Font name="Roboto Condensed Bold" size="11.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </VBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="22" textFill="#657e47">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner" textFill="#657e47">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="32">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="32">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="22" textFill="#657e47">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner" textFill="#485a33">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="27">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="28">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="29">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="30">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="297.0" spacing="3.5">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="31">
-                                 <font>
-                                    <Font name="Roboto Bold" size="10.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="IT Cell Dinner">
-                                 <font>
-                                    <Font name="Roboto Slab Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="6.00pm" textFill="#aaaaaa">
-                                 <font>
-                                    <Font name="Open Sans Bold" size="10.0" />
-                                 </font>
-                              </Label>
                            </children>
                         </HBox>
                      </children>
