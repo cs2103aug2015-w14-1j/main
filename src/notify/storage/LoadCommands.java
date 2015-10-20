@@ -34,7 +34,7 @@ public class LoadCommands extends StorageOperation {
 				File file = new File(filePath);
 				FileReader fileReader = new FileReader(file);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
-				
+				commands.put(command.toString().toUpperCase(), command);
 				while((currentLine = bufferedReader.readLine()) != null) {
 					commands.put(currentLine.toUpperCase() , command);
 				}
