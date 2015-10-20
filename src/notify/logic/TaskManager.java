@@ -21,7 +21,7 @@ public class TaskManager {
 	public Task addTask(String name, DateRange timespan, String category, TaskType taskType) {
 		//logger.log(Level.INFO, "ADDING TASK");
 
-		Task task = new Task(latest_id, taskType, name, timespan, category);
+		Task task = new Task(latest_id, taskType, name, timespan, category, false);
 		taskList.add(task);
 		updateLatestId(latest_id);
 		
@@ -32,15 +32,15 @@ public class TaskManager {
 	public boolean deleteTask(int id) {
 		Task task = getTask(id);
 		
-		if(task!=null) {
-			task.setDeleted();
+		if(task!=null) { 
+			task.setDeleted(false);
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public boolean updateTask(int id, String newName, DateRange newTimeSpan, TaskType newType) {
+	public boolean updateTask(int id, String newName, DateRange newDateRange, String category, TaskType newType) {
 		
 		//log.log(Level.INFO, "Updated task [{0}]", newName);
 		
@@ -48,7 +48,8 @@ public class TaskManager {
 		
 		if(task!=null) {
 			task.setTaskName(newName);
-			task.setTimespan(newTimeSpan);
+			task.setDateRange(newDateRange);
+			task.setCategory(category);
 			task.setTaskType(newType);
 			return true;
 		} else {
@@ -60,7 +61,7 @@ public class TaskManager {
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
 		for(int i=0; i<taskList.size(); i++) {
-			if(taskList.get(i).getTimespan().getStartDate().compareTo(date) < 0 && taskList.get(i).isDeleted()==false) {
+			if(taskList.get(i).getDateRange().getStartDate().compareTo(date) < 0 && taskList.get(i).isDeleted()==false) {
 				tempTaskList.add(taskList.get(i));
 			}
 		}
@@ -72,7 +73,7 @@ public class TaskManager {
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 
 		for(int i=0; i<taskList.size(); i++) {
-			if(taskList.get(i).getTimespan().getStartDate().compareTo(date) > 0 && taskList.get(i).isDeleted()==false) {
+			if(taskList.get(i).getDateRange().getStartDate().compareTo(date) > 0 && taskList.get(i).isDeleted()==false) {
 				tempTaskList.add(taskList.get(i));
 			}
 		}
@@ -84,7 +85,7 @@ public class TaskManager {
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
 		for(int i=0; i<taskList.size(); i++) {
-			if(taskList.get(i).getTimespan().getStartDate().compareTo(date) == 0 && taskList.get(i).isDeleted()==false) {
+			if(taskList.get(i).getDateRange().getStartDate().compareTo(date) == 0 && taskList.get(i).isDeleted()==false) {
 				tempTaskList.add(taskList.get(i));
 			}
 		}
@@ -110,6 +111,8 @@ public class TaskManager {
 				tempTaskList.add(taskList.get(i));
 			}
 		}
+		
+		return tempTaskList;
 	}
 	
 	private void updateLatestId(int currentId) {
