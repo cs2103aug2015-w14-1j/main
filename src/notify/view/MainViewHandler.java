@@ -10,7 +10,6 @@ import java.util.Date;
 
 import javax.sound.sampled.Control;
 
-import cs.notify.controller.Logic;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
