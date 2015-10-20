@@ -59,6 +59,7 @@ public class TaskManager {
 		Task task = getTask(id);
 		
 		if(task != null) {
+			
 			task.setDeleted(false);
 			
 			return task;
@@ -116,9 +117,7 @@ public class TaskManager {
 		
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
-		for(int i = 0; i < taskList.size(); i++) {
-			
-			Task task = taskList.get(i);
+		for(Task task: taskList) {
 			
 			if(task.isCompleted() && !task.isDeleted()) {
 				
@@ -140,11 +139,9 @@ public class TaskManager {
 		
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
-		for(int i = 0; i < taskList.size(); i++) {
+		for(Task task: taskList) {
 			
-			Task task = taskList.get(i);
-			
-			if(task.getDateRange().getStartDate().compareTo(date) < 0 && !task.isDeleted()) {
+			if(task.getDateRange().getStartDate().before(date) && !task.isDeleted()) {
 				
 				tempTaskList.add(task);
 				
@@ -159,12 +156,10 @@ public class TaskManager {
 	public ArrayList<Task> afterDate(Calendar date) {
 		
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
-
-		for(int i = 0; i < taskList.size(); i++) {
+		
+		for(Task task: taskList) {
 			
-			Task task = taskList.get(i);
-			
-			if(task.getDateRange().getStartDate().compareTo(date) > 0 && !task.isDeleted()) {
+			if(task.getDateRange().getStartDate().after(date) && !task.isDeleted()) {
 				
 				tempTaskList.add(task);
 				
@@ -180,9 +175,7 @@ public class TaskManager {
 		
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
-		for(int i = 0; i < taskList.size(); i++) {
-			
-			Task task = taskList.get(i);
+		for(Task task: taskList) {
 			
 			if(task.getDateRange().getStartDate().compareTo(date) == 0 && !task.isDeleted()) {
 				
@@ -198,9 +191,7 @@ public class TaskManager {
 	
 	public Task getTask(int id) {
 		
-		for(int i=0; i<taskList.size(); i++) {
-			
-			Task task = taskList.get(i);
+		for(Task task: taskList) {
 			
 			if(task.getTaskId() == id) {
 				
@@ -218,11 +209,9 @@ public class TaskManager {
 		
 		ArrayList<Task> tempTaskList = new ArrayList<Task>();
 		
-		for(int i = 0; i < taskList.size(); i++) {
+		for(Task task: taskList) {
 			
-			Task task = taskList.get(i);
-					
-			if(task.getTaskType().equals(TaskType.FLOATING) && !task.isDeleted()) {
+			if(task.getTaskType() == TaskType.FLOATING && !task.isDeleted()) {
 				
 				tempTaskList.add(task);
 				
