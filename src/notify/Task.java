@@ -26,7 +26,6 @@ public class Task {
 
 	// This stores the task type that it belongs to
 	private TaskType taskType;
-<<<<<<< HEAD
 
 	public Task(int id, TaskType taskType, String name) {
 		this(id, taskType, name, null);
@@ -46,9 +45,8 @@ public class Task {
 
 		assert taskType != null;
 		assert name != null;
-
-=======
-
+	}
+		
 	/*
 	 * public Task(int id, TaskType taskType, String name) { this(id, taskType,
 	 * name, null); }
@@ -66,7 +64,6 @@ public class Task {
 		assert name != null;  
 
 		this.id = id;
->>>>>>> 83d44e28e328bcfd969834ed74ccbfe00a4bc7fa
 		this.taskType = taskType;
 		this.name = name;
 		this.dateRange = dateRange;
@@ -117,11 +114,7 @@ public class Task {
 		return this.dateRange;
 	}
 
-<<<<<<< HEAD
-	public void setTimespan(DateRange dateRange) {
-=======
 	public void setDateRange(DateRange dateRange) {
->>>>>>> 83d44e28e328bcfd969834ed74ccbfe00a4bc7fa
 		this.dateRange = dateRange;
 	}
 
@@ -159,8 +152,4 @@ public class Task {
 	public String toString() {
 		return name + " " + category;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 83d44e28e328bcfd969834ed74ccbfe00a4bc7fa
 }
