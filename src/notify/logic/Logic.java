@@ -2,20 +2,28 @@ package notify.logic;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import notify.Task;
 import notify.logic.command.Command;
+import notify.logic.command.Result;
+import notify.logic.parser.CommandParser;
+import notify.storage.Storage;
 
 public class Logic {
 	
 	private ArrayList<Task> tasks;
-	private Parser parser;
-	//private Storage storage;
+	private CommandParser parser;
+	private Storage storage;
+	private TaskManager taskManager;
 	
 	public Logic() {
+		
 		this.tasks = new ArrayList<Task>();
-		this.parser = new Parser();
-		//this.storage = new Storage();
+		this.parser = new CommandParser();
+		this.storage = new Storage();
+		this.taskManager = new TaskManager(storage);
+		
 	}
 	
 	/**
@@ -23,14 +31,11 @@ public class Logic {
 	 * @param input input entered by the user.
 	 */
 	public void processCommand(String input) {
-		parser.parse(input);
-		Command command = parser.getCommand();
 		
-		switch(command) {
-			case CREATE:
-				create();
-				break;
-		}
+		Command command = parser.parse(input);
+		Result result = command.execute();
+
+		
 	}
 	
 	
@@ -38,10 +43,7 @@ public class Logic {
 		Task task = parser.getTask();
 		//storage.addTask(task, "NON-CATEGORIZED");
 		tasks.add(task);
-		System.out.println(task.getTaskId());
-		System.out.println(task.getTaskName());
-		System.out.println(task.getFromDate());
-		System.out.println(task.getToDate());
+		
 		return parser.getCommand();
 	}
 	
