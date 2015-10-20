@@ -1,4 +1,4 @@
-package Logic;
+package notify.logic.command;
 
 import notify.DateRange;
 import notify.Task;

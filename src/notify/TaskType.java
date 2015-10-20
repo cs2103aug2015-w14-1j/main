@@ -1,5 +1,7 @@
 package notify;
 
-public class TaskType {
+public enum TaskType {
+
+	RANGE, DEADLINE, FLOATING
 
 }
