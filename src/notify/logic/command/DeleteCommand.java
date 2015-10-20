@@ -27,7 +27,7 @@ public class DeleteCommand extends ReversibleCommand {
 		listOfResults.add(temptask);
 		Result result = new Result(Action.DELETE, listOfResults);
 		//this.task = temptask;
-		pushToHistoryStack();
+		pushToStack();
 		return result;
 		
 	}

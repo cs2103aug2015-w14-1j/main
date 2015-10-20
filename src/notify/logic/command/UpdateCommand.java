@@ -37,7 +37,7 @@ public class UpdateCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(updatedTask);
 		Result result = new Result(Action.EDIT, listOfResults);
-		pushToHistoryStack();
+		pushToStack();
 		return result;
 		
 	}

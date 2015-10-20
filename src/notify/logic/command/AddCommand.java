@@ -37,7 +37,7 @@ public class AddCommand extends ReversibleCommand {
 		Result result = new Result(Action.ADD, listOfResults);
 		this.task = addTask;
 		//this.task = addtask;
-		pushToHistoryStack();
+		pushToStack();
 		return result;
 	}
 	
