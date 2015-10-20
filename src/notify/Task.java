@@ -58,6 +58,7 @@ public class Task {
 	 * public Task(int id, TaskType taskType, String name, DateRange dateRange)
 	 * { this(id, taskType, name, dateRange, false); }
 	 */
+	
 	public Task(int id, TaskType taskType, String name, DateRange dateRange, String category, boolean isCompleted) {
 
 		assert taskType != null;
