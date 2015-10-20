@@ -26,7 +26,6 @@ public class Task {
 
 	// This stores the task type that it belongs to
 	private TaskType taskType;
-<<<<<<< HEAD
 
 	public Task(int id, TaskType taskType, String name) {
 		this(id, taskType, name, null);
