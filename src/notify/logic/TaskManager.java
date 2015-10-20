@@ -11,11 +11,13 @@ import notify.storage.Storage;
 
 public class TaskManager {
 	private int latest_id;
-	private ArrayList<Task> taskList;	
+	private ArrayList<Task> taskList;
+	private Storage storage;
 	
 	public TaskManager(Storage storage) {
 		latest_id = 0;
-		this.taskList = storage.loadTasks();
+		this.storage = storage;
+		this.taskList = this.storage.loadTasks();
 	}
 	
 	public Task addTask(String name, DateRange timespan, String category, TaskType taskType) {
@@ -29,18 +31,29 @@ public class TaskManager {
 		return task;
 	}
 	
-	public boolean deleteTask(int id) {
+	public Task deleteTask(int id) {
 		Task task = getTask(id);
 		
 		if(task!=null) { 
 			task.setDeleted(false);
-			return true;
+			return task;
 		} else {
-			return false;
+			return null;
 		}
 	}
 	
-	public boolean updateTask(int id, String newName, DateRange newDateRange, String category, TaskType newType) {
+	public Task undeleteTask(int id) {
+		Task task = getTask(id);
+		
+		if(task!=null) {
+			task.setDeleted(false);
+			return task;
+		} else {
+			return null;
+		}
+	}
+	
+	public Task updateTask(int id, String newName, DateRange newDateRange, String category, TaskType newType) {
 		
 		//log.log(Level.INFO, "Updated task [{0}]", newName);
 		
@@ -51,10 +64,37 @@ public class TaskManager {
 			task.setDateRange(newDateRange);
 			task.setCategory(category);
 			task.setTaskType(newType);
-			return true;
+			return task;
 		} else {
-			return false;
+			return null;
 		}
+	}
+	
+	public Task markTask(int id) {
+		Task task = getTask(id);
+		
+		if(task!=null) {
+			task.setCompleted(true);
+			return task;
+		} else {
+			return null;
+		}
+	}
+	
+	public ArrayList<Task> displayCompletedTasks() {
+		ArrayList<Task> tempTaskList = new ArrayList<Task>();
+		
+		for(int i=0; i<taskList.size(); i++) {
+			if(taskList.get(i).isCompleted()==true && taskList.get(i).isDeleted()==false) {
+				tempTaskList.add(taskList.get(i));
+			}
+		}
+		
+		return tempTaskList;
+	}
+	
+	public void exit() {
+		storage.saveTasks(taskList);
 	}
 	
 	public ArrayList<Task> beforeDate(Calendar date) {

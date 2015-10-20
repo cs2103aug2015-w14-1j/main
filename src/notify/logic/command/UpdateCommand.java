@@ -1,34 +1,42 @@
-package Logic;
+package notify.logic.command;
 
-import java.awt.Desktop.Action;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import notify.DateRange;
 import notify.Task;
+import notify.TaskType;
 import notify.logic.TaskManager;
 
-public class UpdateCommand {
+public class UpdateCommand extends ReversibleCommand {
 	
 	//private Task task;
 	private Task oldTask;
-	//private TaskType taskType;
+	private TaskType type;
 	private String taskName;
 	private DateRange range;
 	private String category;
 	private int id;
+	private Action commandAction;
+	private TaskManager manager;
 	
-	public UpdateCommand(Action commandAction,String taskName, DateRange range, String category, int id, TaskManager manager, Task oldTask){
+	public UpdateCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String taskName, DateRange range, String category, int id, TaskManager manager, Task oldTask, TaskType type){
+		super(commandAction, historyStack);
 		this.oldTask = manager.getTask(id);
 		this.commandAction = commandAction;
 		this.taskName = taskName;
 		this.range = range;
 		this.category = category;
 		this.id = id;
+		this.type = type;
 	}
 	
 	@Override
 	public Result execute(){
-		Task updatedTask = manager.updateTask(id,taskName,range,category);
-		Result result = new Result(Action.UPDATE, updatedTask);
+		Task updatedTask = manager.updateTask(id,taskName,range,category,type);
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(updatedTask);
+		Result result = new Result(Action.EDIT, listOfResults);
 		pushToHistoryStack();
 		return result;
 		
@@ -36,8 +44,10 @@ public class UpdateCommand {
 	
 	@Override
 	public Result undo(){
-		Task beforeUpdatedTask = (oldTask.getId(), oldTask.getTaskName(), oldTask.getRange(), oldTask.getCategory());
-		Result result = new Result(Action.UNDO, beforeUpdatedTask);
+		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(beforeUpdatedTask);
+		Result result = new Result(Action.UNDO, listOfResults);
 		return result;
 	}
 	
