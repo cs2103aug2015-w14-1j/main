@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import notify.DateRange;
 import notify.Task;
+import notify.TaskType;
 import notify.storage.Storage;
 
 public class TaskManager {
@@ -17,10 +18,10 @@ public class TaskManager {
 		this.taskList = storage.loadTasks();
 	}
 	
-	public Task addTask(String name, DateRange timespan, String category) {
+	public Task addTask(String name, DateRange timespan, String category, TaskType taskType) {
 		//logger.log(Level.INFO, "ADDING TASK");
 
-		Task task = new Task(latest_id, name, timespan, category);
+		Task task = new Task(latest_id, taskType, name, timespan, category);
 		taskList.add(task);
 		updateLatestId(latest_id);
 		
