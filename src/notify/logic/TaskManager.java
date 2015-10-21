@@ -42,7 +42,7 @@ public class TaskManager {
 		
 		if(task != null) { 
 			
-			task.setDeleted(false);
+			task.setDeleted(true);
 			
 			return task;
 			
@@ -212,7 +212,7 @@ public class TaskManager {
 		for(Task task: taskList) {
 			
 			if(task.getTaskType() == TaskType.FLOATING && !task.isDeleted()) {
-				
+				System.out.println(task);
 				tempTaskList.add(task);
 				
 			}
@@ -227,6 +227,10 @@ public class TaskManager {
 		
 		latest_id = currentId + 1;
 		
+	}
+	
+	public ArrayList<Task> getTask() {
+		return taskList;
 	}
 	
 }

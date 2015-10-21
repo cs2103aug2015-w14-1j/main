@@ -1,6 +1,7 @@
 package notify.view;
 
 import notify.Task;
+import notify.TaskType;
 import notify.logic.*;
 
 import java.text.SimpleDateFormat;
@@ -148,8 +149,8 @@ public class MainViewHandler {
 		
 		//loadOverdueTask();
 		loadFloatingTask();
-		loadComingTask();
-		loadDailyTask();
+		//loadComingTask();
+		//loadDailyTask();
 		
 	}
 	
@@ -160,7 +161,9 @@ public class MainViewHandler {
 	 */
 	public void loadOverdueTask() {
 		
-		overdueTasks = logic.getTasksBefore(new Date());
+		Calendar date = Calendar.getInstance();
+		
+		overdueTasks = logic.getTasksBefore(date);
 
 		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
 		ArrayList<HBox> hboxes = generateListItem(overdueTasks, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
@@ -196,7 +199,10 @@ public class MainViewHandler {
 	 */
 	public void loadComingTask() {
 		
-		comingTasks = logic.getTasksAfter(new Date());
+		Calendar date = Calendar.getInstance();
+		date.add(Calendar.DAY_OF_MONTH, 7);
+		
+		comingTasks = logic.getTasksAfter(date);
 
 		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
 		ArrayList<HBox> hboxes = generateListItem(comingTasks, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
@@ -222,7 +228,7 @@ public class MainViewHandler {
 		
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
-			ArrayList<Task> dailyTasks = logic.getTasksOn(calendar.getTime());
+			ArrayList<Task> dailyTasks = logic.getTasksOn(calendar);
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
@@ -319,14 +325,14 @@ public class MainViewHandler {
 			checkBox = createCheckbox(task.getTaskId() + "", CHECKBOX_FONT, textFill);
 			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
 			
-			if(task.getTaskType() == Task.TaskType.DAY) {
+			if(task.getTaskType() == TaskType.DEADLINE) {
 				
-				subtext = DAY_DATE_FORMAT.format(task.getToDate());
+				subtext = DAY_DATE_FORMAT.format(task.getDateRange().getEndDate());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
-			} else if(task.getTaskType() == Task.TaskType.RANGE) {
+			} else if(task.getTaskType() == TaskType.RANGE) {
 				
-				subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getFromDate().toString(), task.getToDate().toString());
+				subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getDateRange().getStartDate().toString(), task.getDateRange().getEndDate().toString());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			}
@@ -348,9 +354,9 @@ public class MainViewHandler {
 		
 		String subtext = "";
 		
-		if(task.getTaskType() == Task.TaskType.DAY) {
+		if(task.getTaskType() == TaskType.DEADLINE) {
 			
-			if(oneWeekLater.after(task.getToDate())) {
+			if(oneWeekLater.after(task.getDateRange().getEndDate())) {
 				
 				
 				
@@ -360,7 +366,7 @@ public class MainViewHandler {
 			// not within 7 days then show date and time (if got time)
 			
 			
-		} else if(task.getTaskType() == Task.TaskType.RANGE) {
+		} else if(task.getTaskType() == TaskType.RANGE) {
 			
 			
 			
@@ -596,7 +602,7 @@ public class MainViewHandler {
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
 		if(keyEvent.getCode() == KeyCode.ENTER) {
 			logic.processCommand(txtCommand.getText());
-			add(logic.getTasks());
+			load();
 			txtCommand.setText("");
 		}
 	}

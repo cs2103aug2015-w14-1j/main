@@ -3,10 +3,13 @@ package notify.logic;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import notify.view.MainViewHandler;
 
 public class Main extends Application {
@@ -39,6 +42,18 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setMinHeight(MIN_SCREEN_HEIGHT);
 			primaryStage.setMinWidth(MIN_SCREEN_WIDTH);
+
+	        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	        	@Override
+	            public void handle(WindowEvent event) {
+	                Platform.runLater(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                    	logic.getStorage().saveTasks(logic.getTaskManager().getTask());
+	                    }
+	                });
+	            }
+	        });
 			primaryStage.show();
 			
 			MainViewHandler mainViewHandler = fxmlLoader.getController();

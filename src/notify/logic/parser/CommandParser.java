@@ -1,13 +1,19 @@
 package notify.logic.parser;
 
 import java.util.HashMap;
-
-import notify.DateRange;
-import notify.logic.command.Action;
-import notify.logic.command.Command;
-import notify.storage.Storage;
+import java.util.Stack;
 
 import org.apache.commons.lang3.StringUtils;
+
+import notify.DateRange;
+import notify.TaskType;
+import notify.logic.TaskManager;
+import notify.logic.command.Action;
+import notify.logic.command.AddCommand;
+import notify.logic.command.Command;
+import notify.logic.command.DeleteCommand;
+import notify.logic.command.ReversibleCommand;
+import notify.storage.Storage;
 
 public class CommandParser {
 	
@@ -25,9 +31,13 @@ public class CommandParser {
 	private static final String ERROR_INVALID_PARAMS = "Unable to recognize parameter(s) entered.";
 	
 	private Storage storage;
+	private TaskManager taskManager;
+	private Stack<ReversibleCommand> history;
 	
-	public CommandParser(Storage storage) {
+	public CommandParser(Storage storage, TaskManager taskManager, Stack<ReversibleCommand> history) {
 		this.storage = storage;
+		this.taskManager = taskManager;
+		this.history = history;
 	}
 	
 	public Command parse(String input) {
@@ -47,10 +57,10 @@ public class CommandParser {
 		
 		switch(action) {
 			case ADD:
-				//command = new AddCommand(action, null);
+				
 				String category = CategoryParser.parse(input);
 				DateRange dateRange = null;
-				String name = null;
+				String name = input;
 				
 				if(category != null) { 
 					int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
@@ -72,8 +82,13 @@ public class CommandParser {
 					name = input.substring(0, index);
 				}
 				
+				System.out.println(name);
+				command = new AddCommand(action, name, dateRange, category, this.taskManager, TaskType.FLOATING, this.history);
+				
+				
+				
 				break;
-			case DELETE: command = handleDeleteCommand(input); break;
+			case DELETE: command = handleDeleteCommand(action, history, taskManager, input); break;
 			case EDIT: break;
 			case SEARCH: command = handleSearchCommand(input); break;
 			case MARK: command = handleMarkCommand(input); break; 
@@ -92,8 +107,8 @@ public class CommandParser {
 		return null;
 	}
 	
-	private Command handleDeleteCommand(String input) {
-		Command command = null; //new DeleteCommand();
+	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		Command command = null;
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
 		
@@ -101,6 +116,10 @@ public class CommandParser {
 		if(isNumeric == false) {
 			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
 		}
+		
+		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		
+		command = new DeleteCommand(commandAction, id, historyStack, taskManager);
 		
 		return command;
 	}
@@ -160,6 +179,7 @@ public class CommandParser {
 		Action result = Action.INVALID;
 		
 		HashMap<String, Action> commandVariations = storage.loadCommands();
+
 		if(commandVariations.containsKey(action)) {
 			result = commandVariations.get(action); 
 		}

@@ -3,12 +3,14 @@ package notify.logic;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Stack;
 
 import notify.Task;
 import notify.logic.command.Command;
 import notify.logic.command.Result;
 import notify.logic.parser.CommandParser;
 import notify.storage.Storage;
+import notify.logic.command.ReversibleCommand;
 
 public class Logic {
 	
@@ -16,14 +18,24 @@ public class Logic {
 	private CommandParser parser;
 	private Storage storage;
 	private TaskManager taskManager;
+	private Stack<ReversibleCommand> history;
 	
 	public Logic() {
 		
 		this.tasks = new ArrayList<Task>();
-		this.parser = new CommandParser();
 		this.storage = new Storage();
+		this.history = new Stack<ReversibleCommand>();
 		this.taskManager = new TaskManager(storage);
+		this.parser = new CommandParser(storage, taskManager, history);
 		
+	}
+	
+	public Storage getStorage() {
+		return storage;
+	}
+	
+	public TaskManager getTaskManager() {
+		return taskManager;
 	}
 	
 	/**
@@ -35,30 +47,35 @@ public class Logic {
 		Command command = parser.parse(input);
 		Result result = command.execute();
 
-		
+		System.out.println(result.getFirstResult().getTaskName());
 	}
 	
 	
-	public Command create() {
+	/*public Command create() {
 		Task task = parser.getTask();
 		//storage.addTask(task, "NON-CATEGORIZED");
 		tasks.add(task);
 		
 		return parser.getCommand();
-	}
+	}*/
 	
 	
 	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
 	
-	public ArrayList<Task> getTasksOn(Date date) {
-		return getTasksBefore(date);
+	public ArrayList<Task> getTasksOn(Calendar date) {
+		
+		return taskManager.getTask(date);
+		
+		//return getTasksBefore(date);
 	}
 	
-	public ArrayList<Task> getTasksBefore(Date date) {
+	public ArrayList<Task> getTasksBefore(Calendar date) {
 		
-		ArrayList<Task> tasks = new ArrayList<Task>();
+		return taskManager.beforeDate(date);
+		
+		/*ArrayList<Task> tasks = new ArrayList<Task>();
 		
 		String[] taskNames = { "IT Cell Meeting", "User Guide Submission", "Developer Guide Submission", "CS2101 Reflection" };
 		int[] years = { 2015, 2015, 2015, 2015 };
@@ -81,17 +98,22 @@ public class Logic {
 		}
 		
 		System.out.println("ASD");
-		return tasks;
+		return tasks;*/
 		
 	}
 	
-	public ArrayList<Task> getTasksAfter(Date date) {
-		return getTasksBefore(date);
+	public ArrayList<Task> getTasksAfter(Calendar date) {
+		
+		return taskManager.afterDate(date);
+		
+		//return getTasksBefore(date);
 	}
 	
 	public ArrayList<Task> getFloatingTasks() {
 		
-		ArrayList<Task> tasks = new ArrayList<Task>();
+		return taskManager.getFloatingTask();
+		
+		/*ArrayList<Task> tasks = new ArrayList<Task>();
 		
 		String[] taskNames = { "IT Cell Meeting", "User Guide Submission", "Developer Guide Submission", "CS2101 Reflection" };
 
@@ -106,7 +128,7 @@ public class Logic {
 			
 		}
 		
-		return tasks;
+		return tasks;*/
 	}
 
 }

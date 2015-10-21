@@ -31,6 +31,7 @@ public class LoadCommands extends StorageOperation {
 		for(Action command : Action.values()) {
 			try {
 				filePath = "config/commands/"+command.toString()+".txt";
+				System.out.println(filePath);
 				File file = new File(filePath);
 				FileReader fileReader = new FileReader(file);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);

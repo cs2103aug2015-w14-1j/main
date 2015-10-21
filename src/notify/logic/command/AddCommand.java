@@ -23,6 +23,7 @@ public class AddCommand extends ReversibleCommand {
 	public AddCommand(Action commandAction,String taskName, DateRange range, String category, TaskManager manager, TaskType type, Stack<ReversibleCommand> historyStack){
 		
 		super(commandAction, historyStack);
+		this.taskName = taskName;
 		this.range = range;
 		this.category = category;
 		this.manager = manager;
