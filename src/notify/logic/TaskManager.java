@@ -20,6 +20,7 @@ public class TaskManager {
 		this.latest_id = 0;
 		this.storage = storage;
 		this.taskList = this.storage.loadTasks();
+		updateLatestId(taskList.get(taskList.size()-1).getTaskId());
 		
 	}
 	

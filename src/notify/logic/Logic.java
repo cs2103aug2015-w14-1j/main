@@ -51,15 +51,6 @@ public class Logic {
 	}
 	
 	
-	/*public Command create() {
-		Task task = parser.getTask();
-		//storage.addTask(task, "NON-CATEGORIZED");
-		tasks.add(task);
-		
-		return parser.getCommand();
-	}*/
-	
-	
 	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
