@@ -356,9 +356,18 @@ public class MainViewHandler {
 		
 		if(task.getTaskType() == TaskType.DEADLINE) {
 			
-			if(oneWeekLater.after(task.getDateRange().getEndDate())) {
+			if(task.isOverdue()) {
+				// displays date (and time) e.g. 23 Oct 15 OR 23 Oct 15 2:00pm
 				
 				
+			} else if(task.isWithinSevenDays()) {
+				
+				// displays time (optional) e.g. 2:00pm
+				
+			} else {
+				
+				// if it's not within 7 days means is coming soon
+				// displays date (and time) e.g. 25 Nov 15 OR 25 Nov 15 2:00pm
 				
 			}
 			// check if within 7 days.
@@ -368,7 +377,33 @@ public class MainViewHandler {
 			
 		} else if(task.getTaskType() == TaskType.RANGE) {
 			
-			
+			if(task.isOverdue()) {
+				
+				if(task.getStartTime() != null) {
+					
+					subtext = "";
+					
+				} else {
+					
+					subtext = "";
+					
+				}
+				
+				//displays date to date (e.g. 21-Oct-15 to 23-Oct-15) OR
+				//displays date time to date time (e.g. 21-Oct-15 2:00pm to 23-Oct-25 2:00pm)
+				
+			} else if(task.isWithinSevenDays()) {
+				
+				// if start and end date is same day, displays time to time (e.g. 2:00pm to 4:00pm)
+				// if start and end date different day without time, displays (e.g. till Mon [if within 7 days] or till 23-Nov-15)
+				// if start and end date different dat with time, displays (e.g. from 10:00am till Mon 2:00pm or from 10:00am till 23-Nov-15 2:00pm)
+				
+			} else {
+				
+				//displays date to date (e.g. 25-Oct-15 to 23-Nov-15) OR
+				//displays date time to date time (e.g. 25-Oct-15 2:00pm to 23-Nov-25 2:00pm)
+				
+			}
 			
 		}
 		
