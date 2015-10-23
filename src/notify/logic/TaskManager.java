@@ -20,8 +20,7 @@ public class TaskManager {
 		this.latest_id = 0;
 		this.storage = storage;
 		this.taskList = this.storage.loadTasks();
-		updateLatestId(taskList.get(taskList.size()-1).getTaskId());
-		
+		updateLatestId();
 	}
 	
 	public Task addTask(String name, DateRange timespan, String category, TaskType taskType) {
@@ -30,7 +29,7 @@ public class TaskManager {
 
 		Task task = new Task(latest_id, taskType, name, timespan, category, false);
 		taskList.add(task);
-		updateLatestId(latest_id);
+		latest_id++;
 		
 		//logger.log(Level.WARNING, "TASK CANNOT BE ADDED");
 		return task;
@@ -224,10 +223,14 @@ public class TaskManager {
 		
 	}
 	
-	private void updateLatestId(int currentId) {
-		
-		latest_id = currentId + 1;
-		
+	private void updateLatestId() {
+		if(taskList==null) {
+			taskList = new ArrayList<Task>();
+		} else {
+			if(!taskList.isEmpty()) {
+				latest_id = taskList.get(taskList.size()-1).getTaskId() + 1;
+			}
+		}
 	}
 	
 	public ArrayList<Task> getTask() {
