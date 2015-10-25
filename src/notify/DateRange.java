@@ -5,23 +5,16 @@ import java.util.Calendar;
 import notify.logic.parser.DateTimeParser;
 
 public class DateRange {
-
-	private static final int startDateIndex = 0;
-	private static final int startTimeIndex = 1;
-	private static final int endDateIndex = 0;
-	private static final int endTimeIndex = 1;
-
+	
 	private Calendar startDate = null;
 	private Calendar startTime = null;
 	private Calendar endDate = null;
 	private Calendar endTime = null;
-
-	public DateRange(String startDate, String endDate) {
-		this(startDate, null, endDate, null);
-	}
 	
-	public DateRange(Calendar startDate, Calendar endDate) {
-		this(startDate, null, endDate, null);
+	private static final String ERROR_DATE_RANGE = "You have entered an invalid date range.";
+	
+	public DateRange() { 
+		
 	}
 	
 	public DateRange(Calendar startDate, Calendar startTime, Calendar endDate, Calendar endTime) {
@@ -45,9 +38,8 @@ public class DateRange {
 	public void setStartDate(String startDate) {
 		
 		if(startDate != null) {
-			Calendar[] startDateInfo = DateTimeParser.parseDate(startDate);
-			this.startDate = startDateInfo[startDateIndex];
-			this.startTime = startDateInfo[startTimeIndex];
+			startDate = startDate.trim();
+			this.startDate = DateTimeParser.parseDate(startDate);
 		}
 	}
 	
@@ -57,6 +49,7 @@ public class DateRange {
 	
 	public void setStartTime(String startTime) {
 		if(startTime != null) {
+			startTime = startTime.trim();
 			this.startTime = DateTimeParser.parseTime(startTime);
 		}
 	}
@@ -68,9 +61,14 @@ public class DateRange {
 	public void setEndDate(String endDate) {
 		
 		if(endDate != null) {
-			Calendar[] startDateInfo = DateTimeParser.parseDate(endDate);
-			this.endDate = startDateInfo[endDateIndex];
-			this.endTime = startDateInfo[endTimeIndex];
+			endDate = endDate.trim();
+			this.endDate = DateTimeParser.parseDate(endDate.trim());
+			
+			if(this.startDate != null) {
+				if(this.endDate.equals(this.startDate) == false && this.endDate.before(this.startDate)) {
+					throw new IllegalArgumentException(ERROR_DATE_RANGE);
+				}
+			}
 		}
 	}
 	
@@ -80,6 +78,7 @@ public class DateRange {
 	
 	public void setEndTime(String endTime) {
 		if(endTime != null) {
+			endTime = endTime.trim();
 			this.endTime = DateTimeParser.parseTime(endTime);
 		}
 	}
@@ -87,4 +86,21 @@ public class DateRange {
 	public Calendar getEndTime() { 
 		return this.endTime;
 	}
+	
+	public String toString() {
+		String output = "";
+		
+		if(startDate != null) { 
+			output += "start: " + startDate.get(Calendar.DATE) + "-" + startDate.get(Calendar.MONTH) + "-" + startDate.get(Calendar.YEAR);
+			if(startTime != null) { output += " " + startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE); }
+		}
+		
+		if(endDate != null) { 
+			output += " to " + endDate.get(Calendar.DATE) + "-" + endDate.get(Calendar.MONTH) + "-" + endDate.get(Calendar.YEAR);
+			if(endTime != null) { output += " " + endTime.get(Calendar.HOUR_OF_DAY) + ":" + endTime.get(Calendar.MINUTE); }
+		}
+		
+		return output;
+	}
+	
 }

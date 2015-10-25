@@ -19,13 +19,13 @@ public class AddCommand extends ReversibleCommand {
 	
 	private TaskManager manager;
 	
-	public AddCommand(Action commandAction,TaskManager manager, Stack<ReversibleCommand> historyStack){
+	public AddCommand(Action commandAction, TaskManager manager, Stack<ReversibleCommand> historyStack){
 		super(commandAction, historyStack);
 		this.manager = manager;
 	}
 
 	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
-		this.taskName = taskName;
+		this.taskName = taskName.trim();
 		this.taskType = taskType;
 		this.dateRange = dateRange;
 		this.category = category;

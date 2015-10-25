@@ -1,6 +1,5 @@
 package notify;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Task {
@@ -31,11 +30,6 @@ public class Task {
 
 	public Task(int id, TaskType taskType, String name) {
 		this(id, taskType, name, null);
-	}
-
-	public Task(int id, TaskType taskType, String name, Calendar startDate,
-			Calendar endDate) {
-		this(id, taskType, name, new DateRange(startDate, endDate));
 	}
 
 	public Task(int id, TaskType taskType, String name, DateRange dateRange) {

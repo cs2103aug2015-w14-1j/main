@@ -18,6 +18,7 @@ public class CategoryParser {
 			String hashtag = input[i].substring(HASHTAG_START_INDEX, HASHTAG_END_INDEX);
 			if(hashtag.equalsIgnoreCase(KEYWORD_HASHTAG) == true) {
 				result = input[i];
+				result = result.substring(HASHTAG_END_INDEX, result.length()).trim();
 			}
 		}
 		
