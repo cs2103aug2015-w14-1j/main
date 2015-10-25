@@ -56,38 +56,7 @@ public class CommandParser {
 		}
 		
 		switch(action) {
-			case ADD:
-				
-				String category = CategoryParser.parse(input);
-				DateRange dateRange = null;
-				String name = input;
-				
-				if(category != null) { 
-					int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
-					input = input.substring(0, input.length() - length);
-				}
-				
-				//assume start date to be now, and the info as end date
-				int index = input.toUpperCase().indexOf(KEYWORD_BY);
-				if(index > 0) {
-					//check if escaped
-					String escapedCharacter = input.substring(index - KEYWORD_ESCAPE_OFFSET, index);
-					boolean isEscaped = escapedCharacter.equalsIgnoreCase(KEYWORD_ESCAPE);
-					
-					if(isEscaped == false) {
-						String range = input.substring(index + KEYWORD_BY.length(), input.length()).trim();
-						dateRange = new DateRange(null, range);
-					}
-					
-					name = input.substring(0, index);
-				}
-				
-				System.out.println(name);
-				command = new AddCommand(action, name, dateRange, category, this.taskManager, TaskType.FLOATING, this.history);
-				
-				
-				
-				break;
+			case ADD: command = handleAddCommand(action, history, taskManager, input); break;
 			case DELETE: command = handleDeleteCommand(action, history, taskManager, input); break;
 			case EDIT: break;
 			case SEARCH: command = handleSearchCommand(input); break;
@@ -103,8 +72,39 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleAddCommand(String input) {
-		return null;
+	private Command handleAddCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		Command command = null;
+		
+		String category = CategoryParser.parse(input);
+		DateRange dateRange = null;
+		String name = input;
+		
+		if(category != null) { 
+			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
+			input = input.substring(0, input.length() - length);
+		}
+		
+		//assume start date to be now, and the info as end date
+		int index = input.toUpperCase().indexOf(KEYWORD_BY);
+		if(index > 0) {
+			//check if escaped
+			String escapedCharacter = input.substring(index - KEYWORD_ESCAPE_OFFSET, index);
+			boolean isEscaped = escapedCharacter.equalsIgnoreCase(KEYWORD_ESCAPE);
+			
+			if(isEscaped == false) {
+				String range = input.substring(index + KEYWORD_BY.length(), input.length()).trim();
+				dateRange = new DateRange(null, range);
+			}
+			
+			name = input.substring(0, index);
+		}
+		
+		System.out.println(name);
+		command = new AddCommand(commandAction, name, dateRange, category, this.taskManager, TaskType.FLOATING, this.history);
+		
+		return command;
+		
+		
 	}
 	
 	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
