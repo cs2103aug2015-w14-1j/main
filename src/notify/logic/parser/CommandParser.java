@@ -87,6 +87,7 @@ public class CommandParser {
 		if(datePrompt != null) { 
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM];
+			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
@@ -114,7 +115,7 @@ public class CommandParser {
 		
 		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
 		
-		command = new DeleteCommand(commandAction, id, historyStack, taskManager);
+		command = new DeleteCommand(commandAction, historyStack, taskManager);
 		
 		return command;
 	}
@@ -174,9 +175,9 @@ public class CommandParser {
 	private String[] parseDate(String input) {
 		String compare = input.toUpperCase();
 		
-		int byIndex = compare.indexOf(DateTimeParser.KEYWORD_BY);
-		int onIndex = compare.indexOf(DateTimeParser.KEYWORD_ON);
-		int fromIndex = compare.indexOf(DateTimeParser.KEYWORD_FROM);
+		int byIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_BY + COMMAND_SEPERATOR);
+		int onIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_ON + COMMAND_SEPERATOR);
+		int fromIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_FROM + COMMAND_SEPERATOR);
 		
 		if(byIndex == DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
 			byIndex = Integer.MAX_VALUE;
@@ -193,8 +194,8 @@ public class CommandParser {
 		int startIndex = Math.min(Math.min(byIndex, onIndex), fromIndex);
 		
 		String[] results = new String[RESULTS_PARAM_SIZE];
-		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex);
-		results[RESULTS_DATE_PARAM] = input.substring(startIndex, input.length());
+		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex + COMMAND_SEPERATOR.length());
+		results[RESULTS_DATE_PARAM] = input.substring(startIndex + COMMAND_SEPERATOR.length(), input.length());
 		
 		return results;	
 	}

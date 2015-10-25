@@ -30,7 +30,7 @@ public class CommandParserTest {
 	
 	@Test
 	public void test() {
-		
+		           
 		String input = "add meeting with joe by 01 oct at 5pm #meeting";
 		AddCommand command = (AddCommand) this.parser.parse(input);
 		org.junit.Assert.assertEquals("meeting with joe", command.getTaskName());
@@ -47,6 +47,9 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(17, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
+		input = "add ps5 submission by 05 oct at 2am";
+		command = (AddCommand) this.parser.parse(input);
+		System.out.println(command.getTaskName());
 		
 		input = "add meeting with joe on 02 oct at 5pm #meeting";
 		command = (AddCommand) this.parser.parse(input);
@@ -146,8 +149,7 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(10, dateRange.getEndDate().get(Calendar.MONTH));
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
-		
+		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));	
 	}
 
 }
