@@ -9,15 +9,24 @@ import notify.logic.TaskManager;
 
 public class DeleteCommand extends ReversibleCommand {
 	
-	//private Task task;
+	private Task task;
 	private int id;
 	private TaskManager manager;
 	
 	
-	public DeleteCommand(Action commandAction, int id, Stack<ReversibleCommand> historyStack, TaskManager manager ){
+	public DeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager ){
 		super(commandAction, historyStack);
 		this.manager = manager;
-		this.id = id;
+		
+	}
+	
+	public void addValues(int id){
+	this.id = id;
+	
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 	
 	@Override
@@ -26,9 +35,7 @@ public class DeleteCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(temptask);
 		Result result = new Result(Action.DELETE, listOfResults);
-		//this.task = temptask;
 		pushToStack();
-		
 		return result;
 		
 	}
@@ -39,7 +46,6 @@ public class DeleteCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>(); 
 		listOfResults.add(temptask); 
 		Result result = new Result(Action.UNDO, listOfResults);
-		//this.task = temptask;
 		return result;
 	}
 
