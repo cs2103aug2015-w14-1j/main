@@ -147,9 +147,9 @@ public class MainViewHandler {
 	 */
 	public void load() {
 		
-		//loadOverdueTask();
+		loadOverdueTask();
 		loadFloatingTask();
-		//loadComingTask();
+		loadComingTask();
 		//loadDailyTask();
 		
 	}
@@ -163,7 +163,7 @@ public class MainViewHandler {
 		
 		Calendar date = Calendar.getInstance();
 		
-		overdueTasks = logic.getTasksBefore(date);
+		overdueTasks = logic.getOverdueTasks();
 
 		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
 		ArrayList<HBox> hboxes = generateListItem(overdueTasks, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
@@ -202,7 +202,7 @@ public class MainViewHandler {
 		Calendar date = Calendar.getInstance();
 		date.add(Calendar.DAY_OF_MONTH, 7);
 		
-		comingTasks = logic.getTasksAfter(date);
+		comingTasks = logic.getComingSoonTasks();
 
 		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
 		ArrayList<HBox> hboxes = generateListItem(comingTasks, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
@@ -228,7 +228,8 @@ public class MainViewHandler {
 		
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
-			ArrayList<Task> dailyTasks = logic.getTasksOn(calendar);
+			//ArrayList<Task> dailyTasks = logic.getTasksOn(calendar);
+			ArrayList<Task> dailyTasks = new ArrayList<Task>();
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
@@ -327,12 +328,13 @@ public class MainViewHandler {
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
 				
-				subtext = DAY_DATE_FORMAT.format(task.getDateRange().getEndDate());
+				subtext = DAY_DATE_FORMAT.format(task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			} else if(task.getTaskType() == TaskType.RANGE) {
 				
-				subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getDateRange().getStartDate().toString(), task.getDateRange().getEndDate().toString());
+				subtext = DAY_DATE_FORMAT.format(task.getStartDate().getTime()) + " to " + DAY_DATE_FORMAT.format(task.getEndDate().getTime());
+				//subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getStartDate().getTime(), task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			}
@@ -347,7 +349,7 @@ public class MainViewHandler {
 		
 	}
 	
-	public String generateSubtext(Task task) {
+	/*public String generateSubtext(Task task) {
 		Calendar today = Calendar.getInstance();
 		Calendar oneWeekLater = Calendar.getInstance();
 		oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
@@ -408,7 +410,7 @@ public class MainViewHandler {
 		}
 		
 		return subtext;
-	}
+	}*/
 	
 	public void initDailyView() {
 		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };

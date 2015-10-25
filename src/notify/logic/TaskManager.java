@@ -20,6 +20,7 @@ public class TaskManager {
 		this.latest_id = 0;
 		this.storage = storage;
 		this.taskList = this.storage.loadTasks();
+		System.out.println(taskList);
 		updateLatestId();
 	}
 	
@@ -95,7 +96,7 @@ public class TaskManager {
 		
 	}
 	
-	public Task markTask(int id) {
+	public Task markTask(int id, boolean isCompleted) {
 		
 		Task task = getTask(id);
 		
@@ -113,87 +114,35 @@ public class TaskManager {
 		
 	}
 	
-	public ArrayList<Task> displayCompletedTasks() {
-		
-		ArrayList<Task> tempTaskList = new ArrayList<Task>();
-		
-		for(Task task: taskList) {
-			
-			if(task.isCompleted() && !task.isDeleted()) {
-				
-				tempTaskList.add(task);
-				
-			}
-			
-		}
-		
-		return tempTaskList;
-		
-	}
-	
 	public void exit() {
 		storage.saveTasks(taskList);
 	}
 	
-	public ArrayList<Task> beforeDate(Calendar date) {
+	private void updateLatestId() {
 		
-		ArrayList<Task> tempTaskList = new ArrayList<Task>();
-		
-		for(Task task: taskList) {
+		if(taskList == null) {
 			
-			if(task.getDateRange().getStartDate().before(date) && !task.isDeleted()) {
-				
-				tempTaskList.add(task);
-				
-			}
+			taskList = new ArrayList<Task>();
 			
-		}
-		
-		return tempTaskList;
-		
-	}
-	
-	public ArrayList<Task> afterDate(Calendar date) {
-		
-		ArrayList<Task> tempTaskList = new ArrayList<Task>();
-		
-		for(Task task: taskList) {
+		} else {
 			
-			if(task.getDateRange().getStartDate().after(date) && !task.isDeleted()) {
+			if(!taskList.isEmpty()) {
 				
-				tempTaskList.add(task);
+				int lastTaskIndex = taskList.size() - 1;
+				int lastTaskId = taskList.get(lastTaskIndex).getTaskId();
+				latest_id = lastTaskId + 1;
 				
 			}
 			
 		}
 		
-		return tempTaskList;
-		
 	}
 	
-	public ArrayList<Task> getTask(Calendar date) {
-		
-		ArrayList<Task> tempTaskList = new ArrayList<Task>();
+	public Task getTask(int taskId) {
 		
 		for(Task task: taskList) {
 			
-			if(task.getDateRange().getStartDate().compareTo(date) == 0 && !task.isDeleted()) {
-				
-				tempTaskList.add(task);
-				
-			}
-			
-		}
-		
-		return tempTaskList;
-		
-	}
-	
-	public Task getTask(int id) {
-		
-		for(Task task: taskList) {
-			
-			if(task.getTaskId() == id) {
+			if(task.getTaskId() == taskId) {
 				
 				return task;
 				
@@ -205,36 +154,166 @@ public class TaskManager {
 		
 	}
 	
-	public ArrayList<Task> getFloatingTask() {
-		
-		ArrayList<Task> tempTaskList = new ArrayList<Task>();
+	/**
+	 * Retrieve the task that is not deleted with the id specified or null if there are no task with the id specified.
+	 * @param taskId task id of the task to be retrieved
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
+	 * @return a task object of the task is found, otherwise return null
+	 */
+	public Task getTask(int taskId, boolean isCompleted) {
 		
 		for(Task task: taskList) {
 			
-			if(task.getTaskType() == TaskType.FLOATING && !task.isDeleted()) {
-				System.out.println(task);
-				tempTaskList.add(task);
+			if(task.getTaskId() == taskId && !task.isDeleted() && task.isCompleted() == isCompleted) {
+				
+				return task;
 				
 			}
 			
 		}
 		
-		return tempTaskList;
+		return null;
 		
 	}
 	
-	private void updateLatestId() {
-		if(taskList==null) {
-			taskList = new ArrayList<Task>();
-		} else {
-			if(!taskList.isEmpty()) {
-				latest_id = taskList.get(taskList.size()-1).getTaskId() + 1;
+	/**
+	 * Retrieve all the tasks that are not deleted.
+	 * @return a list of all the tasks that are not deleted.
+	 */
+	public ArrayList<Task> getTask() {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+			
+			if(!task.isDeleted()) {
+				
+				tempList.add(task);
+				
 			}
+			
 		}
+		
+		return tempList;
+		
 	}
 	
-	public ArrayList<Task> getTask() {
-		return taskList;
+	/**
+	 * Retrieve all the tasks where its task type is equals to the task type specified.
+	 * @param taskType type of task to retrieve
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
+	 * @return a list of task where task type is equals to the task type specified.
+	 */
+	public ArrayList<Task> getTask(TaskType taskType, boolean isCompleted) {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+			
+			if(task.getTaskType() == taskType && !task.isDeleted() && task.isCompleted() == isCompleted) {
+				
+				tempList.add(task);
+				
+			}
+			
+		}
+		
+		return tempList;
+		
+	}
+	
+	/**
+	 * Retrieve all the tasks where its date falls on the date specified or the date specified is within its range.
+	 * @param date date of the task to retrieve
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
+	 * @return a list of task where its date falls on the date specified or the date specified is within its range.
+	 */
+	public ArrayList<Task> getTask(Calendar date, boolean isCompleted) {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+
+			if(task.isOn(date) && !task.isDeleted() && task.isCompleted() == isCompleted) {
+				
+				tempList.add(task);
+				
+			}
+			
+		}
+		
+		return tempList;
+		
+	}
+	
+	/**
+	 * Retrieve all the tasks that are not deleted and its completed status matches the completed status specified.
+	 * @param isCompleted true to retrieve completed tasks. false to retrieve uncompleted tasks
+	 * @return a list of completed task or uncompleted task depending on the value passed in.
+	 */
+	public ArrayList<Task> getTask(boolean isCompleted) {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+			
+			if(task.isCompleted() == isCompleted && !task.isDeleted()) {
+				
+				tempList.add(task);
+				
+			}
+			
+		}
+		
+		return tempList;
+		
+	}
+	
+	public ArrayList<Task> getOverdueTasks() {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+			
+			if(task.isOverdue()) {
+				
+				assert task.isCompleted() == false;
+				assert task.isDeleted() == false;
+				
+				tempList.add(task);
+				
+			}
+			
+		}
+		
+		return tempList;
+		
+	}
+	
+	/**
+	 * Retrieve all the tasks that are coming soon. 
+	 * Coming soon tasks are tasks that are not within the week (or today and up coming 6 days )
+	 * @return a list of tasks that are coming soon.
+	 */
+	public ArrayList<Task> getComingSoonTasks() {
+		
+		ArrayList<Task> tempList = new ArrayList<Task>();
+		
+		for(Task task: taskList) {
+			
+			if(task.isComingSoon()) {
+				
+				assert task.isCompleted() == false;
+				assert task.isDeleted() == false;
+				
+				tempList.add(task);
+				
+			}
+			
+		}
+		
+		return tempList;
+		
 	}
 	
 }

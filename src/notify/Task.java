@@ -6,6 +6,8 @@ import java.util.Calendar;
 public class Task {
 
 	private static final int UNASSIGNED_TASK = -1;
+	
+	private static final int DAYS_A_WEEK = 7;
 
 	// This stores the id that is associated with the task
 	private int id = UNASSIGNED_TASK;
@@ -82,10 +84,10 @@ public class Task {
 	
 	public boolean isOverdue() {
 		
-		Calendar calendar = Calendar.getInstance();
+		Calendar today = Calendar.getInstance();
 		
-		int todaysYear = calendar.get(Calendar.YEAR);
-		int todaysDay = calendar.get(Calendar.DAY_OF_YEAR);
+		int todayYear = today.get(Calendar.YEAR);
+		int todayDay = today.get(Calendar.DAY_OF_YEAR);
 		int endDateYear, endDateDay;
 		
 		boolean isOverdue = false;
@@ -103,11 +105,11 @@ public class Task {
 				endDateYear = getEndDate().get(Calendar.YEAR);
 				endDateDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(endDateYear < todaysYear && !isCompleted) {
+				if(endDateYear < todayYear && !isCompleted && !isDeleted) {
 					
 					isOverdue = true;
 					
-				} else if(endDateYear == todaysYear && endDateDay < todaysDay && !isCompleted) {
+				} else if(endDateYear == todayYear && endDateDay < todayDay && !isCompleted && !isDeleted) {
 					
 					isOverdue = true;
 					
@@ -121,67 +123,95 @@ public class Task {
 		
 	}
 	
-	public boolean isWithinSevenDays() {
+	/**
+	 * Check whether the task is on the date specified (for deadline tasks)
+	 * Check whether the date specified is within the range of date the task (for range tasks)
+	 * @param date day to be checked against 
+	 * @return true if the task is on the date specified, or within the range of date of the task. else return false
+	 */
+	public boolean isOn(Calendar date) {
 		
-		Calendar calendar = Calendar.getInstance();
-		Calendar nextWeek = Calendar.getInstance();
-		nextWeek.add(Calendar.DAY_OF_MONTH, 7);
-
-		int todaysYear = calendar.get(Calendar.YEAR);
-		int todaysDay = calendar.get(Calendar.DAY_OF_YEAR);
-		int nextWeekYear = nextWeek.get(Calendar.YEAR);
-		int nextWeekDay = nextWeek.get(Calendar.DAY_OF_YEAR);
-		int startDateYear, startDateDay;
-		int endDateYear, endDateDay;
+		int dateYear = date.get(Calendar.YEAR);
+		int dateDay = date.get(Calendar.DAY_OF_YEAR);
 		
-		boolean isWithinSevenDays = false;
+		int taskEndYear, taskEndDay, taskStartYear, taskStartDay;
+		
+		boolean isOnDate = false;
 		
 		switch(taskType) {
-			
-			case FLOATING:
-				
-				isWithinSevenDays = false;
-				
-				break;
-				
+		
 			case DEADLINE:
+
+				taskEndYear = getEndDate().get(Calendar.YEAR);
+				taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				endDateYear = getEndDate().get(Calendar.YEAR);
-				endDateDay = getEndDate().get(Calendar.DAY_OF_YEAR);
-				
-				if(todaysYear <= endDateYear && endDateYear <= nextWeekYear 
-						&& todaysDay <= endDateDay && endDateDay <= nextWeekDay) {
+				if(dateYear == taskEndYear && dateDay == taskEndDay && !isCompleted && !isDeleted) {
 					
-					isWithinSevenDays = true;
+					isOnDate = true;
 					
 				}
 				
 				break;
 				
 			case RANGE:
+
+				taskEndYear = getEndDate().get(Calendar.YEAR);
+				taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
+				taskStartYear = getStartDate().get(Calendar.YEAR);
+				taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
 				
-				startDateYear = getStartDate().get(Calendar.YEAR);
-				startDateDay = getStartDate().get(Calendar.DAY_OF_YEAR);
-				endDateYear = getEndDate().get(Calendar.YEAR);
-				endDateDay = getEndDate().get(Calendar.DAY_OF_YEAR);
+				if(taskStartYear <= dateYear && dateYear <= taskEndYear
+						&& taskStartDay <= dateDay && dateDay <= taskEndDay && !isCompleted && !isDeleted) {
+					
+					isOnDate = true;
+					
+				}				
 				
-				// check if start date is within this week (e.g. today: 19Oct, start date: 20Oct, next week: 26Oct)
-				// or end date is within this week (e.g. today: 19Oct, end date: 20Oct, next week: 26Oct)
-				// or this week is part of the start and end date (e.g. start date: 17Oct, today: 19Oct, next week: 26Oct, end date: 30Oct)
-				if(todaysYear <= startDateYear && startDateYear <= nextWeekYear
-						&& todaysDay <= startDateDay && startDateDay <= nextWeekDay) {
-					
-					isWithinSevenDays = true;
-					
-				} else if(todaysYear <= endDateYear && endDateYear <= nextWeekYear
-						&& todaysDay <= endDateDay && endDateDay <= nextWeekDay) {
+				break;
+			
+			default:
+				
+				isOnDate = false;
+				
+				break;
+		
+		}
+		
+		return isOnDate;
+		
+	}
 	
-					isWithinSevenDays = true;
+	/**
+	 * Check whether the task is coming soon.
+	 * A coming soon task is a task that will happen after than seven days or more
+	 * @return true if the task is a coming soon task, else false
+	 */
+	public boolean isComingSoon() {
+		
+		Calendar today = Calendar.getInstance();
+		boolean isComingSoon = true;
+		
+		switch(taskType) {
+			
+			case FLOATING:
 				
-				} else if(startDateYear <= todaysYear && nextWeekYear <= endDateYear
-						&& startDateDay <= todaysDay && nextWeekDay <= endDateDay) {
+				isComingSoon = false;
+				
+				break;
+				
+			default:
+
+				for(int i = 0; i < DAYS_A_WEEK; i++) {
 					
-					isWithinSevenDays = true;
+					if(isOn(today) || isOverdue() || isCompleted || isDeleted) {
+						
+						isComingSoon = false;
+						
+						break;
+						
+					}
+					
+					today.add(Calendar.DAY_OF_MONTH, 1);
 					
 				}
 				
@@ -189,7 +219,7 @@ public class Task {
 		
 		}
 		
-		return isWithinSevenDays;
+		return isComingSoon;
 		
 	}
 	
