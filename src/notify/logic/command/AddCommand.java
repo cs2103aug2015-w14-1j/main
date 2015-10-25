@@ -11,20 +11,22 @@ import notify.logic.TaskManager;
 public class AddCommand extends ReversibleCommand {
 	
 	private Task task;
-	private TaskType taskType;
+
 	private String taskName;
+	private TaskType taskType;
 	private DateRange dateRange;
 	private String category;
+	
 	private TaskManager manager;
 	
-	public AddCommand(Action commandAction,TaskManager manager, TaskType type, Stack<ReversibleCommand> historyStack){
+	public AddCommand(Action commandAction,TaskManager manager, Stack<ReversibleCommand> historyStack){
 		super(commandAction, historyStack);
 		this.manager = manager;
-		this.taskType = type;
 	}
 
-	public void addValues(String taskName, DateRange dateRange, String category) {
+	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
 		this.taskName = taskName;
+		this.taskType = taskType;
 		this.dateRange = dateRange;
 		this.category = category;
 	}

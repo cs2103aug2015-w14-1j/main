@@ -1,7 +1,7 @@
 package notify.logic.parser;
 
 import notify.logic.Logic;
-import notify.logic.command.Command;
+import notify.logic.command.AddCommand;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,9 +28,8 @@ public class CommandParserTest {
 	public void test() {
 		
 		String input = "add xyz by 01 oct at 5pm #ok";
-		AddCommand command = this.parser.parse(input);
-		
-		
+		//AddCommand command = (AddCommand) this.parser.parse(input);
+	
 		
 		
 		//input = "delete 1";
