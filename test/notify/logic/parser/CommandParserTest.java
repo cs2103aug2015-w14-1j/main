@@ -1,18 +1,22 @@
 package notify.logic.parser;
 
+import notify.logic.Logic;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CommandParserTest {
 	
+	private Logic logic;
 	private CommandParser parser;
 	private String expected;
 	private String actual;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.parser = new CommandParser();
+		this.logic = new Logic();
+		
 	}
 
 	@After

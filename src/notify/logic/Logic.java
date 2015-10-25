@@ -1,17 +1,15 @@
 package notify.logic;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Stack;
 
 import notify.Task;
 import notify.TaskType;
 import notify.logic.command.Command;
 import notify.logic.command.Result;
+import notify.logic.command.ReversibleCommand;
 import notify.logic.parser.CommandParser;
 import notify.storage.Storage;
-import notify.logic.command.ReversibleCommand;
 
 public class Logic {
 	
@@ -29,6 +27,10 @@ public class Logic {
 		this.taskManager = new TaskManager(storage);
 		this.parser = new CommandParser(storage, taskManager, history);
 		
+	}
+	
+	public CommandParser getCommandParser() {
+		return this.parser;
 	}
 	
 	public Storage getStorage() {
