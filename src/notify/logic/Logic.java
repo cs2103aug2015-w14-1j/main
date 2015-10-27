@@ -40,6 +40,10 @@ public class Logic {
 		return this.parser;
 	}
 	
+	public CommandParser getCommandParser() {
+		return this.parser;
+	}
+	
 	public Storage getStorage() {
 		return storage;
 	}

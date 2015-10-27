@@ -1,5 +1,11 @@
 package notify.logic.command;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+
+import notify.Task;
+>>>>>>> origin/master
 import notify.logic.TaskManager;
 
 public class SearchCommand extends Command {
