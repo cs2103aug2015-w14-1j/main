@@ -28,6 +28,13 @@ public class Result {
 		return actionPerformed;
 	}
 
+	
+	/**
+	 * Returns the first task in the ArrayList of results.
+	 * 
+	 * @return	task at index 0 in the ArrayList of results
+	 */
+	
 	public Task getFirstResult() {
 
 		if (results.isEmpty()) {
@@ -37,6 +44,12 @@ public class Result {
 		return results.get(FIRST_RESULT_INDEX);
 	}
 
+	/**
+	 * Returns the ArrayList of tasks.
+	 * 
+	 * @return	ArrayList of tasks
+	 */
+	
 	public ArrayList<Task> getResults() {
 		return results;
 	}

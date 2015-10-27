@@ -2,11 +2,12 @@ package notify.logic.parser;
 
 import java.util.Calendar;
 
+import notify.DateRange;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class DateTimeParser {
 
-	private static final String KEYWORD_AT = "AT";
 	private static final String[] KEYWORD_TODAY = { "TODAY", "TDY", "LATER" };
 	private static final String[] KEYWORD_TOMORROW = { "TOMORROW", "TMR", "TMRW" };
 	private static final String[] KEYWORD_NEXT_WEEK = { "NEXT WEEK" };
@@ -18,8 +19,6 @@ public class DateTimeParser {
 	private static final int OFFSET_MONTH = 1;
 	private static final int OFFSET_YEAR = 1;
 	
-	private static final int DATE_PARAM_INDEX = 0;
-	private static final int TIME_PARAM_INDEX = 1;
 	private static final int TIME_MERIDIEM_LENGTH = 2;
 	
 	private static final int DATE_DEFAULT_YEAR = 0;
@@ -54,11 +53,26 @@ public class DateTimeParser {
 	private static final int TIME_HOUR_MINUTE = 3;
 	private static final int TIME_FULL = 4;
 
-	private static final int DATE_RESULT_SIZE = 2;
 	private static final String DATE_SEPERATOR_SLASH = "\\/";
 	private static final String DATE_SEPERATOR_SPACE = " ";
 	private static final int DATE_SEPERATOR_MIN = 2;
 	private static final int DATE_SEPERATOR_MAX = 3;
+	
+	public static final String[] DATETIME_PROMPT_KEYWORDS = { "BY", "ON", "FROM" };
+	public static final String[] DATETIME_KEYWORDS = { "AT", "FROM", "TO" };
+	public static final String KEYWORD_BY = DATETIME_PROMPT_KEYWORDS[0];
+	public static final String KEYWORD_ON = DATETIME_PROMPT_KEYWORDS[1];
+	public static final String KEYWORD_FROM = DATETIME_PROMPT_KEYWORDS[2];
+	public static final String KEYWORD_AT = DATETIME_KEYWORDS[0];
+	public static final String KEYWORD_TO = DATETIME_KEYWORDS[2];
+	public static final int KEYWORD_PROMPT_INDEX = 0; 
+	
+	public static final int DATE_PARAM_INDEX = 0;
+	public static final int TIME_PARAM_INDEX = 1;
+	public static final int FROM_PARAM_INDEX = 0;
+	public static final int TO_PARAM_INDEX = 1;
+	public static final int KEYWORD_NOT_FOUND_INDEX = -1;
+	public static final String ESCAPE_KEYWORD = "/";
 	
 	private static final int INVALID_YEAR = -1;
 	private static final String ERROR_INVALID_DATE = "You have entered an invalid date.";
@@ -70,6 +84,83 @@ public class DateTimeParser {
 		return result;
 	}
 	
+	public static DateRange parseDateRange(String rawDateTime) {
+		
+		rawDateTime = rawDateTime.toUpperCase();
+		
+		DateRange dateRange = new DateRange();
+
+		//case one: contains 'by' or 'on', check for at (start/time date = today, end/time date = given)
+		int byIndex = rawDateTime.indexOf(KEYWORD_BY);
+		int onIndex = rawDateTime.indexOf(KEYWORD_ON);
+		int fromIndex = rawDateTime.indexOf(KEYWORD_FROM);
+		int toIndex = rawDateTime.indexOf(KEYWORD_TO);
+	
+		if(byIndex == KEYWORD_PROMPT_INDEX || onIndex == KEYWORD_PROMPT_INDEX) {
+			rawDateTime = rawDateTime.substring(KEYWORD_BY.length(), rawDateTime.length());
+			
+			int atIndex = rawDateTime.indexOf(KEYWORD_AT);
+			toIndex = rawDateTime.indexOf(KEYWORD_TO);
+			fromIndex = rawDateTime.indexOf(KEYWORD_FROM); 
+						
+			if(atIndex != KEYWORD_NOT_FOUND_INDEX) {
+				String[] split = rawDateTime.split(KEYWORD_AT);
+				
+				dateRange.setEndDate(split[DATE_PARAM_INDEX].trim());
+				dateRange.setEndTime(split[TIME_PARAM_INDEX].trim());
+			
+			//case two: contains 'on', check for from and to 
+			} else if (fromIndex != KEYWORD_NOT_FOUND_INDEX && toIndex != KEYWORD_NOT_FOUND_INDEX) {
+				if(toIndex <= fromIndex) { 
+					throw new IllegalArgumentException(ERROR_INVALID_DATE);
+				}
+				
+				String[] split = rawDateTime.split(KEYWORD_FROM);
+				dateRange.setStartDate(split[DATE_PARAM_INDEX]);
+				dateRange.setEndDate(split[DATE_PARAM_INDEX]);
+				
+				split = split[TIME_PARAM_INDEX].split(KEYWORD_TO);				
+				dateRange.setStartTime(split[FROM_PARAM_INDEX]);
+				dateRange.setEndTime(split[TO_PARAM_INDEX]);	
+			
+			} else {
+				dateRange.setEndDate(rawDateTime);
+			}
+			
+		//case three: from and to (search for at in within)	
+		} else if(fromIndex == KEYWORD_PROMPT_INDEX && toIndex != KEYWORD_NOT_FOUND_INDEX) {
+			if(toIndex <= fromIndex) { 
+				throw new IllegalArgumentException(ERROR_INVALID_DATE);
+			}
+			
+			rawDateTime = rawDateTime.substring(KEYWORD_FROM.length(), rawDateTime.length());
+			String[] split = rawDateTime.split(KEYWORD_TO);
+			
+			String startDateTime = split[FROM_PARAM_INDEX];
+			String endDateTime = split[TO_PARAM_INDEX];	
+			
+			int atIndex = startDateTime.indexOf(KEYWORD_AT);
+			if(atIndex != KEYWORD_NOT_FOUND_INDEX) {
+				split = startDateTime.split(KEYWORD_AT);
+				dateRange.setStartDate(split[DATE_PARAM_INDEX]);
+				dateRange.setStartTime(split[TIME_PARAM_INDEX]);
+			} else {
+				dateRange.setStartDate(startDateTime);
+			}
+
+			atIndex = endDateTime.indexOf(KEYWORD_AT);
+			if(atIndex != KEYWORD_NOT_FOUND_INDEX) {
+				split = endDateTime.split(KEYWORD_AT);
+				dateRange.setEndDate(split[DATE_PARAM_INDEX]);
+				dateRange.setEndTime(split[TIME_PARAM_INDEX]);
+			} else {
+				dateRange.setEndDate(endDateTime);
+			}
+		}
+		
+		return dateRange;
+	}
+	
 	/**
 	 * Returns an array of Calendar object. The first object will contain the
 	 * date and the second the time. Object will be null if it does not exist in
@@ -78,55 +169,49 @@ public class DateTimeParser {
 	 * @return Calendar[] The first object will contain the date and the second
 	 *         the time.
 	 */
-	public static Calendar[] parseDate(String rawDate) {
+	public static Calendar parseDate(String rawDate) {
 		
 		assert rawDate != null;
 		
-		Calendar[] result = new Calendar[DATE_RESULT_SIZE];
+		Calendar result = null;
 		
 		//check if raw date contains time, parse it accordingly
-		String[] dateInfo = rawDate.split(KEYWORD_AT);
-		if (dateInfo.length > TIME_PARAM_INDEX) {
-			result[TIME_PARAM_INDEX] = parseTime(dateInfo[TIME_PARAM_INDEX]);
-			rawDate = dateInfo[DATE_PARAM_INDEX];
-		}
-		
 		boolean dateFound = false;
 		for(int i = 0; i < KEYWORD_TODAY.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TODAY[i])) {
-				result[DATE_PARAM_INDEX] = Calendar.getInstance();
+				result = Calendar.getInstance();
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_TOMORROW.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TOMORROW[i])) {
-				result[DATE_PARAM_INDEX] = Calendar.getInstance();
-				result[DATE_PARAM_INDEX].add(Calendar.DATE, OFFSET_DAY);
+				result = Calendar.getInstance();
+				result.add(Calendar.DATE, OFFSET_DAY);
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_NEXT_WEEK.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_WEEK[i])) {
-				result[DATE_PARAM_INDEX] = Calendar.getInstance();
-				result[DATE_PARAM_INDEX].add(Calendar.DATE, OFFSET_WEEK);
+				result = Calendar.getInstance();
+				result.add(Calendar.DATE, OFFSET_WEEK);
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_NEXT_MONTH.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_MONTH[i])) {
-				result[DATE_PARAM_INDEX] = Calendar.getInstance();
-				result[DATE_PARAM_INDEX].add(Calendar.MONTH, OFFSET_MONTH);
+				result = Calendar.getInstance();
+				result.add(Calendar.MONTH, OFFSET_MONTH);
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_NEXT_YEAR.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_YEAR[i])) {
-				result[DATE_PARAM_INDEX] = Calendar.getInstance();
-				result[DATE_PARAM_INDEX].add(Calendar.YEAR, OFFSET_YEAR);
+				result = Calendar.getInstance();
+				result.add(Calendar.YEAR, OFFSET_YEAR);
 				dateFound = true;
 			}
 		}
@@ -144,10 +229,10 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result[DATE_PARAM_INDEX] = getInstance();
-				result[DATE_PARAM_INDEX].set(Calendar.DATE, day);
-				result[DATE_PARAM_INDEX].set(Calendar.MONTH, month);
-				result[DATE_PARAM_INDEX].set(Calendar.YEAR, year);
+				result = getInstance();
+				result.set(Calendar.DATE, day);
+				result.set(Calendar.MONTH, month);
+				result.set(Calendar.YEAR, year);
 				
 				dateFound = true;
 			}
@@ -166,10 +251,10 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result[DATE_PARAM_INDEX] = getInstance();
-				result[DATE_PARAM_INDEX].set(Calendar.DATE, day);
-				result[DATE_PARAM_INDEX].set(Calendar.MONTH, month);
-				result[DATE_PARAM_INDEX].set(Calendar.YEAR, year);
+				result = getInstance();
+				result.set(Calendar.DATE, day);
+				result.set(Calendar.MONTH, month);
+				result.set(Calendar.YEAR, year);
 				
 				dateFound = true;
 			}

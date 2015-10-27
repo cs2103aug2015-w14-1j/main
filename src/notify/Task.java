@@ -1,6 +1,5 @@
 package notify;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Task {
@@ -31,11 +30,6 @@ public class Task {
 
 	public Task(int id, TaskType taskType, String name) {
 		this(id, taskType, name, null);
-	}
-
-	public Task(int id, TaskType taskType, String name, Calendar startDate,
-			Calendar endDate) {
-		this(id, taskType, name, new DateRange(startDate, endDate));
 	}
 
 	public Task(int id, TaskType taskType, String name, DateRange dateRange) {
@@ -126,6 +120,7 @@ public class Task {
 	/**
 	 * Check whether the task is on the date specified (for deadline tasks)
 	 * Check whether the date specified is within the range of date the task (for range tasks)
+	 * Includes task that are completed.
 	 * @param date day to be checked against 
 	 * @return true if the task is on the date specified, or within the range of date of the task. else return false
 	 */
@@ -145,7 +140,7 @@ public class Task {
 				taskEndYear = getEndDate().get(Calendar.YEAR);
 				taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(dateYear == taskEndYear && dateDay == taskEndDay && !isCompleted && !isDeleted) {
+				if(dateYear == taskEndYear && dateDay == taskEndDay && !isDeleted) {
 					
 					isOnDate = true;
 					
@@ -161,7 +156,7 @@ public class Task {
 				taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
 				
 				if(taskStartYear <= dateYear && dateYear <= taskEndYear
-						&& taskStartDay <= dateDay && dateDay <= taskEndDay && !isCompleted && !isDeleted) {
+						&& taskStartDay <= dateDay && dateDay <= taskEndDay && !isDeleted) {
 					
 					isOnDate = true;
 					
