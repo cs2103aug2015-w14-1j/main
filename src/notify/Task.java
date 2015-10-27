@@ -43,18 +43,6 @@ public class Task {
 		assert name != null;
 	}
 		
-	/*
-	 * public Task(int id, TaskType taskType, String name) { this(id, taskType,
-	 * name, null); }
-	 * 
-	 * public Task(int id, TaskType taskType, String name, Calendar startDate,
-	 * Calendar endDate) { this(id, taskType, name, new DateRange(startDate,
-	 * endDate)); }
-	 * 
-	 * public Task(int id, TaskType taskType, String name, DateRange dateRange)
-	 * { this(id, taskType, name, dateRange, false); }
-	 */
-	
 	public Task(int id, TaskType taskType, String name, DateRange dateRange, String category, boolean isCompleted) {
 
 		assert taskType != null;
@@ -70,7 +58,7 @@ public class Task {
 
 	/**
 	 * Returns true if this task is overdue. An overdue task is a deadline task
-	 * that is not finished and its end time is earlier than the time when this
+	 * that has not finished and its end time is earlier than the time when this
 	 * method is called.
 	 * 
 	 * @return true if this task is overdue
@@ -218,15 +206,12 @@ public class Task {
 		
 	}
 	
+	public boolean isSearchedTask(String keyWord) {
+		if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
+			return true;
+		return false;
+	}
 	
-	/*
-	 * public boolean isOverdue() {
-	 * 
-	 * if(taskType != TaskType.DEADLINE) { return false; }
-	 * 
-	 * Calendar cal = Calendar.getInstance(); // boolean isOverdue =
-	 * !isCompleted && }
-	 */
 	public int getTaskId() {
 		return this.id;
 	}
@@ -290,14 +275,7 @@ public class Task {
 	public void setCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
 	}
-
-	/*
-	 * public boolean isBlocking() { return this.isBlocking; }
-	 * 
-	 * public void setBlocking(boolean isBlocking) { this.isBlocking =
-	 * isBlocking; }
-	 */
-
+	
 	public void setTaskType(TaskType taskType) {
 		this.taskType = taskType;
 	}
