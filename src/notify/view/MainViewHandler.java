@@ -161,8 +161,6 @@ public class MainViewHandler {
 	 */
 	public void loadOverdueTask() {
 		
-		Calendar date = Calendar.getInstance();
-		
 		overdueTasks = logic.getOverdueTasks();
 
 		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
@@ -199,9 +197,6 @@ public class MainViewHandler {
 	 */
 	public void loadComingTask() {
 		
-		Calendar date = Calendar.getInstance();
-		date.add(Calendar.DAY_OF_MONTH, 7);
-		
 		comingTasks = logic.getComingSoonTasks();
 
 		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
@@ -222,7 +217,6 @@ public class MainViewHandler {
 		
 		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
 		
 		dailyTasksList = new ArrayList<ArrayList<Task>>();
 		
@@ -264,6 +258,152 @@ public class MainViewHandler {
 	}
 	
 	
+	public String generateTimeStamp(Task task) {
+		
+		TaskType taskType = task.getTaskType();
+		
+		String timeStamp = "";
+		
+		switch(taskType) {
+		
+			case DEADLINE:
+				
+				timeStamp += generateDeadlineTimestamp(task);
+				
+				break;
+				
+			case RANGE:
+				
+				timeStamp = generateRangeTimestamp(task);		
+				
+				break;
+				
+			default:
+				
+				timeStamp = "";
+				
+				break;
+		
+		}
+		
+		return timeStamp;
+		
+	}
+	
+	
+	public String generateDeadlineTimestamp(Task task) {
+		
+		Calendar startDate = task.getStartDate();
+		Calendar endDate = task.getEndDate();
+		Calendar startTime = task.getStartTime();
+		Calendar endTime = task.getEndTime();
+
+		String DAY_DATE_PATTERN = "dd MMM yy";
+		String TIME_PATTERN = "hh:mm a";
+		String DEADLINE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s)";
+		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
+		String DEADLINE_TIMESTAMP = "";
+		
+		String startDateStamp = "";
+		String startTimeStamp = "";
+		String endDateStamp = "";
+		String endTimeStamp = "";
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
+		
+		String timeStamp = "";
+		
+		if(task.isComingSoon() || task.isOverdue()) {
+
+			if(startTime != null) {
+				
+				endDateStamp = dateFormatter.format(endDate.getTime());
+				startTimeStamp = timeFormatter.format(startTime.getTime());
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+						;
+				timeStamp = String.format(DEADLINE_WITH_START_END_TIME_TIMESTAMP, endDateStamp, startTimeStamp, endTimeStamp);
+				
+			} else if(endTime != null) {
+				
+				endDateStamp = dateFormatter.format(endDate.getTime());
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+				
+				timeStamp = String.format(DEADLINE_WITH_END_TIME_TIMESTAMP, endDateStamp, endTimeStamp);
+				//timeStamp = dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
+				
+			} else {
+				
+				endDateStamp = dateFormatter.format(endDate.getTime());
+				
+				timeStamp = String.format(DEADLINE_TIMESTAMP, endDateStamp);
+				
+			}
+			
+		} else {
+		
+			
+			
+		}
+		
+		return timeStamp;
+		
+	}
+	
+	public String generateRangeTimestamp(Task task) {
+		
+		Calendar startDate = task.getStartDate();
+		Calendar endDate = task.getEndDate();
+		Calendar startTime = task.getStartTime();
+		Calendar endTime = task.getEndTime();
+
+		String DAY_DATE_PATTERN = "dd MMM yy";
+		String TIME_PATTERN = "hh:mm a";
+		String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
+		String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
+		String DEADLINE_TIMESTAMP = "";
+		
+		String startDateStamp = "";
+		String startTimeStamp = "";
+		String endDateStamp = "";
+		String endTimeStamp = "";
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
+		
+		String timeStamp = "";
+		
+		if(task.isComingSoon() || task.isOverdue()) {
+			
+			if(startTime != null && endTime != null) {
+				
+				startDateStamp = dateFormatter.format(startDate.getTime());
+				startTimeStamp = timeFormatter.format(startTime.getTime());
+				endDateStamp = dateFormatter.format(endDate.getTime());
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+				
+				timeStamp = String.format(RANGE_WITH_START_END_TIME_TIMESTAMP, startDateStamp, startTimeStamp, endDateStamp, endTimeStamp);
+				
+				//timeStamp = dateFormat.format(startDate.getTime()) + ", " + timeFormat.format(startTime.getTime()) + " to " + dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
+				
+			} else {
+				startDateStamp = dateFormatter.format(startDate.getTime());
+				endDateStamp = dateFormatter.format(endDate.getTime())
+						;
+				timeStamp = String.format(RANGE_WITH_NO_TIME, startDateStamp, endDateStamp);
+				//timeStamp = dateFormat.format(startDate.getTime()) + " to " + dateFormat.format(endDate.getTime());
+				
+			}
+			
+		} else {
+			
+			
+			
+		}
+		
+		return timeStamp;
+		
+	}
 	
 	/**
 	 * Generates the header by providing the date of the header
@@ -328,12 +468,14 @@ public class MainViewHandler {
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
 				
-				subtext = DAY_DATE_FORMAT.format(task.getEndDate().getTime());
+				subtext = generateTimeStamp(task);
+				//subtext = DAY_DATE_FORMAT.format(task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			} else if(task.getTaskType() == TaskType.RANGE) {
 				
-				subtext = DAY_DATE_FORMAT.format(task.getStartDate().getTime()) + " to " + DAY_DATE_FORMAT.format(task.getEndDate().getTime());
+				subtext = generateTimeStamp(task);
+				//subtext = DAY_DATE_FORMAT.format(task.getStartDate().getTime()) + " to " + DAY_DATE_FORMAT.format(task.getEndDate().getTime());
 				//subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getStartDate().getTime(), task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				

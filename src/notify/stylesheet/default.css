@@ -3,7 +3,7 @@
 }
 
 .overlay {
-	-fx-background-color:#FFFFFF;
+	-fx-background-color:#000000;
 }
 
 .text-field {
@@ -118,6 +118,7 @@
 
 .check-box > .box {
 	-fx-background-color:transparent;
+	-fx-border-color:#FFFFFF;
 	-fx-border-radius:3px;
 	-fx-border-style:dashed;
 }
