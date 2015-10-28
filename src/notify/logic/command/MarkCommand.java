@@ -17,11 +17,10 @@ public class MarkCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
-	public void addValues(int id) {
-		this.id = id;
-	}
+	public void addValues(int id){
+		this.id = id;}
 	
-	public int getId() {
+	public int getId(){
 		return this.id;
 	}
 

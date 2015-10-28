@@ -6,7 +6,7 @@ package notify.logic.command;
  */
 public enum Action {
 	
-	ADD			(true, true),
+	ADD		    (true, true),
 	BACK 		(false, false),
 	DELETE 		(true, true),
 	EDIT 		(true, true),
