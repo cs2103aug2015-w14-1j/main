@@ -46,7 +46,6 @@ public class Logic {
 		return this.parser;
 	}*/
 	
->>>>>>> origin/master
 	public Storage getStorage() {
 		return storage;
 	}
@@ -62,18 +61,12 @@ public class Logic {
 	public Result processCommand(String input) {
 		
 		Command command = parser.parse(input);
-System.out.println(input);
-		Result result = command.execute();
-<<<<<<< HEAD
 
-		//System.out.println(result.getFirstResult().getTaskName());
-=======
+		Result result = command.execute();
 		
 		System.out.println(result.getFirstResult().getTaskName());
 		
 		return result;
-
->>>>>>> origin/master
 	}
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
