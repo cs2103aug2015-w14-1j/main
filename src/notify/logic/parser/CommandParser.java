@@ -10,6 +10,7 @@ import notify.logic.command.Action;
 import notify.logic.command.AddCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
+import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.storage.Storage;
 
@@ -59,7 +60,7 @@ public class CommandParser {
 			case DELETE: command = handleDeleteCommand(commandAction, history, taskManager, input); break;
 			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
 			case SEARCH: command = handleSearchCommand(input); break;
-			case MARK: command = handleMarkCommand(input); break; 
+			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
 			case DISPLAY: command = handleDisplayCommand(input); break;
 			case UNDO: command = handleUndoCommand(input); break;
 			case SET: command = handleSetCommand(input); break;
@@ -104,7 +105,7 @@ public class CommandParser {
 	}
 	
 	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
-		Command command = null;
+		DeleteCommand command = null;
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
 		
@@ -116,6 +117,7 @@ public class CommandParser {
 		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
 		
 		command = new DeleteCommand(commandAction, historyStack, taskManager);
+		command.addValues(id);
 		
 		return command;
 	}
@@ -125,8 +127,8 @@ public class CommandParser {
 		return null;
 	}
 	
-	private Command handleMarkCommand(String input) {
-		Command command = null;
+	private Command handleMarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		MarkCommand command = null;
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
 		
@@ -134,6 +136,11 @@ public class CommandParser {
 		if(isNumeric == false) {
 			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
 		}
+		
+		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		
+		command = new MarkCommand(commandAction, historyStack, taskManager); 
+		command.addValues(id);
 		
 		return command;
 	}
