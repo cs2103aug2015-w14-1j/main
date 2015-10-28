@@ -174,7 +174,7 @@ public class DateTimeParserTest {
 		this.time = "01 oct";
 		this.expected = DateTimeParser.getInstance();	
 		this.expected.set(Calendar.DATE, 1);
-		this.expected.set(Calendar.MONTH, 10);
+		this.expected.set(Calendar.MONTH, Calendar.OCTOBER);
 		this.expected.set(Calendar.YEAR, 2015);
 												
 		this.actual = DateTimeParser.parseDate(time);	
@@ -186,7 +186,7 @@ public class DateTimeParserTest {
 		this.time = "05 jun";
 		this.expected = DateTimeParser.getInstance();	
 		this.expected.set(Calendar.DATE, 5);
-		this.expected.set(Calendar.MONTH, 06);
+		this.expected.set(Calendar.MONTH, Calendar.JUNE);
 		this.expected.set(Calendar.YEAR, 2015);
 												
 		this.actual = DateTimeParser.parseDate(time);	
@@ -198,7 +198,7 @@ public class DateTimeParserTest {
 		this.time = "05 jul 2000";
 		this.expected = DateTimeParser.getInstance();	
 		this.expected.set(Calendar.DATE, 5);
-		this.expected.set(Calendar.MONTH, 07);
+		this.expected.set(Calendar.MONTH, Calendar.JULY);
 		this.expected.set(Calendar.YEAR, 2000);
 														
 		this.actual = DateTimeParser.parseDate(time);	
