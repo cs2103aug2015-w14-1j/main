@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 []
+=======
+[{"id":0,"name":"meeting","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"},{"id":1,"name":"meeting with jim","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":3,"hourOfDay":0,"minute":0,"second":0},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":19,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":2,"name":"meeting with her","dateRange":{"endDate":{"year":2015,"month":9,"dayOfMonth":23,"hourOfDay":0,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":3,"name":"meeting with him","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":4,"hourOfDay":0,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"}]
+>>>>>>> origin/master

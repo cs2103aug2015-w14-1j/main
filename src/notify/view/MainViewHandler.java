@@ -308,7 +308,7 @@ public class MainViewHandler {
 		String TIME_PATTERN = "hh:mm a";
 		String DEADLINE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s)";
 		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
-		String DEADLINE_TIMESTAMP = "";
+		String DEADLINE_TIMESTAMP = "(%1$s)";
 		
 		String startDateStamp = "";
 		String startTimeStamp = "";
@@ -319,11 +319,11 @@ public class MainViewHandler {
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
 		String timeStamp = "";
-		
+
 		if(task.isComingSoon() || task.isOverdue()) {
 
 			if(startTime != null) {
-				
+
 				endDateStamp = dateFormatter.format(endDate.getTime());
 				startTimeStamp = timeFormatter.format(startTime.getTime());
 				endTimeStamp = timeFormatter.format(endTime.getTime());
@@ -331,7 +331,7 @@ public class MainViewHandler {
 				timeStamp = String.format(DEADLINE_WITH_START_END_TIME_TIMESTAMP, endDateStamp, startTimeStamp, endTimeStamp);
 				
 			} else if(endTime != null) {
-				
+
 				endDateStamp = dateFormatter.format(endDate.getTime());
 				endTimeStamp = timeFormatter.format(endTime.getTime());
 				
@@ -341,17 +341,16 @@ public class MainViewHandler {
 			} else {
 				
 				endDateStamp = dateFormatter.format(endDate.getTime());
-				
+
 				timeStamp = String.format(DEADLINE_TIMESTAMP, endDateStamp);
-				
 			}
 			
 		} else {
 		
-			
+
 			
 		}
-		
+
 		return timeStamp;
 		
 	}
@@ -791,7 +790,7 @@ public class MainViewHandler {
 			if(result.getActionPerformed() == Action.SEARCH) {
 				
 				pnOverlay.setVisible(true);
-				bpnSearch.setVisible(false);
+				bpnSearch.setVisible(true);
 				
 			}
 			
