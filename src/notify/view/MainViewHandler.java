@@ -3,6 +3,8 @@ package notify.view;
 import notify.Task;
 import notify.TaskType;
 import notify.logic.*;
+import notify.logic.command.Action;
+import notify.logic.command.Result;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,8 +23,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -115,6 +119,8 @@ public class MainViewHandler {
 	@FXML private VBox vboxSeven;
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	@FXML private Pane pnOverlay;
+	@FXML private BorderPane bpnSearch;
 	
 	@FXML
 	public void initialize() {
@@ -267,9 +273,9 @@ public class MainViewHandler {
 		switch(taskType) {
 		
 			case DEADLINE:
-				
-				timeStamp += generateDeadlineTimestamp(task);
-				
+
+				timeStamp = generateDeadlineTimestamp(task);
+
 				break;
 				
 			case RANGE:
@@ -467,7 +473,7 @@ public class MainViewHandler {
 			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
-				
+				System.out.println(task.getTaskId());
 				subtext = generateTimeStamp(task);
 				//subtext = DAY_DATE_FORMAT.format(task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
@@ -780,7 +786,22 @@ public class MainViewHandler {
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
 		if(keyEvent.getCode() == KeyCode.ENTER) {
-			logic.processCommand(txtCommand.getText());
+			Result result = logic.processCommand(txtCommand.getText());
+			
+			if(result.getActionPerformed() == Action.SEARCH) {
+				
+				pnOverlay.setVisible(true);
+				bpnSearch.setVisible(false);
+				
+			}
+			
+			if(result.getActionPerformed() == Action.BACK) {
+				
+				pnOverlay.setVisible(false);
+				bpnSearch.setVisible(false);
+				
+			}
+			
 			load();
 			txtCommand.setText("");
 		}
