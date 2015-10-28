@@ -28,23 +28,9 @@ public class Logic {
 		this.parser = new CommandParser(storage, taskManager, history);
 	}
 	
-	/*public CommandParser getCommandParser() {
-		return this.parser;
-	}
-	
-<<<<<<< HEAD
-=======
 	public CommandParser getCommandParser() {
 		return this.parser;
 	}
-	
-	public CommandParser getCommandParser() {
-		return this.parser;
-	}
-	
-	public CommandParser getCommandParser() {
-		return this.parser;
-	}*/
 	
 	public Storage getStorage() {
 		return storage;

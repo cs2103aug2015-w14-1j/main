@@ -284,7 +284,7 @@ public class DateTimeParser {
 		
 		boolean isNumeric = StringUtils.isNumeric(month);
 		if(isNumeric == true) {
-			result = Integer.parseInt(month);
+			result = Integer.parseInt(month) - OFFSET_MONTH;
 		} else {
 			result = Month.retrieve(month).getValue();
 			if(result < DATE_MONTH_MIN || result > DATE_MONTH_MAX) {

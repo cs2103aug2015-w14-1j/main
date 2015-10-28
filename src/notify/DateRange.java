@@ -66,7 +66,7 @@ public class DateRange {
 			
 			if(this.startDate != null) {
 				if(this.endDate.equals(this.startDate) == false && this.endDate.before(this.startDate)) {
-					throw new IllegalArgumentException(ERROR_DATE_RANGE);
+					throw new IllegalArgumentException(ERROR_DATE_RANGE + " " + endDate);
 				}
 			}
 		}
