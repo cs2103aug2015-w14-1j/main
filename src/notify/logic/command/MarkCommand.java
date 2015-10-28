@@ -17,6 +17,13 @@ public class MarkCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
+	public void addValues(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
 
 	@Override
 	public Result execute() {

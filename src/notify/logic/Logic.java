@@ -32,18 +32,6 @@ public class Logic {
 		return this.parser;
 	}
 	
-	public CommandParser getCommandParser() {
-		return this.parser;
-	}
-	
-	public CommandParser getCommandParser() {
-		return this.parser;
-	}
-	
-	public CommandParser getCommandParser() {
-		return this.parser;
-	}
-	
 	public Storage getStorage() {
 		return storage;
 	}
@@ -61,7 +49,7 @@ public class Logic {
 		Command command = parser.parse(input);
 		Result result = command.execute();
 
-		System.out.println(result.getFirstResult().getTaskName());
+		//System.out.println(result.getFirstResult().getTaskName());
 	}
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
@@ -69,7 +57,7 @@ public class Logic {
 		return taskManager.getTask(date, isCompleted);
 		
 	}
-	
+	 
 	public ArrayList<Task> getDailyTasks(Calendar date, boolean isCompleted) {
 		
 		Calendar today = Calendar.getInstance();
