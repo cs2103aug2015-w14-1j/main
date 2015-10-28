@@ -28,10 +28,25 @@ public class Logic {
 		this.parser = new CommandParser(storage, taskManager, history);
 	}
 	
+	/*public CommandParser getCommandParser() {
+		return this.parser;
+	}
+	
+<<<<<<< HEAD
+=======
 	public CommandParser getCommandParser() {
 		return this.parser;
 	}
 	
+	public CommandParser getCommandParser() {
+		return this.parser;
+	}
+	
+	public CommandParser getCommandParser() {
+		return this.parser;
+	}*/
+	
+>>>>>>> origin/master
 	public Storage getStorage() {
 		return storage;
 	}
@@ -44,12 +59,21 @@ public class Logic {
 	 * Process the input entered by the user.
 	 * @param input input entered by the user.
 	 */
-	public void processCommand(String input) {
+	public Result processCommand(String input) {
 		
 		Command command = parser.parse(input);
+System.out.println(input);
 		Result result = command.execute();
+<<<<<<< HEAD
 
 		//System.out.println(result.getFirstResult().getTaskName());
+=======
+		
+		System.out.println(result.getFirstResult().getTaskName());
+		
+		return result;
+
+>>>>>>> origin/master
 	}
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
