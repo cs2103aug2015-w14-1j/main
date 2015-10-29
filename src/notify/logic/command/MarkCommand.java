@@ -26,7 +26,7 @@ public class MarkCommand extends ReversibleCommand {
 
 	@Override
 	public Result execute() {
-		Task markTask = manager.getTask(id, true);
+		Task markTask = manager.markTask(id, true);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(markTask);
 		Result result = new Result(Action.MARK, listOfResults);
@@ -35,7 +35,7 @@ public class MarkCommand extends ReversibleCommand {
 
 	@Override
 	public Result undo() {
-		Task tempTask = manager.markTask(id,false);
+		Task tempTask = manager.markTask(id, false);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(tempTask);
 		Result result = new Result(Action.UNDO, listOfResults);
