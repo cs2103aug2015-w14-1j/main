@@ -51,7 +51,8 @@ public class DateTimeParser {
 	private static final int SEPERATOR_MONTH_INDEX = 1;
 	private static final int SEPERATOR_YEAR_INDEX = 2;
 	
-	private static final int TIME_HOUR = 1;
+	private static final int TIME_HOUR_SINGLE = 1;
+	private static final int TIME_HOUR_DOUBLE = 2;
 	private static final int TIME_HOUR_MINUTE = 3;
 	private static final int TIME_FULL = 4;
 
@@ -96,14 +97,14 @@ public class DateTimeParser {
 		int byIndex = rawDateTime.indexOf(KEYWORD_BY + CommandParser.COMMAND_SEPERATOR);
 		int onIndex = rawDateTime.indexOf(KEYWORD_ON + CommandParser.COMMAND_SEPERATOR);
 		int fromIndex = rawDateTime.indexOf(KEYWORD_FROM + CommandParser.COMMAND_SEPERATOR);
-		int toIndex = rawDateTime.indexOf(KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
+		int toIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
 	
 		if(byIndex == KEYWORD_PROMPT_INDEX || onIndex == KEYWORD_PROMPT_INDEX) {
 			rawDateTime = rawDateTime.substring(KEYWORD_BY.length(), rawDateTime.length());
 			
-			int atIndex = rawDateTime.indexOf(KEYWORD_AT);
-			toIndex = rawDateTime.indexOf(KEYWORD_TO);
-			fromIndex = rawDateTime.indexOf(KEYWORD_FROM); 
+			int atIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_AT + CommandParser.COMMAND_SEPERATOR);
+			toIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
+			fromIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_FROM + CommandParser.COMMAND_SEPERATOR); 
 						
 			if(atIndex != KEYWORD_NOT_FOUND_INDEX) {
 				String[] split = rawDateTime.split(KEYWORD_AT);
@@ -134,9 +135,9 @@ public class DateTimeParser {
 			if(toIndex <= fromIndex) { 
 				throw new IllegalArgumentException(ERROR_INVALID_DATE);
 			}
-			
+
 			rawDateTime = rawDateTime.substring(KEYWORD_FROM.length(), rawDateTime.length());
-			String[] split = rawDateTime.split(KEYWORD_TO);
+			String[] split = rawDateTime.split(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
 			
 			String startDateTime = split[FROM_PARAM_INDEX];
 			String endDateTime = split[TO_PARAM_INDEX];	
@@ -324,6 +325,8 @@ public class DateTimeParser {
 		
 		assert rawTime != null;
 
+		rawTime = rawTime.trim();
+		
 		Calendar calendar = getInstance();
 		boolean isPostMeridiem = false;
 		int hour = 0; 
@@ -341,8 +344,8 @@ public class DateTimeParser {
 		if(isNumeric == false) {
 			throw new IllegalArgumentException(ERROR_INVALID_DATE);
 		}
-		
-		if(rawTime.length() == TIME_HOUR) {
+
+		if(rawTime.length() == TIME_HOUR_SINGLE || rawTime.length() == TIME_HOUR_DOUBLE) {
 			hour = Integer.parseInt(rawTime);
 			minute = DATE_DEFAULT_MINUTE;
 		} else if(rawTime.length() == TIME_HOUR_MINUTE) {

@@ -170,11 +170,7 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));	
-		
-		input = "add long meeting from 23 oct to 23 nov";
-		addCommand = (AddCommand) this.parser.parse(input);
-		//System.out.println(addCommand.getTaskType());
-		
+
 	}
 
 }

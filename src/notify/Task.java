@@ -83,6 +83,7 @@ public class Task {
 				break;
 				
 			default:
+				assert getEndDate() != null;
 				
 				endDateYear = getEndDate().get(Calendar.YEAR);
 				endDateDay = getEndDate().get(Calendar.DAY_OF_YEAR);
