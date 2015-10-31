@@ -1,9 +1,7 @@
 package notify.logic.command;
 
 import java.util.ArrayList;
-
 import java.util.Stack;
-
 import notify.Task;
 
 public class UndoCommand extends Command {

@@ -35,6 +35,10 @@ public class SaveTasks extends StorageOperation {
 		return null;
 	}
 	
+	protected boolean execute(String emptyString) {
+		return false;
+	}
+	
 	private String jsonizeData(ArrayList<Task> taskList_) {		
 		String jsonDataString = gson.toJson(taskList_);
 		

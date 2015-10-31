@@ -18,4 +18,6 @@ public abstract class StorageOperation {
 	protected HashMap<String, Action> commands;
 	
 	abstract Object execute(ArrayList<Task> taskList_);
+
+	abstract boolean execute(String filePath);
 }
