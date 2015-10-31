@@ -13,7 +13,7 @@
    <bottom>
       <AnchorPane prefHeight="73.0" prefWidth="960.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="txtCommand" layoutX="14.0" layoutY="159.0" onKeyPressed="#txtCommandOnKeyPressedHandler" prefHeight="27.0" prefWidth="896.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <TextField fx:id="txtCommand" layoutX="14.0" layoutY="159.0" onKeyPressed="#txtCommandOnKeyPressedHandler" prefHeight="37.0" prefWidth="992.0" promptText="Your wimp is my command" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
             <Label fx:id="lblFeedback" alignment="CENTER" layoutX="14.0" layoutY="127.0" prefHeight="32.0" prefWidth="932.0" textFill="#16a085" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                <padding>
                   <Insets bottom="7.0" top="7.0" />

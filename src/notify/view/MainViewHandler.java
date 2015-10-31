@@ -267,7 +267,6 @@ public class MainViewHandler {
 	public String generateTimeStamp(Task task) {
 		
 		TaskType taskType = task.getTaskType();
-		
 		String timeStamp = "";
 		
 		switch(taskType) {
@@ -275,19 +274,16 @@ public class MainViewHandler {
 			case DEADLINE:
 
 				timeStamp = generateDeadlineTimestamp(task);
-
 				break;
 				
 			case RANGE:
 				
 				timeStamp = generateRangeTimestamp(task);		
-				
 				break;
 				
 			default:
 				
 				timeStamp = "";
-				
 				break;
 		
 		}
@@ -310,6 +306,9 @@ public class MainViewHandler {
 		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
 		String DEADLINE_TIMESTAMP = "(%1$s)";
 		
+		String DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP = "from %1$s to %2$s";
+		String DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP = "at %1$s";
+		
 		String startDateStamp = "";
 		String startTimeStamp = "";
 		String endDateStamp = "";
@@ -327,7 +326,7 @@ public class MainViewHandler {
 				endDateStamp = dateFormatter.format(endDate.getTime());
 				startTimeStamp = timeFormatter.format(startTime.getTime());
 				endTimeStamp = timeFormatter.format(endTime.getTime());
-						;
+						
 				timeStamp = String.format(DEADLINE_WITH_START_END_TIME_TIMESTAMP, endDateStamp, startTimeStamp, endTimeStamp);
 				
 			} else if(endTime != null) {
@@ -347,7 +346,20 @@ public class MainViewHandler {
 			
 		} else {
 		
-
+			if(startTime != null) {
+				
+				startTimeStamp = timeFormatter.format(startTime.getTime());
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+				
+				timeStamp = String.format(DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP, startTimeStamp, endTimeStamp);
+				
+			} else if(endTime != null) {
+				
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+				
+				timeStamp = String.format(DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP, endTimeStamp);
+				
+			}
 			
 		}
 
@@ -362,10 +374,14 @@ public class MainViewHandler {
 		Calendar startTime = task.getStartTime();
 		Calendar endTime = task.getEndTime();
 
+		String DAY_PATTERN = "EEE";
 		String DAY_DATE_PATTERN = "dd MMM yy";
 		String TIME_PATTERN = "hh:mm a";
 		String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
 		String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
+		String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
+		String DAILY_RANGE_WITH_TIME = "till %1$s %2$s";
+		String DAILY_RANGE_NOT_STARTED_TIMESTAMP = "from %1$s till %2$s %3$s";
 		String DEADLINE_TIMESTAMP = "";
 		
 		String startDateStamp = "";
@@ -392,9 +408,10 @@ public class MainViewHandler {
 				//timeStamp = dateFormat.format(startDate.getTime()) + ", " + timeFormat.format(startTime.getTime()) + " to " + dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
 				
 			} else {
+				
 				startDateStamp = dateFormatter.format(startDate.getTime());
-				endDateStamp = dateFormatter.format(endDate.getTime())
-						;
+				endDateStamp = dateFormatter.format(endDate.getTime());
+				
 				timeStamp = String.format(RANGE_WITH_NO_TIME, startDateStamp, endDateStamp);
 				//timeStamp = dateFormat.format(startDate.getTime()) + " to " + dateFormat.format(endDate.getTime());
 				
@@ -402,7 +419,38 @@ public class MainViewHandler {
 			
 		} else {
 			
+			if(task.isEndingSoon()) {
+				
+				dateFormatter = new SimpleDateFormat(DAY_PATTERN);
+				
+			} else {
+				
+				dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+				
+			}
 			
+			endDateStamp = dateFormatter.format(endDate.getTime());
+			
+			if(startTime != null && endTime != null) {
+				
+				startTimeStamp = timeFormatter.format(startTime.getTime());
+				endTimeStamp = timeFormatter.format(endTime.getTime());
+				
+				if(task.isStarted()) {
+					
+					timeStamp = String.format(DAILY_RANGE_WITH_TIME, endDateStamp, endTimeStamp);
+					
+				} else {
+					
+					timeStamp = String.format(DAILY_RANGE_NOT_STARTED_TIMESTAMP, startTimeStamp, endDateStamp, endTimeStamp);
+					
+				}
+				
+			} else {
+				
+				timeStamp = String.format(DAILY_RANGE_WITH_NO_TIME, endDateStamp);
+				
+			}
 			
 		}
 		
@@ -472,16 +520,13 @@ public class MainViewHandler {
 			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
-				System.out.println(task.getTaskId());
+
 				subtext = generateTimeStamp(task);
-				//subtext = DAY_DATE_FORMAT.format(task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			} else if(task.getTaskType() == TaskType.RANGE) {
 				
 				subtext = generateTimeStamp(task);
-				//subtext = DAY_DATE_FORMAT.format(task.getStartDate().getTime()) + " to " + DAY_DATE_FORMAT.format(task.getEndDate().getTime());
-				//subtext = String.format(TIME_RANGE_STRING_FORMAT, task.getStartDate().getTime(), task.getEndDate().getTime());
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			}
@@ -495,69 +540,6 @@ public class MainViewHandler {
 		return hboxes;
 		
 	}
-	
-	/*public String generateSubtext(Task task) {
-		Calendar today = Calendar.getInstance();
-		Calendar oneWeekLater = Calendar.getInstance();
-		oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
-		
-		String subtext = "";
-		
-		if(task.getTaskType() == TaskType.DEADLINE) {
-			
-			if(task.isOverdue()) {
-				// displays date (and time) e.g. 23 Oct 15 OR 23 Oct 15 2:00pm
-				
-				
-			} else if(task.isWithinSevenDays()) {
-				
-				// displays time (optional) e.g. 2:00pm
-				
-			} else {
-				
-				// if it's not within 7 days means is coming soon
-				// displays date (and time) e.g. 25 Nov 15 OR 25 Nov 15 2:00pm
-				
-			}
-			// check if within 7 days.
-			// within 7 days then show time (if got time)
-			// not within 7 days then show date and time (if got time)
-			
-			
-		} else if(task.getTaskType() == TaskType.RANGE) {
-			
-			if(task.isOverdue()) {
-				
-				if(task.getStartTime() != null) {
-					
-					subtext = "";
-					
-				} else {
-					
-					subtext = "";
-					
-				}
-				
-				//displays date to date (e.g. 21-Oct-15 to 23-Oct-15) OR
-				//displays date time to date time (e.g. 21-Oct-15 2:00pm to 23-Oct-25 2:00pm)
-				
-			} else if(task.isWithinSevenDays()) {
-				
-				// if start and end date is same day, displays time to time (e.g. 2:00pm to 4:00pm)
-				// if start and end date different day without time, displays (e.g. till Mon [if within 7 days] or till 23-Nov-15)
-				// if start and end date different dat with time, displays (e.g. from 10:00am till Mon 2:00pm or from 10:00am till 23-Nov-15 2:00pm)
-				
-			} else {
-				
-				//displays date to date (e.g. 25-Oct-15 to 23-Nov-15) OR
-				//displays date time to date time (e.g. 25-Oct-15 2:00pm to 23-Nov-25 2:00pm)
-				
-			}
-			
-		}
-		
-		return subtext;
-	}*/
 	
 	public void initDailyView() {
 		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };

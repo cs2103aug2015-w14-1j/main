@@ -143,12 +143,33 @@ public class Task {
 				taskStartYear = getStartDate().get(Calendar.YEAR);
 				taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(taskStartYear <= dateYear && dateYear <= taskEndYear
+				if(taskStartYear < dateYear && dateYear < taskEndYear) {
+					
+					isOnDate = true;
+					
+				} else if(taskStartYear == dateYear && dateYear < taskEndYear
+						&& taskStartDay <= dateDay) {
+					
+					isOnDate = true;
+					
+				} else if(taskStartYear < dateYear && dateYear == taskEndYear
+						&& dateDay <= taskEndDay) {
+					
+					isOnDate = true;
+					
+				} else if(taskStartYear == dateYear && dateYear == taskEndYear
+						&& taskStartDay <= dateDay && dateDay <= taskEndDay) {
+
+					isOnDate = true;
+					
+				}
+				
+				/*if(taskStartYear <= dateYear && dateYear <= taskEndYear
 						&& taskStartDay <= dateDay && dateDay <= taskEndDay && !isDeleted) {
 					
 					isOnDate = true;
 					
-				}				
+				}	*/		
 				
 				break;
 			
@@ -204,6 +225,89 @@ public class Task {
 		
 		return isComingSoon;
 		
+	}
+	
+	/**
+	 * Check whether the ranged task ends within the week .
+	 * A ending soon task is a task that will end within seven days.
+	 * @return true if the task is a ending soon task, else false
+	 */
+	public boolean isEndingSoon() {
+
+		Calendar today = Calendar.getInstance();
+		boolean isEndingSoon = false;
+		
+		switch(taskType) {
+		
+			case RANGE:
+				
+				int taskEndYear = getEndDate().get(Calendar.YEAR);
+				int taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
+				
+				for(int i = 0; i < DAYS_A_WEEK; i++) {
+
+					int todayYear = today.get(Calendar.YEAR);
+					int todayDay = today.get(Calendar.DAY_OF_YEAR);
+					
+					if(todayYear == taskEndYear && todayDay == taskEndDay && !isCompleted && !isDeleted && !isOverdue()) {
+						
+						isEndingSoon = true;
+						
+						break;
+						
+					}
+					
+					
+					today.add(Calendar.DAY_OF_MONTH, 1);
+					
+				}
+				
+				break;
+			
+			default:
+				
+				isEndingSoon = false;
+				
+				break;
+		
+		}
+		
+		return isEndingSoon;
+		
+	}
+	
+	public boolean isStarted() {
+
+		Calendar today = Calendar.getInstance();
+		boolean isStarted = false;
+		
+		int todayYear = today.get(Calendar.YEAR);
+		int todayDay = today.get(Calendar.DAY_OF_YEAR);
+		int taskStartYear = getStartDate().get(Calendar.YEAR);
+		int taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
+		
+		switch(taskType) {
+		
+			case RANGE:
+				
+				if(!isCompleted && !isDeleted && !isOverdue()) {
+					
+					isStarted = (taskStartYear < todayYear) || (taskStartYear == todayYear && taskStartDay < todayDay);
+					
+				}
+				
+				
+				break;
+			
+			default:
+				
+				isStarted = false;
+				
+				break;
+		
+		}
+		
+		return isStarted;
 	}
 	
 	public boolean isSearchedTask(String keyWord) {
