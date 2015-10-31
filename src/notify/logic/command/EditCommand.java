@@ -10,14 +10,12 @@ import notify.logic.TaskManager;
 
 public class EditCommand extends ReversibleCommand {
 	
-	//private Task task;
 	private Task oldTask;
-	private TaskType type;
+	private TaskType taskType;
 	private String taskName;
-	private DateRange range;
+	private DateRange dateRange;
 	private String category;
 	private int id;
-	private Action commandAction;
 	private TaskManager manager;
 	
 	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
@@ -25,13 +23,13 @@ public class EditCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
-	public void addValues(String taskName, DateRange range, String category, int id, TaskType type){
+	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType){
 		this.oldTask = manager.getTask(id);
 		this.taskName = taskName;
-		this.range = range;
+		this.dateRange = dateRange;
 		this.category = category;
 		this.id = id;
-		this.type = type;
+		this.taskType = taskType;
 	}
 	
 	public void checkNull(){
@@ -39,22 +37,38 @@ public class EditCommand extends ReversibleCommand {
 		if(taskName == null){
 			this.taskName = oldTask.getTaskName();
 		}
-		if(range == null){
-			this.range = oldTask.getDateRange();
+		if(dateRange == null){
+			this.dateRange = oldTask.getDateRange();
 		}
 		if(category == null){
 			this.category = oldTask.getCategory();
 		}
 		
-		if(type == null){
-			this.type = oldTask.getTaskType();
+		if(taskType == null){
+			this.taskType = oldTask.getTaskType();
 		}
+	}
+	
+	public String getTaskName() {
+		return this.taskName;
+	}
+	
+	public TaskType getTaskType() { 
+		return this.taskType;
+	}
+	
+	public String getCategory() {
+		return this.category;
+	}
+	
+	public DateRange getDateRange() {
+		return this.dateRange;
 	}
 	
 	@Override
 	public Result execute(){
 		checkNull();
-		Task updatedTask = manager.updateTask(id,taskName,range,category,type);
+		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(updatedTask);
 		Result result = new Result(Action.EDIT, listOfResults);
