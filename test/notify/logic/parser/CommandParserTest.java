@@ -6,6 +6,7 @@ import notify.DateRange;
 import notify.TaskType;
 import notify.logic.Logic;
 import notify.logic.command.AddCommand;
+import notify.logic.command.EditCommand;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,12 +33,12 @@ public class CommandParserTest {
 	public void test() {
 		           
 		String input = "add meeting with joe by 01 oct at 5pm #meeting";
-		AddCommand command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals("meeting with joe", command.getTaskName());
-		org.junit.Assert.assertEquals(TaskType.DEADLINE, command.getTaskType());
-		org.junit.Assert.assertEquals("meeting", command.getCategory());
+		AddCommand addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals("meeting with joe", addCommand.getTaskName());
+		org.junit.Assert.assertEquals(TaskType.DEADLINE, addCommand.getTaskType());
+		org.junit.Assert.assertEquals("meeting", addCommand.getCategory());
 		
-		DateRange dateRange = command.getDateRange();
+		DateRange dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(null, dateRange.getStartDate());
 		org.junit.Assert.assertEquals(null, dateRange.getStartTime());
 		
@@ -48,15 +49,15 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
 		input = "add ps5 submission by 05 oct at 2am";
-		command = (AddCommand) this.parser.parse(input);
+		addCommand = (AddCommand) this.parser.parse(input);
 		
 		input = "add meeting with joe on 02 oct at 5pm #meeting";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joe");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.DEADLINE);
-		org.junit.Assert.assertEquals(command.getCategory(), "meeting");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joe");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.DEADLINE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "meeting");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(dateRange.getStartDate(), null);
 		org.junit.Assert.assertEquals(dateRange.getStartTime(), null);
 		
@@ -68,12 +69,12 @@ public class CommandParserTest {
 		
 
 		input = "add meeting with joe on 02 oct at 5pm #meeting";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joe");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.DEADLINE);
-		org.junit.Assert.assertEquals(command.getCategory(), "meeting");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joe");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.DEADLINE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "meeting");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(dateRange.getStartDate(), null);
 		org.junit.Assert.assertEquals(dateRange.getStartTime(), null);
 		
@@ -84,12 +85,12 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
 		input = "add meeting with joe on 02 oct #meeting";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joe");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.DEADLINE);
-		org.junit.Assert.assertEquals(command.getCategory(), "meeting");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joe");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.DEADLINE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "meeting");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(dateRange.getStartDate(), null);
 		org.junit.Assert.assertEquals(dateRange.getStartTime(), null);
 		
@@ -98,12 +99,12 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
 		
 		input = "add meeting with joshua on 02 oct from 5pm to 0630pm #fail";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joshua");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.DEADLINE);
-		org.junit.Assert.assertEquals(command.getCategory(), "fail");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joshua");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.DEADLINE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "fail");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(2, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
@@ -118,12 +119,12 @@ public class CommandParserTest {
 		
 		
 		input = "add meeting with joshua on 02 oct #fail";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joshua");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.DEADLINE);
-		org.junit.Assert.assertEquals(command.getCategory(), "fail");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joshua");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.DEADLINE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "fail");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(null, dateRange.getStartDate());
 		org.junit.Assert.assertEquals(null, dateRange.getStartTime());
 		
@@ -132,12 +133,12 @@ public class CommandParserTest {
 		
 		
 		input = "add meeting with joshua from 01 10 at 5pm to 02 oct at 6pm #ok";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joshua");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.RANGE);
-		org.junit.Assert.assertEquals(command.getCategory(), "ok");
+		addCommand = (AddCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(addCommand.getTaskName(), "meeting with joshua");
+		org.junit.Assert.assertEquals(addCommand.getTaskType(), TaskType.RANGE);
+		org.junit.Assert.assertEquals(addCommand.getCategory(), "ok");
 		
-		dateRange = command.getDateRange();
+		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(1, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
@@ -152,12 +153,12 @@ public class CommandParserTest {
 		
 		
 		input = "edit 1 meeting with joshua from 01 10 at 5pm to 02 oct at 6pm #ok";
-		command = (AddCommand) this.parser.parse(input);
-		org.junit.Assert.assertEquals(command.getTaskName(), "meeting with joshua");
-		org.junit.Assert.assertEquals(command.getTaskType(), TaskType.RANGE);
-		org.junit.Assert.assertEquals(command.getCategory(), "ok");
+		EditCommand editCommand = (EditCommand) this.parser.parse(input);
+		org.junit.Assert.assertEquals(editCommand.getTaskName(), "meeting with joshua");
+		org.junit.Assert.assertEquals(editCommand.getTaskType(), TaskType.RANGE);
+		org.junit.Assert.assertEquals(editCommand.getCategory(), "ok");
 		
-		dateRange = command.getDateRange();
+		dateRange = editCommand.getDateRange();
 		org.junit.Assert.assertEquals(1, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
 		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
@@ -170,6 +171,9 @@ public class CommandParserTest {
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));	
 		
+		input = "add long meeting from 23 oct to 23 nov";
+		addCommand = (AddCommand) this.parser.parse(input);
+		//System.out.println(addCommand.getTaskType());
 		
 	}
 

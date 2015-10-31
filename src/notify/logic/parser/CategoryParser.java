@@ -7,9 +7,10 @@ public class CategoryParser {
 	
 	public static String KEYWORD_HASHTAG = "#";
 	
-	public static String parse(String input) {
+	public static String parse(String input) { 
 		return parse(input.split(CommandParser.COMMAND_SEPERATOR));
 	}
+	
 	public static String parse(String[] input) {
 		
 		String result = null;

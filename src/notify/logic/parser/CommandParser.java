@@ -146,7 +146,7 @@ public class CommandParser {
 		if(id != Task.UNASSIGNED_TASK) { 
 			int length = String.valueOf(id).length();
 			input = input.substring(length, input.length());
-			name = input;
+			name = input.trim();
 		}
 	
 		if(category != null) { 
@@ -158,7 +158,7 @@ public class CommandParser {
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
 			String[] results = parseDate(input);
-			name = results[RESULTS_NAME_PARAM];
+			name = results[RESULTS_NAME_PARAM].trim();
 			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
@@ -209,6 +209,7 @@ public class CommandParser {
 		Command command = null; //new DeleteCommand();
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
+		String keyword = split[FIRST_PARAM_INDEX];
 
 		return command;
 	}
@@ -270,7 +271,7 @@ public class CommandParser {
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
-			int index = input.indexOf(array[i]);
+			int index = input.indexOf(COMMAND_SEPERATOR + array[i] + COMMAND_SEPERATOR);
 			
 			if(index != DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
 				String escape = input.substring(index - DateTimeParser.ESCAPE_KEYWORD.length(), index);
