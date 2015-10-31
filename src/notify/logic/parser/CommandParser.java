@@ -271,7 +271,7 @@ public class CommandParser {
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
-			int index = input.indexOf(array[i]);
+			int index = input.indexOf(COMMAND_SEPERATOR + array[i] + COMMAND_SEPERATOR);
 			
 			if(index != DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
 				String escape = input.substring(index - DateTimeParser.ESCAPE_KEYWORD.length(), index);

@@ -7,7 +7,9 @@ import notify.DateRange;
 import org.apache.commons.lang3.StringUtils;
 
 public class DateTimeParser {
-
+ 
+	public static final String COMMAND_SEPERATOR = " "; 
+	
 	private static final String[] KEYWORD_TODAY = { "TODAY", "TDY", "LATER" };
 	private static final String[] KEYWORD_TOMORROW = { "TOMORROW", "TMR", "TMRW" };
 	private static final String[] KEYWORD_NEXT_WEEK = { "NEXT WEEK" };
@@ -91,10 +93,10 @@ public class DateTimeParser {
 		DateRange dateRange = new DateRange();
 
 		//case one: contains 'by' or 'on', check for at (start/time date = today, end/time date = given)
-		int byIndex = rawDateTime.indexOf(KEYWORD_BY);
-		int onIndex = rawDateTime.indexOf(KEYWORD_ON);
-		int fromIndex = rawDateTime.indexOf(KEYWORD_FROM);
-		int toIndex = rawDateTime.indexOf(KEYWORD_TO);
+		int byIndex = rawDateTime.indexOf(KEYWORD_BY + CommandParser.COMMAND_SEPERATOR);
+		int onIndex = rawDateTime.indexOf(KEYWORD_ON + CommandParser.COMMAND_SEPERATOR);
+		int fromIndex = rawDateTime.indexOf(KEYWORD_FROM + CommandParser.COMMAND_SEPERATOR);
+		int toIndex = rawDateTime.indexOf(KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
 	
 		if(byIndex == KEYWORD_PROMPT_INDEX || onIndex == KEYWORD_PROMPT_INDEX) {
 			rawDateTime = rawDateTime.substring(KEYWORD_BY.length(), rawDateTime.length());
