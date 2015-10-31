@@ -150,7 +150,7 @@ public class MainViewHandler {
 		loadOverdueTask();
 		loadFloatingTask();
 		loadComingTask();
-		//loadDailyTask();
+		loadDailyTask();
 		
 	}
 	
@@ -228,8 +228,8 @@ public class MainViewHandler {
 		
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
-			//ArrayList<Task> dailyTasks = logic.getTasksOn(calendar);
-			ArrayList<Task> dailyTasks = new ArrayList<Task>();
+			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
+			//ArrayList<Task> dailyTasks = new ArrayList<Task>();
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);

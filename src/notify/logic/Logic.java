@@ -1,6 +1,7 @@
 package notify.logic;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Stack;
 
 import notify.Task;
@@ -21,7 +22,6 @@ public class Logic {
 	
 	public Logic() {
 		
-		this.tasks = new ArrayList<Task>();
 		this.storage = new Storage();
 		this.history = new Stack<ReversibleCommand>();
 		this.taskManager = new TaskManager(storage);
@@ -51,6 +51,60 @@ public class Logic {
 		Result result = command.execute();
 
 		System.out.println(result.getFirstResult().getTaskName());
+	}
+	
+	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
+		
+		return taskManager.getTask(date, isCompleted);
+		
+	}
+	
+	public ArrayList<Task> getDailyTasks(Calendar date, boolean isCompleted) {
+		
+		Calendar today = Calendar.getInstance();
+		
+		int todayYear = today.get(Calendar.YEAR);
+		int todayDay = today.get(Calendar.DAY_OF_YEAR);
+		int dateYear = date.get(Calendar.YEAR);
+		int dateDay = date.get(Calendar.DAY_OF_YEAR);
+		
+		ArrayList<Task> tasks = taskManager.getTask(date, isCompleted);
+		
+		for(int i = 0; i < tasks.size(); i++) {
+			
+			Task task = tasks.get(i);
+			
+			assert task.getTaskType() != TaskType.FLOATING;
+			
+			if(task.getTaskType() == TaskType.RANGE) {
+				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
+				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
+				
+				if(taskStartYear < todayYear || (taskStartYear == todayYear && taskStartDay < todayDay)) {
+					
+					if(dateYear > todayYear || (dateYear == todayYear && dateDay > todayDay)) {
+						
+						tasks.remove(i);
+						
+					}
+					
+				
+				} else {
+					
+					if(dateYear > taskStartYear || (dateYear == taskStartYear && dateDay > taskStartDay)) {
+						
+						tasks.remove(i);
+						
+					}
+					
+				} 
+				
+			}
+			
+		}
+		
+		return tasks;
+		
 	}
 	
 	public ArrayList<Task> getComingSoonTasks() {
