@@ -3,6 +3,8 @@ package notify.logic.parser;
 import java.util.HashMap;
 import java.util.Stack;
 
+import org.apache.commons.lang3.StringUtils;
+
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
@@ -15,10 +17,9 @@ import notify.logic.command.EditCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
+import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class CommandParser {
 	
@@ -67,7 +68,7 @@ public class CommandParser {
 			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
 			case DISPLAY: command = handleDisplayCommand(input); break;
 			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
-			case SET: command = handleSetCommand(input); break;
+			case SET: command = handleSetCommand(commandAction, storage, input); break;
 			case EXIT: command = handleExitCommand(input); break;
 			default: throw new IllegalArgumentException(ERROR_INVALID_COMMAND);			
 		}
@@ -208,20 +209,29 @@ public class CommandParser {
 		Command command = null; //new DeleteCommand();
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
+<<<<<<< HEAD
 		String keyword = split[FIRST_PARAM_INDEX];
 		
+=======
+
+>>>>>>> 40be5ea353d025a59e7b44d339c0ba8d29ca0bc7
 		return command;
 	}
 	
 	private Command handleUndoCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String input) {
 		UndoCommand command = new UndoCommand(commandAction, historyStack);
-		command.execute();
 		
 		return command;
 	}
 	
-	private Command handleSetCommand(String input) {
-		Command command = null;
+	private Command handleSetCommand(Action commandAction, Storage storage, String input) {
+		SetCommand command = null;
+		
+		String[] split = input.split(COMMAND_SEPERATOR);
+		String newFilePath = split[FIRST_PARAM_INDEX];
+		
+		command = new SetCommand(commandAction, storage);
+		command.addValues(newFilePath);
 		
 		return command;
 	}

@@ -24,6 +24,10 @@ public class LoadCommands extends StorageOperation {
 			return null;
 		}
 	}
+	
+	protected boolean execute(String emptyString) {
+		return false;
+	}
 
 	private boolean readFromFile() {
 		String currentLine;

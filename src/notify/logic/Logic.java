@@ -2,6 +2,7 @@ package notify.logic;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.Stack;
 
 import notify.Task;
@@ -50,7 +51,7 @@ public class Logic {
 
 		Result result = command.execute();
 		
-		//System.out.println(result.getFirstResult().getTaskName());
+		System.out.println(result.isSuccess());
 		
 		return result;
 	}
@@ -72,7 +73,37 @@ public class Logic {
 		
 		ArrayList<Task> tasks = taskManager.getTask(date, isCompleted);
 		
-		for(int i = 0; i < tasks.size(); i++) {
+		for(Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
+			
+			Task task = iterator.next();
+			
+			if(task.getTaskType() == TaskType.RANGE) {
+				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
+				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
+				
+				if(task.isStarted()) {
+
+					System.out.println(task.getTaskName());
+					if(!(todayYear == dateYear && todayDay == dateDay)) {
+						
+						iterator.remove();
+						
+					}
+					
+				} else {
+					
+					if(!(taskStartYear == dateYear && taskStartDay == dateDay)) {
+						
+						iterator.remove();
+						
+					}
+					
+				}
+			}
+			
+		}
+		
+		/*for(int i = 0; i < tasks.size(); i++) {
 			
 			Task task = tasks.get(i);
 			
@@ -82,7 +113,25 @@ public class Logic {
 				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
 				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(taskStartYear < todayYear || (taskStartYear == todayYear && taskStartDay < todayDay)) {
+				if(task.isStarted()) {
+					
+					if(!(todayYear == dateYear && todayDay == dateDay)) {
+						
+						tasks.remove(i);
+						
+					}
+					
+				} else {
+					
+					if(!(taskStartYear == dateYear && taskStartDay == dateDay)) {
+						
+						tasks.remove(i);
+						
+					}
+					
+				}*/
+				
+				/*if(taskStartYear < todayYear || (taskStartYear == todayYear && taskStartDay < todayDay)) {
 					
 					if(dateYear > todayYear || (dateYear == todayYear && dateDay > todayDay)) {
 						
@@ -99,11 +148,11 @@ public class Logic {
 						
 					}
 					
-				} 
+				} */
 				
-			}
+			/*}
 			
-		}
+		}*/
 		
 		return tasks;
 		

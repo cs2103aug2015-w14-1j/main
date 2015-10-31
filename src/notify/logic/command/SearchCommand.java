@@ -9,7 +9,6 @@ import notify.logic.TaskManager;
 
 public class SearchCommand extends Command {
 
-	
 	private TaskManager manager;
 	private String keyword;
 	
