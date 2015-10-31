@@ -97,14 +97,14 @@ public class DateTimeParser {
 		int byIndex = rawDateTime.indexOf(KEYWORD_BY + CommandParser.COMMAND_SEPERATOR);
 		int onIndex = rawDateTime.indexOf(KEYWORD_ON + CommandParser.COMMAND_SEPERATOR);
 		int fromIndex = rawDateTime.indexOf(KEYWORD_FROM + CommandParser.COMMAND_SEPERATOR);
-		int toIndex = rawDateTime.indexOf(KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
+		int toIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
 	
 		if(byIndex == KEYWORD_PROMPT_INDEX || onIndex == KEYWORD_PROMPT_INDEX) {
 			rawDateTime = rawDateTime.substring(KEYWORD_BY.length(), rawDateTime.length());
 			
-			int atIndex = rawDateTime.indexOf(KEYWORD_AT);
-			toIndex = rawDateTime.indexOf(KEYWORD_TO);
-			fromIndex = rawDateTime.indexOf(KEYWORD_FROM); 
+			int atIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_AT + CommandParser.COMMAND_SEPERATOR);
+			toIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
+			fromIndex = rawDateTime.indexOf(CommandParser.COMMAND_SEPERATOR + KEYWORD_FROM + CommandParser.COMMAND_SEPERATOR); 
 						
 			if(atIndex != KEYWORD_NOT_FOUND_INDEX) {
 				String[] split = rawDateTime.split(KEYWORD_AT);
@@ -135,9 +135,9 @@ public class DateTimeParser {
 			if(toIndex <= fromIndex) { 
 				throw new IllegalArgumentException(ERROR_INVALID_DATE);
 			}
-			
+
 			rawDateTime = rawDateTime.substring(KEYWORD_FROM.length(), rawDateTime.length());
-			String[] split = rawDateTime.split(KEYWORD_TO);
+			String[] split = rawDateTime.split(CommandParser.COMMAND_SEPERATOR + KEYWORD_TO + CommandParser.COMMAND_SEPERATOR);
 			
 			String startDateTime = split[FROM_PARAM_INDEX];
 			String endDateTime = split[TO_PARAM_INDEX];	
@@ -332,7 +332,6 @@ public class DateTimeParser {
 		int hour = 0; 
 		int minute = 0;
 		
-		System.out.println(rawTime);
 		if(rawTime.length() >= TIME_HOUR_MINUTE) {
 			String meridiem = rawTime.substring(rawTime.length() - TIME_MERIDIEM_LENGTH, rawTime.length());
 			if(meridiem.equalsIgnoreCase(Meridiem.AM.toString()) == true || meridiem.equalsIgnoreCase(Meridiem.PM.toString()) == true) {

@@ -157,6 +157,7 @@ public class CommandParser {
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
+			System.out.println(input);
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM].trim();
 			System.out.println(results[RESULTS_DATE_PARAM]);
