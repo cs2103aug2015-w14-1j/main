@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 import notify.Task;
 
-public class SetFileLink extends StorageOperation{
+public class FilePathManager extends StorageOperation{
 
 	/**
 	 * Constructor
 	 * 
 	 * @param pathLinkFile_		The file which contains the absolute path of the data file where all the user's tasks are stored.
 	 */
-	protected SetFileLink(String pathLinkFile_) {
+	protected FilePathManager(String pathLinkFile_) {
 		filePath = pathLinkFile_;
 	}
 	

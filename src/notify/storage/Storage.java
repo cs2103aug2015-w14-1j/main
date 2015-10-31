@@ -12,14 +12,14 @@ public class Storage {
 	private static final String PATHLINK = "data/.filePath.txt";
 	private static final String FILEPATH = "data/tasks.txt";
 
-	private SetFileLink set;
+	private FilePathManager set;
 	
 	private SaveTasks save;
 	private LoadTasks load;
 	private LoadCommands loadCommand;
 	
 	public Storage() {
-		set = new SetFileLink(PATHLINK);
+		set = new FilePathManager(PATHLINK);
 		save = new SaveTasks(FILEPATH);
 		load = new LoadTasks(FILEPATH);
 		loadCommand = new LoadCommands();
