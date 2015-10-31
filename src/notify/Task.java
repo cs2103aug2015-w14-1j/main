@@ -207,7 +207,7 @@ public class Task {
 	}
 	
 	public boolean isSearchedTask(String keyWord) {
-		if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
+		if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase()))
 			return true;
 		return false;
 	}
