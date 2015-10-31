@@ -23,6 +23,7 @@ public class SearchCommand extends Command {
 		this.keyword = keyword;
 	}
 	
+	//searches for the task based on a keyword and 
 	@Override
 	public Result execute() {
 		ArrayList<Task> searchTasks = manager.searchTask(keyword);

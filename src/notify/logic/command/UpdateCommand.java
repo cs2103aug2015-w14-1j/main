@@ -33,6 +33,7 @@ public class UpdateCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute(){
+		
 		Task updatedTask = manager.updateTask(id,taskName,range,category,type);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(updatedTask);
