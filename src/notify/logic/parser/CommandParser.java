@@ -15,6 +15,7 @@ import notify.logic.command.DeleteCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
+import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
 
 public class CommandParser {
@@ -63,7 +64,7 @@ public class CommandParser {
 			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
 			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
 			case DISPLAY: command = handleDisplayCommand(input); break;
-			case UNDO: command = handleUndoCommand(input); break;
+			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
 			case SET: command = handleSetCommand(input); break;
 			case EXIT: command = handleExitCommand(input); break;
 			default: throw new IllegalArgumentException(ERROR_INVALID_COMMAND);			
@@ -166,8 +167,9 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleUndoCommand(String input) {
-		Command command = null;
+	private Command handleUndoCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String input) {
+		UndoCommand command = new UndoCommand(commandAction, historyStack);
+		command.execute();
 		
 		return command;
 	}
