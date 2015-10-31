@@ -1,43 +1,57 @@
 package notify.logic.command;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
-import notify.logic.*;
-import notify.*;
-import notify.logic.command.*;
+import notify.DateRange;
+import notify.Task;
+import notify.TaskType;
 import notify.logic.TaskManager;
 
 public class AddCommand extends ReversibleCommand {
 	
 	private Task task;
-	private TaskType type;
-	private String taskName;
-	private DateRange range;
+    private String taskName;
+	private TaskType taskType;
+	private DateRange dateRange;
 	private String category;
 	private TaskManager manager;
 	
-	
-	public AddCommand(Action commandAction,String taskName, DateRange range, String category, TaskManager manager, TaskType type, Stack<ReversibleCommand> historyStack){
-		
+	public AddCommand(Action commandAction,TaskManager manager, Stack<ReversibleCommand> historyStack){
 		super(commandAction, historyStack);
-		this.taskName = taskName;
-		this.range = range;
-		this.category = category;
 		this.manager = manager;
-		this.type = type;
+	}
+
+	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
+		this.taskName = taskName;
+		this.taskType = taskType;
+		this.dateRange = dateRange;
+		this.category = category;
+	}
+	
+	public String getTaskName() {
+		return this.taskName;
+	}
+	
+	public TaskType getTaskType() { 
+		return this.taskType;
+	}
+	
+	public String getCategory() {
+		return this.category;
+	}
+	
+	public DateRange getDateRange() {
+		return this.dateRange;
 	}
 
 	@Override
 	public Result execute(){
-		Task addTask = manager.addTask(taskName, range, category, type);
+		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(addTask);
 		Result result = new Result(Action.ADD, listOfResults);
 		this.task = addTask;
-		//this.task = addtask;
 		pushToStack();
 		return result;
 	}
