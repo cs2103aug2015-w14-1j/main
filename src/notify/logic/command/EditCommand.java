@@ -25,7 +25,7 @@ public class EditCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
-	public void addValues(String taskName, DateRange range, String category, int id, Task oldTask, TaskType type ){
+	public void addValues(String taskName, DateRange range, String category, int id, TaskType type){
 		this.oldTask = manager.getTask(id);
 		this.taskName = taskName;
 		this.range = range;

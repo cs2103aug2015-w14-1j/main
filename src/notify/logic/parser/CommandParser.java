@@ -3,20 +3,22 @@ package notify.logic.parser;
 import java.util.HashMap;
 import java.util.Stack;
 
-import org.apache.commons.lang3.StringUtils;
-
 import notify.DateRange;
+import notify.Task;
 import notify.TaskType;
 import notify.logic.TaskManager;
 import notify.logic.command.Action;
 import notify.logic.command.AddCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
+import notify.logic.command.EditCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class CommandParser {
 	
@@ -90,7 +92,6 @@ public class CommandParser {
 		if(datePrompt != null) { 
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM];
-			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
@@ -126,7 +127,51 @@ public class CommandParser {
 	
 	private Command handleEditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		
-		return null;
+		String category = CategoryParser.parse(input);
+		TaskType taskType = TaskType.FLOATING;
+		DateRange dateRange = null;
+		String name = input;
+		int id = Task.UNASSIGNED_TASK;
+		
+		String[] split = input.split(COMMAND_SEPERATOR);
+		
+		boolean isNumeric = StringUtils.isNumeric(split[FIRST_PARAM_INDEX]);
+		if(isNumeric == false) { 
+			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
+		}
+		
+		id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		
+		if(id != Task.UNASSIGNED_TASK) { 
+			int length = String.valueOf(id).length();
+			input = input.substring(length, input.length());
+			name = input;
+		}
+	
+		if(category != null) { 
+			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
+			input = input.substring(0, input.length() - length);
+		}
+		
+		//check if command contains any keywords
+		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
+		if(datePrompt != null) { 
+			String[] results = parseDate(input);
+			name = results[RESULTS_NAME_PARAM];
+			System.out.println(results[RESULTS_DATE_PARAM]);
+			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
+			
+			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
+				taskType = TaskType.RANGE;
+			} else {
+				taskType = TaskType.DEADLINE;
+			}
+		}	
+		
+		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
+		command.addValues(name, dateRange, category, id, taskType);
+		
+		return command;
 	}
 	
 	private Command handleMarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
