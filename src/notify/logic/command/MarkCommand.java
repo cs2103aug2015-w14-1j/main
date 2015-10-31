@@ -18,7 +18,8 @@ public class MarkCommand extends ReversibleCommand {
 	}
 	
 	public void addValues(int id){
-		this.id = id;}
+		this.id = id;
+	}
 	
 	public int getId(){
 		return this.id;

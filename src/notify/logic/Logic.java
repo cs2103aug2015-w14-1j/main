@@ -50,7 +50,7 @@ public class Logic {
 
 		Result result = command.execute();
 		
-		System.out.println(result.getFirstResult().getTaskName());
+		//System.out.println(result.getFirstResult().getTaskName());
 		
 		return result;
 	}
