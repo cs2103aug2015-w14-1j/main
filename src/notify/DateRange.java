@@ -39,6 +39,7 @@ public class DateRange {
 		
 		if(startDate != null) {
 			startDate = startDate.trim();
+			System.out.println(startDate);
 			this.startDate = DateTimeParser.parseDate(startDate);
 		}
 	}
@@ -79,6 +80,7 @@ public class DateRange {
 	public void setEndTime(String endTime) {
 		if(endTime != null) {
 			endTime = endTime.trim();
+			System.out.println(endTime);
 			this.endTime = DateTimeParser.parseTime(endTime);
 		}
 	}

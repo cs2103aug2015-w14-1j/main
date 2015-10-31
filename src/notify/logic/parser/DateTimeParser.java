@@ -51,7 +51,8 @@ public class DateTimeParser {
 	private static final int SEPERATOR_MONTH_INDEX = 1;
 	private static final int SEPERATOR_YEAR_INDEX = 2;
 	
-	private static final int TIME_HOUR = 1;
+	private static final int TIME_HOUR_SINGLE = 1;
+	private static final int TIME_HOUR_DOUBLE = 2;
 	private static final int TIME_HOUR_MINUTE = 3;
 	private static final int TIME_FULL = 4;
 
@@ -324,11 +325,14 @@ public class DateTimeParser {
 		
 		assert rawTime != null;
 
+		rawTime = rawTime.trim();
+		
 		Calendar calendar = getInstance();
 		boolean isPostMeridiem = false;
 		int hour = 0; 
 		int minute = 0;
 		
+		System.out.println(rawTime);
 		if(rawTime.length() >= TIME_HOUR_MINUTE) {
 			String meridiem = rawTime.substring(rawTime.length() - TIME_MERIDIEM_LENGTH, rawTime.length());
 			if(meridiem.equalsIgnoreCase(Meridiem.AM.toString()) == true || meridiem.equalsIgnoreCase(Meridiem.PM.toString()) == true) {
@@ -341,8 +345,8 @@ public class DateTimeParser {
 		if(isNumeric == false) {
 			throw new IllegalArgumentException(ERROR_INVALID_DATE);
 		}
-		
-		if(rawTime.length() == TIME_HOUR) {
+
+		if(rawTime.length() == TIME_HOUR_SINGLE || rawTime.length() == TIME_HOUR_DOUBLE) {
 			hour = Integer.parseInt(rawTime);
 			minute = DATE_DEFAULT_MINUTE;
 		} else if(rawTime.length() == TIME_HOUR_MINUTE) {
