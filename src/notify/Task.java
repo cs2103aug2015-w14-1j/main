@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Task {
 
-	private static final int UNASSIGNED_TASK = -1;
+	public static final int UNASSIGNED_TASK = -1;
 	
 	private static final int DAYS_A_WEEK = 7;
 
