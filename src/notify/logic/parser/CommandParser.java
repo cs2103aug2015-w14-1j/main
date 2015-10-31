@@ -169,7 +169,6 @@ public class CommandParser {
 	
 	private Command handleUndoCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String input) {
 		UndoCommand command = new UndoCommand(commandAction, historyStack);
-		command.execute();
 		
 		return command;
 	}
