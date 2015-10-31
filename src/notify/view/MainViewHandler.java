@@ -264,6 +264,7 @@ public class MainViewHandler {
 	}
 	
 	
+	
 	public String generateTimeStamp(Task task) {
 		
 		TaskType taskType = task.getTaskType();
@@ -293,9 +294,9 @@ public class MainViewHandler {
 	}
 	
 	
+	
 	public String generateDeadlineTimestamp(Task task) {
 		
-		Calendar startDate = task.getStartDate();
 		Calendar endDate = task.getEndDate();
 		Calendar startTime = task.getStartTime();
 		Calendar endTime = task.getEndTime();
@@ -309,7 +310,6 @@ public class MainViewHandler {
 		String DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP = "from %1$s to %2$s";
 		String DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP = "at %1$s";
 		
-		String startDateStamp = "";
 		String startTimeStamp = "";
 		String endDateStamp = "";
 		String endTimeStamp = "";
@@ -335,7 +335,6 @@ public class MainViewHandler {
 				endTimeStamp = timeFormatter.format(endTime.getTime());
 				
 				timeStamp = String.format(DEADLINE_WITH_END_TIME_TIMESTAMP, endDateStamp, endTimeStamp);
-				//timeStamp = dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
 				
 			} else {
 				

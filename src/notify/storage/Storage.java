@@ -7,16 +7,12 @@ import notify.Task;
 import notify.logic.command.Action;
 
 public class Storage {
-<<<<<<< HEAD
+	
 	//private static final String[] commandFiles = {"ADD.txt", "DELETE.txt", "EDIT.txt", "SEARCH.txt", "MARK.txt", "DISPLAY.txt", "UNDO.txt", "SET.txt", "EXIT.txt"};
 	private static final String FILEPATH = "data/tasks.txt";
-	
-=======
 	private static final String PATHLINK = "data/.filePath.txt";
-	private static final String FILEPATH = "data/tasks.txt";
 
 	private SetFileLink set;
->>>>>>> origin/master
 	private SaveTasks save;
 	private LoadTasks load;
 	private LoadCommands loadCommand;
