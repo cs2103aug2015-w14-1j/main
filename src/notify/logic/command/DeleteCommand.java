@@ -32,6 +32,7 @@ public class DeleteCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(temptask);
 		Result result = new Result(Action.DELETE, listOfResults);
+		this.task = temptask;
 		pushToStack();
 		return result;
 	}
@@ -42,6 +43,7 @@ public class DeleteCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(temptask);
 		Result result = new Result(Action.UNDO, listOfResults);
+		this.task = temptask;
 		return result;
 	}
 
