@@ -209,12 +209,8 @@ public class CommandParser {
 		Command command = null; //new DeleteCommand();
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
-<<<<<<< HEAD
 		String keyword = split[FIRST_PARAM_INDEX];
-		
-=======
 
->>>>>>> 40be5ea353d025a59e7b44d339c0ba8d29ca0bc7
 		return command;
 	}
 	
