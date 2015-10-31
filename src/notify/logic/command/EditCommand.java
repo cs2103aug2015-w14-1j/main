@@ -8,7 +8,7 @@ import notify.Task;
 import notify.TaskType;
 import notify.logic.TaskManager;
 
-public class UpdateCommand extends ReversibleCommand {
+public class EditCommand extends ReversibleCommand {
 	
 	//private Task task;
 	private Task oldTask;
@@ -20,10 +20,13 @@ public class UpdateCommand extends ReversibleCommand {
 	private Action commandAction;
 	private TaskManager manager;
 	
-	public UpdateCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String taskName, DateRange range, String category, int id, TaskManager manager, Task oldTask, TaskType type){
+	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
 		super(commandAction, historyStack);
+		this.manager = manager;
+	}
+	
+	public void addValues(String taskName, DateRange range, String category, int id, Task oldTask, TaskType type ){
 		this.oldTask = manager.getTask(id);
-		this.commandAction = commandAction;
 		this.taskName = taskName;
 		this.range = range;
 		this.category = category;
@@ -31,9 +34,26 @@ public class UpdateCommand extends ReversibleCommand {
 		this.type = type;
 	}
 	
+	public void checkNull(){
+		//assert id!=-1 (unassigned)
+		if(taskName == null){
+			this.taskName = oldTask.getTaskName();
+		}
+		if(range == null){
+			this.range = oldTask.getDateRange();
+		}
+		if(category == null){
+			this.category = oldTask.getCategory();
+		}
+		
+		if(type == null){
+			this.type = oldTask.getTaskType();
+		}
+	}
+	
 	@Override
 	public Result execute(){
-		
+		checkNull();
 		Task updatedTask = manager.updateTask(id,taskName,range,category,type);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(updatedTask);
