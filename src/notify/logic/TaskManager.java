@@ -272,7 +272,6 @@ public class TaskManager {
 		}
 
 		return tempList;
-
 	}
 
 	public ArrayList<Task> getOverdueTasks() {

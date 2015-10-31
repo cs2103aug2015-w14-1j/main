@@ -208,7 +208,7 @@ public class CommandParser {
 		Command command = null; //new DeleteCommand();
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
-		
+
 		return command;
 	}
 	
