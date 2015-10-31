@@ -39,6 +39,10 @@ public class LoadTasks extends StorageOperation{
 		}
 	}
 	
+	protected boolean execute(String emptyString) {
+		return false;
+	}
+	
 	/**
 	 * Reads from file and saves it line-by-line into taskList.
 	 * 
