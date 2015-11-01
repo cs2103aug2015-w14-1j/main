@@ -37,12 +37,17 @@ public class MainViewHandler {
 	// DAY_DATE_SUBTITLE example: (Friday, 23 October)
 	// DATE_SUBTITLE example: (23 October)
 	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-	private static String DAY_DATE_STRING_FORMAT = "(%1$s, %2$s)";
-	private static String DATE_STRING_FORMAT = "(%1$s)";
-	private static String TIME_RANGE_STRING_FORMAT = "%1$s to %2$s";
-	private static SimpleDateFormat DAY_DATE_FORMAT = new SimpleDateFormat("(EEE, dd MMM)");
-	private static SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("EEEE");
-	private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd MMMM)");
+	//private static String DAY_DATE_STRING_FORMAT = "(%1$s, %2$s)";
+	//private static String DATE_STRING_FORMAT = "(%1$s)";
+	//private static String TIME_RANGE_STRING_FORMAT = "%1$s to %2$s";
+
+	private static String DAY_PATTERN = "EEEE";
+	private static String DATE_PATTERN = "dd MMM yy";
+	private static String TIME_PATTERN = "hh:mm a";
+	
+	//private static SimpleDateFormat DAY_DATE_FORMAT = new SimpleDateFormat("(EEE, dd MMM)");
+	//private static SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("EEEE");
+	//private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd MMMM)");
 	
 	// styling for container containing each line of item
 	private static double HBOX_NODE_SPACING = 3.5;
@@ -124,7 +129,7 @@ public class MainViewHandler {
 	
 	@FXML
 	public void initialize() {
-		initDailyView();
+		//initDailyView();
 		//populateOverdueTask();
 		//populateFloatingTask();
 		//populateComingSoonTask();
@@ -301,8 +306,6 @@ public class MainViewHandler {
 		Calendar startTime = task.getStartTime();
 		Calendar endTime = task.getEndTime();
 
-		String DAY_DATE_PATTERN = "dd MMM yy";
-		String TIME_PATTERN = "hh:mm a";
 		String DEADLINE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s)";
 		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
 		String DEADLINE_TIMESTAMP = "(%1$s)";
@@ -314,7 +317,7 @@ public class MainViewHandler {
 		String endDateStamp = "";
 		String endTimeStamp = "";
 		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
 		String timeStamp = "";
@@ -373,9 +376,6 @@ public class MainViewHandler {
 		Calendar startTime = task.getStartTime();
 		Calendar endTime = task.getEndTime();
 
-		String DAY_PATTERN = "EEE";
-		String DAY_DATE_PATTERN = "dd MMM yy";
-		String TIME_PATTERN = "hh:mm a";
 		String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
 		String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
 		String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
@@ -387,8 +387,8 @@ public class MainViewHandler {
 		String startTimeStamp = "";
 		String endDateStamp = "";
 		String endTimeStamp = "";
-		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
 		String timeStamp = "";
@@ -424,7 +424,7 @@ public class MainViewHandler {
 				
 			} else {
 				
-				dateFormatter = new SimpleDateFormat(DAY_DATE_PATTERN);
+				dateFormatter = new SimpleDateFormat(DATE_PATTERN);
 				
 			}
 			
@@ -470,18 +470,21 @@ public class MainViewHandler {
 		Calendar tomorrow = Calendar.getInstance();
 		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 		
-		String title = DAY_FORMAT.format(calendar.getTime());
-		String subtitle = DATE_FORMAT.format(calendar.getTime());
+		SimpleDateFormat dayFormatter = new SimpleDateFormat(DAY_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		
+		String title = dayFormatter.format(calendar.getTime());
+		String subtitle = dateFormatter.format(calendar.getTime());
 		
 		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
 			
+			subtitle = title + ", " + subtitle;
 			title = "Today"; 
-			subtitle = DAY_DATE_FORMAT.format(calendar.getTime());
 			
 		} else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
-			
+
+			subtitle = title + ", " + subtitle;
 			title = "Tomorrow";
-			subtitle = DAY_DATE_FORMAT.format(calendar.getTime());
 			
 		}
 		
@@ -540,7 +543,7 @@ public class MainViewHandler {
 		
 	}
 	
-	public void initDailyView() {
+	/*public void initDailyView() {
 		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };
 
 		// get the calendar instance and set the time to today.
@@ -586,9 +589,9 @@ public class MainViewHandler {
 			// increase the day by 1
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
-	}
+	}*/
 	
-	public void initDailyTaskHeader(VBox vbox, Calendar calendar, SimpleDateFormat sdf) {
+	/*public void initDailyTaskHeader(VBox vbox, Calendar calendar, SimpleDateFormat sdf) {
 		// values of today and tomorrow to check with the date and print accordingly
 		Calendar today = Calendar.getInstance();
 		Calendar tomorrow = Calendar.getInstance();
@@ -623,9 +626,9 @@ public class MainViewHandler {
 		HBox hbox = createItem(HEADER_PADDING, false, lblTitle, lblSubtitle);
 
 		vbox.getChildren().add(hbox);
-	}
+	}*/
 	
-	public void populateDailyTask(VBox vbox, String[] tasks, String[] timings) {
+	/*public void populateDailyTask(VBox vbox, String[] tasks, String[] timings) {
 		for(int i = 0; i < tasks.length; i++) {
 			CheckBox checkbox = createCheckbox((i + 14 + tasks.length) + "", CHECKBOX_FONT, DAILY_TEXT_FILL);
 			Label task = createLabel(tasks[i], TASK_FONT, DAILY_TEXT_FILL);
@@ -634,9 +637,9 @@ public class MainViewHandler {
 			HBox hbox = createItem(true, checkbox, task, time);
 			vbox.getChildren().add(hbox);
 		}
-	}
+	}*/
 	
-	public void populateOverdueTask() {
+	/*public void populateOverdueTask() {
 		String[] tasks = {"IT Cell Meeting"};
 		String[] timings = {"(Friday 9 October, 6.00pm to 8.00pm)"};
 		
@@ -648,10 +651,10 @@ public class MainViewHandler {
 			HBox hbox = createItem(true, checkbox, task, time);
 			vboxOverdue.getChildren().add(hbox);
 		}
-	}
+	}*/
 	
 	
-	public void populateFloatingTask() {
+	/*public void populateFloatingTask() {
 		String[] tasks = {"Bake brownie", "Buy Birthday Present", "Source for Blazer"};
 		//String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
 		
@@ -663,9 +666,9 @@ public class MainViewHandler {
 			HBox hbox = createItem(true, checkbox, task);
 			vboxFloating.getChildren().add(hbox);
 		}
-	}
+	}*/
 	
-	public void populateComingSoonTask() {
+	/*public void populateComingSoonTask() {
 		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "User Guide Submission", "Developer Guide Submission", "Cut Nails", "IT Cell Core Team Meeting"};
 		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
 		
@@ -677,7 +680,7 @@ public class MainViewHandler {
 			HBox hbox = createItem(true, checkbox, label, time);
 			vboxComing.getChildren().add(hbox);
 		}
-	}
+	}*/
 	
 	/**
 	 * Creates the HBox with nodes
