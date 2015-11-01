@@ -63,6 +63,7 @@ public class CommandParser {
 		
 		switch(commandAction) {
 			case ADD: command = handleAddCommand(commandAction, history, taskManager, input); break;
+			//case BACK: command = handleBackCommand(commandAction, history, taskManager, input); break;
 			case DELETE: command = handleDeleteCommand(commandAction, history, taskManager, input); break;
 			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
 			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
@@ -109,6 +110,10 @@ public class CommandParser {
 		return command;
 	}
 	
+	/*private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager) {
+		
+	}*/
+	
 	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		DeleteCommand command = null;
 		
@@ -130,7 +135,7 @@ public class CommandParser {
 	private Command handleEditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		
 		String category = CategoryParser.parse(input);
-		TaskType taskType = TaskType.FLOATING;
+		TaskType taskType = null;
 		DateRange dateRange = null;
 		String name = input;
 		int id = Task.UNASSIGNED_TASK;
@@ -154,7 +159,8 @@ public class CommandParser {
 			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
 		}
-		
+		System.out.println(input);
+
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
@@ -164,6 +170,7 @@ public class CommandParser {
 			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
+			System.out.println(datePrompt);
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
 				taskType = TaskType.RANGE;
 			} else {
@@ -171,6 +178,7 @@ public class CommandParser {
 			}
 		}	
 		
+		if(name.trim().equalsIgnoreCase("")) { name = null; }
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
 		
@@ -275,6 +283,7 @@ public class CommandParser {
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
+			input = " " + input;
 			int index = input.indexOf(COMMAND_SEPERATOR + array[i] + COMMAND_SEPERATOR);
 			
 			if(index != DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
