@@ -36,12 +36,13 @@ public class LoadCommands extends StorageOperation {
 		
 		for(Action command : Action.values()) {
 			try {
-				filePath = "config/commands/"+command.toString()+".txt";
-				System.out.println(filePath);
+				filePath = "notify.config/commands/"+command.toString()+".txt";
+
 				File file = new File(filePath);
 				FileReader fileReader = new FileReader(file);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
 				commands.put(command.toString().toUpperCase(), command);
+				
 				while((currentLine = bufferedReader.readLine()) != null) {
 					commands.put(currentLine.toUpperCase() , command);
 				}
