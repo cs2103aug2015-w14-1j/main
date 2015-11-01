@@ -15,7 +15,7 @@ public class LoadCommands extends StorageOperation {
 		commands = new HashMap<String, Action>();
 	}
 	
-	protected HashMap<String, Action> execute(ArrayList<Task> emptyList) {
+	protected HashMap<String, Action> execute(Object emptyList_) {
 		boolean isReadSuccessfully = this.readFromFile();
 		
 		if(isReadSuccessfully) {
@@ -25,10 +25,12 @@ public class LoadCommands extends StorageOperation {
 		}
 	}
 	
+	/*
 	protected boolean execute(String emptyString) {
 		return false;
 	}
-
+	*/
+	
 	private boolean readFromFile() {
 		String currentLine;
 		

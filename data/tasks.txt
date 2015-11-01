@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 [{"id":0,"name":"long meeting","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":1,"hourOfDay":0,"minute":3,"second":24},"endDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":0,"minute":3,"second":24}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"},{"id":1,"name":"meeting joshua today","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"},{"id":2,"name":"add","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"}]
+=======
+<<<<<<< HEAD
+[{"id":0,"name":"meeting with abcd","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":1,"hourOfDay":11,"minute":20,"second":23},"endDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":11,"minute":20,"second":23}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
+=======
+[{"id":0,"name":"long meeting","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":1,"hourOfDay":0,"minute":3,"second":24},"endDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":0,"minute":3,"second":24}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
+>>>>>>> origin/master
+>>>>>>> 79774658a7fdcff10ed36dae33ca4d088f0203e2
