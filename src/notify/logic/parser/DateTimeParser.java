@@ -263,6 +263,10 @@ public class DateTimeParser {
 			}
 		}
 		
+		if(dateFound == false) { 
+			throw new IllegalArgumentException(ERROR_INVALID_DATE);
+		}
+		
 		return result;
 	}
 	
