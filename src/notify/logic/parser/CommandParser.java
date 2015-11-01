@@ -14,6 +14,7 @@ import notify.logic.command.AddCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
 import notify.logic.command.EditCommand;
+import notify.logic.command.ExitCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
@@ -69,7 +70,7 @@ public class CommandParser {
 			case DISPLAY: command = handleDisplayCommand(input); break;
 			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
 			case SET: command = handleSetCommand(commandAction, storage, input); break;
-			case EXIT: command = handleExitCommand(input); break;
+			case EXIT: command = handleExitCommand(commandAction, taskManager, input); break;
 			default: throw new IllegalArgumentException(ERROR_INVALID_COMMAND);			
 		}
 		
@@ -233,8 +234,10 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleExitCommand(String input) {
-		Command command = null;
+	private Command handleExitCommand(Action commandAction, TaskManager taskManager, String input) {
+		ExitCommand command = null;
+				
+		command = new ExitCommand(commandAction, taskManager);
 		
 		return command;
 	}
