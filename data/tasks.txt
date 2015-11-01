@@ -1,0 +1,1 @@
+[{"id":0,"name":"long meeting","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":1,"hourOfDay":0,"minute":3,"second":24},"endDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":0,"minute":3,"second":24}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
