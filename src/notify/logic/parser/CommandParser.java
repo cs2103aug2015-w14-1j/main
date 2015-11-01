@@ -98,7 +98,11 @@ public class CommandParser {
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.getStartDate().equals(dateRange.getEndDate())) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}

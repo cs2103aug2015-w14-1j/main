@@ -182,14 +182,14 @@ public class DateTimeParser {
 		boolean dateFound = false;
 		for(int i = 0; i < KEYWORD_TODAY.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TODAY[i])) {
-				result = Calendar.getInstance();
+				result = getInstance();
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_TOMORROW.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TOMORROW[i])) {
-				result = Calendar.getInstance();
+				result = getInstance();
 				result.add(Calendar.DATE, OFFSET_DAY);
 				dateFound = true;
 			}
@@ -197,7 +197,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_WEEK.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_WEEK[i])) {
-				result = Calendar.getInstance();
+				result = getInstance();
 				result.add(Calendar.DATE, OFFSET_WEEK);
 				dateFound = true;
 			}
@@ -205,7 +205,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_MONTH.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_MONTH[i])) {
-				result = Calendar.getInstance();
+				result = getInstance();
 				result.add(Calendar.MONTH, OFFSET_MONTH);
 				dateFound = true;
 			}
@@ -213,7 +213,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_YEAR.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_YEAR[i])) {
-				result = Calendar.getInstance();
+				result = getInstance();
 				result.add(Calendar.YEAR, OFFSET_YEAR);
 				dateFound = true;
 			}
