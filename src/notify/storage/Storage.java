@@ -10,9 +10,10 @@ public class Storage {
 	
 	//private static final String[] commandFiles = {"ADD.txt", "DELETE.txt", "EDIT.txt", "SEARCH.txt", "MARK.txt", "DISPLAY.txt", "UNDO.txt", "SET.txt", "EXIT.txt"};
 
-	private static final String PATHFILELINK = "data/.filePath.txt";
+	private static final String PATHFILELINK = "notify.config/data/.filePath.txt";
 	private static final String DATAFILE = "/tasks.txt";
 
+	private FileGenerator fileGenerator;
 	private FilePathManager filePathManager;
 	private FileTransferManager fileTransferManager;
 	private SaveTasks save;
@@ -21,6 +22,7 @@ public class Storage {
 	private String filePath;
 	
 	public Storage() {
+		fileGenerator = new FileGenerator();
 		filePathManager = new FilePathManager(PATHFILELINK);
 		filePath = filePathManager.getDataFilePath()+DATAFILE;
 		//System.out.println(filePath);
