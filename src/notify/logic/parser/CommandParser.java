@@ -177,7 +177,11 @@ public class CommandParser {
 			
 			System.out.println(datePrompt);
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.isSameDay()) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
