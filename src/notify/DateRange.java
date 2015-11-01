@@ -89,6 +89,24 @@ public class DateRange {
 		return this.endTime;
 	}
 	
+	public boolean isSameDay() {
+		boolean result = true;
+		
+		if(this.getStartDate().get(Calendar.DATE) != this.getEndDate().get(Calendar.DATE)) { 
+			result = false; 
+		}
+		
+		if(this.getStartDate().get(Calendar.MONTH) != this.getEndDate().get(Calendar.MONTH)) { 
+			result = false; 
+		}
+		
+		if(this.getStartDate().get(Calendar.YEAR) != this.getEndDate().get(Calendar.YEAR)) { 
+			result = false; 
+		}
+			
+		return result;
+	}
+	
 	public String toString() {
 		String output = "";
 		

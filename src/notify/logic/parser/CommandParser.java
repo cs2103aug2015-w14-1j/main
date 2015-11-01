@@ -1,5 +1,6 @@
 package notify.logic.parser;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -98,7 +99,7 @@ public class CommandParser {
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				if(dateRange.getStartDate().equals(dateRange.getEndDate())) {
+				if(dateRange.isSameDay()) {
 					taskType = TaskType.DEADLINE;
 				} else {
 					taskType = TaskType.RANGE;
