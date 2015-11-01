@@ -41,55 +41,69 @@ public class MainViewHandler {
 	//private static String DATE_STRING_FORMAT = "(%1$s)";
 	//private static String TIME_RANGE_STRING_FORMAT = "%1$s to %2$s";
 
-	private static String DAY_PATTERN = "EEEE";
-	private static String DATE_PATTERN = "dd MMM yy";
+	private static String SHORT_DAY_PATTERN = "EEE";
+	private static String LONG_DAY_PATTERN = "EEEE";
+	private static String SHORT_DATE_PATTERN = "dd MMM yy";
+	private static String LONG_DATE_PATTERN = "dd MMMM yy";
 	private static String TIME_PATTERN = "hh:mm a";
 	
 	//private static SimpleDateFormat DAY_DATE_FORMAT = new SimpleDateFormat("(EEE, dd MMM)");
 	//private static SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("EEEE");
 	//private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd MMMM)");
 	
+	
+	
 	// styling for container containing each line of item
 	private static double HBOX_NODE_SPACING = 3.5;
 	private static Pos HBOX_NODE_ALIGNMENT = Pos.TOP_LEFT;
 	private static Insets HEADER_PADDING = new Insets(0, 0, 2, 0);	//top, right, bottom, left
 	
-	// styling for title of each section
+	
+	
+	// font family settings for different types of text displayed
 	private static String TITLE_FONT_FAMILY = "Roboto Condensed";
-	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static int TITLE_FONT_SIZE = 17;
-	private static Paint TITLE_TEXT_FILL = Paint.valueOf("#7E7E45");
-	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
-	
-	// styling for subtitle of each section
 	private static String SUBTITLE_FONT_FAMILY = "Roboto Condensed";
-	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static int SUBTITLE_FONT_SIZE = 12;
-	private static Paint SUBTITLE_TEXT_FILL = Paint.valueOf("#B2B262");
-	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
-
-	// styling for checkbox
 	private static String CHECKBOX_FONT_FAMILY = "Roboto";
-	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
-	private static int CHECKBOX_FONT_SIZE = 10;
-	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
-	
-	// styling for task item
 	private static String TASK_FONT_FAMILY = "Roboto Slab Regular";
-	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
-	private static int TASK_FONT_SIZE = 12;
-	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
-	
-	// styling for task subtext (date day time etc.)
 	private static String TASK_SUBTEXT_FONT_FAMILY = "Roboto Condensed";
+	
+	
+	
+	// font weight settings for different types of text displayed
+	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight TASK_SUBTEXT_FONT_WEIGHT = FontWeight.BOLD;
+	
+	
+	
+	// font posture settings for different types of text displayed
+	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
 	private static FontPosture TASK_SUBTEXT_FONT_POSTURE = FontPosture.REGULAR;
+	
+	
+	
+	// font size settings for different types of text displayed
+	private static int TITLE_FONT_SIZE = 17;
+	private static int SUBTITLE_FONT_SIZE = 12;
+	private static int CHECKBOX_FONT_SIZE = 10;
+	private static int TASK_FONT_SIZE = 12;
 	private static int TASK_SUBTEXT_FONT_SIZE = 11;
+	
+
+	
+	// font object that is set up by the settings above
+	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
+	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
+	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
+	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
 	private static Font TASK_SUBTEXT_FONT = Font.font(TASK_SUBTEXT_FONT_FAMILY, TASK_SUBTEXT_FONT_WEIGHT, TASK_SUBTEXT_FONT_POSTURE, TASK_SUBTEXT_FONT_SIZE);
+	
+	
 	
 	// font color for different type of task
 	private static Paint OVERDUE_TEXT_FILL = Paint.valueOf("#5D322E");
@@ -100,6 +114,22 @@ public class MainViewHandler {
 	private static Paint COMING_SUBTEXT_FILL = Paint.valueOf("#8EB264");
 	private static Paint DAILY_TEXT_FILL = Paint.valueOf("#5D5D33");
 	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
+	
+	
+
+	private static String DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s";
+	private static String DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s";
+	private static String DEADLINE_END_DATE_TIMESTAMP_FORMAT = "%1$s";
+	private static String DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT = "from %1$s to %2$s";
+	private static String DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT = "at %1$s";
+	
+	
+
+	private static String RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s, %4$s";
+	private static String RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT = "%1$s to %2$s";
+	private static String RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "from %1$s till %2$s, %3$s";
+	private static String RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "till %1$s, %2$s";
+	private static String RANGE_TILL_END_DATE_TIMESTAMP_FORMAT = "till %1$s";
 	
 	private static String OVERDUE_TITLE = "Overdue";
 	private static String FLOATING_TITLE = "Floating";
@@ -270,6 +300,11 @@ public class MainViewHandler {
 	
 	
 	
+	/**
+	 * Generates the timestamp for all tasks with time
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 */
 	public String generateTimeStamp(Task task) {
 		
 		TaskType taskType = task.getTaskType();
@@ -300,119 +335,108 @@ public class MainViewHandler {
 	
 	
 	
+	/**
+	 * Generates the timestamp for deadline tasks
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 */
 	public String generateDeadlineTimestamp(Task task) {
 		
-		Calendar endDate = task.getEndDate();
-		Calendar startTime = task.getStartTime();
-		Calendar endTime = task.getEndTime();
-
-		String DEADLINE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s)";
-		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
-		String DEADLINE_TIMESTAMP = "(%1$s)";
-		
-		String DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP = "from %1$s to %2$s";
-		String DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP = "at %1$s";
-		
-		String startTimeStamp = "";
-		String endDateStamp = "";
-		String endTimeStamp = "";
-		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
-		String timeStamp = "";
+		Calendar taskEndDate = task.getEndDate();
+		Calendar taskStartTime = task.getStartTime();
+		Calendar taskEndTime = task.getEndTime();
+		
+		String taskEndDateStamp = "";
+		String taskStartTimeStamp = "";
+		String taskEndTimeStamp = "";
+		String timestamp = "";
 
+		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
+		
 		if(task.isComingSoon() || task.isOverdue()) {
 
-			if(startTime != null) {
+			if(taskStartTime != null) {
 
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-						
-				timeStamp = String.format(DEADLINE_WITH_START_END_TIME_TIMESTAMP, endDateStamp, startTimeStamp, endTimeStamp);
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(endTime != null) {
+			} else if(taskEndTime != null) {
 
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-				
-				timeStamp = String.format(DEADLINE_WITH_END_TIME_TIMESTAMP, endDateStamp, endTimeStamp);
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 				
 			} else {
 				
-				endDateStamp = dateFormatter.format(endDate.getTime());
-
-				timeStamp = String.format(DEADLINE_TIMESTAMP, endDateStamp);
+				timestamp = String.format(DEADLINE_END_DATE_TIMESTAMP_FORMAT, taskEndDateStamp);
+				
 			}
 			
 		} else {
 		
-			if(startTime != null) {
+			if(taskStartTime != null) {
 				
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndTimeStamp);
 				
-				timeStamp = String.format(DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP, startTimeStamp, endTimeStamp);
+			} else if(taskEndTime != null) {
 				
-			} else if(endTime != null) {
-				
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-				
-				timeStamp = String.format(DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP, endTimeStamp);
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT, taskEndTimeStamp);
 				
 			}
 			
 		}
 
-		return timeStamp;
+		return timestamp;
 		
 	}
 	
 	public String generateRangeTimestamp(Task task) {
 		
-		Calendar startDate = task.getStartDate();
-		Calendar endDate = task.getEndDate();
-		Calendar startTime = task.getStartTime();
-		Calendar endTime = task.getEndTime();
-
-		String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
-		String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
-		String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
-		String DAILY_RANGE_WITH_TIME = "till %1$s %2$s";
-		String DAILY_RANGE_NOT_STARTED_TIMESTAMP = "from %1$s till %2$s %3$s";
-		String DEADLINE_TIMESTAMP = "";
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
+		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
+		
+		Calendar taskStartDate = task.getStartDate();
+		Calendar taskStartTime = task.getStartTime();
+		Calendar taskEndDate = task.getEndDate();
+		Calendar taskEndTime = task.getEndTime();
+		
+		//String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
+		//String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
+		//String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
+		//String DAILY_RANGE_WITH_TIME = "till %1$s %2$s";
+		//String DAILY_RANGE_NOT_STARTED_TIMESTAMP = "from %1$s till %2$s %3$s";
 		
 		String startDateStamp = "";
 		String startTimeStamp = "";
 		String endDateStamp = "";
 		String endTimeStamp = "";
 
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
-		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
 		String timeStamp = "";
 		
 		if(task.isComingSoon() || task.isOverdue()) {
 			
-			if(startTime != null && endTime != null) {
+			if(taskStartTime != null && taskEndTime != null) {
 				
-				startDateStamp = dateFormatter.format(startDate.getTime());
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				startDateStamp = dateFormatter.format(taskStartDate.getTime());
+				startTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				endDateStamp = dateFormatter.format(taskEndDate.getTime());
+				endTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
-				timeStamp = String.format(RANGE_WITH_START_END_TIME_TIMESTAMP, startDateStamp, startTimeStamp, endDateStamp, endTimeStamp);
-				
-				//timeStamp = dateFormat.format(startDate.getTime()) + ", " + timeFormat.format(startTime.getTime()) + " to " + dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
+				timeStamp = String.format(RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT, startDateStamp, startTimeStamp, endDateStamp, endTimeStamp);
 				
 			} else {
 				
-				startDateStamp = dateFormatter.format(startDate.getTime());
-				endDateStamp = dateFormatter.format(endDate.getTime());
+				startDateStamp = dateFormatter.format(taskStartDate.getTime());
+				endDateStamp = dateFormatter.format(taskEndDate.getTime());
 				
-				timeStamp = String.format(RANGE_WITH_NO_TIME, startDateStamp, endDateStamp);
-				//timeStamp = dateFormat.format(startDate.getTime()) + " to " + dateFormat.format(endDate.getTime());
+				timeStamp = String.format(RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT, startDateStamp, endDateStamp);
 				
 			}
 			
@@ -420,34 +444,34 @@ public class MainViewHandler {
 			
 			if(task.isEndingSoon()) {
 				
-				dateFormatter = new SimpleDateFormat(DAY_PATTERN);
+				dateFormatter = new SimpleDateFormat(SHORT_DAY_PATTERN);
 				
 			} else {
 				
-				dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+				dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 				
 			}
 			
-			endDateStamp = dateFormatter.format(endDate.getTime());
+			endDateStamp = dateFormatter.format(taskEndDate.getTime());
 			
-			if(startTime != null && endTime != null) {
+			if(taskStartTime != null && taskEndTime != null) {
 				
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				startTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				endTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
 				if(task.isStarted()) {
 					
-					timeStamp = String.format(DAILY_RANGE_WITH_TIME, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, endDateStamp, endTimeStamp);
 					
 				} else {
 					
-					timeStamp = String.format(DAILY_RANGE_NOT_STARTED_TIMESTAMP, startTimeStamp, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, startTimeStamp, endDateStamp, endTimeStamp);
 					
 				}
 				
 			} else {
 				
-				timeStamp = String.format(DAILY_RANGE_WITH_NO_TIME, endDateStamp);
+				timeStamp = String.format(RANGE_TILL_END_DATE_TIMESTAMP_FORMAT, endDateStamp);
 				
 			}
 			
@@ -470,8 +494,8 @@ public class MainViewHandler {
 		Calendar tomorrow = Calendar.getInstance();
 		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 		
-		SimpleDateFormat dayFormatter = new SimpleDateFormat(DAY_PATTERN);
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
 		
 		String title = dayFormatter.format(calendar.getTime());
 		String subtitle = dateFormatter.format(calendar.getTime());
