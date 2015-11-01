@@ -29,7 +29,7 @@ public class LoadTasks extends StorageOperation{
 	 * 
 	 * @return			ArrayList of tasks
 	 */
-	protected ArrayList<Task> execute(ArrayList<Task> emptyList) {
+	protected ArrayList<Task> execute(Object emptyList_) {
 		boolean isReadSuccessfully = this.readFromFile();
 		
 		if(isReadSuccessfully) {
@@ -39,9 +39,11 @@ public class LoadTasks extends StorageOperation{
 		}
 	}
 	
+	/*
 	protected boolean execute(String emptyString) {
 		return false;
 	}
+	*/
 	
 	/**
 	 * Reads from file and saves it line-by-line into taskList.

@@ -27,17 +27,19 @@ public class SaveTasks extends StorageOperation {
 	 * @return				Returns null as logic does not require
 	 * 						confirmation of successful save
 	 */
-	protected ArrayList<Task> execute(ArrayList<Task> taskList_) {
-		taskList = taskList_;
-		jsonString = this.jsonizeData(taskList_);
+	protected ArrayList<Task> execute(Object taskList_) {
+		taskList = (ArrayList<Task>) taskList_;
+		jsonString = this.jsonizeData(taskList);
 		this.writeIntoFile();
 		
 		return null;
 	}
 	
+	/*
 	protected boolean execute(String emptyString) {
 		return false;
 	}
+	*/
 	
 	private String jsonizeData(ArrayList<Task> taskList_) {		
 		String jsonDataString = gson.toJson(taskList_);

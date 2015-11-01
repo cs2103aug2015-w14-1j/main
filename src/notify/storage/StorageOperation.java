@@ -13,11 +13,10 @@ public abstract class StorageOperation {
 	protected Gson gson;
 	protected String jsonString;
 	protected String filePath;
-	protected String[] commandFiles;
 	protected ArrayList<Task> taskList;
 	protected HashMap<String, Action> commands;
 	
-	abstract Object execute(ArrayList<Task> taskList_);
-
-	abstract boolean execute(String filePath);
+	//abstract Object execute(ArrayList<Task> taskList_);
+	abstract Object execute(Object dataObject_);
+	//abstract boolean execute(String filePath);
 }

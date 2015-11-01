@@ -1,0 +1,1 @@
+[{"id":0,"name":"meeting with abcd","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":1,"hourOfDay":11,"minute":20,"second":23},"endDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":11,"minute":20,"second":23}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
