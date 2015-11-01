@@ -74,7 +74,6 @@ public class EditCommand extends ReversibleCommand {
 		Result result = new Result(Action.EDIT, listOfResults);
 		pushToStack();
 		return result;
-		
 	}
 	
 	@Override
