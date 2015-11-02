@@ -1,1 +1,1 @@
-[{"id":0,"name":"meeting with beier","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":14,"minute":34,"second":11},"endDate":{"year":2015,"month":10,"dayOfMonth":3,"hourOfDay":14,"minute":34,"second":11}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
+[{"id":0,"name":"at 6pm","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":2,"hourOfDay":14,"minute":34,"second":11},"endDate":{"year":2015,"month":10,"dayOfMonth":3,"hourOfDay":14,"minute":34,"second":11}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
