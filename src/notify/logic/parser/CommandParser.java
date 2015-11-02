@@ -116,7 +116,7 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager) {
+	private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		BackCommand command = null;
 		
 		command = new BackCommand(commandAction, taskManager);
