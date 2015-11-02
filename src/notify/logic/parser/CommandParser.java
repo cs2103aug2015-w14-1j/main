@@ -12,6 +12,7 @@ import notify.TaskType;
 import notify.logic.TaskManager;
 import notify.logic.command.Action;
 import notify.logic.command.AddCommand;
+import notify.logic.command.BackCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
 import notify.logic.command.EditCommand;
@@ -64,7 +65,7 @@ public class CommandParser {
 		
 		switch(commandAction) {
 			case ADD: command = handleAddCommand(commandAction, history, taskManager, input); break;
-			//case BACK: command = handleBackCommand(commandAction, history, taskManager, input); break;
+			case BACK: command = handleBackCommand(commandAction, history, taskManager, input); break;
 			case DELETE: command = handleDeleteCommand(commandAction, history, taskManager, input); break;
 			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
 			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
@@ -115,9 +116,13 @@ public class CommandParser {
 		return command;
 	}
 	
-	/*private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager) {
+	private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager) {
+		BackCommand command = null;
 		
-	}*/
+		command = new BackCommand(commandAction, taskManager);
+		
+		return command;
+	}
 	
 	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		DeleteCommand command = null;
