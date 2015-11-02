@@ -582,11 +582,11 @@
                   </ScrollPane>
                </children>
             </GridPane>
-            <Pane fx:id="pnOverlay" opacity="0.7" prefHeight="200.0" prefWidth="200.0" styleClass="overlay" visible="false">
+            <Pane fx:id="pnOverlay" opacity="0.7" prefHeight="200.0" prefWidth="200.0" styleClass="overlay">
                <StackPane.margin>
                   <Insets left="20.0" right="20.0" top="20.0" />
                </StackPane.margin></Pane>
-            <BorderPane fx:id="bpnSearch" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <BorderPane fx:id="bpnSearch" prefHeight="200.0" prefWidth="200.0">
                <top>
                   <Label text="Search Results for &quot;submission&quot;" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
                      <font>
@@ -622,232 +622,483 @@
                               </Label>
                            </top>
                            <center>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="overlay-scrollpane" BorderPane.alignment="CENTER">
+                                 <content>
+                                    <VBox fx:id="vboxSearchCompleted" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                       <children>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="User Guide Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Developer Guide Submissionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Response Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Fri, 23 October 15)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Fri, 23 October 15)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Response Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Developer Guide Submissionnnnnnnnnnnnnnnn" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="User Guide Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Fri, 23 October 15)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Response Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Developer Guide Submissionnnnnnnnnnnnnnnn" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="User Guide Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Fri, 23 October 15)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Response Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Developer Guide Submissionnnnnnnnnnnnnnnn" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="User Guide Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                 </padding>
                                  <BorderPane.margin>
-                                    <Insets top="10.0" />
+                                    <Insets right="20.0" />
                                  </BorderPane.margin>
-                                 <children>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="User Guide Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Slab Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="Developer Guide Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Slab Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="Reflection Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Slab Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="Reflection Response Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Slab Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Slab Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Fri, 23 October 15)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
+                              </ScrollPane>
                            </center>
                         </BorderPane>
                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                           <center>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="16" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="GEK1901 Essay Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Wed, 28 October 15, 2:00pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="29" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="GEK1901 Game Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Thurs, 29 October 15, 2:00pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="1" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="V0.3 Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Fri, 30 October 15, 11:59pm)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="35" textFill="WHITE">
-                                             <font>
-                                                <Font name="Roboto Bold" size="10.0" />
-                                             </font>
-                                          </CheckBox>
-                                          <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label text="CS2102 Submission" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="(Mon, 2 November 15)" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Roboto Condensed Bold" size="11.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </FlowPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                                 <BorderPane.margin>
-                                    <Insets top="10.0" />
-                                 </BorderPane.margin>
-                              </VBox>
-                           </center>
                            <top>
                               <Label text="Uncompleted" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
                                  <font>
@@ -855,6 +1106,137 @@
                                  </font>
                               </Label>
                            </top>
+                           <center>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="overlay-scrollpane" BorderPane.alignment="CENTER">
+                                 <padding>
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <content>
+                                    <VBox fx:id="vboxSearchUncompleted" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                       <children>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="15" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="HDD Purchase Proposal Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Fri, 23 October 15)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="14" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Response Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Wed, 21 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="3" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Reflection Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Sat, 17 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="4" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="Developer Guide Submissionnnnnnnnnnnnnnnn" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15), 11:59pm" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="470.0" spacing="3.5">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="5" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="10.0" />
+                                                   </font>
+                                                </CheckBox>
+                                                <FlowPane hgap="3.5" prefHeight="2.0" prefWidth="438.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <Label text="User Guide Submission" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Slab Regular" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="(Thurs, 15 October 15, 11:59pm)" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="Roboto Condensed Bold" size="11.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </FlowPane>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <BorderPane.margin>
+                                    <Insets right="20.0" />
+                                 </BorderPane.margin>
+                              </ScrollPane>
+                           </center>
                         </BorderPane>
                      </children>
                   </GridPane>

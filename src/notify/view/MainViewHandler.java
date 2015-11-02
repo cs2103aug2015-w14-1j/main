@@ -146,6 +146,7 @@ public class MainViewHandler {
 	private ArrayList<Task> comingTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 
+	
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
 	@FXML private VBox vboxComing;
@@ -156,8 +157,12 @@ public class MainViewHandler {
 	@FXML private VBox vboxFive;
 	@FXML private VBox vboxSix;
 	@FXML private VBox vboxSeven;
+	@FXML private VBox vboxSearchCompleted;
+	@FXML private VBox vboxSearchUncompleted;
+	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
 	
