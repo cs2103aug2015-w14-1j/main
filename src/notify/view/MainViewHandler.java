@@ -24,6 +24,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -783,10 +785,20 @@ public class MainViewHandler {
 	}*/
 	
 	public CheckBox createCheckbox(String text, Font font, Paint textFill) {
+		
 		CheckBox checkbox = new CheckBox(text);
 		checkbox.setFont(font);
 		checkbox.setTextFill(textFill);
-		checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+		checkbox.selectedProperty().addListener(checkboxOnChangedHandler(checkbox));
+		
+		return checkbox;
+		
+	}
+	
+	public ChangeListener<Boolean> checkboxOnChangedHandler(CheckBox checkbox) {
+		
+		return new ChangeListener<Boolean>() {
+			
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
 				
 				if(newValue) {
@@ -797,13 +809,17 @@ public class MainViewHandler {
 				}
 				
 			}
-		});
+			
+		};
 		
-		return checkbox;
 	}
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
-		if(keyEvent.getCode() == KeyCode.ENTER) {
+		
+		KeyCode keyCode = keyEvent.getCode();
+		
+		if(keyCode == KeyCode.ENTER) {
+			
 			Result result = logic.processCommand(txtCommand.getText());
 			
 			if(result.getActionPerformed() == Action.SEARCH) {
@@ -822,7 +838,21 @@ public class MainViewHandler {
 			
 			load();
 			txtCommand.setText("");
+			
+		} else {
+
+			KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
+			
+			if(keyCombination.match(keyEvent)) {
+				
+				logic.processCommand("undo");
+				load();
+				
+			}
+			
 		}
+		
+		
 	}
 	
 	
