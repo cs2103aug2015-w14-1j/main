@@ -182,14 +182,14 @@ public class DateTimeParser {
 		boolean dateFound = false;
 		for(int i = 0; i < KEYWORD_TODAY.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TODAY[i])) {
-				result = getInstance();
+				result = Calendar.getInstance();
 				dateFound = true;
 			}
 		}
 		
 		for(int i = 0; i < KEYWORD_TOMORROW.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_TOMORROW[i])) {
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.add(Calendar.DATE, OFFSET_DAY);
 				dateFound = true;
 			}
@@ -197,7 +197,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_WEEK.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_WEEK[i])) {
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.add(Calendar.DATE, OFFSET_WEEK);
 				dateFound = true;
 			}
@@ -205,7 +205,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_MONTH.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_MONTH[i])) {
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.add(Calendar.MONTH, OFFSET_MONTH);
 				dateFound = true;
 			}
@@ -213,7 +213,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < KEYWORD_NEXT_YEAR.length; i++) {
 			if(rawDate.equalsIgnoreCase(KEYWORD_NEXT_YEAR[i])) {
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.add(Calendar.YEAR, OFFSET_YEAR);
 				dateFound = true;
 			}
@@ -232,7 +232,7 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.set(Calendar.DATE, day);
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);
@@ -254,7 +254,7 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.set(Calendar.DATE, day);
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);
