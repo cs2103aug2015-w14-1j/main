@@ -13,6 +13,8 @@ import java.util.Date;
 
 import javax.sound.sampled.Control;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -784,6 +786,18 @@ public class MainViewHandler {
 		CheckBox checkbox = new CheckBox(text);
 		checkbox.setFont(font);
 		checkbox.setTextFill(textFill);
+		checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
+				
+				if(newValue) {
+					
+					logic.processCommand("mark " + checkbox.getText());
+					load();
+					
+				}
+				
+			}
+		});
 		
 		return checkbox;
 	}
@@ -810,6 +824,8 @@ public class MainViewHandler {
 			txtCommand.setText("");
 		}
 	}
+	
+	
 	
 	//public void add(ArrayList<Task> tasklist) {
 		//Node header = vboxFloating.getChildren().get(0);
