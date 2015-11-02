@@ -268,7 +268,6 @@ public class MainViewHandler {
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
-			//ArrayList<Task> dailyTasks = new ArrayList<Task>();
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
@@ -823,6 +822,12 @@ public class MainViewHandler {
 			Result result = logic.processCommand(txtCommand.getText());
 			
 			if(result.getActionPerformed() == Action.SEARCH) {
+				
+				for(int i = 0; i < result.getResults().size(); i++) {
+					
+					System.out.println(result.getResults().get(i).getTaskName());
+					
+				}
 				
 				pnOverlay.setVisible(true);
 				bpnSearch.setVisible(true);
