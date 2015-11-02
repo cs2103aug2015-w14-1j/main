@@ -312,9 +312,21 @@ public class Task {
 	}
 	
 	public boolean isSearchedTask(String keyWord) {
-		if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase()))
-			return true;
-		return false;
+		boolean result = false;
+		
+		if(isNull(this.category)) {
+			if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
+				result = true;
+		} else {
+			if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase())) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	private boolean isNull(Object obj) {
+		return obj==null;
 	}
 	
 	public int getTaskId() {
