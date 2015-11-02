@@ -26,7 +26,22 @@
 		</copy>
 		<copy todir="externalLibs">
 			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
+				<filename name="commons-lang3-3.4.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
 				<filename name="java-json.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Applications/Eclipse.app/Contents/Eclipse/plugins/org.junit_4.12.0.v201504281640">
+				<filename name="junit.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Applications/Eclipse.app/Contents/Eclipse/plugins">
+				<filename name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
@@ -36,6 +51,11 @@
 		</copy>
 	
 		<mkdir dir="project" />
+		<copy todir="project">
+			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
+				<include name="test/**" />
+			</fileset>
+		</copy>
 		<copy todir="project">
 			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
 				<include name="src/**" />
@@ -53,7 +73,10 @@
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
 			<fileset dir="externalLibs">
+				<include name="commons-lang3-3.4.jar"/>
+				<include name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
 				<include name="gson-2.2.2.jar"/>
+				<include name="junit.jar"/>
 				<include name="jackson-all-1.9.0.jar"/>
 				<include name="java-json.jar"/>
 			</fileset>
@@ -62,6 +85,11 @@
 		<!-- Copy project references -->
 	
 		<!-- Copy project sources itself -->
+		<copy todir="build/src">
+			<fileset dir="project/test">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
 		<copy todir="build/src">
 			<fileset dir="project/src">
 				<include name="**/*"/>
@@ -78,6 +106,9 @@
 	
 		<!-- Copy over none Java-Files -->
 		<copy todir="build/classes">
+		<fileset dir="project/test">
+			<exclude name="**/*.java"/>
+		</fileset>
 		<fileset dir="project/src">
 			<exclude name="**/*.java"/>
 		</fileset>
@@ -106,7 +137,7 @@
 	
 		<fx:application id="fxApplication"
 			name="Notify"
-			mainClass="cs.notify.controller.Main"
+			mainClass="notify.logic.Main"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -120,9 +151,9 @@
 			<fx:resources refid="appRes"/>
 	
 			<manifest>
-				<attribute name="Implementation-Vendor" value="notify.cs"/>
+				<attribute name="Implementation-Vendor" value="notify"/>
 				<attribute name="Implementation-Title" value="Notify"/>
-				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="Implementation-Version" value="0.3"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>
@@ -140,7 +171,7 @@
 			updatemode="background" >
 	
 			<fx:platform basedir="${java.home}"/>
-			<fx:info title="Notify" vendor="notify.cs"/>
+			<fx:info title="Notify" vendor="notify"/>
 	
 			<fx:application refId="fxApplication"/>
 			<fx:resources refid="appRes"/>

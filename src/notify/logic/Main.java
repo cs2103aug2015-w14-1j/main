@@ -62,6 +62,9 @@ public class Main extends Application {
 		}
 		catch(IOException e) {
 			e.printStackTrace();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

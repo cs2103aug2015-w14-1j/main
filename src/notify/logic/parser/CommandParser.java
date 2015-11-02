@@ -1,5 +1,6 @@
 package notify.logic.parser;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -98,7 +99,11 @@ public class CommandParser {
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.isSameDay()) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
@@ -172,7 +177,11 @@ public class CommandParser {
 			
 			System.out.println(datePrompt);
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.isSameDay()) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
