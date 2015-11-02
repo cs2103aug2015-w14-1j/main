@@ -396,6 +396,11 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Generates the timestamp for ranged tasks
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. 23 Oct 15, 12:00AM to 12:00PM)
+	 */
 	public String generateRangeTimestamp(Task task) {
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
@@ -406,37 +411,29 @@ public class MainViewHandler {
 		Calendar taskEndDate = task.getEndDate();
 		Calendar taskEndTime = task.getEndTime();
 		
-		//String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
-		//String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
-		//String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
-		//String DAILY_RANGE_WITH_TIME = "till %1$s %2$s";
-		//String DAILY_RANGE_NOT_STARTED_TIMESTAMP = "from %1$s till %2$s %3$s";
-		
-		String startDateStamp = "";
-		String startTimeStamp = "";
-		String endDateStamp = "";
-		String endTimeStamp = "";
-
-		
+		String taskStartDateStamp = "";
+		String taskStartTimeStamp = "";
+		String taskEndDateStamp = "";
+		String taskEndTimeStamp = "";
 		String timeStamp = "";
 		
 		if(task.isComingSoon() || task.isOverdue()) {
 			
 			if(taskStartTime != null && taskEndTime != null) {
 				
-				startDateStamp = dateFormatter.format(taskStartDate.getTime());
-				startTimeStamp = timeFormatter.format(taskStartTime.getTime());
-				endDateStamp = dateFormatter.format(taskEndDate.getTime());
-				endTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
-				timeStamp = String.format(RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT, startDateStamp, startTimeStamp, endDateStamp, endTimeStamp);
+				timeStamp = String.format(RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT, taskStartDateStamp, taskStartTimeStamp, taskEndDateStamp, taskEndTimeStamp);
 				
 			} else {
 				
-				startDateStamp = dateFormatter.format(taskStartDate.getTime());
-				endDateStamp = dateFormatter.format(taskEndDate.getTime());
+				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
+				taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 				
-				timeStamp = String.format(RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT, startDateStamp, endDateStamp);
+				timeStamp = String.format(RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT, taskStartDateStamp, taskEndDateStamp);
 				
 			}
 			
@@ -452,26 +449,26 @@ public class MainViewHandler {
 				
 			}
 			
-			endDateStamp = dateFormatter.format(taskEndDate.getTime());
+			taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 			
 			if(taskStartTime != null && taskEndTime != null) {
 				
-				startTimeStamp = timeFormatter.format(taskStartTime.getTime());
-				endTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
 				if(task.isStarted()) {
 					
-					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 					
 				} else {
 					
-					timeStamp = String.format(RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, startTimeStamp, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndDateStamp, taskEndTimeStamp);
 					
 				}
 				
 			} else {
 				
-				timeStamp = String.format(RANGE_TILL_END_DATE_TIMESTAMP_FORMAT, endDateStamp);
+				timeStamp = String.format(RANGE_TILL_END_DATE_TIMESTAMP_FORMAT, taskEndDateStamp);
 				
 			}
 			
@@ -814,8 +811,8 @@ public class MainViewHandler {
 		}
 	}
 	
-	public void add(ArrayList<Task> tasklist) {
-		Node header = vboxFloating.getChildren().get(0);
+	//public void add(ArrayList<Task> tasklist) {
+		//Node header = vboxFloating.getChildren().get(0);
 		
 		//vboxFloating.getChildren().clear();
 		//vboxFloating.getChildren().add(header);
@@ -829,12 +826,12 @@ public class MainViewHandler {
 			vboxFloating.getChildren().add(hbox);
 		}*/
 
-		CheckBox checkbox = createCheckbox((4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-		Label task = createLabel(tasklist.get(0).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
+		//CheckBox checkbox = createCheckbox((4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
+		//Label task = createLabel(tasklist.get(0).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
 		//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
 
-		HBox hbox = createItem(true, checkbox, task);
-		vboxFloating.getChildren().add(hbox);
-		vboxFloating.requestLayout();
-	}
+		//HBox hbox = createItem(true, checkbox, task);
+		//vboxFloating.getChildren().add(hbox);
+		//vboxFloating.requestLayout();
+	//}
 }
