@@ -182,13 +182,10 @@ public class CommandParser {
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
-			System.out.println(input);
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM].trim();
-			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
-			System.out.println(datePrompt);
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
 				if(dateRange.isSameDay()) {
 					taskType = TaskType.DEADLINE;
@@ -275,7 +272,6 @@ public class CommandParser {
 	
 	private String[] parseDate(String input) {
 		String compare = input.toUpperCase();
-		System.out.println(input);
 		
 		int byIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_BY + COMMAND_SEPERATOR);
 		int onIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_ON + COMMAND_SEPERATOR);

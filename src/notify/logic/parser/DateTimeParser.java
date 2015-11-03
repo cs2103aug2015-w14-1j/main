@@ -89,7 +89,7 @@ public class DateTimeParser {
 	
 	public static DateRange parseDateRange(String rawDateTime) {
 		
-		rawDateTime = rawDateTime.toUpperCase();
+		rawDateTime = rawDateTime.toUpperCase().trim();
 		
 		DateRange dateRange = new DateRange();
 
@@ -160,7 +160,7 @@ public class DateTimeParser {
 				dateRange.setEndDate(endDateTime);
 			}
 		}
-		
+	
 		return dateRange;
 	}
 	
