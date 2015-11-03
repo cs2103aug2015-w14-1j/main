@@ -307,14 +307,9 @@ public class CommandParser {
 	}
 	
 	
-	private String containsKeyword(String input, String[]... arrays) {
+	private String containsKeyword(String input, String[] array) {
 		
 		String keyword = null;
-		
-		String[] array = { };
-		for(int i = 0; i < arrays.length; i++) {
-			ArrayUtils.addAll(array, arrays[i]);
-		}
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
