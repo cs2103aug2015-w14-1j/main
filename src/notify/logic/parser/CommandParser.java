@@ -100,6 +100,7 @@ public class CommandParser {
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM];
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
+			System.out.println(dateRange);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
 				if(dateRange.isSameDay()) {
