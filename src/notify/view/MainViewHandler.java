@@ -140,7 +140,10 @@ public class MainViewHandler {
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
 	
-	private static String INVALID_COMMAND_MESSAGE = "Invalid command entered. Please try again.";
+	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
+	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
+	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
+	private static String DELETED_MESSAGE = "Task '%1$s' deleted.";
 	
 	private static String SEARCH_INPUT = "";
 	
@@ -770,6 +773,15 @@ public class MainViewHandler {
 		
 	}
 	
+	
+	
+	public void setFeedbackLabel(String message, Paint textFill) {
+		
+		lblFeedback.setText(message);
+		lblFeedback.setTextFill(textFill);
+		
+	}
+	
 	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
@@ -811,6 +823,22 @@ public class MainViewHandler {
 					
 				}
 				
+				Task task = result.getFirstResult();
+				
+				if(actionPerformed == Action.ADD) {
+					
+					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+
+				} else if(actionPerformed == Action.EDIT) {
+
+					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				} else if(actionPerformed == Action.DELETE) {
+					
+					setFeedbackLabel(String.format(DELETED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				}
+				
 				load();
 				
 				break;
@@ -833,20 +861,11 @@ public class MainViewHandler {
 	}
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
-
-		/*FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), lblFeedback);
-
-		
-		fadeTransition.setFromValue(1.0);
-		fadeTransition.setToValue(0);
-		fadeTransition.setCycleCount(1);
-		fadeTransition.setDelay(Duration.millis(1000));
-		fadeTransition.setAutoReverse(true);*/
+		String userInput = txtCommand.getText().trim();
 		
 		try {
 
 			KeyCode keyCode = keyEvent.getCode();
-			String userInput = txtCommand.getText().trim();
 
 			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
@@ -929,7 +948,7 @@ public class MainViewHandler {
 			
 		} catch(IllegalArgumentException e) {
 			
-			lblFeedback.setText(INVALID_COMMAND_MESSAGE);
+			lblFeedback.setText(String.format(INVALID_COMMAND_MESSAGE, userInput));
 			lblFeedback.setTextFill(ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
 			

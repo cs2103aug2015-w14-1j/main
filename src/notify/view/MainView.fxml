@@ -22,7 +22,7 @@
                   <Insets bottom="7.0" top="7.0" />
                </padding>
                <font>
-                  <Font name="Roboto" size="12.0" />
+                  <Font name="Roboto Black" size="12.0" />
                </font>
             </Label>
          </children>
