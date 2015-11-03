@@ -16,8 +16,8 @@ public class DateTimeParser {
 	private static final String[] KEYWORD_NEXT_MONTH = { "NEXT MONTH" };
 	private static final String[] KEYWORD_NEXT_YEAR = { "NEXT YEAR" };
 	
-	private static final int OFFSET_DAY = 1;
-	private static final int OFFSET_WEEK = 7;
+	public static final int OFFSET_DAY = 1;
+	public static final int OFFSET_WEEK = 7;
 	private static final int OFFSET_MONTH = 1;
 	private static final int OFFSET_YEAR = 1;
 	
