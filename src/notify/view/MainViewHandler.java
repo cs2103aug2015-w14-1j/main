@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Stack;
 
 import javax.sound.sampled.Control;
 
@@ -143,6 +144,9 @@ public class MainViewHandler {
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
 	
+	private static Stack<String> commandHistoryStack = new Stack<String>();
+	private static Stack<String> commandFutureStack = new Stack<String>();
+	
 	private Logic logic;
 	
 	private ArrayList<Task> overdueTasks;
@@ -172,6 +176,7 @@ public class MainViewHandler {
 	
 	@FXML
 	public void initialize() {
+		
 		//initDailyView();
 		//populateOverdueTask();
 		//populateFloatingTask();
@@ -201,10 +206,25 @@ public class MainViewHandler {
 	 */
 	public void load() {
 		
+		txtCommand.requestFocus();
+		
 		loadOverdueTask();
 		loadFloatingTask();
 		loadComingTask();
 		loadDailyTask();
+		
+	}
+	
+	public boolean isSearchViewVisible() {
+		
+		return bpnSearch.isVisible();
+		
+	}
+	
+	
+	public boolean isCompletedViewVisible() {
+		
+		return false;
 		
 	}
 	
@@ -309,6 +329,20 @@ public class MainViewHandler {
 		
 		vboxSearchUncompleted.getChildren().clear();
 		vboxSearchUncompleted.getChildren().addAll(hboxesUncompleted);
+		
+	}
+	
+	public void showSearchView() {
+		
+		pnOverlay.setVisible(true);
+		bpnSearch.setVisible(true);
+		
+	}
+	
+	public void hideSearchView() {
+		
+		pnOverlay.setVisible(false);
+		bpnSearch.setVisible(false);
 		
 	}
 	
@@ -729,6 +763,47 @@ public class MainViewHandler {
 		
 	}
 	
+	public void processResult(Result result) {
+		
+		Action actionPerformed = result.getActionPerformed();
+		
+		switch(actionPerformed) {
+		
+			case SEARCH:
+				
+				loadSearchResult(result.getResults());
+				showSearchView();
+				
+				break;
+				
+			case BACK:
+				
+				hideSearchView();
+				
+				break;
+				
+			case DISPLAY:
+				
+				System.out.println("MainViewHandler: display command");
+				
+				break;
+				
+			case EXIT:
+
+				System.exit(0);
+				
+				break;
+			
+			default:
+				
+				load();
+				
+				break;
+		
+		}
+		
+	}
+	
 	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
 		if(checkbox.isSelected()) {
@@ -743,35 +818,69 @@ public class MainViewHandler {
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
 		
 		KeyCode keyCode = keyEvent.getCode();
-		
-		if(keyCode == KeyCode.ENTER) {
+		String userInput = txtCommand.getText().trim();
+
+		if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 			
-			Result result = logic.processCommand(txtCommand.getText());
+			Result result = logic.processCommand(userInput);
+			processResult(result);
 			
-			if(result.getActionPerformed() == Action.SEARCH) {
+			if(!commandFutureStack.isEmpty()) {
 				
-				loadSearchResult(result.getResults());
-				pnOverlay.setVisible(true);
-				bpnSearch.setVisible(true);
-				
-			}
-			
-			if(result.getActionPerformed() == Action.BACK) {
-				
-				pnOverlay.setVisible(false);
-				bpnSearch.setVisible(false);
+				commandHistoryStack.push(userInput);
 				
 			}
 			
-			load();
+			while(!commandFutureStack.isEmpty()) {
+				
+				commandHistoryStack.push(commandFutureStack.pop());
+				
+			}
+
+			commandHistoryStack.push(userInput);
+
 			txtCommand.setText("");
 			
 		} else if(keyCode == KeyCode.BACK_SPACE) {
 			
 			if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
 				
-				pnOverlay.setVisible(false);
-				bpnSearch.setVisible(false);
+				hideSearchView();
+				
+			}
+			
+		} else if(keyCode == KeyCode.UP) {
+			
+			if(!commandHistoryStack.isEmpty()) {
+				
+				String previousCommand = commandHistoryStack.pop();
+				String currentCommand = txtCommand.getText().trim();
+				
+				if(!currentCommand.equals("")) {
+					
+					commandFutureStack.push(currentCommand);
+					
+				}
+				
+				txtCommand.setText(previousCommand);
+				
+			}
+			
+		} else if(keyCode == KeyCode.DOWN) {
+			
+			String currentCommand = txtCommand.getText().trim();
+			
+			if(!commandFutureStack.isEmpty()) {
+				
+				String nextCommand = commandFutureStack.pop();
+				
+				commandHistoryStack.push(currentCommand);
+				txtCommand.setText(nextCommand);
+				
+			} else if(!currentCommand.equals("")) {
+				
+				commandHistoryStack.push(currentCommand);
+				txtCommand.setText("");
 				
 			}
 			

@@ -53,7 +53,7 @@ public class Main extends Application {
 	                Platform.runLater(new Runnable() {
 	                    @Override
 	                    public void run() {
-	                    	logic.getStorage().saveTasks(logic.getTaskManager().getTask());
+	                    	logic.save();
 	                    }
 	                });
 	            }
