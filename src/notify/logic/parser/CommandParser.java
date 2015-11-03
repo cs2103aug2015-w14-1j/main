@@ -1,6 +1,5 @@
 package notify.logic.parser;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -15,6 +14,7 @@ import notify.logic.command.AddCommand;
 import notify.logic.command.BackCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
+import notify.logic.command.DisplayCommand;
 import notify.logic.command.EditCommand;
 import notify.logic.command.ExitCommand;
 import notify.logic.command.MarkCommand;
@@ -70,7 +70,7 @@ public class CommandParser {
 			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
 			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
 			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
-			case DISPLAY: command = handleDisplayCommand(input); break;
+			case DISPLAY: command = handleDisplayCommand(commandAction, history, taskManager, input); break;
 			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
 			case SET: command = handleSetCommand(commandAction, storage, input); break;
 			case EXIT: command = handleExitCommand(commandAction, taskManager, input); break;
@@ -229,12 +229,11 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleDisplayCommand(String input) {
-		Command command = null; //new DeleteCommand();
+	private Command handleDisplayCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		DisplayCommand command = null; //new DeleteCommand();
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
-		String keyword = split[FIRST_PARAM_INDEX];
-
+		command = new DisplayCommand(commandAction, taskManager);
+		
 		return command;
 	}
 	
