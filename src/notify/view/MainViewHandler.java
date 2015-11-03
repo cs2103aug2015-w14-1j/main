@@ -849,6 +849,15 @@ public class MainViewHandler {
 			load();
 			txtCommand.setText("");
 			
+		} else if(keyCode == KeyCode.BACK_SPACE) {
+			
+			if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+				
+				pnOverlay.setVisible(false);
+				bpnSearch.setVisible(false);
+				
+			}
+			
 		} else {
 
 			KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
