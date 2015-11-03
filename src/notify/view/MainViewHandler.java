@@ -15,6 +15,8 @@ import javax.sound.sampled.Control;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -118,6 +120,8 @@ public class MainViewHandler {
 	private static Paint COMING_SUBTEXT_FILL = Paint.valueOf("#8EB264");
 	private static Paint DAILY_TEXT_FILL = Paint.valueOf("#5D5D33");
 	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
+	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
+	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
 	
 	
 
@@ -214,7 +218,7 @@ public class MainViewHandler {
 		overdueTasks = logic.getOverdueTasks();
 
 		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(overdueTasks, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(overdueTasks, false, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
 		
 		vboxOverdue.getChildren().clear();
 		vboxOverdue.getChildren().add(hboxHeader);
@@ -232,7 +236,7 @@ public class MainViewHandler {
 		floatingTasks = logic.getFloatingTasks();
 		
 		HBox hboxHeader = generateListHeader(FLOATING_TITLE, FLOATING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(floatingTasks, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(floatingTasks, false, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
 		
 		vboxFloating.getChildren().clear();
 		vboxFloating.getChildren().add(hboxHeader);
@@ -250,7 +254,7 @@ public class MainViewHandler {
 		comingTasks = logic.getComingSoonTasks();
 
 		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(comingTasks, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(comingTasks, false, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
 		
 		vboxComing.getChildren().clear();
 		vboxComing.getChildren().add(hboxHeader);
@@ -275,7 +279,7 @@ public class MainViewHandler {
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
-			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
+			ArrayList<HBox> hboxes = generateListItem(dailyTasks, false, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			
 			vboxes[i].getChildren().clear();
 			vboxes[i].getChildren().add(hboxHeader);
@@ -289,6 +293,43 @@ public class MainViewHandler {
 	}
 	
 	
+	public void loadSearchResult(ArrayList<Task> searchResults) {
+		
+		ArrayList<Task> completedTasks = new ArrayList<Task>();
+		ArrayList<Task> uncompletedTasks = new ArrayList<Task>();
+		
+		completedTasks = filterTask(searchResults, true);
+		uncompletedTasks = filterTask(searchResults, false);
+
+		ArrayList<HBox> hboxesCompleted = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		ArrayList<HBox> hboxesUncompleted = generateListItem(uncompletedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		
+		vboxSearchCompleted.getChildren().clear();
+		vboxSearchCompleted.getChildren().addAll(hboxesCompleted);
+		
+		vboxSearchUncompleted.getChildren().clear();
+		vboxSearchUncompleted.getChildren().addAll(hboxesUncompleted);
+		
+	}
+	
+	public ArrayList<Task> filterTask(ArrayList<Task> tasks, boolean isCompleted) {
+		
+		ArrayList<Task> results = new ArrayList<Task>();
+		
+		for(Task task: tasks) {
+			
+			if(task.isCompleted() == isCompleted) {
+				
+				results.add(task);
+				
+			}
+			
+		}
+		
+		return results;
+		
+	}
+	
 	
 	/**
 	 * Generates the header (without subtitle)
@@ -300,7 +341,7 @@ public class MainViewHandler {
 	public HBox generateListHeader(String title, Paint titleTextFill) {
 		
 		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle);
 		
 		return hbox;
 		
@@ -313,7 +354,7 @@ public class MainViewHandler {
 	 * @param task the task to have its timestamp generated
 	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
 	 */
-	public String generateTimeStamp(Task task) {
+	public String generateTimeStamp(Task task, boolean isSearch) {
 		
 		TaskType taskType = task.getTaskType();
 		String timeStamp = "";
@@ -322,12 +363,12 @@ public class MainViewHandler {
 		
 			case DEADLINE:
 
-				timeStamp = generateDeadlineTimestamp(task);
+				timeStamp = generateDeadlineTimestamp(task, isSearch);
 				break;
 				
 			case RANGE:
 				
-				timeStamp = generateRangeTimestamp(task);		
+				timeStamp = generateRangeTimestamp(task, isSearch);		
 				break;
 				
 			default:
@@ -348,7 +389,7 @@ public class MainViewHandler {
 	 * @param task the task to have its timestamp generated
 	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
 	 */
-	public String generateDeadlineTimestamp(Task task) {
+	public String generateDeadlineTimestamp(Task task, boolean isSearch) {
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
@@ -364,7 +405,7 @@ public class MainViewHandler {
 
 		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 		
-		if(task.isComingSoon() || task.isOverdue()) {
+		if(task.isComingSoon() || task.isOverdue() || isSearch) {
 
 			if(taskStartTime != null) {
 
@@ -409,7 +450,7 @@ public class MainViewHandler {
 	 * @param task the task to have its timestamp generated
 	 * @return timestamp (e.g. 23 Oct 15, 12:00AM to 12:00PM)
 	 */
-	public String generateRangeTimestamp(Task task) {
+	public String generateRangeTimestamp(Task task, boolean isSearch) {
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
@@ -425,7 +466,7 @@ public class MainViewHandler {
 		String taskEndTimeStamp = "";
 		String timeStamp = "";
 		
-		if(task.isComingSoon() || task.isOverdue()) {
+		if(task.isComingSoon() || task.isOverdue() || isSearch) {
 			
 			if(taskStartTime != null && taskEndTime != null) {
 				
@@ -520,7 +561,7 @@ public class MainViewHandler {
 		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
 		Label lblSubtitle = createLabel(subtitle, SUBTITLE_FONT, subtitleTextFill);
 
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle, lblSubtitle);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
 		
 		return hbox;
 		
@@ -535,7 +576,7 @@ public class MainViewHandler {
 	 * @param subtextFill the color of the subtext
 	 * @return
 	 */
-	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, Paint textFill, Paint subtextFill) {
+	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, boolean isSearch, Paint textFill, Paint subtextFill) {
 		
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
 		CheckBox checkBox = new CheckBox();
@@ -547,22 +588,22 @@ public class MainViewHandler {
 			
 			Task task = tasks.get(i);
 			
-			checkBox = createCheckbox(task.getTaskId() + "", CHECKBOX_FONT, textFill);
+			checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
 			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
 
-				subtext = generateTimeStamp(task);
+				subtext = generateTimeStamp(task, isSearch);
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			} else if(task.getTaskType() == TaskType.RANGE) {
 				
-				subtext = generateTimeStamp(task);
+				subtext = generateTimeStamp(task, isSearch);
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			}
 			
-			HBox hbox = createItem(true, checkBox, lblTaskName, lblTaskTime);
+			HBox hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
 
 			hboxes.add(hbox);
 			
@@ -572,157 +613,20 @@ public class MainViewHandler {
 		
 	}
 	
-	/*public void initDailyView() {
-		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };
-
-		// get the calendar instance and set the time to today.
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		
-		// format the date
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM");
-		
-
-		// temporary dummy tasks
-		String[] tasksMonday = {"CS2103T Group Meeting", "User Guide Submission", "Developer Guide Submission"};
-		String[] timingsMonday = {"6.00pm", "11.59pm", "11.59pm"};
-		
-		String[] tasksTuesday = {"GEK1901 Midterms", "MC Meeting"};
-		String[] timingsTuesday = {"2.00pm to 4.00pm", "6.30pm to 8.30pm"};
-		
-		String[] tasksWednesday = {"IT Cell Core Meeting"};
-		String[] timingsWednesday = {"6.30pm to 7.30pm"};
-
-		String[] tasksThursday = {};
-		String[] timingsThursday = {};
-		
-		String[] tasksFriday = {"CS2102 Project Meeting", "Collect Parcel", "Dinner with Jim", "Supper with Jim's Mother"};
-		String[] timingsFriday = {"12.00pm", "4.00pm", "7.00pm", "11.00pm"};
-		
-		String[] tasksSaturday = {"Startup Hackathon", "Hair cut"};
-		String[] timingsSaturday = {"9.00am to 12.00pm", "3.00pm"};
-		
-		String[] tasksSunday = {};
-		String[] timingsSunday = {};
-
-		String[][] tasks = {tasksMonday, tasksTuesday, tasksWednesday, tasksThursday, tasksFriday, tasksSaturday, tasksSunday};
-		String[][] timings = {timingsMonday, timingsTuesday, timingsWednesday, timingsThursday, timingsFriday, timingsSaturday, timingsSunday};
-
-		// set up the view for today and the next 6 days
-		for(int i = 0; i < vboxes.length; i++) {
-			// create and add the header to the current vbox
-			// and populate the current vbox
-			initDailyTaskHeader(vboxes[i], calendar, sdf);
-			populateDailyTask(vboxes[i], tasks[i], timings[i]);
-			
-			// increase the day by 1
-			calendar.add(Calendar.DAY_OF_MONTH, 1);
-		}
-	}*/
 	
-	/*public void initDailyTaskHeader(VBox vbox, Calendar calendar, SimpleDateFormat sdf) {
-		// values of today and tomorrow to check with the date and print accordingly
-		Calendar today = Calendar.getInstance();
-		Calendar tomorrow = Calendar.getInstance();
-		
-		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-		
-		// -1 due to index starting from 0 but Calendar starts from 1
-		int dayIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-
-		// get the day and date
-		String day = DAYS_OF_WEEK[dayIndex];
-		String date = sdf.format(calendar.getTime());
-		
-		Label lblTitle = new Label();
-		Label lblSubtitle = new Label();
-		
-		// if statement to check if it's today
-		// if it's not, check if it's tomorrow, if it's not then print their day
-		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
-			lblTitle = createLabel("Today", TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DAY_DATE_STRING_FORMAT, day, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
-			lblTitle = createLabel("Tomorrow", TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DAY_DATE_STRING_FORMAT, day, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		else {
-			lblTitle = createLabel(day, TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DATE_STRING_FORMAT, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle, lblSubtitle);
-
-		vbox.getChildren().add(hbox);
-	}*/
-	
-	/*public void populateDailyTask(VBox vbox, String[] tasks, String[] timings) {
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 14 + tasks.length) + "", CHECKBOX_FONT, DAILY_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, DAILY_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, DAILY_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task, time);
-			vbox.getChildren().add(hbox);
-		}
-	}*/
-	
-	/*public void populateOverdueTask() {
-		String[] tasks = {"IT Cell Meeting"};
-		String[] timings = {"(Friday 9 October, 6.00pm to 8.00pm)"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 21) + "", CHECKBOX_FONT, OVERDUE_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, OVERDUE_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, OVERDUE_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task, time);
-			vboxOverdue.getChildren().add(hbox);
-		}
-	}*/
-	
-	
-	/*public void populateFloatingTask() {
-		String[] tasks = {"Bake brownie", "Buy Birthday Present", "Source for Blazer"};
-		//String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, FLOATING_TEXT_FILL);
-			//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task);
-			vboxFloating.getChildren().add(hbox);
-		}
-	}*/
-	
-	/*public void populateComingSoonTask() {
-		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "User Guide Submission", "Developer Guide Submission", "Cut Nails", "IT Cell Core Team Meeting"};
-		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 16) + "", CHECKBOX_FONT, COMING_TEXT_FILL);
-			Label label = createLabel(tasks[i], TASK_FONT, COMING_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, COMING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, label, time);
-			vboxComing.getChildren().add(hbox);
-		}
-	}*/
 	
 	/**
 	 * Creates the HBox with nodes
 	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
 	 * @return the HBox which represents a single line of item to be added into the VBox
 	 */
-	public HBox createItem(boolean hasCheckbox, Node... nodes) {
+	public HBox createItem(boolean hasCheckbox, boolean isSearch, Node... nodes) {
 		HBox hbox = new HBox();
 		hbox.setSpacing(HBOX_NODE_SPACING);
 		hbox.setAlignment(HBOX_NODE_ALIGNMENT);
 		
-		FlowPane flowPane = new FlowPane();
-		flowPane.setHgap(HBOX_NODE_SPACING);
+		//FlowPane flowPane = new FlowPane();
+		//flowPane.setHgap(HBOX_NODE_SPACING);
 
 		int startIndex = 0;
 		if(hasCheckbox) {
@@ -730,17 +634,40 @@ public class MainViewHandler {
 			startIndex = 1;
 		}
 
-		for(int i = startIndex; i < nodes.length; i++) {
-			flowPane.getChildren().add(nodes[i]);
+		if(isSearch) {
+			
+			VBox vbox = new VBox();
+			
+			for(int i = startIndex; i< nodes.length; i++) {
+				
+				vbox.getChildren().add(nodes[i]);
+				
+			}
+			
+			hbox.getChildren().add(vbox);
+			
+		} else {
+			
+			FlowPane flowPane = new FlowPane();
+			flowPane.setHgap(HBOX_NODE_SPACING);
+			
+			for(int i = startIndex; i < nodes.length; i++) {
+				
+				flowPane.getChildren().add(nodes[i]);
+				
+			}
+			
+			hbox.getChildren().add(flowPane);
+			
 		}
 		
-		hbox.getChildren().add(flowPane);
 		
 		return hbox;
+		
 	}
 	
-	public HBox createItem(Insets insets, boolean hasCheckbox, Node... nodes) {
-		HBox hbox = createItem(hasCheckbox, nodes);
+	public HBox createItem(Insets insets, boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		HBox hbox = createItem(hasCheckbox, isSearch, nodes);
 		hbox.setPadding(insets);
 		
 		return hbox;
@@ -788,33 +715,28 @@ public class MainViewHandler {
 		return label;
 	}*/
 	
-	public CheckBox createCheckbox(String text, Font font, Paint textFill) {
+	public CheckBox createCheckbox(String text, boolean isChecked, Font font, Paint textFill) {
 		
 		CheckBox checkbox = new CheckBox(text);
 		checkbox.setFont(font);
 		checkbox.setTextFill(textFill);
-		checkbox.selectedProperty().addListener(checkboxOnChangedHandler(checkbox));
-		
+		checkbox.setSelected(isChecked);
+		checkbox.setFocusTraversable(false);
+
+		checkbox.setOnAction(event -> checkboxEventHandler(event, checkbox));
+
 		return checkbox;
 		
 	}
 	
-	public ChangeListener<Boolean> checkboxOnChangedHandler(CheckBox checkbox) {
+	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
-		return new ChangeListener<Boolean>() {
+		if(checkbox.isSelected()) {
+
+			logic.processCommand("mark " + checkbox.getText());
+			load();
 			
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
-				
-				if(newValue) {
-					
-					logic.processCommand("mark " + checkbox.getText());
-					load();
-					
-				}
-				
-			}
-			
-		};
+		}
 		
 	}
 	
@@ -828,12 +750,7 @@ public class MainViewHandler {
 			
 			if(result.getActionPerformed() == Action.SEARCH) {
 				
-				for(int i = 0; i < result.getResults().size(); i++) {
-					
-					System.out.println(result.getResults().get(i).getTaskName());
-					
-				}
-				
+				loadSearchResult(result.getResults());
 				pnOverlay.setVisible(true);
 				bpnSearch.setVisible(true);
 				
@@ -874,29 +791,4 @@ public class MainViewHandler {
 		
 	}
 	
-	
-	
-	//public void add(ArrayList<Task> tasklist) {
-		//Node header = vboxFloating.getChildren().get(0);
-		
-		//vboxFloating.getChildren().clear();
-		//vboxFloating.getChildren().add(header);
-		
-		/*for(int i = 0; i < tasklist.size(); i++) {
-			CheckBox checkbox = createCheckbox((i + 4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-			Label task = createLabel(tasklist.get(i).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
-			//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task);
-			vboxFloating.getChildren().add(hbox);
-		}*/
-
-		//CheckBox checkbox = createCheckbox((4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-		//Label task = createLabel(tasklist.get(0).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
-		//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-
-		//HBox hbox = createItem(true, checkbox, task);
-		//vboxFloating.getChildren().add(hbox);
-		//vboxFloating.requestLayout();
-	//}
 }
