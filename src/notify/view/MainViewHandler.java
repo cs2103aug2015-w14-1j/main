@@ -144,8 +144,10 @@ public class MainViewHandler {
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
 	
-	private static Stack<String> commandHistoryStack = new Stack<String>();
-	private static Stack<String> commandFutureStack = new Stack<String>();
+	private static String SEARCH_INPUT = "";
+	
+	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
+	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
 	
 	private Logic logic;
 	
@@ -173,6 +175,7 @@ public class MainViewHandler {
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private Label lblSearchTitle;
 	
 	@FXML
 	public void initialize() {
@@ -763,7 +766,7 @@ public class MainViewHandler {
 		
 	}
 	
-	public void processResult(Result result) {
+	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
 		
@@ -771,6 +774,7 @@ public class MainViewHandler {
 		
 			case SEARCH:
 				
+				SEARCH_INPUT = userInput;
 				loadSearchResult(result.getResults());
 				showSearchView();
 				
@@ -796,6 +800,13 @@ public class MainViewHandler {
 			
 			default:
 				
+				if(isSearchViewVisible()) {
+					
+					Result searchResult = logic.processCommand(SEARCH_INPUT);
+					loadSearchResult(searchResult.getResults());
+					
+				}
+				
 				load();
 				
 				break;
@@ -807,9 +818,11 @@ public class MainViewHandler {
 	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
 		if(checkbox.isSelected()) {
-
-			logic.processCommand("mark " + checkbox.getText());
-			load();
+			
+			String userInput = "mark " + checkbox.getText();
+			Result result = logic.processCommand(userInput);
+			
+			processResult(result, userInput);
 			
 		}
 		
@@ -823,21 +836,21 @@ public class MainViewHandler {
 		if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 			
 			Result result = logic.processCommand(userInput);
-			processResult(result);
+			processResult(result, userInput);
 			
-			if(!commandFutureStack.isEmpty()) {
+			if(!COMMAND_FUTURE_STACK.isEmpty()) {
 				
-				commandHistoryStack.push(userInput);
+				COMMAND_HISTORY_STACK.push(userInput);
 				
 			}
 			
-			while(!commandFutureStack.isEmpty()) {
+			while(!COMMAND_FUTURE_STACK.isEmpty()) {
 				
-				commandHistoryStack.push(commandFutureStack.pop());
+				COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
 				
 			}
 
-			commandHistoryStack.push(userInput);
+			COMMAND_HISTORY_STACK.push(userInput);
 
 			txtCommand.setText("");
 			
@@ -851,14 +864,14 @@ public class MainViewHandler {
 			
 		} else if(keyCode == KeyCode.UP) {
 			
-			if(!commandHistoryStack.isEmpty()) {
+			if(!COMMAND_HISTORY_STACK.isEmpty()) {
 				
-				String previousCommand = commandHistoryStack.pop();
+				String previousCommand = COMMAND_HISTORY_STACK.pop();
 				String currentCommand = txtCommand.getText().trim();
 				
 				if(!currentCommand.equals("")) {
 					
-					commandFutureStack.push(currentCommand);
+					COMMAND_FUTURE_STACK.push(currentCommand);
 					
 				}
 				
@@ -870,16 +883,16 @@ public class MainViewHandler {
 			
 			String currentCommand = txtCommand.getText().trim();
 			
-			if(!commandFutureStack.isEmpty()) {
+			if(!COMMAND_FUTURE_STACK.isEmpty()) {
 				
-				String nextCommand = commandFutureStack.pop();
+				String nextCommand = COMMAND_FUTURE_STACK.pop();
 				
-				commandHistoryStack.push(currentCommand);
+				COMMAND_HISTORY_STACK.push(currentCommand);
 				txtCommand.setText(nextCommand);
 				
 			} else if(!currentCommand.equals("")) {
 				
-				commandHistoryStack.push(currentCommand);
+				COMMAND_HISTORY_STACK.push(currentCommand);
 				txtCommand.setText("");
 				
 			}
@@ -890,8 +903,10 @@ public class MainViewHandler {
 			
 			if(keyCombination.match(keyEvent)) {
 				
-				logic.processCommand("undo");
-				load();
+				userInput = "undo";
+				Result result = logic.processCommand(userInput);
+				
+				processResult(result, userInput);
 				
 			}
 			
