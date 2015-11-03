@@ -146,6 +146,7 @@ public class MainViewHandler {
 	private ArrayList<Task> comingTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 
+	
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
 	@FXML private VBox vboxComing;
@@ -156,8 +157,12 @@ public class MainViewHandler {
 	@FXML private VBox vboxFive;
 	@FXML private VBox vboxSix;
 	@FXML private VBox vboxSeven;
+	@FXML private VBox vboxSearchCompleted;
+	@FXML private VBox vboxSearchUncompleted;
+	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
 	
@@ -268,7 +273,6 @@ public class MainViewHandler {
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
-			//ArrayList<Task> dailyTasks = new ArrayList<Task>();
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
@@ -824,6 +828,12 @@ public class MainViewHandler {
 			
 			if(result.getActionPerformed() == Action.SEARCH) {
 				
+				for(int i = 0; i < result.getResults().size(); i++) {
+					
+					System.out.println(result.getResults().get(i).getTaskName());
+					
+				}
+				
 				pnOverlay.setVisible(true);
 				bpnSearch.setVisible(true);
 				
@@ -838,6 +848,15 @@ public class MainViewHandler {
 			
 			load();
 			txtCommand.setText("");
+			
+		} else if(keyCode == KeyCode.BACK_SPACE) {
+			
+			if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+				
+				pnOverlay.setVisible(false);
+				bpnSearch.setVisible(false);
+				
+			}
 			
 		} else {
 

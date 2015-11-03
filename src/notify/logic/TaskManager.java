@@ -94,7 +94,7 @@ public class TaskManager {
 		ArrayList<Task> tempList = new ArrayList<Task>();
 		
 		for(Task task : taskList) {
-			if(task.isSearchedTask(keyWord)) {
+			if(task.isSearchedTask(keyWord) && !task.isDeleted()) {
 				tempList.add(task);
 			}
 		}

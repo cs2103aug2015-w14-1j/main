@@ -39,6 +39,10 @@ public class Main extends Application {
 			mainView = (BorderPane)fxmlLoader.load();
 			
 			Scene scene = new Scene(mainView);
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100");
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700");
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic");
+			
 			primaryStage.setScene(scene);
 			primaryStage.setMinHeight(MIN_SCREEN_HEIGHT);
 			primaryStage.setMinWidth(MIN_SCREEN_WIDTH);
