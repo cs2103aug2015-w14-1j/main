@@ -11,18 +11,18 @@
 
 <BorderPane prefHeight="732.0" prefWidth="1020.0" styleClass="main" stylesheets="@../stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notify.view.MainViewHandler">
    <bottom>
-      <AnchorPane prefHeight="73.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="86.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="txtCommand" layoutX="14.0" layoutY="159.0" onKeyPressed="#txtCommandOnKeyPressedHandler" prefHeight="37.0" prefWidth="992.0" promptText="Your wimp is my command" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font></TextField>
-            <Label fx:id="lblFeedback" alignment="CENTER" layoutX="14.0" layoutY="127.0" prefHeight="32.0" prefWidth="932.0" textFill="#16a085" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+            <Label fx:id="lblFeedback" alignment="CENTER" layoutX="14.0" layoutY="127.0" prefHeight="32.0" prefWidth="932.0" textFill="#16a085" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                <padding>
                   <Insets bottom="7.0" top="7.0" />
                </padding>
                <font>
-                  <Font name="Open Sans Semibold" size="13.0" />
+                  <Font name="Roboto Black" size="12.0" />
                </font>
             </Label>
          </children>

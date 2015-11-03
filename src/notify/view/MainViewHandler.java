@@ -9,22 +9,16 @@ import notify.logic.command.Result;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Stack;
 
-import javax.sound.sampled.Control;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -123,6 +117,8 @@ public class MainViewHandler {
 	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
 	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
 	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
+	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
+	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
 	
 	
 
@@ -144,6 +140,11 @@ public class MainViewHandler {
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
 	
+	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
+	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
+	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
+	private static String DELETED_MESSAGE = "Task '%1$s' deleted.";
+	
 	private static String SEARCH_INPUT = "";
 	
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
@@ -156,6 +157,7 @@ public class MainViewHandler {
 	private ArrayList<Task> comingTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 
+	
 	
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
@@ -170,16 +172,21 @@ public class MainViewHandler {
 	@FXML private VBox vboxSearchCompleted;
 	@FXML private VBox vboxSearchUncompleted;
 	
+	
+	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	
+	
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
 	@FXML private Label lblSearchTitle;
 	
+
+	
 	@FXML
 	public void initialize() {
-		
 		//initDailyView();
 		//populateOverdueTask();
 		//populateFloatingTask();
@@ -766,6 +773,33 @@ public class MainViewHandler {
 		
 	}
 	
+	
+	public void addCommandHistory(String userInput) {
+
+		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			
+		}
+		
+		while(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
+			
+		}
+
+		COMMAND_HISTORY_STACK.push(userInput);
+		
+	}
+	
+	
+	public void setFeedbackLabel(String message, Paint textFill) {
+		
+		lblFeedback.setText(message);
+		lblFeedback.setTextFill(textFill);
+		
+	}
+	
 	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
@@ -807,6 +841,22 @@ public class MainViewHandler {
 					
 				}
 				
+				Task task = result.getFirstResult();
+				
+				if(actionPerformed == Action.ADD) {
+					
+					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+
+				} else if(actionPerformed == Action.EDIT) {
+
+					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				} else if(actionPerformed == Action.DELETE) {
+					
+					setFeedbackLabel(String.format(DELETED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				}
+				
 				load();
 				
 				break;
@@ -829,88 +879,89 @@ public class MainViewHandler {
 	}
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
-		
-		KeyCode keyCode = keyEvent.getCode();
 		String userInput = txtCommand.getText().trim();
+		
+		try {
 
-		if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
-			
-			Result result = logic.processCommand(userInput);
-			processResult(result, userInput);
-			
-			if(!COMMAND_FUTURE_STACK.isEmpty()) {
-				
-				COMMAND_HISTORY_STACK.push(userInput);
-				
-			}
-			
-			while(!COMMAND_FUTURE_STACK.isEmpty()) {
-				
-				COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
-				
-			}
+			KeyCode keyCode = keyEvent.getCode();
 
-			COMMAND_HISTORY_STACK.push(userInput);
+			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
+				
+				Result result = logic.processCommand(userInput);
+				processResult(result, userInput);
+				
+				addCommandHistory(userInput);
 
-			txtCommand.setText("");
-			
-		} else if(keyCode == KeyCode.BACK_SPACE) {
-			
-			if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+				txtCommand.setText("");
 				
-				hideSearchView();
+			} else if(keyCode == KeyCode.BACK_SPACE) {
 				
-			}
-			
-		} else if(keyCode == KeyCode.UP) {
-			
-			if(!COMMAND_HISTORY_STACK.isEmpty()) {
-				
-				String previousCommand = COMMAND_HISTORY_STACK.pop();
-				String currentCommand = txtCommand.getText().trim();
-				
-				if(!currentCommand.equals("")) {
+				if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
 					
-					COMMAND_FUTURE_STACK.push(currentCommand);
+					hideSearchView();
 					
 				}
 				
-				txtCommand.setText(previousCommand);
+			} else if(keyCode == KeyCode.UP) {
 				
-			}
-			
-		} else if(keyCode == KeyCode.DOWN) {
-			
-			String currentCommand = txtCommand.getText().trim();
-			
-			if(!COMMAND_FUTURE_STACK.isEmpty()) {
+				if(!COMMAND_HISTORY_STACK.isEmpty()) {
+					
+					String previousCommand = COMMAND_HISTORY_STACK.pop();
+					String currentCommand = txtCommand.getText().trim();
+					
+					if(!currentCommand.equals("")) {
+						
+						COMMAND_FUTURE_STACK.push(currentCommand);
+						
+					}
+					
+					txtCommand.setText(previousCommand);
+					
+				}
 				
-				String nextCommand = COMMAND_FUTURE_STACK.pop();
+			} else if(keyCode == KeyCode.DOWN) {
 				
-				COMMAND_HISTORY_STACK.push(currentCommand);
-				txtCommand.setText(nextCommand);
+				String currentCommand = txtCommand.getText().trim();
 				
-			} else if(!currentCommand.equals("")) {
+				if(!COMMAND_FUTURE_STACK.isEmpty()) {
+					
+					String nextCommand = COMMAND_FUTURE_STACK.pop();
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText(nextCommand);
+					
+				} else if(!currentCommand.equals("")) {
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText("");
+					
+				}
 				
-				COMMAND_HISTORY_STACK.push(currentCommand);
-				txtCommand.setText("");
-				
-			}
-			
-		} else {
+			} else {
 
-			KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
-			
-			if(keyCombination.match(keyEvent)) {
+				KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
 				
-				userInput = "undo";
-				Result result = logic.processCommand(userInput);
-				
-				processResult(result, userInput);
+				if(keyCombination.match(keyEvent)) {
+					
+					userInput = "undo";
+					Result result = logic.processCommand(userInput);
+					
+					processResult(result, userInput);
+					
+				}
 				
 			}
+			
+		} catch(IllegalArgumentException e) {
+			
+			lblFeedback.setText(String.format(INVALID_COMMAND_MESSAGE, userInput));
+			lblFeedback.setTextFill(ERROR_MESSAGE_FILL);
+			txtCommand.setText("");
+
+			COMMAND_HISTORY_STACK.push(userInput);
 			
 		}
+		
 		
 		
 	}

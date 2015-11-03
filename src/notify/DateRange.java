@@ -85,8 +85,8 @@ public class DateRange {
 	public void setEndTime(String endTime) {
 		if(endTime != null) {
 			endTime = endTime.trim();
+			System.out.println(endTime);
 			this.endTime = DateTimeParser.parseTime(endTime);
-			
 			if(isSameDay() == true && this.endTime.before(this.startTime)) {
 				throw new IllegalArgumentException(ERROR_DATE_RANGE);
 			}
