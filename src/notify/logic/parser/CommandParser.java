@@ -27,6 +27,7 @@ import notify.storage.Storage;
 public class CommandParser {
 	
 	public static final String COMMAND_SEPERATOR = " ";
+	public static final String STRING_EMPTY = "";
 	
 	private static final int SEPERATOR_COMMAND_INDEX = 0;
 	private static final int FIRST_PARAM_INDEX = 0;
@@ -34,6 +35,8 @@ public class CommandParser {
 	private static final int RESULTS_PARAM_SIZE = 2;
 	private static final int RESULTS_NAME_PARAM = 0;
 	private static final int RESULTS_DATE_PARAM = 1;
+	
+	private static final int OFFSET_LAST_ITEM = 1;
 	
 	private static final String ERROR_INVALID_COMMAND = "Unable to parse command. Invalid command provided.";
 	private static final String ERROR_INVALID_PARAMS = "Unable to recognize parameter(s) entered.";
@@ -85,7 +88,7 @@ public class CommandParser {
 		String category = CategoryParser.parse(input);
 		TaskType taskType = TaskType.FLOATING;
 		DateRange dateRange = null;
-		String name = input;
+		String name = input.trim();
 		
 		if(category != null) { 
 			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
@@ -108,7 +111,14 @@ public class CommandParser {
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
-		}	
+		}
+		
+		
+		if(name.equalsIgnoreCase(STRING_EMPTY)) { 
+			throw new IllegalArgumentException(ERROR_INVALID_PARAMS); 
+		}
+		
+		name = name.replaceAll("/", STRING_EMPTY);
 		
 		AddCommand command = new AddCommand(commandAction, taskManager, historyStack);
 		command.addValues(name, taskType, dateRange, category);
@@ -192,7 +202,9 @@ public class CommandParser {
 			}
 		}	
 		
+		name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
 		if(name.trim().equalsIgnoreCase("")) { name = null; }
+		
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
 		

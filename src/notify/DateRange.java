@@ -49,9 +49,14 @@ public class DateRange {
 	}
 	
 	public void setStartTime(String startTime) {
+	
 		if(startTime != null) {
 			startTime = startTime.trim();
 			this.startTime = DateTimeParser.parseTime(startTime);
+			
+			if(isSameDay() == true && this.startTime.after(this.endTime)) {
+				throw new IllegalArgumentException(ERROR_DATE_RANGE);
+			}
 		}
 	}
 	
@@ -67,7 +72,7 @@ public class DateRange {
 			
 			if(this.startDate != null) {
 				if(this.endDate.equals(this.startDate) == false && this.endDate.before(this.startDate)) {
-					throw new IllegalArgumentException(ERROR_DATE_RANGE + " " + endDate);
+					throw new IllegalArgumentException(ERROR_DATE_RANGE);
 				}
 			}
 		}
@@ -80,8 +85,11 @@ public class DateRange {
 	public void setEndTime(String endTime) {
 		if(endTime != null) {
 			endTime = endTime.trim();
-			System.out.println(endTime);
 			this.endTime = DateTimeParser.parseTime(endTime);
+			
+			if(isSameDay() == true && this.endTime.before(this.startTime)) {
+				throw new IllegalArgumentException(ERROR_DATE_RANGE);
+			}
 		}
 	}
 	
@@ -92,16 +100,20 @@ public class DateRange {
 	public boolean isSameDay() {
 		boolean result = true;
 		
-		if(this.getStartDate().get(Calendar.DATE) != this.getEndDate().get(Calendar.DATE)) { 
-			result = false; 
-		}
-		
-		if(this.getStartDate().get(Calendar.MONTH) != this.getEndDate().get(Calendar.MONTH)) { 
-			result = false; 
-		}
-		
-		if(this.getStartDate().get(Calendar.YEAR) != this.getEndDate().get(Calendar.YEAR)) { 
-			result = false; 
+		if(this.getStartDate() != null && this.getEndDate() != null) {
+			
+			if(this.getStartDate().get(Calendar.DATE) != this.getEndDate().get(Calendar.DATE)) { 
+				result = false; 
+			}
+			
+			if(this.getStartDate().get(Calendar.MONTH) != this.getEndDate().get(Calendar.MONTH)) { 
+				result = false; 
+			}
+			
+			if(this.getStartDate().get(Calendar.YEAR) != this.getEndDate().get(Calendar.YEAR)) { 
+				result = false; 
+			}
+			
 		}
 			
 		return result;

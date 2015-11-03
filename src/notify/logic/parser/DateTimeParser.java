@@ -42,8 +42,8 @@ public class DateTimeParser {
 	
 	private static final int DATE_DAY_MIN = 1;
 	private static final int DATE_DAY_MAX = 31;
-	private static final int DATE_MONTH_MIN = 1;
-	private static final int DATE_MONTH_MAX = 12;
+	private static final int DATE_MONTH_MIN = 0;
+	private static final int DATE_MONTH_MAX = 11;
 	private static final int DATE_YEAR_MIN = 1900;
 	private static final int DATE_YEAR_MAX = 2100;
 	
