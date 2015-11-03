@@ -9,22 +9,16 @@ import notify.logic.command.Result;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Stack;
 
-import javax.sound.sampled.Control;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -123,6 +117,8 @@ public class MainViewHandler {
 	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
 	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
 	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
+	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
+	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
 	
 	
 
@@ -144,6 +140,8 @@ public class MainViewHandler {
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
 	
+	private static String INVALID_COMMAND_MESSAGE = "Invalid command entered. Please try again.";
+	
 	private static String SEARCH_INPUT = "";
 	
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
@@ -156,6 +154,7 @@ public class MainViewHandler {
 	private ArrayList<Task> comingTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 
+	
 	
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
@@ -170,16 +169,21 @@ public class MainViewHandler {
 	@FXML private VBox vboxSearchCompleted;
 	@FXML private VBox vboxSearchUncompleted;
 	
+	
+	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	
+	
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
 	@FXML private Label lblSearchTitle;
 	
+
+	
 	@FXML
 	public void initialize() {
-		
 		//initDailyView();
 		//populateOverdueTask();
 		//populateFloatingTask();
@@ -829,88 +833,108 @@ public class MainViewHandler {
 	}
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
+
+		/*FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), lblFeedback);
+
 		
-		KeyCode keyCode = keyEvent.getCode();
-		String userInput = txtCommand.getText().trim();
+		fadeTransition.setFromValue(1.0);
+		fadeTransition.setToValue(0);
+		fadeTransition.setCycleCount(1);
+		fadeTransition.setDelay(Duration.millis(1000));
+		fadeTransition.setAutoReverse(true);*/
+		
+		try {
 
-		if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
-			
-			Result result = logic.processCommand(userInput);
-			processResult(result, userInput);
-			
-			if(!COMMAND_FUTURE_STACK.isEmpty()) {
-				
-				COMMAND_HISTORY_STACK.push(userInput);
-				
-			}
-			
-			while(!COMMAND_FUTURE_STACK.isEmpty()) {
-				
-				COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
-				
-			}
+			KeyCode keyCode = keyEvent.getCode();
+			String userInput = txtCommand.getText().trim();
 
-			COMMAND_HISTORY_STACK.push(userInput);
-
-			txtCommand.setText("");
-			
-		} else if(keyCode == KeyCode.BACK_SPACE) {
-			
-			if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
-				hideSearchView();
+				Result result = logic.processCommand(userInput);
+				processResult(result, userInput);
 				
-			}
-			
-		} else if(keyCode == KeyCode.UP) {
-			
-			if(!COMMAND_HISTORY_STACK.isEmpty()) {
-				
-				String previousCommand = COMMAND_HISTORY_STACK.pop();
-				String currentCommand = txtCommand.getText().trim();
-				
-				if(!currentCommand.equals("")) {
+				if(!COMMAND_FUTURE_STACK.isEmpty()) {
 					
-					COMMAND_FUTURE_STACK.push(currentCommand);
+					COMMAND_HISTORY_STACK.push(userInput);
 					
 				}
 				
-				txtCommand.setText(previousCommand);
-				
-			}
-			
-		} else if(keyCode == KeyCode.DOWN) {
-			
-			String currentCommand = txtCommand.getText().trim();
-			
-			if(!COMMAND_FUTURE_STACK.isEmpty()) {
-				
-				String nextCommand = COMMAND_FUTURE_STACK.pop();
-				
-				COMMAND_HISTORY_STACK.push(currentCommand);
-				txtCommand.setText(nextCommand);
-				
-			} else if(!currentCommand.equals("")) {
-				
-				COMMAND_HISTORY_STACK.push(currentCommand);
+				while(!COMMAND_FUTURE_STACK.isEmpty()) {
+					
+					COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
+					
+				}
+
+				COMMAND_HISTORY_STACK.push(userInput);
+
 				txtCommand.setText("");
 				
-			}
-			
-		} else {
+			} else if(keyCode == KeyCode.BACK_SPACE) {
+				
+				if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+					
+					hideSearchView();
+					
+				}
+				
+			} else if(keyCode == KeyCode.UP) {
+				
+				if(!COMMAND_HISTORY_STACK.isEmpty()) {
+					
+					String previousCommand = COMMAND_HISTORY_STACK.pop();
+					String currentCommand = txtCommand.getText().trim();
+					
+					if(!currentCommand.equals("")) {
+						
+						COMMAND_FUTURE_STACK.push(currentCommand);
+						
+					}
+					
+					txtCommand.setText(previousCommand);
+					
+				}
+				
+			} else if(keyCode == KeyCode.DOWN) {
+				
+				String currentCommand = txtCommand.getText().trim();
+				
+				if(!COMMAND_FUTURE_STACK.isEmpty()) {
+					
+					String nextCommand = COMMAND_FUTURE_STACK.pop();
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText(nextCommand);
+					
+				} else if(!currentCommand.equals("")) {
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText("");
+					
+				}
+				
+			} else {
 
-			KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
-			
-			if(keyCombination.match(keyEvent)) {
+				KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
 				
-				userInput = "undo";
-				Result result = logic.processCommand(userInput);
-				
-				processResult(result, userInput);
+				if(keyCombination.match(keyEvent)) {
+					
+					userInput = "undo";
+					Result result = logic.processCommand(userInput);
+					
+					processResult(result, userInput);
+					
+				}
 				
 			}
+			
+		} catch(IllegalArgumentException e) {
+			
+			lblFeedback.setText(INVALID_COMMAND_MESSAGE);
+			lblFeedback.setTextFill(ERROR_MESSAGE_FILL);
+			txtCommand.setText("");
 			
 		}
+		
 		
 		
 	}
