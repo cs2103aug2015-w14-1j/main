@@ -774,6 +774,24 @@ public class MainViewHandler {
 	}
 	
 	
+	public void addCommandHistory(String userInput) {
+
+		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			
+		}
+		
+		while(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
+			
+		}
+
+		COMMAND_HISTORY_STACK.push(userInput);
+		
+	}
+	
 	
 	public void setFeedbackLabel(String message, Paint textFill) {
 		
@@ -872,19 +890,7 @@ public class MainViewHandler {
 				Result result = logic.processCommand(userInput);
 				processResult(result, userInput);
 				
-				if(!COMMAND_FUTURE_STACK.isEmpty()) {
-					
-					COMMAND_HISTORY_STACK.push(userInput);
-					
-				}
-				
-				while(!COMMAND_FUTURE_STACK.isEmpty()) {
-					
-					COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
-					
-				}
-
-				COMMAND_HISTORY_STACK.push(userInput);
+				addCommandHistory(userInput);
 
 				txtCommand.setText("");
 				
@@ -951,6 +957,8 @@ public class MainViewHandler {
 			lblFeedback.setText(String.format(INVALID_COMMAND_MESSAGE, userInput));
 			lblFeedback.setTextFill(ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
+
+			COMMAND_HISTORY_STACK.push(userInput);
 			
 		}
 		
