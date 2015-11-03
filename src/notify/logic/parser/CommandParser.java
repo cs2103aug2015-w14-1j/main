@@ -36,8 +36,6 @@ public class CommandParser {
 	private static final int RESULTS_NAME_PARAM = 0;
 	private static final int RESULTS_DATE_PARAM = 1;
 	
-	private static final int OFFSET_LAST_ITEM = 1;
-	
 	private static final String ERROR_INVALID_COMMAND = "Unable to parse command. Invalid command provided.";
 	private static final String ERROR_INVALID_PARAMS = "Unable to recognize parameter(s) entered.";
 	
@@ -118,7 +116,7 @@ public class CommandParser {
 			throw new IllegalArgumentException(ERROR_INVALID_PARAMS); 
 		}
 		
-		name = name.replaceAll("/", STRING_EMPTY);
+		name = name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
 		
 		AddCommand command = new AddCommand(commandAction, taskManager, historyStack);
 		command.addValues(name, taskType, dateRange, category);
@@ -230,7 +228,7 @@ public class CommandParser {
 	}
 	
 	private Command handleSearchCommand(Action commandAction, TaskManager taskManager, String input) {
-		SearchCommand command = null; //new DeleteCommand();
+		SearchCommand command = null;
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
 		String keyword = split[FIRST_PARAM_INDEX];
@@ -277,6 +275,7 @@ public class CommandParser {
 	
 	private String[] parseDate(String input) {
 		String compare = input.toUpperCase();
+		System.out.println(input);
 		
 		int byIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_BY + COMMAND_SEPERATOR);
 		int onIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_ON + COMMAND_SEPERATOR);
@@ -295,10 +294,14 @@ public class CommandParser {
 		}
 		
 		int startIndex = Math.min(Math.min(byIndex, onIndex), fromIndex);
+	
+		if(startIndex == Integer.MAX_VALUE) { 
+			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);		
+		}
 		
 		String[] results = new String[RESULTS_PARAM_SIZE];
-		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex + COMMAND_SEPERATOR.length());
-		results[RESULTS_DATE_PARAM] = input.substring(startIndex + COMMAND_SEPERATOR.length(), input.length());
+		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex);
+		results[RESULTS_DATE_PARAM] = input.substring(startIndex, input.length());
 		
 		return results;	
 	}
