@@ -3,8 +3,6 @@ package notify.logic.parser;
 import java.util.HashMap;
 import java.util.Stack;
 
-import org.apache.commons.lang3.StringUtils;
-
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
@@ -23,6 +21,9 @@ import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class CommandParser {
 	
@@ -109,8 +110,8 @@ public class CommandParser {
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
+			
 		}
-		
 		
 		if(name.equalsIgnoreCase(STRING_EMPTY)) { 
 			throw new IllegalArgumentException(ERROR_INVALID_PARAMS); 
@@ -177,7 +178,6 @@ public class CommandParser {
 			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
 		}
-		System.out.println(input);
 
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
@@ -306,8 +306,15 @@ public class CommandParser {
 		return results;	
 	}
 	
-	private String containsKeyword(String input, String[] array) {
+	
+	private String containsKeyword(String input, String[]... arrays) {
+		
 		String keyword = null;
+		
+		String[] array = { };
+		for(int i = 0; i < arrays.length; i++) {
+			ArrayUtils.addAll(array, arrays[i]);
+		}
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
