@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"id":0,"name":"a","isCompleted":true,"isDeleted":false,"taskType":"FLOATING"},{"id":2,"name":"c","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"},{"id":3,"name":"deadline","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":11,"hourOfDay":14,"minute":22,"second":55}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":4,"name":"my birthday","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":9,"hourOfDay":14,"minute":26,"second":48}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":5,"name":"event","dateRange":{"startDate":{"year":2015,"month":10,"dayOfMonth":7,"hourOfDay":14,"minute":27,"second":37},"startTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":8,"minute":0,"second":0},"endDate":{"year":2015,"month":10,"dayOfMonth":8,"hourOfDay":14,"minute":27,"second":37},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":21,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"RANGE"}]
+=======
+[]
+>>>>>>> origin/master

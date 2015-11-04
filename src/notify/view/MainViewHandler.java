@@ -809,20 +809,24 @@ public class MainViewHandler {
 			case SEARCH:
 				
 				SEARCH_INPUT = userInput;
+				
 				loadSearchResult(result.getResults());
 				showSearchView();
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
 			case BACK:
 				
 				hideSearchView();
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
 			case DISPLAY:
 				
 				System.out.println("MainViewHandler: display command");
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
@@ -854,6 +858,10 @@ public class MainViewHandler {
 				} else if(actionPerformed == Action.DELETE) {
 					
 					setFeedbackLabel(String.format(DELETED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				} else {
+
+					setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 					
 				}
 				
@@ -953,12 +961,11 @@ public class MainViewHandler {
 			}
 			
 		} catch(IllegalArgumentException e) {
-			
-			lblFeedback.setText(String.format(INVALID_COMMAND_MESSAGE, userInput));
-			lblFeedback.setTextFill(ERROR_MESSAGE_FILL);
+
+			setFeedbackLabel(String.format(INVALID_COMMAND_MESSAGE, userInput), ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
 
-			COMMAND_HISTORY_STACK.push(userInput);
+			addCommandHistory(userInput);
 			
 		}
 		
