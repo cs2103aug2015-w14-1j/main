@@ -18,10 +18,11 @@ public enum Action {
 	EXIT		(false, false),
 	INVALID 	(false, false);
 	
-	private boolean isReversible;
-	private boolean isPersistent;
 	
-	private Action(boolean isReversible, boolean isPersistent) {
+	public boolean isReversible;
+	public boolean isPersistent;
+	
+	private Action(boolean isReversible, boolean isPeristent){
 		this.isReversible = isReversible;
 		this.isPersistent = isPersistent;
 	}
@@ -40,7 +41,7 @@ public enum Action {
 	 * 
 	 * @return	true if the selected command requires data to be stored
 	 */
-	public boolean isPersistent() {
+	public boolean isPersistent(){
 		return this.isPersistent;
 	}
 }
