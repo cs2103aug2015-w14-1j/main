@@ -15,7 +15,6 @@ import notify.storage.Storage;
 
 public class Logic {
 	
-	private ArrayList<Task> tasks;
 	private CommandParser parser;
 	private Storage storage;
 	private TaskManager taskManager;
@@ -25,20 +24,33 @@ public class Logic {
 		
 		this.storage = new Storage();
 		this.history = new Stack<ReversibleCommand>();
-		this.taskManager = new TaskManager(storage);
-		this.parser = new CommandParser(storage, taskManager, history);
+		this.taskManager = new TaskManager(this.storage);
+		this.parser = new CommandParser(this.storage, this.taskManager, this.history);
+		
 	}
 	
 	public CommandParser getCommandParser() {
+		
 		return this.parser;
+		
+	}
+	
+	public void save() {
+		
+		this.storage.saveTasks(taskManager.getTask());
+		
 	}
 	
 	public Storage getStorage() {
-		return storage;
+		
+		return this.storage;
+		
 	}
 	
 	public TaskManager getTaskManager() {
-		return taskManager;
+		
+		return this.taskManager;
+		
 	}
 	
 	/**
@@ -47,13 +59,11 @@ public class Logic {
 	 */
 	public Result processCommand(String input) {
 		
-		Command command = parser.parse(input);
-
+		Command command = this.parser.parse(input);
 		Result result = command.execute();
 		
-		//System.out.println(result.isSuccess());
-		
 		return result;
+		
 	}
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
@@ -71,7 +81,7 @@ public class Logic {
 		int dateYear = date.get(Calendar.YEAR);
 		int dateDay = date.get(Calendar.DAY_OF_YEAR);
 		
-		ArrayList<Task> tasks = taskManager.getTask(date, isCompleted);
+		ArrayList<Task> tasks = this.taskManager.getTask(date, isCompleted);
 		
 		for(Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
 			
@@ -83,7 +93,6 @@ public class Logic {
 				
 				if(task.isStarted()) {
 
-					System.out.println(task.getTaskName());
 					if(!(todayYear == dateYear && todayDay == dateDay)) {
 						
 						iterator.remove();
@@ -99,6 +108,7 @@ public class Logic {
 					}
 					
 				}
+				
 			}
 			
 		}
@@ -160,19 +170,19 @@ public class Logic {
 	
 	public ArrayList<Task> getComingSoonTasks() {
 		
-		return taskManager.getComingSoonTasks();
+		return this.taskManager.getComingSoonTasks();
 		
 	}
 	
 	public ArrayList<Task> getOverdueTasks() {
 		
-		return taskManager.getOverdueTasks();
+		return this.taskManager.getOverdueTasks();
 		
 	}
 	
 	public ArrayList<Task> getFloatingTasks() {
 		
-		return taskManager.getTask(TaskType.FLOATING, false);
+		return this.taskManager.getTask(TaskType.FLOATING, false);
 		
 	}
 

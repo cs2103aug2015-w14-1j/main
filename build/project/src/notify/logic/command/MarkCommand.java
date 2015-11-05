@@ -31,6 +31,7 @@ public class MarkCommand extends ReversibleCommand {
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(markTask);
 		Result result = new Result(Action.MARK, listOfResults);
+		pushToStack();
 		return result;
 	}
 
@@ -41,7 +42,6 @@ public class MarkCommand extends ReversibleCommand {
 		listOfResults.add(tempTask);
 		Result result = new Result(Action.UNDO, listOfResults);
 		return result;
-		
 	}
 
 }
