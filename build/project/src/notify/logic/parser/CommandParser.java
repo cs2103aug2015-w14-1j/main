@@ -3,16 +3,16 @@ package notify.logic.parser;
 import java.util.HashMap;
 import java.util.Stack;
 
-import org.apache.commons.lang3.StringUtils;
-
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
 import notify.logic.TaskManager;
 import notify.logic.command.Action;
 import notify.logic.command.AddCommand;
+import notify.logic.command.BackCommand;
 import notify.logic.command.Command;
 import notify.logic.command.DeleteCommand;
+import notify.logic.command.DisplayCommand;
 import notify.logic.command.EditCommand;
 import notify.logic.command.ExitCommand;
 import notify.logic.command.MarkCommand;
@@ -22,9 +22,13 @@ import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
 public class CommandParser {
 	
 	public static final String COMMAND_SEPERATOR = " ";
+	public static final String STRING_EMPTY = "";
 	
 	private static final int SEPERATOR_COMMAND_INDEX = 0;
 	private static final int FIRST_PARAM_INDEX = 0;
@@ -63,11 +67,12 @@ public class CommandParser {
 		
 		switch(commandAction) {
 			case ADD: command = handleAddCommand(commandAction, history, taskManager, input); break;
+			case BACK: command = handleBackCommand(commandAction, history, taskManager, input); break;
 			case DELETE: command = handleDeleteCommand(commandAction, history, taskManager, input); break;
 			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
 			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
 			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
-			case DISPLAY: command = handleDisplayCommand(input); break;
+			case DISPLAY: command = handleDisplayCommand(commandAction, history, taskManager, input); break;
 			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
 			case SET: command = handleSetCommand(commandAction, storage, input); break;
 			case EXIT: command = handleExitCommand(commandAction, taskManager, input); break;
@@ -82,7 +87,7 @@ public class CommandParser {
 		String category = CategoryParser.parse(input);
 		TaskType taskType = TaskType.FLOATING;
 		DateRange dateRange = null;
-		String name = input;
+		String name = input.trim();
 		
 		if(category != null) { 
 			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
@@ -97,14 +102,33 @@ public class CommandParser {
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.isSameDay()) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
-		}	
+			
+		}
+		
+		if(name.equalsIgnoreCase(STRING_EMPTY)) { 
+			throw new IllegalArgumentException(ERROR_INVALID_PARAMS); 
+		}
+		
+		name = name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
 		
 		AddCommand command = new AddCommand(commandAction, taskManager, historyStack);
 		command.addValues(name, taskType, dateRange, category);
+		
+		return command;
+	}
+	
+	private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		BackCommand command = null;
+		
+		command = new BackCommand(commandAction, taskManager);
 		
 		return command;
 	}
@@ -130,7 +154,7 @@ public class CommandParser {
 	private Command handleEditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		
 		String category = CategoryParser.parse(input);
-		TaskType taskType = TaskType.FLOATING;
+		TaskType taskType = null;
 		DateRange dateRange = null;
 		String name = input;
 		int id = Task.UNASSIGNED_TASK;
@@ -154,22 +178,27 @@ public class CommandParser {
 			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
 		}
-		
+
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
-			System.out.println(input);
 			String[] results = parseDate(input);
 			name = results[RESULTS_NAME_PARAM].trim();
-			System.out.println(results[RESULTS_DATE_PARAM]);
 			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
 			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				taskType = TaskType.RANGE;
+				if(dateRange.isSameDay()) {
+					taskType = TaskType.DEADLINE;
+				} else {
+					taskType = TaskType.RANGE;
+				}
 			} else {
 				taskType = TaskType.DEADLINE;
 			}
 		}	
+		
+		name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
+		if(name.trim().equalsIgnoreCase("")) { name = null; }
 		
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
@@ -196,7 +225,7 @@ public class CommandParser {
 	}
 	
 	private Command handleSearchCommand(Action commandAction, TaskManager taskManager, String input) {
-		SearchCommand command = null; //new DeleteCommand();
+		SearchCommand command = null;
 		
 		String[] split = input.split(COMMAND_SEPERATOR);
 		String keyword = split[FIRST_PARAM_INDEX];
@@ -207,12 +236,11 @@ public class CommandParser {
 		return command;
 	}
 	
-	private Command handleDisplayCommand(String input) {
-		Command command = null; //new DeleteCommand();
+	private Command handleDisplayCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		DisplayCommand command = null; //new DeleteCommand();
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
-		String keyword = split[FIRST_PARAM_INDEX];
-
+		command = new DisplayCommand(commandAction, taskManager);
+		
 		return command;
 	}
 	
@@ -262,19 +290,26 @@ public class CommandParser {
 		}
 		
 		int startIndex = Math.min(Math.min(byIndex, onIndex), fromIndex);
+	
+		if(startIndex == Integer.MAX_VALUE) { 
+			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);		
+		}
 		
 		String[] results = new String[RESULTS_PARAM_SIZE];
-		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex + COMMAND_SEPERATOR.length());
-		results[RESULTS_DATE_PARAM] = input.substring(startIndex + COMMAND_SEPERATOR.length(), input.length());
+		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex);
+		results[RESULTS_DATE_PARAM] = input.substring(startIndex, input.length());
 		
 		return results;	
 	}
 	
+	
 	private String containsKeyword(String input, String[] array) {
+		
 		String keyword = null;
 		
 		for(int i = 0; i < array.length && keyword == null; i++) {
 			input = input.toUpperCase();
+			input = " " + input;
 			int index = input.indexOf(COMMAND_SEPERATOR + array[i] + COMMAND_SEPERATOR);
 			
 			if(index != DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {

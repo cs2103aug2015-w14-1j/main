@@ -16,7 +16,7 @@ public class Main extends Application {
 	private static double MIN_SCREEN_WIDTH = 1020;
 	private static double MIN_SCREEN_HEIGHT = 732;
 	
-	private static String MAIN_VIEW_PATH = "view/MainView.fxml";
+	private static String MAIN_VIEW_PATH = "/notify/view/MainView.fxml";
 	
 	private Logic logic;
 	private Stage primaryStage;
@@ -39,6 +39,10 @@ public class Main extends Application {
 			mainView = (BorderPane)fxmlLoader.load();
 			
 			Scene scene = new Scene(mainView);
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100");
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700");
+			//scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic");
+			
 			primaryStage.setScene(scene);
 			primaryStage.setMinHeight(MIN_SCREEN_HEIGHT);
 			primaryStage.setMinWidth(MIN_SCREEN_WIDTH);
@@ -49,7 +53,7 @@ public class Main extends Application {
 	                Platform.runLater(new Runnable() {
 	                    @Override
 	                    public void run() {
-	                    	logic.getStorage().saveTasks(logic.getTaskManager().getTask());
+	                    	logic.save();
 	                    }
 	                });
 	            }
@@ -61,6 +65,9 @@ public class Main extends Application {
 			mainViewHandler.load();
 		}
 		catch(IOException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

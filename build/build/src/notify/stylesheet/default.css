@@ -114,6 +114,10 @@
 
 
 
+.overlay-scrollpane, .overlay-scrollpane > .viewport {
+	-fx-background-color:transparent;
+}
+
 
 
 .check-box > .box {

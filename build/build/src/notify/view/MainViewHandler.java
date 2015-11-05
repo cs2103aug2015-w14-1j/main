@@ -9,19 +9,20 @@ import notify.logic.command.Result;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Stack;
 
-import javax.sound.sampled.Control;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -41,55 +42,69 @@ public class MainViewHandler {
 	//private static String DATE_STRING_FORMAT = "(%1$s)";
 	//private static String TIME_RANGE_STRING_FORMAT = "%1$s to %2$s";
 
-	private static String DAY_PATTERN = "EEEE";
-	private static String DATE_PATTERN = "dd MMM yy";
+	private static String SHORT_DAY_PATTERN = "EEE";
+	private static String LONG_DAY_PATTERN = "EEEE";
+	private static String SHORT_DATE_PATTERN = "dd MMM yy";
+	private static String LONG_DATE_PATTERN = "dd MMMM yy";
 	private static String TIME_PATTERN = "hh:mm a";
 	
 	//private static SimpleDateFormat DAY_DATE_FORMAT = new SimpleDateFormat("(EEE, dd MMM)");
 	//private static SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("EEEE");
 	//private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd MMMM)");
 	
+	
+	
 	// styling for container containing each line of item
 	private static double HBOX_NODE_SPACING = 3.5;
 	private static Pos HBOX_NODE_ALIGNMENT = Pos.TOP_LEFT;
 	private static Insets HEADER_PADDING = new Insets(0, 0, 2, 0);	//top, right, bottom, left
 	
-	// styling for title of each section
+	
+	
+	// font family settings for different types of text displayed
 	private static String TITLE_FONT_FAMILY = "Roboto Condensed";
-	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static int TITLE_FONT_SIZE = 17;
-	private static Paint TITLE_TEXT_FILL = Paint.valueOf("#7E7E45");
-	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
-	
-	// styling for subtitle of each section
 	private static String SUBTITLE_FONT_FAMILY = "Roboto Condensed";
-	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static int SUBTITLE_FONT_SIZE = 12;
-	private static Paint SUBTITLE_TEXT_FILL = Paint.valueOf("#B2B262");
-	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
-
-	// styling for checkbox
 	private static String CHECKBOX_FONT_FAMILY = "Roboto";
-	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
-	private static int CHECKBOX_FONT_SIZE = 10;
-	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
-	
-	// styling for task item
 	private static String TASK_FONT_FAMILY = "Roboto Slab Regular";
-	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
-	private static int TASK_FONT_SIZE = 12;
-	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
-	
-	// styling for task subtext (date day time etc.)
 	private static String TASK_SUBTEXT_FONT_FAMILY = "Roboto Condensed";
+	
+	
+	
+	// font weight settings for different types of text displayed
+	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
+	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight TASK_SUBTEXT_FONT_WEIGHT = FontWeight.BOLD;
+	
+	
+	
+	// font posture settings for different types of text displayed
+	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
+	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
 	private static FontPosture TASK_SUBTEXT_FONT_POSTURE = FontPosture.REGULAR;
+	
+	
+	
+	// font size settings for different types of text displayed
+	private static int TITLE_FONT_SIZE = 17;
+	private static int SUBTITLE_FONT_SIZE = 12;
+	private static int CHECKBOX_FONT_SIZE = 10;
+	private static int TASK_FONT_SIZE = 12;
 	private static int TASK_SUBTEXT_FONT_SIZE = 11;
+	
+
+	
+	// font object that is set up by the settings above
+	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
+	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
+	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
+	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
 	private static Font TASK_SUBTEXT_FONT = Font.font(TASK_SUBTEXT_FONT_FAMILY, TASK_SUBTEXT_FONT_WEIGHT, TASK_SUBTEXT_FONT_POSTURE, TASK_SUBTEXT_FONT_SIZE);
+	
+	
 	
 	// font color for different type of task
 	private static Paint OVERDUE_TEXT_FILL = Paint.valueOf("#5D322E");
@@ -100,10 +115,40 @@ public class MainViewHandler {
 	private static Paint COMING_SUBTEXT_FILL = Paint.valueOf("#8EB264");
 	private static Paint DAILY_TEXT_FILL = Paint.valueOf("#5D5D33");
 	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
+	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
+	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
+	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
+	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
+	
+	
+
+	private static String DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s";
+	private static String DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s";
+	private static String DEADLINE_END_DATE_TIMESTAMP_FORMAT = "%1$s";
+	private static String DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT = "from %1$s to %2$s";
+	private static String DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT = "at %1$s";
+	
+	
+
+	private static String RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s, %4$s";
+	private static String RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT = "%1$s to %2$s";
+	private static String RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "from %1$s till %2$s, %3$s";
+	private static String RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "till %1$s, %2$s";
+	private static String RANGE_TILL_END_DATE_TIMESTAMP_FORMAT = "till %1$s";
 	
 	private static String OVERDUE_TITLE = "Overdue";
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
+	
+	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
+	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
+	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
+	private static String DELETED_MESSAGE = "Task '%1$s' deleted.";
+	
+	private static String SEARCH_INPUT = "";
+	
+	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
+	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
 	
 	private Logic logic;
 	
@@ -112,6 +157,8 @@ public class MainViewHandler {
 	private ArrayList<Task> comingTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 
+	
+	
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
 	@FXML private VBox vboxComing;
@@ -122,10 +169,21 @@ public class MainViewHandler {
 	@FXML private VBox vboxFive;
 	@FXML private VBox vboxSix;
 	@FXML private VBox vboxSeven;
+	@FXML private VBox vboxSearchCompleted;
+	@FXML private VBox vboxSearchUncompleted;
+	
+	
+	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
+	
+	
+	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private Label lblSearchTitle;
+	
+
 	
 	@FXML
 	public void initialize() {
@@ -158,10 +216,25 @@ public class MainViewHandler {
 	 */
 	public void load() {
 		
+		txtCommand.requestFocus();
+		
 		loadOverdueTask();
 		loadFloatingTask();
 		loadComingTask();
 		loadDailyTask();
+		
+	}
+	
+	public boolean isSearchViewVisible() {
+		
+		return bpnSearch.isVisible();
+		
+	}
+	
+	
+	public boolean isCompletedViewVisible() {
+		
+		return false;
 		
 	}
 	
@@ -175,7 +248,7 @@ public class MainViewHandler {
 		overdueTasks = logic.getOverdueTasks();
 
 		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(overdueTasks, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(overdueTasks, false, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
 		
 		vboxOverdue.getChildren().clear();
 		vboxOverdue.getChildren().add(hboxHeader);
@@ -193,7 +266,7 @@ public class MainViewHandler {
 		floatingTasks = logic.getFloatingTasks();
 		
 		HBox hboxHeader = generateListHeader(FLOATING_TITLE, FLOATING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(floatingTasks, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(floatingTasks, false, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
 		
 		vboxFloating.getChildren().clear();
 		vboxFloating.getChildren().add(hboxHeader);
@@ -211,7 +284,7 @@ public class MainViewHandler {
 		comingTasks = logic.getComingSoonTasks();
 
 		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(comingTasks, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateListItem(comingTasks, false, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
 		
 		vboxComing.getChildren().clear();
 		vboxComing.getChildren().add(hboxHeader);
@@ -234,10 +307,9 @@ public class MainViewHandler {
 		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
-			//ArrayList<Task> dailyTasks = new ArrayList<Task>();
 			
 			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
-			ArrayList<HBox> hboxes = generateListItem(dailyTasks, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
+			ArrayList<HBox> hboxes = generateListItem(dailyTasks, false, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
 			
 			vboxes[i].getChildren().clear();
 			vboxes[i].getChildren().add(hboxHeader);
@@ -251,6 +323,57 @@ public class MainViewHandler {
 	}
 	
 	
+	public void loadSearchResult(ArrayList<Task> searchResults) {
+		
+		ArrayList<Task> completedTasks = new ArrayList<Task>();
+		ArrayList<Task> uncompletedTasks = new ArrayList<Task>();
+		
+		completedTasks = filterTask(searchResults, true);
+		uncompletedTasks = filterTask(searchResults, false);
+
+		ArrayList<HBox> hboxesCompleted = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		ArrayList<HBox> hboxesUncompleted = generateListItem(uncompletedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		
+		vboxSearchCompleted.getChildren().clear();
+		vboxSearchCompleted.getChildren().addAll(hboxesCompleted);
+		
+		vboxSearchUncompleted.getChildren().clear();
+		vboxSearchUncompleted.getChildren().addAll(hboxesUncompleted);
+		
+	}
+	
+	public void showSearchView() {
+		
+		pnOverlay.setVisible(true);
+		bpnSearch.setVisible(true);
+		
+	}
+	
+	public void hideSearchView() {
+		
+		pnOverlay.setVisible(false);
+		bpnSearch.setVisible(false);
+		
+	}
+	
+	public ArrayList<Task> filterTask(ArrayList<Task> tasks, boolean isCompleted) {
+		
+		ArrayList<Task> results = new ArrayList<Task>();
+		
+		for(Task task: tasks) {
+			
+			if(task.isCompleted() == isCompleted) {
+				
+				results.add(task);
+				
+			}
+			
+		}
+		
+		return results;
+		
+	}
+	
 	
 	/**
 	 * Generates the header (without subtitle)
@@ -262,7 +385,7 @@ public class MainViewHandler {
 	public HBox generateListHeader(String title, Paint titleTextFill) {
 		
 		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle);
 		
 		return hbox;
 		
@@ -270,7 +393,12 @@ public class MainViewHandler {
 	
 	
 	
-	public String generateTimeStamp(Task task) {
+	/**
+	 * Generates the timestamp for all tasks with time
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 */
+	public String generateTimeStamp(Task task, boolean isSearch) {
 		
 		TaskType taskType = task.getTaskType();
 		String timeStamp = "";
@@ -279,12 +407,12 @@ public class MainViewHandler {
 		
 			case DEADLINE:
 
-				timeStamp = generateDeadlineTimestamp(task);
+				timeStamp = generateDeadlineTimestamp(task, isSearch);
 				break;
 				
 			case RANGE:
 				
-				timeStamp = generateRangeTimestamp(task);		
+				timeStamp = generateRangeTimestamp(task, isSearch);		
 				break;
 				
 			default:
@@ -300,119 +428,105 @@ public class MainViewHandler {
 	
 	
 	
-	public String generateDeadlineTimestamp(Task task) {
+	/**
+	 * Generates the timestamp for deadline tasks
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 */
+	public String generateDeadlineTimestamp(Task task, boolean isSearch) {
 		
-		Calendar endDate = task.getEndDate();
-		Calendar startTime = task.getStartTime();
-		Calendar endTime = task.getEndTime();
-
-		String DEADLINE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s)";
-		String DEADLINE_WITH_END_TIME_TIMESTAMP = "(%1$s, %2$s)";
-		String DEADLINE_TIMESTAMP = "(%1$s)";
-		
-		String DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP = "from %1$s to %2$s";
-		String DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP = "at %1$s";
-		
-		String startTimeStamp = "";
-		String endDateStamp = "";
-		String endTimeStamp = "";
-		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
-		String timeStamp = "";
+		Calendar taskEndDate = task.getEndDate();
+		Calendar taskStartTime = task.getStartTime();
+		Calendar taskEndTime = task.getEndTime();
+		
+		String taskEndDateStamp = "";
+		String taskStartTimeStamp = "";
+		String taskEndTimeStamp = "";
+		String timestamp = "";
 
-		if(task.isComingSoon() || task.isOverdue()) {
+		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
+		
+		if(task.isComingSoon() || task.isOverdue() || isSearch) {
 
-			if(startTime != null) {
+			if(taskStartTime != null) {
 
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-						
-				timeStamp = String.format(DEADLINE_WITH_START_END_TIME_TIMESTAMP, endDateStamp, startTimeStamp, endTimeStamp);
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(endTime != null) {
+			} else if(taskEndTime != null) {
 
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-				
-				timeStamp = String.format(DEADLINE_WITH_END_TIME_TIMESTAMP, endDateStamp, endTimeStamp);
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 				
 			} else {
 				
-				endDateStamp = dateFormatter.format(endDate.getTime());
-
-				timeStamp = String.format(DEADLINE_TIMESTAMP, endDateStamp);
+				timestamp = String.format(DEADLINE_END_DATE_TIMESTAMP_FORMAT, taskEndDateStamp);
+				
 			}
 			
 		} else {
 		
-			if(startTime != null) {
+			if(taskStartTime != null) {
 				
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndTimeStamp);
 				
-				timeStamp = String.format(DAILY_DEADLINE_WITH_START_END_TIME_TIMESTAMP, startTimeStamp, endTimeStamp);
+			} else if(taskEndTime != null) {
 				
-			} else if(endTime != null) {
-				
-				endTimeStamp = timeFormatter.format(endTime.getTime());
-				
-				timeStamp = String.format(DAILY_DEADLINE_WITH_END_TIME_TIMESTAMP, endTimeStamp);
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
+				timestamp = String.format(DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT, taskEndTimeStamp);
 				
 			}
 			
 		}
 
-		return timeStamp;
+		return timestamp;
 		
 	}
 	
-	public String generateRangeTimestamp(Task task) {
+	/**
+	 * Generates the timestamp for ranged tasks
+	 * @param task the task to have its timestamp generated
+	 * @return timestamp (e.g. 23 Oct 15, 12:00AM to 12:00PM)
+	 */
+	public String generateRangeTimestamp(Task task, boolean isSearch) {
 		
-		Calendar startDate = task.getStartDate();
-		Calendar endDate = task.getEndDate();
-		Calendar startTime = task.getStartTime();
-		Calendar endTime = task.getEndTime();
-
-		String RANGE_WITH_START_END_TIME_TIMESTAMP = "(%1$s, %2$s to %3$s, %4$s)";
-		String RANGE_WITH_NO_TIME = "(%1$s to %2$s)";
-		String DAILY_RANGE_WITH_NO_TIME = "till %1$s";
-		String DAILY_RANGE_WITH_TIME = "till %1$s %2$s";
-		String DAILY_RANGE_NOT_STARTED_TIMESTAMP = "from %1$s till %2$s %3$s";
-		String DEADLINE_TIMESTAMP = "";
-		
-		String startDateStamp = "";
-		String startTimeStamp = "";
-		String endDateStamp = "";
-		String endTimeStamp = "";
-
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 		SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_PATTERN);
 		
+		Calendar taskStartDate = task.getStartDate();
+		Calendar taskStartTime = task.getStartTime();
+		Calendar taskEndDate = task.getEndDate();
+		Calendar taskEndTime = task.getEndTime();
+		
+		String taskStartDateStamp = "";
+		String taskStartTimeStamp = "";
+		String taskEndDateStamp = "";
+		String taskEndTimeStamp = "";
 		String timeStamp = "";
 		
-		if(task.isComingSoon() || task.isOverdue()) {
+		if(task.isComingSoon() || task.isOverdue() || isSearch) {
 			
-			if(startTime != null && endTime != null) {
+			if(taskStartTime != null && taskEndTime != null) {
 				
-				startDateStamp = dateFormatter.format(startDate.getTime());
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endDateStamp = dateFormatter.format(endDate.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
-				timeStamp = String.format(RANGE_WITH_START_END_TIME_TIMESTAMP, startDateStamp, startTimeStamp, endDateStamp, endTimeStamp);
-				
-				//timeStamp = dateFormat.format(startDate.getTime()) + ", " + timeFormat.format(startTime.getTime()) + " to " + dateFormat.format(endDate.getTime()) + ", " + timeFormat.format(endTime.getTime());
+				timeStamp = String.format(RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT, taskStartDateStamp, taskStartTimeStamp, taskEndDateStamp, taskEndTimeStamp);
 				
 			} else {
 				
-				startDateStamp = dateFormatter.format(startDate.getTime());
-				endDateStamp = dateFormatter.format(endDate.getTime());
+				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
+				taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 				
-				timeStamp = String.format(RANGE_WITH_NO_TIME, startDateStamp, endDateStamp);
-				//timeStamp = dateFormat.format(startDate.getTime()) + " to " + dateFormat.format(endDate.getTime());
+				timeStamp = String.format(RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT, taskStartDateStamp, taskEndDateStamp);
 				
 			}
 			
@@ -420,34 +534,34 @@ public class MainViewHandler {
 			
 			if(task.isEndingSoon()) {
 				
-				dateFormatter = new SimpleDateFormat(DAY_PATTERN);
+				dateFormatter = new SimpleDateFormat(SHORT_DAY_PATTERN);
 				
 			} else {
 				
-				dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+				dateFormatter = new SimpleDateFormat(SHORT_DATE_PATTERN);
 				
 			}
 			
-			endDateStamp = dateFormatter.format(endDate.getTime());
+			taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 			
-			if(startTime != null && endTime != null) {
+			if(taskStartTime != null && taskEndTime != null) {
 				
-				startTimeStamp = timeFormatter.format(startTime.getTime());
-				endTimeStamp = timeFormatter.format(endTime.getTime());
+				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
+				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
 				if(task.isStarted()) {
 					
-					timeStamp = String.format(DAILY_RANGE_WITH_TIME, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 					
 				} else {
 					
-					timeStamp = String.format(DAILY_RANGE_NOT_STARTED_TIMESTAMP, startTimeStamp, endDateStamp, endTimeStamp);
+					timeStamp = String.format(RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndDateStamp, taskEndTimeStamp);
 					
 				}
 				
 			} else {
 				
-				timeStamp = String.format(DAILY_RANGE_WITH_NO_TIME, endDateStamp);
+				timeStamp = String.format(RANGE_TILL_END_DATE_TIMESTAMP_FORMAT, taskEndDateStamp);
 				
 			}
 			
@@ -470,8 +584,8 @@ public class MainViewHandler {
 		Calendar tomorrow = Calendar.getInstance();
 		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 		
-		SimpleDateFormat dayFormatter = new SimpleDateFormat(DAY_PATTERN);
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
 		
 		String title = dayFormatter.format(calendar.getTime());
 		String subtitle = dateFormatter.format(calendar.getTime());
@@ -491,7 +605,7 @@ public class MainViewHandler {
 		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
 		Label lblSubtitle = createLabel(subtitle, SUBTITLE_FONT, subtitleTextFill);
 
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle, lblSubtitle);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
 		
 		return hbox;
 		
@@ -506,7 +620,7 @@ public class MainViewHandler {
 	 * @param subtextFill the color of the subtext
 	 * @return
 	 */
-	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, Paint textFill, Paint subtextFill) {
+	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, boolean isSearch, Paint textFill, Paint subtextFill) {
 		
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
 		CheckBox checkBox = new CheckBox();
@@ -518,22 +632,22 @@ public class MainViewHandler {
 			
 			Task task = tasks.get(i);
 			
-			checkBox = createCheckbox(task.getTaskId() + "", CHECKBOX_FONT, textFill);
+			checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
 			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
 			
 			if(task.getTaskType() == TaskType.DEADLINE) {
 
-				subtext = generateTimeStamp(task);
+				subtext = generateTimeStamp(task, isSearch);
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			} else if(task.getTaskType() == TaskType.RANGE) {
 				
-				subtext = generateTimeStamp(task);
+				subtext = generateTimeStamp(task, isSearch);
 				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
 				
 			}
 			
-			HBox hbox = createItem(true, checkBox, lblTaskName, lblTaskTime);
+			HBox hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
 
 			hboxes.add(hbox);
 			
@@ -543,157 +657,20 @@ public class MainViewHandler {
 		
 	}
 	
-	/*public void initDailyView() {
-		VBox[] vboxes = { vboxOne, vboxTwo, vboxThree, vboxFour, vboxFive, vboxSix, vboxSeven };
-
-		// get the calendar instance and set the time to today.
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		
-		// format the date
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM");
-		
-
-		// temporary dummy tasks
-		String[] tasksMonday = {"CS2103T Group Meeting", "User Guide Submission", "Developer Guide Submission"};
-		String[] timingsMonday = {"6.00pm", "11.59pm", "11.59pm"};
-		
-		String[] tasksTuesday = {"GEK1901 Midterms", "MC Meeting"};
-		String[] timingsTuesday = {"2.00pm to 4.00pm", "6.30pm to 8.30pm"};
-		
-		String[] tasksWednesday = {"IT Cell Core Meeting"};
-		String[] timingsWednesday = {"6.30pm to 7.30pm"};
-
-		String[] tasksThursday = {};
-		String[] timingsThursday = {};
-		
-		String[] tasksFriday = {"CS2102 Project Meeting", "Collect Parcel", "Dinner with Jim", "Supper with Jim's Mother"};
-		String[] timingsFriday = {"12.00pm", "4.00pm", "7.00pm", "11.00pm"};
-		
-		String[] tasksSaturday = {"Startup Hackathon", "Hair cut"};
-		String[] timingsSaturday = {"9.00am to 12.00pm", "3.00pm"};
-		
-		String[] tasksSunday = {};
-		String[] timingsSunday = {};
-
-		String[][] tasks = {tasksMonday, tasksTuesday, tasksWednesday, tasksThursday, tasksFriday, tasksSaturday, tasksSunday};
-		String[][] timings = {timingsMonday, timingsTuesday, timingsWednesday, timingsThursday, timingsFriday, timingsSaturday, timingsSunday};
-
-		// set up the view for today and the next 6 days
-		for(int i = 0; i < vboxes.length; i++) {
-			// create and add the header to the current vbox
-			// and populate the current vbox
-			initDailyTaskHeader(vboxes[i], calendar, sdf);
-			populateDailyTask(vboxes[i], tasks[i], timings[i]);
-			
-			// increase the day by 1
-			calendar.add(Calendar.DAY_OF_MONTH, 1);
-		}
-	}*/
 	
-	/*public void initDailyTaskHeader(VBox vbox, Calendar calendar, SimpleDateFormat sdf) {
-		// values of today and tomorrow to check with the date and print accordingly
-		Calendar today = Calendar.getInstance();
-		Calendar tomorrow = Calendar.getInstance();
-		
-		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-		
-		// -1 due to index starting from 0 but Calendar starts from 1
-		int dayIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-
-		// get the day and date
-		String day = DAYS_OF_WEEK[dayIndex];
-		String date = sdf.format(calendar.getTime());
-		
-		Label lblTitle = new Label();
-		Label lblSubtitle = new Label();
-		
-		// if statement to check if it's today
-		// if it's not, check if it's tomorrow, if it's not then print their day
-		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
-			lblTitle = createLabel("Today", TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DAY_DATE_STRING_FORMAT, day, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
-			lblTitle = createLabel("Tomorrow", TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DAY_DATE_STRING_FORMAT, day, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		else {
-			lblTitle = createLabel(day, TITLE_FONT, TITLE_TEXT_FILL);
-			lblSubtitle = createLabel(String.format(DATE_STRING_FORMAT, date), SUBTITLE_FONT, SUBTITLE_TEXT_FILL);
-		}
-		
-		HBox hbox = createItem(HEADER_PADDING, false, lblTitle, lblSubtitle);
-
-		vbox.getChildren().add(hbox);
-	}*/
-	
-	/*public void populateDailyTask(VBox vbox, String[] tasks, String[] timings) {
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 14 + tasks.length) + "", CHECKBOX_FONT, DAILY_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, DAILY_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, DAILY_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task, time);
-			vbox.getChildren().add(hbox);
-		}
-	}*/
-	
-	/*public void populateOverdueTask() {
-		String[] tasks = {"IT Cell Meeting"};
-		String[] timings = {"(Friday 9 October, 6.00pm to 8.00pm)"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 21) + "", CHECKBOX_FONT, OVERDUE_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, OVERDUE_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, OVERDUE_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task, time);
-			vboxOverdue.getChildren().add(hbox);
-		}
-	}*/
-	
-	
-	/*public void populateFloatingTask() {
-		String[] tasks = {"Bake brownie", "Buy Birthday Present", "Source for Blazer"};
-		//String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-			Label task = createLabel(tasks[i], TASK_FONT, FLOATING_TEXT_FILL);
-			//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task);
-			vboxFloating.getChildren().add(hbox);
-		}
-	}*/
-	
-	/*public void populateComingSoonTask() {
-		String[] tasks = {"Clean pencil box", "IT Cell Meeting", "CS2103 Meeting", "User Guide Submission", "Developer Guide Submission", "Cut Nails", "IT Cell Core Team Meeting"};
-		String[] timings = {"10.00am", "12.30pm", "3.00pm", "4.00pm", "6.30pm", "11.59pm", "11.59pm"};
-		
-		for(int i = 0; i < tasks.length; i++) {
-			CheckBox checkbox = createCheckbox((i + 16) + "", CHECKBOX_FONT, COMING_TEXT_FILL);
-			Label label = createLabel(tasks[i], TASK_FONT, COMING_TEXT_FILL);
-			Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, COMING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, label, time);
-			vboxComing.getChildren().add(hbox);
-		}
-	}*/
 	
 	/**
 	 * Creates the HBox with nodes
 	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
 	 * @return the HBox which represents a single line of item to be added into the VBox
 	 */
-	public HBox createItem(boolean hasCheckbox, Node... nodes) {
+	public HBox createItem(boolean hasCheckbox, boolean isSearch, Node... nodes) {
 		HBox hbox = new HBox();
 		hbox.setSpacing(HBOX_NODE_SPACING);
 		hbox.setAlignment(HBOX_NODE_ALIGNMENT);
 		
-		FlowPane flowPane = new FlowPane();
-		flowPane.setHgap(HBOX_NODE_SPACING);
+		//FlowPane flowPane = new FlowPane();
+		//flowPane.setHgap(HBOX_NODE_SPACING);
 
 		int startIndex = 0;
 		if(hasCheckbox) {
@@ -701,17 +678,40 @@ public class MainViewHandler {
 			startIndex = 1;
 		}
 
-		for(int i = startIndex; i < nodes.length; i++) {
-			flowPane.getChildren().add(nodes[i]);
+		if(isSearch) {
+			
+			VBox vbox = new VBox();
+			
+			for(int i = startIndex; i< nodes.length; i++) {
+				
+				vbox.getChildren().add(nodes[i]);
+				
+			}
+			
+			hbox.getChildren().add(vbox);
+			
+		} else {
+			
+			FlowPane flowPane = new FlowPane();
+			flowPane.setHgap(HBOX_NODE_SPACING);
+			
+			for(int i = startIndex; i < nodes.length; i++) {
+				
+				flowPane.getChildren().add(nodes[i]);
+				
+			}
+			
+			hbox.getChildren().add(flowPane);
+			
 		}
 		
-		hbox.getChildren().add(flowPane);
 		
 		return hbox;
+		
 	}
 	
-	public HBox createItem(Insets insets, boolean hasCheckbox, Node... nodes) {
-		HBox hbox = createItem(hasCheckbox, nodes);
+	public HBox createItem(Insets insets, boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		HBox hbox = createItem(hasCheckbox, isSearch, nodes);
 		hbox.setPadding(insets);
 		
 		return hbox;
@@ -759,58 +759,218 @@ public class MainViewHandler {
 		return label;
 	}*/
 	
-	public CheckBox createCheckbox(String text, Font font, Paint textFill) {
+	public CheckBox createCheckbox(String text, boolean isChecked, Font font, Paint textFill) {
+		
 		CheckBox checkbox = new CheckBox(text);
 		checkbox.setFont(font);
 		checkbox.setTextFill(textFill);
-		
+		checkbox.setSelected(isChecked);
+		checkbox.setFocusTraversable(false);
+
+		checkbox.setOnAction(event -> checkboxEventHandler(event, checkbox));
+
 		return checkbox;
+		
+	}
+	
+	
+	public void addCommandHistory(String userInput) {
+
+		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			
+		}
+		
+		while(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			COMMAND_HISTORY_STACK.push(COMMAND_FUTURE_STACK.pop());
+			
+		}
+
+		COMMAND_HISTORY_STACK.push(userInput);
+		
+	}
+	
+	
+	public void setFeedbackLabel(String message, Paint textFill) {
+		
+		lblFeedback.setText(message);
+		lblFeedback.setTextFill(textFill);
+		
+	}
+	
+	public void processResult(Result result, String userInput) {
+		
+		Action actionPerformed = result.getActionPerformed();
+		
+		switch(actionPerformed) {
+		
+			case SEARCH:
+				
+				SEARCH_INPUT = userInput;
+				
+				loadSearchResult(result.getResults());
+				showSearchView();
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
+				
+				break;
+				
+			case BACK:
+				
+				hideSearchView();
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
+				
+				break;
+				
+			case DISPLAY:
+				
+				System.out.println("MainViewHandler: display command");
+				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
+				
+				break;
+				
+			case EXIT:
+
+				System.exit(0);
+				
+				break;
+			
+			default:
+				
+				if(isSearchViewVisible()) {
+					
+					Result searchResult = logic.processCommand(SEARCH_INPUT);
+					loadSearchResult(searchResult.getResults());
+					
+				}
+				
+				Task task = result.getFirstResult();
+				
+				if(actionPerformed == Action.ADD) {
+					
+					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+
+				} else if(actionPerformed == Action.EDIT) {
+
+					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				} else if(actionPerformed == Action.DELETE) {
+					
+					setFeedbackLabel(String.format(DELETED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
+					
+				} else {
+
+					setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
+					
+				}
+				
+				load();
+				
+				break;
+		
+		}
+		
+	}
+	
+	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
+		
+		if(checkbox.isSelected()) {
+			
+			String userInput = "mark " + checkbox.getText();
+			Result result = logic.processCommand(userInput);
+			
+			processResult(result, userInput);
+			
+		}
+		
 	}
 	
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
-		if(keyEvent.getCode() == KeyCode.ENTER) {
-			Result result = logic.processCommand(txtCommand.getText());
-			
-			if(result.getActionPerformed() == Action.SEARCH) {
+		String userInput = txtCommand.getText().trim();
+		
+		try {
+
+			KeyCode keyCode = keyEvent.getCode();
+
+			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
-				pnOverlay.setVisible(true);
-				bpnSearch.setVisible(true);
+				Result result = logic.processCommand(userInput);
+				processResult(result, userInput);
+				
+				addCommandHistory(userInput);
+
+				txtCommand.setText("");
+				
+			} else if(keyCode == KeyCode.BACK_SPACE) {
+				
+				if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+					
+					hideSearchView();
+					
+				}
+				
+			} else if(keyCode == KeyCode.UP) {
+				
+				if(!COMMAND_HISTORY_STACK.isEmpty()) {
+					
+					String previousCommand = COMMAND_HISTORY_STACK.pop();
+					String currentCommand = txtCommand.getText().trim();
+					
+					if(!currentCommand.equals("")) {
+						
+						COMMAND_FUTURE_STACK.push(currentCommand);
+						
+					}
+					
+					txtCommand.setText(previousCommand);
+					
+				}
+				
+			} else if(keyCode == KeyCode.DOWN) {
+				
+				String currentCommand = txtCommand.getText().trim();
+				
+				if(!COMMAND_FUTURE_STACK.isEmpty()) {
+					
+					String nextCommand = COMMAND_FUTURE_STACK.pop();
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText(nextCommand);
+					
+				} else if(!currentCommand.equals("")) {
+					
+					COMMAND_HISTORY_STACK.push(currentCommand);
+					txtCommand.setText("");
+					
+				}
+				
+			} else {
+
+				KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
+				
+				if(keyCombination.match(keyEvent)) {
+					
+					userInput = "undo";
+					Result result = logic.processCommand(userInput);
+					
+					processResult(result, userInput);
+					
+				}
 				
 			}
 			
-			if(result.getActionPerformed() == Action.BACK) {
-				
-				pnOverlay.setVisible(false);
-				bpnSearch.setVisible(false);
-				
-			}
-			
-			load();
+		} catch(IllegalArgumentException e) {
+
+			setFeedbackLabel(String.format(INVALID_COMMAND_MESSAGE, userInput), ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
+
+			addCommandHistory(userInput);
+			
 		}
+		
+		
+		
 	}
 	
-	public void add(ArrayList<Task> tasklist) {
-		Node header = vboxFloating.getChildren().get(0);
-		
-		//vboxFloating.getChildren().clear();
-		//vboxFloating.getChildren().add(header);
-		
-		/*for(int i = 0; i < tasklist.size(); i++) {
-			CheckBox checkbox = createCheckbox((i + 4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-			Label task = createLabel(tasklist.get(i).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
-			//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-			
-			HBox hbox = createItem(true, checkbox, task);
-			vboxFloating.getChildren().add(hbox);
-		}*/
-
-		CheckBox checkbox = createCheckbox((4) + "", CHECKBOX_FONT, FLOATING_TEXT_FILL);
-		Label task = createLabel(tasklist.get(0).getTaskName(), TASK_FONT, FLOATING_TEXT_FILL);
-		//Label time = createLabel(timings[i], TASK_SUBTEXT_FONT, FLOATING_SUBTEXT_FILL);
-
-		HBox hbox = createItem(true, checkbox, task);
-		vboxFloating.getChildren().add(hbox);
-		vboxFloating.requestLayout();
-	}
 }
