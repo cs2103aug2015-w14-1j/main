@@ -23,9 +23,6 @@ public class Writer {
 	private File file;
 	private FileWriter writer;
 	
-	// These are the valid logging type that an error can be classified into
-	public static enum LOGTYPE { DEBUG, ERROR, INFO, VERBOSE, WEIRD, WTF };
-	
 	/**
 	 * This constructor creates caches the class name and directory for logging
 	 * A new file is created if no existing file is found
@@ -59,7 +56,7 @@ public class Writer {
 	 * @param message
 	 *           message of the error to be written
 	 */
-	public String write(LOGTYPE logType, String message) {
+	public String write(LogType logType, String message) {
 		Calendar calendar = Calendar.getInstance();
 	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	    

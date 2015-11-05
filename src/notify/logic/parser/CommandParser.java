@@ -22,7 +22,6 @@ import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
 import notify.storage.Storage;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class CommandParser {
