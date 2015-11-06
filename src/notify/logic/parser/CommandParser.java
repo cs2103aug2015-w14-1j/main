@@ -1,3 +1,9 @@
+/**
+ * Author: Chua Si Hao
+ * Matric No: A0125471L
+ * For CS2103T - Notify
+ */
+
 package notify.logic.parser;
 
 import java.util.HashMap;
@@ -24,63 +30,109 @@ import notify.storage.Storage;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * This class is used to handle the inputs given and converts them into system recognized commands
+ */
 public class CommandParser {
 	
-	public static final String COMMAND_SEPERATOR = " ";
-	public static final String STRING_EMPTY = "";
-	
-	private static final int SEPERATOR_COMMAND_INDEX = 0;
-	private static final int FIRST_PARAM_INDEX = 0;
-	
-	private static final int RESULTS_PARAM_SIZE = 2;
-	private static final int RESULTS_NAME_PARAM = 0;
-	private static final int RESULTS_DATE_PARAM = 1;
-	
-	private static final String ERROR_INVALID_COMMAND = "Unable to parse command. Invalid command provided.";
-	private static final String ERROR_INVALID_PARAMS = "Unable to recognize parameter(s) entered.";
-	
+	// These variables are used to interact with the other part of the system instantiated by Logic
 	private Storage storage;
 	private TaskManager taskManager;
-	private Stack<ReversibleCommand> history;
+	private Stack<ReversibleCommand> historyStack;
 	
-	public CommandParser(Storage storage, TaskManager taskManager, Stack<ReversibleCommand> history) {
+	public CommandParser(Storage storage, TaskManager taskManager, Stack<ReversibleCommand> historyStack) {
+	
+		assert storage != null;
+		assert taskManager != null;
+		assert historyStack != null;
+		
 		this.storage = storage;
 		this.taskManager = taskManager;
-		this.history = history;
+		this.historyStack = historyStack;
+	
 	}
 	
+	/**
+	 * This method is the main method to be called for commands to be processed
+	 * 
+	 * @param input is parsed as a string into a system recognized command
+	 * 			the corresponding handler is called to process the method
+	 * 
+	 * @returns Command information is allocated into its corresponding variables 
+	 * 				for further processing
+	 */
 	public Command parse(String input) {
 		
 		assert input != null;
-		
-		Command command = null;
 		input = input.trim();
 
-		String[] split = input.split(COMMAND_SEPERATOR);
-		Action commandAction = retrieveAction(split[SEPERATOR_COMMAND_INDEX]);
+		Command command = null;
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
+		String param = split[Constants.COMMAND_LOCATION_INDEX];
+		Action commandAction = retrieveAction(param);
 		
 		if(commandAction != Action.INVALID) {
-			int length = split[SEPERATOR_COMMAND_INDEX].length();
+		
+			int length = split[Constants.COMMAND_LOCATION_INDEX].length();
 			input = input.substring(length, input.length()).trim();
+		
 		}
 		
 		switch(commandAction) {
-			case ADD: command = handleAddCommand(commandAction, history, taskManager, input); break;
-			case BACK: command = handleBackCommand(commandAction, history, taskManager, input); break;
-			case DELETE: command = handleDeleteCommand(commandAction, history, taskManager, input); break;
-			case EDIT: command = handleEditCommand(commandAction,history, taskManager, input); break;
-			case SEARCH: command = handleSearchCommand(commandAction, taskManager, input); break;
-			case MARK: command = handleMarkCommand(commandAction, history, taskManager, input); break; 
-			case DISPLAY: command = handleDisplayCommand(commandAction, history, taskManager, input); break;
-			case UNDO: command = handleUndoCommand(commandAction, history, input); break;
-			case SET: command = handleSetCommand(commandAction, storage, input); break;
-			case EXIT: command = handleExitCommand(commandAction, taskManager, input); break;
-			default: throw new IllegalArgumentException(ERROR_INVALID_COMMAND);			
+		
+			case ADD: 
+				command = handleAddCommand(commandAction, historyStack, taskManager, input); 
+				break;
+				
+			case BACK: 
+				command = handleBackCommand(commandAction, historyStack, taskManager, input); 
+				break;
+				
+			case DELETE: 
+				command = handleDeleteCommand(commandAction, historyStack, taskManager, input); 
+				break;
+				
+			case EDIT: 
+				command = handleEditCommand(commandAction,historyStack, taskManager, input); 
+				break;
+				
+			case SEARCH: 
+				command = handleSearchCommand(commandAction, taskManager, input); 
+				break;
+				
+			case MARK: 
+				command = handleMarkCommand(commandAction, historyStack, taskManager, input); 
+				break;
+				
+			case DISPLAY: 
+				command = handleDisplayCommand(commandAction, historyStack, taskManager, input); 
+				break;
+				
+			case UNDO: 
+				command = handleUndoCommand(commandAction, historyStack, input); 
+				break;
+				
+			case SET: 
+				command = handleSetCommand(commandAction, storage, input); 
+				break;
+				
+			case EXIT: 
+				command = handleExitCommand(commandAction, taskManager, input); 
+				break;
+				
+			default: 
+				throw new IllegalArgumentException(Constants.ERROR_INVALID_COMMAND);			
+		
 		}
 		
 		return command;
+		
 	}
 	
+	/**
+	 * This method handles the add parsing and calls the AddCommand class to process
+	 * The name, daterange and category is extracted according the the provided syntax if present
+	 */
 	private Command handleAddCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		
 		String category = CategoryParser.parse(input);
@@ -89,252 +141,453 @@ public class CommandParser {
 		String name = input.trim();
 		
 		if(category != null) { 
-			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
+			
+			int length = category.length() + Constants.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
+		
 		}
 		
 		//check if command contains any keywords
-		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
+		String datePrompt = containsKeyword(input, Constants.DATETIME_PROMPT_KEYWORDS);
+		
 		if(datePrompt != null) { 
+		
 			String[] results = parseDate(input);
-			name = results[RESULTS_NAME_PARAM];
-			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
+			name = results[Constants.PARAM_RESULT_NAME];
+			dateRange = DateTimeParser.parseDateRange(results[Constants.PARAM_RESULT_DATE]);
 			
-			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
+			if(datePrompt.equalsIgnoreCase(Constants.KEYWORD_FROM)) {
+				
 				if(dateRange.isSameDay()) {
+				
 					taskType = TaskType.DEADLINE;
+				
 				} else {
+				
 					taskType = TaskType.RANGE;
+				
 				}
+				
 			} else {
+			
 				taskType = TaskType.DEADLINE;
+			
 			}
 			
 		}
 		
-		if(name.equalsIgnoreCase(STRING_EMPTY)) { 
-			throw new IllegalArgumentException(ERROR_INVALID_PARAMS); 
+		if(name.equalsIgnoreCase(Constants.STRING_EMPTY)) { 
+			
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS); 
+		
 		}
 		
-		name = name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
+		name = name.replaceAll(Constants.STRING_ESCAPE, Constants.STRING_EMPTY);
 		
 		AddCommand command = new AddCommand(commandAction, taskManager, historyStack);
 		command.addValues(name, taskType, dateRange, category);
 		
 		return command;
+	
 	}
 	
+	/**
+	 * This method handles the back parsing and calls the BackCommand class to process
+	 */
 	private Command handleBackCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		
 		BackCommand command = null;
 		
 		command = new BackCommand(commandAction, taskManager);
 		
 		return command;
+		
 	}
 	
+	
+	/**
+	 * This method handles the delete parsing and calls the DeleteCommand class to process
+	 * The requested id is extracted from the command
+	 * If the id extracted is invalid, an exception is thrown
+	 */
 	private Command handleDeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		
 		DeleteCommand command = null;
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
 		
-		boolean isNumeric = StringUtils.isNumeric(split[FIRST_PARAM_INDEX]);
+		String param = split[Constants.PARAM_FIRST_INDEX];
+		boolean isNumeric = StringUtils.isNumeric(param);
+		
 		if(isNumeric == false) {
-			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
+		
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);
+		
 		}
 		
-		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		int id = Integer.parseInt(split[Constants.PARAM_FIRST_INDEX]);
 		
 		command = new DeleteCommand(commandAction, historyStack, taskManager);
 		command.addValues(id);
 		
 		return command;
-	}
 	
+	}
+
+	/**
+	 * This method handles the edit parsing and calls the EditCommand class to process
+	 * The name, daterange and category is extracted according the the provided syntax if present
+	 */
 	private Command handleEditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
 		
-		String category = CategoryParser.parse(input);
+		int id = Task.UNASSIGNED_TASK;
 		TaskType taskType = null;
 		DateRange dateRange = null;
+		String category = CategoryParser.parse(input);
 		String name = input;
-		int id = Task.UNASSIGNED_TASK;
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
 		
-		boolean isNumeric = StringUtils.isNumeric(split[FIRST_PARAM_INDEX]);
+		String param = split[Constants.PARAM_FIRST_INDEX];
+		boolean isNumeric = StringUtils.isNumeric(param);
+		
 		if(isNumeric == false) { 
-			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
+		
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);
+		
 		}
 		
-		id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		param = split[Constants.PARAM_FIRST_INDEX];
+		id = Integer.parseInt(param);
 		
 		if(id != Task.UNASSIGNED_TASK) { 
+			
 			int length = String.valueOf(id).length();
 			input = input.substring(length, input.length());
 			name = input.trim();
+			
 		}
 	
 		if(category != null) { 
-			int length = category.length() + CategoryParser.KEYWORD_HASHTAG.length();
+			
+			int length = category.length() + Constants.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
+			
 		}
 
 		//check if command contains any keywords
-		String datePrompt = containsKeyword(input, DateTimeParser.DATETIME_PROMPT_KEYWORDS);
+		String datePrompt = containsKeyword(input, Constants.DATETIME_PROMPT_KEYWORDS);
 		if(datePrompt != null) { 
-			String[] results = parseDate(input);
-			name = results[RESULTS_NAME_PARAM].trim();
-			dateRange = DateTimeParser.parseDateRange(results[RESULTS_DATE_PARAM]);
 			
-			if(datePrompt.equalsIgnoreCase(DateTimeParser.KEYWORD_FROM)) {
-				if(dateRange.isSameDay()) {
+			String[] results = parseDate(input);
+			name = results[Constants.PARAM_RESULT_NAME].trim();
+			dateRange = DateTimeParser.parseDateRange(results[Constants.PARAM_RESULT_DATE]);
+			
+			if(datePrompt.equalsIgnoreCase(Constants.KEYWORD_FROM)) {
+				
+				if(dateRange.isSameDay() == true) {
+					
 					taskType = TaskType.DEADLINE;
+					
 				} else {
+					
 					taskType = TaskType.RANGE;
+					
 				}
+				
 			} else {
+				
 				taskType = TaskType.DEADLINE;
+				
 			}
+			
 		}	
 		
-		name.replaceAll(DateTimeParser.ESCAPE_KEYWORD, STRING_EMPTY);
-		if(name.trim().equalsIgnoreCase("")) { name = null; }
+		name.replaceAll(Constants.STRING_ESCAPE, Constants.STRING_EMPTY);
+		name = name.trim();
+		
+		if(name.equalsIgnoreCase(Constants.STRING_EMPTY)) { 
+			
+			name = null; 
+		
+		}
 		
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
 		
 		return command;
+		
 	}
 	
+	/**
+	 * This method handles the mark parsing and calls the MarkCommand class to process
+	 * The requested id is extracted from the command
+	 * If the id extracted is invalid, an exception is thrown
+	 */
 	private Command handleMarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
+		
 		MarkCommand command = null;
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
 		
-		boolean isNumeric = StringUtils.isNumeric(split[FIRST_PARAM_INDEX]);
+		String param = split[Constants.PARAM_FIRST_INDEX];
+		boolean isNumeric = StringUtils.isNumeric(param);
+		
 		if(isNumeric == false) {
-			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);
+			
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);
+		
 		}
 		
-		int id = Integer.parseInt(split[FIRST_PARAM_INDEX]);
+		int id = Integer.parseInt(split[Constants.PARAM_FIRST_INDEX]);
 		
 		command = new MarkCommand(commandAction, historyStack, taskManager); 
 		command.addValues(id);
 		
 		return command;
+		
 	}
 	
+	
+	/**
+	 * This method handles the search parsing and calls the SearchCommand class to process
+	 * The keyword is extracted and passed to SearchCommand class
+	 */
 	private Command handleSearchCommand(Action commandAction, TaskManager taskManager, String input) {
+		
 		SearchCommand command = null;
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
-		String keyword = split[FIRST_PARAM_INDEX];
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
+		String keyword = split[Constants.PARAM_FIRST_INDEX];
 		
 		command = new SearchCommand(commandAction, taskManager);
 		command.addValues(keyword);
 		
 		return command;
+	
 	}
 	
+	
+	/**
+	 * This method handles the display parsing and calls the DisplayCommand class to process
+	 */
 	private Command handleDisplayCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager taskManager, String input) {
-		DisplayCommand command = null; //new DeleteCommand();
+		
+		DisplayCommand command = null;
 		
 		command = new DisplayCommand(commandAction, taskManager);
 		
 		return command;
+	
 	}
 	
+	/**
+	 * This method handles the undo parsing and calls the UndoCommand class to process
+	 */
 	private Command handleUndoCommand(Action commandAction, Stack<ReversibleCommand> historyStack, String input) {
+		
 		UndoCommand command = new UndoCommand(commandAction, historyStack);
 		
 		return command;
+	
 	}
 	
+	/**
+	 * This method handles the set command parsing and calls the SetCommand class to process
+	 * The file path will be extracted and passed to the SetCommand
+	 */
 	private Command handleSetCommand(Action commandAction, Storage storage, String input) {
+		
 		SetCommand command = null;
 		
-		String[] split = input.split(COMMAND_SEPERATOR);
-		String newFilePath = split[FIRST_PARAM_INDEX];
+		String[] split = input.split(Constants.COMMAND_SEPERATOR);
+		String newFilePath = split[Constants.PARAM_FIRST_INDEX];
 		
 		command = new SetCommand(commandAction, storage);
 		command.addValues(newFilePath);
 		
 		return command;
+		
 	}
 	
+	/**
+	 * This method handles the exit command parsing and calls the ExitCommand class to process
+	 */
 	private Command handleExitCommand(Action commandAction, TaskManager taskManager, String input) {
+		
 		ExitCommand command = null;
 				
 		command = new ExitCommand(commandAction, taskManager);
 		
 		return command;
+		
 	}
 	
+	/**
+	 * This converts raw string and date inputs into separate name and daterange
+	 * 
+	 * @param input
+	 *           the string to compute the name and daterange
+	 *           
+	 * @param results
+	 *           the result contains two items
+	 *           first item will be the name of the result
+	 *           second item will be the daterange object parsed
+	 *           
+	 */
 	private String[] parseDate(String input) {
+		
 		String compare = input.toUpperCase();
 		
-		int byIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_BY + COMMAND_SEPERATOR);
-		int onIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_ON + COMMAND_SEPERATOR);
-		int fromIndex = compare.indexOf(COMMAND_SEPERATOR + DateTimeParser.KEYWORD_FROM + COMMAND_SEPERATOR);
+		String byKeyword = formatKeyword(Constants.KEYWORD_BY, Constants.OPTION_KEYWORD_BOTH);
+		String onKeyword = formatKeyword(Constants.KEYWORD_ON, Constants.OPTION_KEYWORD_BOTH);
+		String fromKeyword = formatKeyword(Constants.KEYWORD_FROM, Constants.OPTION_KEYWORD_BOTH);
 		
-		if(byIndex == DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
+		int byIndex = compare.indexOf(byKeyword);
+		int onIndex = compare.indexOf(onKeyword);
+		int fromIndex = compare.indexOf(fromKeyword);
+		
+		if(byIndex == Constants.KEYWORD_NOT_FOUND) {
+		
 			byIndex = Integer.MAX_VALUE;
+		
 		}
 		
-		if(onIndex == DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
+		if(onIndex == Constants.KEYWORD_NOT_FOUND) {
+		
 			onIndex = Integer.MAX_VALUE;
+		
 		}
 		
-		if(fromIndex == DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
+		if(fromIndex == Constants.KEYWORD_NOT_FOUND) {
+		
 			fromIndex = Integer.MAX_VALUE;
+		
 		}
 		
 		int startIndex = Math.min(Math.min(byIndex, onIndex), fromIndex);
 	
 		if(startIndex == Integer.MAX_VALUE) { 
-			throw new IllegalArgumentException(ERROR_INVALID_PARAMS);		
+		
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);		
+		
 		}
 		
-		String[] results = new String[RESULTS_PARAM_SIZE];
-		results[RESULTS_NAME_PARAM] = input.substring(0, startIndex);
-		results[RESULTS_DATE_PARAM] = input.substring(startIndex, input.length());
+		String[] results = new String[Constants.PARAM_RESULT_SIZE];
+		results[Constants.PARAM_RESULT_NAME] = input.substring(0, startIndex);
+		results[Constants.PARAM_RESULT_DATE] = input.substring(startIndex, input.length());
 		
 		return results;	
+	
 	}
 	
-	
-	private String containsKeyword(String input, String[] array) {
+	/**
+	 * This method checks for keyword in the input and returns the keyword found
+	 * 
+	 * @param input
+	 *           the string to search keywords within
+	 *           
+	 * @param list
+	 *           array of keywords to search against
+	 *           
+	 */
+	private String containsKeyword(String input, String[] list) {
 		
-		String keyword = null;
+		String result = null;
 		
-		for(int i = 0; i < array.length && keyword == null; i++) {
+		for(int i = 0; i < list.length && result == null; i++) {
+
 			input = input.toUpperCase();
-			input = " " + input;
-			int index = input.indexOf(COMMAND_SEPERATOR + array[i] + COMMAND_SEPERATOR);
+			input = formatKeyword(input, Constants.OPTION_KEYWORD_FRONT);
 			
-			if(index != DateTimeParser.KEYWORD_NOT_FOUND_INDEX) {
-				String escape = input.substring(index - DateTimeParser.ESCAPE_KEYWORD.length(), index);
-				if(escape.equalsIgnoreCase(DateTimeParser.ESCAPE_KEYWORD) == false) {
-					keyword = array[i].trim();
+			list[i] = list[i].trim();
+			list[i] = formatKeyword(list[i], Constants.OPTION_KEYWORD_BOTH);
+			
+			int index = input.indexOf(list[i]);
+			
+			if(index != Constants.KEYWORD_NOT_FOUND) {
+			
+				String escape = input.substring(index - Constants.STRING_ESCAPE.length(), index);
+				
+				if(escape.equalsIgnoreCase(Constants.STRING_ESCAPE) == false) {
+				
+					result = list[i].trim();
+				
 				}
+			
 			}
+		
 		}
 		
-		return keyword;
+		return result;
+	
 	}
 	
+	/**
+	 * This method retrieves the keyword and process it into the appropriate format
+	 * 
+	 * @param keyword
+	 *           phase to be process with padding
+	 * 
+	 * @param options
+	 *           the option of the way the keyword should be formatted
+	 *           
+	 */
+	public static String formatKeyword(String keyword, int options) {
+		
+		String result = null;
+		
+		switch(options) {
+		
+			case Constants.OPTION_KEYWORD_FRONT:
+				result = String.format(Constants.FORMAT_KEYWORD_FRONT, keyword);
+				break;
+		
+			case Constants.OPTION_KEYWORD_BACK:
+				result = String.format(Constants.FORMAT_KEYWORD_BACK, keyword);
+				break;
+			
+			case Constants.OPTION_KEYWORD_BOTH:
+				result = String.format(Constants.FORMAT_KEYWORD_BOTH, keyword);
+				break;
+			
+			default:
+				result = keyword;
+			
+		}
+		
+		return result;
+		
+	}
+	
+	/**
+	 * This method retrieves the corresponding Action based on the string entered
+	 * 
+	 * @param action
+	 *           name of the action to be processed
+	 * 
+	 * @return Action
+	 *           the corresponding Action based on input string
+	 *           invalid action is returned if no match is found
+	 *           
+	 */
 	private Action retrieveAction(String action) {
 		
 		assert storage != null;
 		
-		action = action.toUpperCase();
 		Action result = Action.INVALID;
+		action = action.toUpperCase();
 		
-		HashMap<String, Action> commandVariations = storage.loadCommands();
+		HashMap<String, Action> commandVariations = this.storage.loadCommands();
 
 		if(commandVariations.containsKey(action)) {
+		
 			result = commandVariations.get(action); 
+		
 		}
 		
 		return result;
+	
 	}
+	
 }

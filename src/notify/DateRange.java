@@ -162,7 +162,7 @@ public class DateRange {
 			
 			if(isSameDay() == true) { 
 			
-				if(this.endDate.equals(this.startDate) || this.endDate.before(this.startDate)) {
+				if(this.endDate.before(this.startDate)) {
 				
 					throw new IllegalArgumentException(ERROR_DATE_RANGE);
 				
@@ -191,7 +191,7 @@ public class DateRange {
 			
 			if(isSameDay() == true) { 
 				
-				if(this.endTime.equals(this.startTime) || this.endTime.before(this.startTime)) {
+				if(this.endTime.before(this.startTime)) {
 			
 					throw new IllegalArgumentException(ERROR_DATE_RANGE);
 				
