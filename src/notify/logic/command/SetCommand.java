@@ -10,6 +10,7 @@ public class SetCommand extends Command {
 	private Storage storage;
 	private String newFilePath;
 	
+	
 	public SetCommand(Action commandAction, Storage storage){
 		super(Action.SET);
 		this.storage = storage;
@@ -17,19 +18,20 @@ public class SetCommand extends Command {
 	
 	public void addValues(String newFilePath){
 		this.newFilePath = newFilePath;
-	} 
+	}
 	
 	@Override
-	public Result execute() {
+	public Result execute(){
 		Result result = null;
-		
-		if(storage.setFilePath(this.newFilePath)) {
+		if(storage.setFilePath(this.newFilePath)){
 			result = new Result(Action.SET, new ArrayList<Task>(), true);
-		} else {
+		}
+		else{
 			result = new Result(Action.SET, new ArrayList<Task>(), false);
 		}
 		
 		return result;
 	}
-
+	
+	
 }

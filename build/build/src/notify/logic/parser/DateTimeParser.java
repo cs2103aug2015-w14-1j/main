@@ -16,8 +16,8 @@ public class DateTimeParser {
 	private static final String[] KEYWORD_NEXT_MONTH = { "NEXT MONTH" };
 	private static final String[] KEYWORD_NEXT_YEAR = { "NEXT YEAR" };
 	
-	private static final int OFFSET_DAY = 1;
-	private static final int OFFSET_WEEK = 7;
+	public static final int OFFSET_DAY = 1;
+	public static final int OFFSET_WEEK = 7;
 	private static final int OFFSET_MONTH = 1;
 	private static final int OFFSET_YEAR = 1;
 	
@@ -42,8 +42,8 @@ public class DateTimeParser {
 	
 	private static final int DATE_DAY_MIN = 1;
 	private static final int DATE_DAY_MAX = 31;
-	private static final int DATE_MONTH_MIN = 1;
-	private static final int DATE_MONTH_MAX = 12;
+	private static final int DATE_MONTH_MIN = 0;
+	private static final int DATE_MONTH_MAX = 11;
 	private static final int DATE_YEAR_MIN = 1900;
 	private static final int DATE_YEAR_MAX = 2100;
 	
@@ -89,7 +89,7 @@ public class DateTimeParser {
 	
 	public static DateRange parseDateRange(String rawDateTime) {
 		
-		rawDateTime = rawDateTime.toUpperCase();
+		rawDateTime = rawDateTime.toUpperCase().trim();
 		
 		DateRange dateRange = new DateRange();
 
@@ -160,7 +160,7 @@ public class DateTimeParser {
 				dateRange.setEndDate(endDateTime);
 			}
 		}
-		
+	
 		return dateRange;
 	}
 	
@@ -232,7 +232,7 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.set(Calendar.DATE, day);
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);
@@ -254,7 +254,7 @@ public class DateTimeParser {
 					year = retrieveYear(split[SEPERATOR_YEAR_INDEX]);
 				}
 				
-				result = getInstance();
+				result = Calendar.getInstance();
 				result.set(Calendar.DATE, day);
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.embed.swing.*?>
 <?import javafx.scene.text.*?>
@@ -585,7 +586,7 @@
                   </ScrollPane>
                </children>
             </GridPane>
-            <Pane fx:id="pnOverlay" opacity="0.7" prefHeight="200.0" prefWidth="200.0" styleClass="overlay" visible="false">
+            <Pane fx:id="pnOverlay" opacity="0.7" prefHeight="200.0" prefWidth="200.0" styleClass="overlay">
                <StackPane.margin>
                   <Insets left="20.0" right="20.0" top="20.0" />
                </StackPane.margin></Pane>
@@ -1328,6 +1329,134 @@
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </padding>
             </BorderPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <StackPane.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </StackPane.margin>
+               <children>
+                  <VBox prefHeight="0.0" prefWidth="0.0" spacing="10.0" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowSpan="3" GridPane.valignment="TOP">
+                     <children>
+                        <Label text="Add" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto Condensed Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="965.0" spacing="8.0">
+                           <children>
+                              <Label text="Floating &#10;Task " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="add &lt;task_name&gt;&#10;e.g. add Get a haircut" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="144.0" prefWidth="965.0" spacing="8.0">
+                           <children>
+                              <Label text="Deadline&#10;Task" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="14.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="add &lt;task_name&gt; on/by &lt;date&gt;&#10;e.g. add Tidy up room by 12 dec" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="add &lt;task_name&gt; on/by &lt;date&gt; at &lt;time&gt;&#10;e.g. add Meeting on 09 aug at 2pm" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="add &lt;task name&gt; on/by &lt;date&gt; from &lt;time&gt; to &lt;time&gt; &#10;e.g. add Soccer match on 23 oct from 2pm to 4pm" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="965.0" spacing="8.0">
+                           <children>
+                              <Label text="  Range  &#10;  Task  " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="14.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="add &lt;task_name&gt; from &lt;date&gt; to &lt;date&gt;&#10;e.g. add Chalet from 04 feb to 08 feb" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="add &lt;task_name&gt; from &lt;date&gt; at &lt;time&gt; to &lt;date&gt; at &lt;time&gt;&#10;e.g. add Field Camp from 12 dec at 8am to 15 dec at 7pm" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inconsolata" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <Label text="add &lt;task_name&gt; from &lt;date&gt; to &lt;date&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="Inconsolata" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="add &lt;task_name&gt; from &lt;date&gt; at &lt;time&gt; to &lt;date&gt; at &lt;time&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="Inconsolata" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="13.0" left="15.0" top="13.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </GridPane>
          </children>
       </StackPane>
    </center>

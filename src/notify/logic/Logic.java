@@ -41,7 +41,7 @@ public class Logic {
 		
 	}
 	
-	/*public Storage getStorage() {
+	public Storage getStorage() {
 		
 		return this.storage;
 		
@@ -51,7 +51,7 @@ public class Logic {
 		
 		return this.taskManager;
 		
-	}*/
+	}
 	
 	/**
 	 * Process the input entered by the user.
