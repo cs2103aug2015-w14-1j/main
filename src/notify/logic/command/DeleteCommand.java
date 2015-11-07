@@ -19,21 +19,25 @@ public class DeleteCommand extends ReversibleCommand {
 	private TaskManager manager;
 
 	public DeleteCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager) {
+		
 		super(commandAction, historyStack);
 		this.manager = manager;
 
 	}
 
 	public void addValues(int id) {
+		
 		this.id = id;
 	}
 
 	public int getId() {
+		
 		return this.id;
 	}
 
 	@Override
 	public Result execute() {
+		
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(id);
@@ -47,6 +51,7 @@ public class DeleteCommand extends ReversibleCommand {
 
 	@Override
 	public Result undo() {
+		
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.undeleteTask(id);
