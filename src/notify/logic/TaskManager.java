@@ -12,6 +12,7 @@ package notify.logic;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 
 import notify.DateRange;
@@ -109,6 +110,7 @@ public class TaskManager {
 			}
 		}
 		
+		//Collections.sort(tempList);
 		return tempList;
 	}
 
@@ -179,7 +181,7 @@ public class TaskManager {
 	 * 
 	 * @return a list of all the tasks that are not deleted.
 	 */
-	public ArrayList<Task> getTask() {
+	public ArrayList<Task> getTasks() {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
@@ -193,6 +195,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -209,7 +212,7 @@ public class TaskManager {
 	 * @return a list of task where task type is equals to the task type
 	 *         specified.
 	 */
-	public ArrayList<Task> getTask(TaskType taskType, boolean isCompleted) {
+	public ArrayList<Task> getTasks(TaskType taskType, boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
@@ -223,6 +226,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -239,7 +243,7 @@ public class TaskManager {
 	 * @return a list of task where its date falls on the date specified or the
 	 *         date specified is within its range.
 	 */
-	public ArrayList<Task> getTask(Calendar date, boolean isCompleted) {
+	public ArrayList<Task> getTasks(Calendar date, boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
@@ -253,6 +257,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -267,7 +272,7 @@ public class TaskManager {
 	 * @return a list of completed task or uncompleted task depending on the
 	 *         value passed in.
 	 */
-	public ArrayList<Task> getTask(boolean isCompleted) {
+	public ArrayList<Task> getTasks(boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
@@ -281,6 +286,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 	}
 
@@ -301,6 +307,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -328,6 +335,7 @@ public class TaskManager {
 
 		}
 
+		//Collections.sort(tempList);
 		return tempList;
 
 	}

@@ -22,7 +22,9 @@ public enum Action {
 	UNDO 		(false, true), 
 	SET 		(true, true),
 	EXIT		(false, false),
-	INVALID 	(false, false);
+	INVALID 	(false, false),
+	HELP		(false, false);
+
 	
 	// These are the variables required to store states for each action
 	public boolean isReversible;
