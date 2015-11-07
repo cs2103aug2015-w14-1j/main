@@ -10,6 +10,7 @@ import notify.logic.TaskManager;
 
 public class EditCommand extends ReversibleCommand {
 	
+	private static final int UNASSIGNED_TASK = -1;
 	private Task oldTask;
 	private TaskType taskType;
 	private String taskName;
@@ -33,7 +34,8 @@ public class EditCommand extends ReversibleCommand {
 	}
 	
 	public void checkNull(){
-		//assert id!=-1 (unassigned)
+		assert id != UNASSIGNED_TASK : "Task id cannot be null";
+		
 		if(taskName == null){
 			this.taskName = oldTask.getTaskName();
 		}
@@ -68,6 +70,12 @@ public class EditCommand extends ReversibleCommand {
 	@Override
 	public Result execute(){
 		checkNull();
+		
+		assert taskName != null;
+		assert dateRange!= null;
+		assert category != null;
+		assert taskType != null;
+		
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(updatedTask);

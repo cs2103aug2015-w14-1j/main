@@ -32,6 +32,8 @@ public class MarkCommand extends ReversibleCommand {
 
 	@Override
 	public Result execute() {
+		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+		
 		Task markTask = manager.markTask(id, true);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(markTask);
@@ -42,6 +44,8 @@ public class MarkCommand extends ReversibleCommand {
 
 	@Override
 	public Result undo() {
+		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+		
 		Task tempTask = manager.markTask(id, false);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(tempTask);

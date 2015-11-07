@@ -47,6 +47,11 @@ public class AddCommand extends ReversibleCommand {
 
 	@Override
 	public Result execute(){
+		assert taskName != null;
+		assert dateRange!= null;
+		assert category != null;
+		assert taskType != null;
+		
 		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(addTask);
@@ -58,7 +63,9 @@ public class AddCommand extends ReversibleCommand {
 	
 	@Override
 	public Result undo(){
-		Task temptask = manager.deleteTask(task.getTaskId()); //This will throw NULLPOINTEREXCEPTION is the task is not successfully created
+		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+		
+		Task temptask = manager.deleteTask(task.getTaskId()); 
 		ArrayList<Task> listOfResults = new ArrayList<Task>();
 		listOfResults.add(temptask);
 		Result result = new Result(Action.UNDO, listOfResults);
