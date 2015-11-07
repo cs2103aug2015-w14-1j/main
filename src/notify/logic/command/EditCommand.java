@@ -1,3 +1,8 @@
+/**
+ * Author: Sadhika Billa
+ * Matric No: A0130319R
+ * For CS2103 - Notify
+ */
 package notify.logic.command;
 
 import java.util.ArrayList;
@@ -32,21 +37,31 @@ public class EditCommand extends ReversibleCommand {
 		this.taskType = taskType;
 	}
 	
-	public void checkNull(){
-		//assert id!=-1 (unassigned)
-		if(taskName == null){
-			this.taskName = oldTask.getTaskName();
-		}
-		if(dateRange == null){
-			this.dateRange = oldTask.getDateRange();
-		}
-		if(category == null){
-			this.category = oldTask.getCategory();
-		}
+	
+	@Override
+	public Result execute(){
+		checkNull();
 		
-		if(taskType == null){
-			this.taskType = oldTask.getTaskType();
-		}
+		assertions();
+		
+		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(updatedTask);
+		Result result = new Result(Action.EDIT, listOfResults);
+		pushToStack();
+		return result;
+	}
+
+	
+	
+	@Override
+	public Result undo(){
+		
+		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(beforeUpdatedTask);
+		Result result = new Result(Action.UNDO, listOfResults);
+		return result;
 	}
 	
 	public String getTaskName() {
@@ -65,24 +80,32 @@ public class EditCommand extends ReversibleCommand {
 		return this.dateRange;
 	}
 	
-	@Override
-	public Result execute(){
-		checkNull();
-		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(updatedTask);
-		Result result = new Result(Action.EDIT, listOfResults);
-		pushToStack();
-		return result;
+	
+	public void checkNull(){
+		
+		assert id != Constants.UNASSIGNED_TASK : "Task id cannot be null";
+		
+		if(taskName == null){
+			this.taskName = oldTask.getTaskName();
+		}
+		if(dateRange == null){
+			this.dateRange = oldTask.getDateRange();
+		}
+		if(category == null){
+			this.category = oldTask.getCategory();
+		}
+		
+		if(taskType == null){
+			this.taskType = oldTask.getTaskType();
+		}
 	}
 	
-	@Override
-	public Result undo(){
-		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(beforeUpdatedTask);
-		Result result = new Result(Action.UNDO, listOfResults);
-		return result;
+	private void assertions() {
+		
+		assert taskName != null;
+		assert dateRange!= null;
+		assert category != null;
+		assert taskType != null;
 	}
 	
 
