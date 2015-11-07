@@ -1,8 +1,12 @@
+/**
+ * Author Sadhika Billa
+ * Matric No: A0130319R
+ * For CS2103-Notify
+ */
 package notify.logic.command;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
@@ -10,6 +14,7 @@ import notify.logic.TaskManager;
 
 public class AddCommand extends ReversibleCommand {
 	
+	//These are variables that are required to store the fields of each task 
 	private Task task;
     private String taskName;
 	private TaskType taskType;
@@ -18,11 +23,13 @@ public class AddCommand extends ReversibleCommand {
 	private TaskManager manager;
 	
 	public AddCommand(Action commandAction, TaskManager manager, Stack<ReversibleCommand> historyStack){
+		
 		super(commandAction, historyStack);
 		this.manager = manager;
 	}
 
 	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
+		
 		this.taskName = taskName.trim();
 		this.taskType = taskType;
 		this.dateRange = dateRange;
@@ -30,23 +37,28 @@ public class AddCommand extends ReversibleCommand {
 	}
 	
 	public String getTaskName() {
+		
 		return this.taskName;
 	}
 	
 	public TaskType getTaskType() { 
+		
 		return this.taskType;
 	}
 	
 	public String getCategory() {
+		
 		return this.category;
 	}
 	
 	public DateRange getDateRange() {
+		
 		return this.dateRange;
 	}
 
 	@Override
 	public Result execute(){
+		
 		assert taskName != null;
 		assert dateRange!= null;
 		assert category != null;
@@ -63,6 +75,7 @@ public class AddCommand extends ReversibleCommand {
 	
 	@Override
 	public Result undo(){
+		
 		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(task.getTaskId()); 
