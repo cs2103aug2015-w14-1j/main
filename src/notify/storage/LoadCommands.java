@@ -10,7 +10,7 @@ import java.util.HashMap;
 import notify.logic.command.Action;
 import notify.Task;
 
-public class LoadCommands extends StorageOperation {
+public class LoadCommands extends StorageOperation {	
 	protected LoadCommands() {
 		commands = new HashMap<String, Action>();
 	}
@@ -36,8 +36,7 @@ public class LoadCommands extends StorageOperation {
 		
 		for(Action command : Action.values()) {
 			try {
-				filePath = "notify.config/commands/"+command.toString()+".txt";
-
+				filePath = String.format(Constants.PATH_VISIBLE_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_COMMANDS, File.separator, command.toString().toLowerCase(), Constants.EXTENSION_FILE);
 				File file = new File(filePath);
 				FileReader fileReader = new FileReader(file);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
