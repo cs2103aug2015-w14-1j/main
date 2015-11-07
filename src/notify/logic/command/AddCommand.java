@@ -65,10 +65,10 @@ public class AddCommand extends ReversibleCommand {
 	}
 	
 	private void assertions() {
-		assert taskName != null;
-		assert dateRange!= null;
-		assert category != null;
-		assert taskType != null;
+		assert taskName != null: "Task name cannot be null";
+		assert dateRange!= null: "Date range cannot be null";
+		assert category != null: "Category cannot be null";
+		assert taskType != null: "Task type cannot be null";
 	}
 	
 public String getTaskName() {
