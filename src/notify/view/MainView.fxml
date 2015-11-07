@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="732.0" prefWidth="1020.0" styleClass="main" stylesheets="@../stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notify.view.MainViewHandler">
+<BorderPane prefHeight="732.0" prefWidth="1100.0" styleClass="main" stylesheets="@../stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notify.view.MainViewHandler">
    <bottom>
       <AnchorPane prefHeight="86.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
          <children>
@@ -587,7 +587,7 @@
                   </ScrollPane>
                </children>
             </GridPane>
-            <Pane fx:id="pnOverlay" opacity="0.8" prefHeight="200.0" prefWidth="200.0" styleClass="overlay">
+            <Pane fx:id="pnOverlay" opacity="0.8" prefHeight="200.0" prefWidth="200.0" styleClass="overlay" visible="false">
                <StackPane.margin>
                   <Insets left="20.0" right="20.0" top="20.0" />
                </StackPane.margin></Pane>
@@ -1330,18 +1330,24 @@
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </padding>
             </BorderPane>
-            <GridPane>
+            <GridPane fx:id="gpnHelp" visible="false">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="0.0" prefWidth="76.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="693.0" minWidth="10.0" prefWidth="395.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="479.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="693.0" minWidth="10.0" prefWidth="381.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="225.0" minWidth="7.0" prefWidth="166.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="240.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="199.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="242.0" minHeight="4.0" prefHeight="51.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="242.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="209.0" minHeight="0.0" prefHeight="22.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="22.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <StackPane.margin>
@@ -1351,7 +1357,7 @@
                   <Insets bottom="13.0" left="15.0" right="15.0" top="13.0" />
                </padding>
                <children>
-                  <Label text="Floating&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Label text="Floating&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Roboto Bold" size="13.0" />
                      </font>
@@ -1359,25 +1365,25 @@
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="add &lt;task_name&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Get a hair cut" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <Label text="Deadline&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <Label text="Deadline&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Roboto Bold" size="13.0" />
                      </font>
@@ -1385,7 +1391,7 @@
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Ranged&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                  <Label text="Ranged&#10;Task" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Roboto Bold" size="13.0" />
                      </font>
@@ -1393,36 +1399,36 @@
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="4">
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="edit &lt;index&gt; &lt;new_task_name&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit 8 Get a haircut" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <children>
                         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="add &lt;task_name&gt; {on|by} &lt;date&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Get a hair cut on 23 oct" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
@@ -1431,12 +1437,12 @@
                            <children>
                               <Label text="add &lt;task_name&gt; {on|by} &lt;date&gt; at &lt;time&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Get a hair cut on 23 oct at 2pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
@@ -1445,30 +1451,30 @@
                            <children>
                               <Label text="add &lt;task_name&gt; {on|by} &lt;date&gt; from &lt;time&gt; to &lt;time&gt; " textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Hair cut on 23 oct from 2pm to 4pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <children>
                         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="add &lt;task_name&gt; from &lt;date&gt; to &lt;date&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Chalet from 23 oct to 2 nov" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
@@ -1477,44 +1483,44 @@
                            <children>
                               <Label text="add &lt;task_name&gt; from &lt;date&gt; at &lt;time&gt; to &lt;date&gt; at &lt;time&gt;" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. add Chalet from 23 oct at 8am to 2 nov at 12pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="6">
                      <children>
                         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="edit &lt;index&gt; [new_task_name] [{on|by} &lt;new_date&gt;]" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit Get a haircut on 23 oct" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="edit &lt;index&gt; [new_task_name] [{on|by} &lt;new_date&gt;] [at &lt;new_time&gt;]" textFill="WHITE">
+                              <Label text="edit &lt;index&gt; [new_task_name] [{on|by} &lt;new_date&gt; at &lt;new_time&gt;]" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit 8 Get a haircut by 23 oct at 2pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
@@ -1523,60 +1529,240 @@
                            <children>
                               <Label text="edit &lt;index&gt; [new_task_name] [{on|by} &lt;new_date&gt;] [from &lt;new_time&gt; to &lt;new_time&gt;]" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit 8 Haircut by 23 oct from 2pm to 4pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="8">
                      <children>
                         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="edit &lt;index&gt; [from &lt;new_date&gt; to &lt;new_date&gt;]" textFill="WHITE">
+                              <Label text="edit &lt;index&gt; [new_task_name] [from &lt;new_date&gt; to &lt;new_date&gt;]" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit 8 Chalet at Changi from 23 oct to 30 oct" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="edit &lt;index&gt; [from &lt;new_date&gt; at &lt;new_time&gt; to &lt;new_date&gt; at &lt;new_time&gt;]" textFill="WHITE">
+                              <Label text="edit &lt;index&gt; [new_task_name] [from &lt;new_date&gt; at &lt;new_time&gt; to &lt;new_date&gt; at &lt;new_time&gt;]" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                               <Label text="e.g. edit 8 Chalet at Changi from 23 oct at 8am to 30 oct at 12pm" textFill="WHITE">
                                  <font>
-                                    <Font name="Consolas Bold" size="12.0" />
+                                    <Font name="Consolas Bold" size="11.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <Line endX="851.0" startX="-100.0" stroke="WHITE" GridPane.columnSpan="3" GridPane.rowIndex="4">
+                  <Line endX="920.0" startX="-100.0" stroke="WHITE" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </GridPane.margin>
                   </Line>
-                  <Line endX="851.0" startX="-100.0" stroke="WHITE" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                  <Line endX="920.0" startX="-100.0" stroke="WHITE" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </GridPane.margin>
                   </Line>
+                  <Label alignment="CENTER" text="Add Commands" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" text="Edit Commands" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Search&#10;Command" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Delete&#10;Command" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Undo&#10;Command" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Mark&#10;Command" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="undo" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label text="e.g. undo" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="mark &lt;index&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label text="e.g. mark 8" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="delete &lt;index&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label text="e.g. delete 8" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
+                     <children>
+                        <Label text="search &lt;search_term&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label text="e.g. search hair" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Label text="Display&#10;Command" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                     <children>
+                        <Label text="display" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label text="e.g. display" textFill="WHITE">
+                           <font>
+                              <Font name="Consolas Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Label text="Legend" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                     <children>
+                        <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="[]: Identifies an optional argument." textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label text="    Arguments not enclosed in brackets are required." textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="| : Indicates mutually exclusive information." textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label text="    You can use the argument to the left of the separator" textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label text="    or the argument to the right of the separator." textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="{}: Delimits a set of mutually exclusive arguments when one" textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label text="    of the arguments is required." textFill="WHITE">
+                                 <font>
+                                    <Font name="Consolas Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="110.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../../images/help_outline.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Help" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Roboto Black" size="48.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>

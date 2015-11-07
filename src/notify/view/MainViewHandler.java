@@ -32,6 +32,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -187,6 +188,7 @@ public class MainViewHandler {
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private GridPane gpnHelp;
 	@FXML private Label lblSearchTitle;
 	
 
@@ -241,6 +243,12 @@ public class MainViewHandler {
 	public boolean isCompletedViewVisible() {
 		
 		return false;
+		
+	}
+	
+	public boolean isHelpViewVisible() {
+		
+		return gpnHelp.isVisible();
 		
 	}
 	
@@ -355,10 +363,24 @@ public class MainViewHandler {
 		
 	}
 	
+	public void showHelpView() {
+		
+		pnOverlay.setVisible(true);
+		gpnHelp.setVisible(true);
+		
+	}
+	
 	public void hideSearchView() {
 		
 		pnOverlay.setVisible(false);
 		bpnSearch.setVisible(false);
+		
+	}
+	
+	public void hideHelpView() {
+		
+		pnOverlay.setVisible(false);
+		gpnHelp.setVisible(false);
 		
 	}
 	
@@ -825,6 +847,7 @@ public class MainViewHandler {
 			case BACK:
 				
 				hideSearchView();
+				hideHelpView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
@@ -835,6 +858,12 @@ public class MainViewHandler {
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
+				
+			/*case HELP:
+				
+				showHelpView();
+				
+				break;*/
 				
 			case EXIT:
 
@@ -910,9 +939,13 @@ public class MainViewHandler {
 				
 			} else if(keyCode == KeyCode.BACK_SPACE) {
 				
-				if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+				if(txtCommand.getText().equals("") && isSearchViewVisible()) {
 					
 					hideSearchView();
+					
+				} else if(txtCommand.getText().equals("") && isHelpViewVisible()) {
+					
+					hideHelpView();
 					
 				}
 				
