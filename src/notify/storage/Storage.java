@@ -1,5 +1,6 @@
 package notify.storage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,20 +15,20 @@ public class Storage {
 	private static final String DATAFILE = "/tasks.txt";
 
 	private FileGenerator fileGenerator;
-	private FilePathManager filePathManager;
+	private DataDirectoryManager dataDirectoryManager;
 	private FileTransferManager fileTransferManager;
-	private SaveTasks save;
-	private LoadTasks load;
+	private TasksSaver save;
+	private TasksLoader load;
 	private LoadCommands loadCommand;
 	private String filePath;
 	
 	public Storage() {
 		fileGenerator = new FileGenerator();
-		filePathManager = new FilePathManager(PATHFILELINK);
-		filePath = filePathManager.getDataFilePath()+DATAFILE;
+		dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
+		filePath = dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE;
 		//System.out.println(filePath);
-		save = new SaveTasks(filePath);
-		load = new LoadTasks(filePath);
+		save = new TasksSaver(filePath);
+		load = new TasksLoader(filePath);
 		loadCommand = new LoadCommands();
 	}
 	
@@ -37,7 +38,7 @@ public class Storage {
 
 	public void saveTasks(ArrayList<Task> taskList_) {	
 		save.execute(taskList_);
-		fileTransferManager = new FileTransferManager(filePath, filePathManager.getDataFilePath()+DATAFILE);
+		fileTransferManager = new FileTransferManager(filePath, dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE);
 		fileTransferManager.transferData();
 	}
 	
@@ -46,6 +47,6 @@ public class Storage {
 	}
 	
 	public boolean setFilePath(String newFilePath) {
-		return filePathManager.execute(newFilePath);
+		return dataDirectoryManager.execute(newFilePath);
 	}
 }

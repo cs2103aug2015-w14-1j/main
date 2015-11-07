@@ -31,10 +31,9 @@ public class SearchCommand extends Command {
 	//searches for the task based on a keyword and 
 	@Override
 	public Result execute() {
+		
 		ArrayList<Task> searchTasks = manager.searchTask(keyword);
-		
 		Result result = new Result(Action.SEARCH, searchTasks);
-		
 		return result;
 	}
 
