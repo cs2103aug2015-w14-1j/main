@@ -44,7 +44,7 @@ public class CommandParserTest {
 		
 		org.junit.Assert.assertEquals(1, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
@@ -63,7 +63,7 @@ public class CommandParserTest {
 		
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
@@ -80,7 +80,7 @@ public class CommandParserTest {
 		
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));
 		
@@ -96,7 +96,7 @@ public class CommandParserTest {
 		
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		
 		input = "add meeting with joshua on 02 oct from 5pm to 0630pm #fail";
 		addCommand = (AddCommand) this.parser.parse(input);
@@ -107,13 +107,13 @@ public class CommandParserTest {
 		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(2, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getStartTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getStartTime().get(Calendar.MINUTE));
 
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(30, dateRange.getEndTime().get(Calendar.MINUTE));
 		
@@ -141,13 +141,13 @@ public class CommandParserTest {
 		dateRange = addCommand.getDateRange();
 		org.junit.Assert.assertEquals(1, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getStartTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getStartTime().get(Calendar.MINUTE));
 
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));	
 		
@@ -161,13 +161,13 @@ public class CommandParserTest {
 		dateRange = editCommand.getDateRange();
 		org.junit.Assert.assertEquals(1, dateRange.getStartDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getStartDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(17, dateRange.getStartTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getStartTime().get(Calendar.MINUTE));
 
 		org.junit.Assert.assertEquals(2, dateRange.getEndDate().get(Calendar.DAY_OF_MONTH));
 		org.junit.Assert.assertEquals(Calendar.OCTOBER, dateRange.getEndDate().get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), dateRange.getEndDate().get(Calendar.YEAR));
+		org.junit.Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, dateRange.getEndDate().get(Calendar.YEAR));
 		org.junit.Assert.assertEquals(18, dateRange.getEndTime().get(Calendar.HOUR_OF_DAY));
 		org.junit.Assert.assertEquals(0, dateRange.getEndTime().get(Calendar.MINUTE));	
 
