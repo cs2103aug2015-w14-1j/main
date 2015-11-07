@@ -19,7 +19,7 @@ import javafx.stage.WindowEvent;
 import notify.view.MainViewHandler;
 
 public class Main extends Application {
-	private static double MIN_SCREEN_WIDTH = 1020;
+	private static double MIN_SCREEN_WIDTH = 1100;
 	private static double MIN_SCREEN_HEIGHT = 732;
 	
 	private static String MAIN_VIEW_PATH = "/notify/view/MainView.fxml";
