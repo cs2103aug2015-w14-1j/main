@@ -110,7 +110,7 @@ public class TaskManager {
 			}
 		}
 		
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 	}
 
@@ -195,7 +195,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -226,7 +226,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -257,7 +257,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -286,7 +286,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 	}
 
@@ -307,7 +307,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -335,7 +335,7 @@ public class TaskManager {
 
 		}
 
-		//Collections.sort(tempList);
+		Collections.sort(tempList);
 		return tempList;
 
 	}

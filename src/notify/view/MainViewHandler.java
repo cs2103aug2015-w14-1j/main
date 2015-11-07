@@ -43,22 +43,12 @@ import javafx.scene.text.FontWeight;
 
 public class MainViewHandler {
 	
-	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-	private static String SHORT_DAY_PATTERN = "EEE";
-	private static String LONG_DAY_PATTERN = "EEEE";
-	private static String SHORT_DATE_PATTERN = "dd MMM yy";
-	private static String LONG_DATE_PATTERN = "dd MMMM yy";
-	private static String TIME_PATTERN = "hh:mm a";
-	
-	
+	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };	
 	
 	// styling for container containing each line of item
 	private static double HBOX_NODE_SPACING = 3.5;
 	private static Pos HBOX_NODE_ALIGNMENT = Pos.TOP_LEFT;
 	private static Insets HEADER_PADDING = new Insets(0, 0, 2, 0);	//top, right, bottom, left
-	
-	
 	
 	// font family settings for different types of text displayed
 	private static String TITLE_FONT_FAMILY = "Roboto Condensed";
@@ -67,16 +57,12 @@ public class MainViewHandler {
 	private static String TASK_FONT_FAMILY = "Roboto Slab Regular";
 	private static String TASK_SUBTEXT_FONT_FAMILY = "Roboto Condensed";
 	
-	
-	
 	// font weight settings for different types of text displayed
 	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
 	private static FontWeight TASK_SUBTEXT_FONT_WEIGHT = FontWeight.BOLD;
-	
-	
 	
 	// font posture settings for different types of text displayed
 	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
@@ -85,25 +71,19 @@ public class MainViewHandler {
 	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
 	private static FontPosture TASK_SUBTEXT_FONT_POSTURE = FontPosture.REGULAR;
 	
-	
-	
 	// font size settings for different types of text displayed
 	private static int TITLE_FONT_SIZE = 17;
 	private static int SUBTITLE_FONT_SIZE = 12;
 	private static int CHECKBOX_FONT_SIZE = 10;
 	private static int TASK_FONT_SIZE = 12;
 	private static int TASK_SUBTEXT_FONT_SIZE = 11;
-	
 
-	
 	// font object that is set up by the settings above
 	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
 	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
 	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
 	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
 	private static Font TASK_SUBTEXT_FONT = Font.font(TASK_SUBTEXT_FONT_FAMILY, TASK_SUBTEXT_FONT_WEIGHT, TASK_SUBTEXT_FONT_POSTURE, TASK_SUBTEXT_FONT_SIZE);
-	
-	
 	
 	// font color for different type of task
 	private static Paint OVERDUE_TEXT_FILL = Paint.valueOf("#5D322E");
@@ -119,30 +99,38 @@ public class MainViewHandler {
 	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
 	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
 	
+	// String pattern for dates
+	private static String SHORT_DAY_PATTERN = "EEE";
+	private static String LONG_DAY_PATTERN = "EEEE";
+	private static String SHORT_DATE_PATTERN = "dd MMM yy";
+	private static String LONG_DATE_PATTERN = "dd MMMM yy";
+	private static String TIME_PATTERN = "hh:mm a";
 	
-
+	// String format for deadline tasks timestamp
 	private static String DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s";
 	private static String DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s";
 	private static String DEADLINE_END_DATE_TIMESTAMP_FORMAT = "%1$s";
 	private static String DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT = "from %1$s to %2$s";
 	private static String DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT = "at %1$s";
 	
-	
-
+	// String format for ranged tasks timestamp
 	private static String RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s, %4$s";
 	private static String RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT = "%1$s to %2$s";
 	private static String RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "from %1$s till %2$s, %3$s";
 	private static String RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "till %1$s, %2$s";
 	private static String RANGE_TILL_END_DATE_TIMESTAMP_FORMAT = "till %1$s";
 	
+	// String format for title timestamp
+	private static String LONG_DAY_DATE_FORMAT = "%1$s, %2$s";
 	
-	
+	// String for title of different tasks status
 	private static String OVERDUE_TITLE = "Overdue";
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
+	private static String TODAY_TITLE = "Today";
+	private static String TOMORROW_TITLE = "Tomorrow";
 	
-	
-	
+	// String for error messages
 	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
 	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
 	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
@@ -151,18 +139,20 @@ public class MainViewHandler {
 	
 	private static String SEARCH_INPUT = "";
 	
+	// stack to store commands history
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
 	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
 	
 	private Logic logic;
 	
+	// arraylist of different types of tasks
 	private ArrayList<Task> overdueTasks;
 	private ArrayList<Task> floatingTasks;
 	private ArrayList<Task> comingTasks;
 	private ArrayList<Task> completedTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
 	
-	
+	// fxml controls
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
 	@FXML private VBox vboxComing;
@@ -177,12 +167,8 @@ public class MainViewHandler {
 	@FXML private VBox vboxSearchUncompleted;
 	@FXML private VBox vboxCompletedTask;
 	
-	
-	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
-	
-	
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
@@ -655,13 +641,13 @@ public class MainViewHandler {
 		
 		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
 			
-			subtitle = title + ", " + subtitle;
-			title = "Today"; 
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TODAY_TITLE; 
 			
 		} else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
 
-			subtitle = title + ", " + subtitle;
-			title = "Tomorrow";
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TOMORROW_TITLE;
 			
 		}
 		
@@ -686,31 +672,34 @@ public class MainViewHandler {
 	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, boolean isSearch, Paint textFill, Paint subtextFill) {
 		
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
-		CheckBox checkBox = new CheckBox();
-		Label lblTaskName = new Label();
-		Label lblTaskTime = new Label();
 		String subtext = "";
 		
 		for(int i = 0; i < tasks.size(); i++) {
 			
 			Task task = tasks.get(i);
 			
-			checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
-			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
+			CheckBox checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
+			Label lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
+			Label lblTaskTime;
+			HBox hbox;
 			
-			if(task.getTaskType() == TaskType.DEADLINE) {
-
-				subtext = generateTimeStamp(task, isSearch);
-				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
+			switch(task.getTaskType()) {
+			
+				case FLOATING:
+					
+					hbox = createItem(true, isSearch, checkBox, lblTaskName);
+					
+					break;
 				
-			} else if(task.getTaskType() == TaskType.RANGE) {
-				
-				subtext = generateTimeStamp(task, isSearch);
-				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
-				
+				default:
+					
+					subtext = generateTimeStamp(task, isSearch);
+					lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
+					hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
+					
+					break;
+			
 			}
-			
-			HBox hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
 
 			hboxes.add(hbox);
 			
