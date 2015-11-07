@@ -1,3 +1,9 @@
+/**
+ * Author: Kenneth Ho Chee Chong
+ * Matric No: A0125364J
+ * For CS2103T - Notify
+ */
+
 package notify;
 
 import java.util.Calendar;

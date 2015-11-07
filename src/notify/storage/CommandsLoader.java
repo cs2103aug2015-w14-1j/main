@@ -10,8 +10,8 @@ import java.util.HashMap;
 import notify.logic.command.Action;
 import notify.Task;
 
-public class LoadCommands extends StorageOperation {	
-	protected LoadCommands() {
+public class CommandsLoader extends StorageOperation {	
+	protected CommandsLoader() {
 		commands = new HashMap<String, Action>();
 	}
 	
@@ -24,12 +24,6 @@ public class LoadCommands extends StorageOperation {
 			return null;
 		}
 	}
-	
-	/*
-	protected boolean execute(String emptyString) {
-		return false;
-	}
-	*/
 	
 	private boolean readFromFile() {
 		String currentLine;

@@ -53,12 +53,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
-				<include name="test/**" />
+				<include name="src/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
-				<include name="src/**" />
+				<include name="test/**" />
 			</fileset>
 		</copy>
 	

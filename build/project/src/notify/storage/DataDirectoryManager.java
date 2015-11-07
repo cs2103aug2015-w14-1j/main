@@ -12,25 +12,19 @@ import com.google.gson.reflect.TypeToken;
 
 import notify.Task;
 
-public class FilePathManager extends StorageOperation{
+public class DataDirectoryManager extends StorageOperation{
 
 	private String dataFilePath;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param pathLinkFile_		The file which contains the absolute path of the data file where all the user's tasks are stored.
+	 * @param directoryFile_		The file which contains the absolute path of the data file where all the user's tasks are stored.
 	 */
-	protected FilePathManager(String pathLinkFile_) {
-		filePath = pathLinkFile_;
+	protected DataDirectoryManager(String directoryFile_) {
+		filePath = directoryFile_;
 		readFromFile();
 	}
-	
-	/*
-	protected Object execute(ArrayList<Task> emptyList) {
-		return null;
-	}
-	*/
 	
 	protected Boolean execute(Object newDataFilePath) {
 		if(isValidFilePath((String)newDataFilePath)) {

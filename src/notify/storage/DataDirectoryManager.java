@@ -21,8 +21,8 @@ public class DataDirectoryManager extends StorageOperation{
 	 * 
 	 * @param directoryFile_		The file which contains the absolute path of the data file where all the user's tasks are stored.
 	 */
-	protected DataDirectoryManager(String directoryFile_) {
-		filePath = directoryFile_;
+	protected DataDirectoryManager(String filePath) {
+		this.filePath = filePath;
 		readFromFile();
 	}
 	
@@ -51,7 +51,7 @@ public class DataDirectoryManager extends StorageOperation{
 	}
 	
 	/**
-	 * Writes absolute path of the data file to the path link file.
+	 * Writes absolute path of the data file to the path text file.
 	 */
 	private void writeIntoFile(String newDataFilePath) {
 		try {

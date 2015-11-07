@@ -1,3 +1,13 @@
+/**
+ * Author: Kenneth Ho Chee Chong
+ * Matric No: A0125364J
+ * For CS2103T - Notify
+ * 
+ * Methods: getTasks() and it's corresponding overload.
+ * 			getOverdueTasks()
+ * 			getComingSoonTasks()
+ */
+
 package notify.logic;
 
 import java.util.ArrayList;

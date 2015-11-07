@@ -1,3 +1,9 @@
+/**
+ * Author: Chua Si Hao
+ * Matric No: A0125471L
+ * For CS2103T - Notify
+ */
+
 package notify.logic.logger;
 
 import java.io.File;
@@ -9,9 +15,9 @@ import java.util.Calendar;
 /**
  * This class is used to write log files to a directory   
  */
-
 public class Writer {
 
+	// These are the static variables required by the class
 	public static final String STRING_LOG = "%1$s\t\t%2$s\t\t%3$s\t\t%4$s\n";
 	public static final String ERROR_WRITE = "Unable to create log file. Logs will be written to console";
 	
@@ -20,11 +26,9 @@ public class Writer {
 	private String directoryPath;
 	private String fileName = "log.log";
 	
+	// These are required variable for io purposes
 	private File file;
 	private FileWriter writer;
-	
-	// These are the valid logging type that an error can be classified into
-	public static enum LOGTYPE { DEBUG, ERROR, INFO, VERBOSE, WEIRD, WTF };
 	
 	/**
 	 * This constructor creates caches the class name and directory for logging
@@ -38,16 +42,22 @@ public class Writer {
 	 *           location of the path to be stored
 	 */
 	public Writer(String className, String directoryPath) { 
+		
 		this.className = className;
 		this.directoryPath = directoryPath;
 		
 		try {
+			
 			this.file = new File(this.directoryPath + fileName);
 			this.writer = new FileWriter(this.file, true);
 			
+			
 		} catch (IOException e) {
+			
 			System.out.println(ERROR_WRITE);
+			
 		}
+		
 	}
 	
 	/**
@@ -59,32 +69,42 @@ public class Writer {
 	 * @param message
 	 *           message of the error to be written
 	 */
-	public String write(LOGTYPE logType, String message) {
+	public String write(LogType logType, String message) {
+		
 		Calendar calendar = Calendar.getInstance();
 	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	    
 		String result = String.format(STRING_LOG, formatter.format(calendar.getTime()), logType.toString(), this.className, message);
-	    if(this.writer != null) {
+	   
+		if(this.writer != null) {
+	    	
 	    	try {
+	    		
 	    		this.writer.write(result);
 		    	this.writer.flush();
 		    	
 	    	} catch (IOException e) {
+	    		
 				System.out.println(ERROR_WRITE);
-			}
+			
+	    	}
+	    	
 	    }
 	    
 	    System.out.println(result);
 	   
 	    return result; 
+	    
 	}
 	
 	/**
 	 * This method returns the logging file created
 	 * 
 	 */
-	public File getFile() { 
+	public File getFile() {
+		
 		return this.file;
+	
 	}
 	
 	/**
@@ -92,13 +112,21 @@ public class Writer {
 	 *
 	 */
 	public void close() {
+		
 		if(this.writer != null) {
+			
 			try {
+				
 				this.writer.close();
 				
 			} catch (IOException e) {
+				
 				System.out.println(ERROR_WRITE);
+				
 			}
+			
 		}
+		
 	}
+	
 }
