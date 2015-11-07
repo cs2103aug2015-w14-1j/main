@@ -45,9 +45,9 @@ public class EditCommand extends ReversibleCommand {
 		assertions();
 		
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(updatedTask);
-		Result result = new Result(Action.EDIT, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(updatedTask);
+		Result result = new Result(Action.EDIT, list);
 		pushToStack();
 		return result;
 	}
@@ -58,9 +58,9 @@ public class EditCommand extends ReversibleCommand {
 	public Result undo(){
 		
 		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(beforeUpdatedTask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(beforeUpdatedTask);
+		Result result = new Result(Action.UNDO, list);
 		return result;
 	}
 	

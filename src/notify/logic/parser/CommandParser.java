@@ -1,3 +1,5 @@
+//@@author A0125471L
+
 /**
  * Author: Chua Si Hao
  * Matric No: A0125471L
@@ -184,7 +186,6 @@ public class CommandParser {
 		if(processedInput != null) {
 			
 			datePrompt = containsKeyword(processedInput, Constants.DATETIME_PROMPT_KEYWORDS);
-			System.out.println("pro: " + processedInput);
 			results = parseDate(processedInput);
 			
 		}
@@ -469,6 +470,21 @@ public class CommandParser {
 		
 	}
 	
+	/**
+	 * This method checks if the input has been added in a shorthand manner
+	 * Where some keywords may be removed to increase efficiency
+	 * Method corrects the command to the full form
+	 * 
+	 * @param input original input received by the parser
+	 * 
+	 * @param name original name from the earlier parsing
+	 * 
+	 * @param results results from the earlier parsing
+	 * 
+	 * @returns String full command that will be system recognized if input is correct
+	 * 			returns null if invalid input is given
+	 * 
+	 */
 	private String handleShortHand(String input, String name, String[] results) {
 		
 		String result = null;
@@ -513,7 +529,6 @@ public class CommandParser {
 		
 		if(keyword != null) {
 		
-			System.out.println("key: " + keyword);
 			result = preProcessDate(input, keyword);
 			
 		}
@@ -522,6 +537,19 @@ public class CommandParser {
 
 	}
 	
+	/**
+	 * This method checks if the input has been added in a shorthand manner
+	 * Where some keywords may be removed to increase efficiency
+	 * Method corrects the command to the full form
+	 * 
+	 * @param input original input received by the parser
+	 * 
+	 * @param keyword keyword that will be appended into the command
+	 * 
+	 * @returns String full command that will be system recognized if input is correct
+	 * 			returns null if invalid input is given
+	 * 
+	 */
 	private String preProcessDate(String input, String keyword) { 
 		
 		String compare = input.toUpperCase();

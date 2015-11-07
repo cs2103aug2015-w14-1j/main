@@ -32,9 +32,9 @@ public class DeleteCommand extends ReversibleCommand {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(id);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.DELETE, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(temptask);
+		Result result = new Result(Action.DELETE, list);
 		this.task = temptask;
 		pushToStack();
 		return result;
@@ -46,9 +46,9 @@ public class DeleteCommand extends ReversibleCommand {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.undeleteTask(id);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(temptask);
+		Result result = new Result(Action.UNDO, list);
 		this.task = temptask;
 		return result;
 	}
