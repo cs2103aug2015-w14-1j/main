@@ -32,6 +32,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,22 +42,14 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class MainViewHandler {
-	// DAY_DATE_SUBTITLE example: (Friday, 23 October)
-	// DATE_SUBTITLE example: (23 October)
+	
 	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-	//private static String DAY_DATE_STRING_FORMAT = "(%1$s, %2$s)";
-	//private static String DATE_STRING_FORMAT = "(%1$s)";
-	//private static String TIME_RANGE_STRING_FORMAT = "%1$s to %2$s";
 
 	private static String SHORT_DAY_PATTERN = "EEE";
 	private static String LONG_DAY_PATTERN = "EEEE";
 	private static String SHORT_DATE_PATTERN = "dd MMM yy";
 	private static String LONG_DATE_PATTERN = "dd MMMM yy";
 	private static String TIME_PATTERN = "hh:mm a";
-	
-	//private static SimpleDateFormat DAY_DATE_FORMAT = new SimpleDateFormat("(EEE, dd MMM)");
-	//private static SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("EEEE");
-	//private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd MMMM)");
 	
 	
 	
@@ -142,14 +135,19 @@ public class MainViewHandler {
 	private static String RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "till %1$s, %2$s";
 	private static String RANGE_TILL_END_DATE_TIMESTAMP_FORMAT = "till %1$s";
 	
+	
+	
 	private static String OVERDUE_TITLE = "Overdue";
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
+	
+	
 	
 	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
 	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
 	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
 	private static String DELETED_MESSAGE = "Task '%1$s' deleted.";
+	private static String SEARCH_RESULT_MESSAGE = "Search Result for '%1$s':";
 	
 	private static String SEARCH_INPUT = "";
 	
@@ -187,6 +185,7 @@ public class MainViewHandler {
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private GridPane gpnHelp;
 	@FXML private Label lblSearchTitle;
 	
 
@@ -241,6 +240,12 @@ public class MainViewHandler {
 	public boolean isCompletedViewVisible() {
 		
 		return false;
+		
+	}
+	
+	public boolean isHelpViewVisible() {
+		
+		return gpnHelp.isVisible();
 		
 	}
 	
@@ -348,10 +353,19 @@ public class MainViewHandler {
 		
 	}
 	
-	public void showSearchView() {
+	public void showSearchView(String searchTerm) {
+		
+		lblSearchTitle.setText(String.format(SEARCH_RESULT_MESSAGE, searchTerm));
 		
 		pnOverlay.setVisible(true);
 		bpnSearch.setVisible(true);
+		
+	}
+	
+	public void showHelpView() {
+		
+		pnOverlay.setVisible(true);
+		gpnHelp.setVisible(true);
 		
 	}
 	
@@ -359,6 +373,13 @@ public class MainViewHandler {
 		
 		pnOverlay.setVisible(false);
 		bpnSearch.setVisible(false);
+		
+	}
+	
+	public void hideHelpView() {
+		
+		pnOverlay.setVisible(false);
+		gpnHelp.setVisible(false);
 		
 	}
 	
@@ -814,10 +835,10 @@ public class MainViewHandler {
 		
 			case SEARCH:
 				
-				SEARCH_INPUT = userInput;
+				String searchTerm = userInput.replaceFirst("search", "").trim();
 				
 				loadSearchResult(result.getResults());
-				showSearchView();
+				showSearchView(searchTerm);
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
@@ -825,6 +846,7 @@ public class MainViewHandler {
 			case BACK:
 				
 				hideSearchView();
+				hideHelpView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
@@ -835,6 +857,12 @@ public class MainViewHandler {
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
+				
+			/*case HELP:
+				
+				showHelpView();
+				
+				break;*/
 				
 			case EXIT:
 
@@ -910,9 +938,13 @@ public class MainViewHandler {
 				
 			} else if(keyCode == KeyCode.BACK_SPACE) {
 				
-				if(txtCommand.getText().equals("") && pnOverlay.isVisible() && bpnSearch.isVisible()) {
+				if(txtCommand.getText().equals("") && isSearchViewVisible()) {
 					
 					hideSearchView();
+					
+				} else if(txtCommand.getText().equals("") && isHelpViewVisible()) {
+					
+					hideHelpView();
 					
 				}
 				

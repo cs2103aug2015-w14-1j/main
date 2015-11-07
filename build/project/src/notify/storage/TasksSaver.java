@@ -8,14 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SaveTasks extends StorageOperation {
+public class TasksSaver extends StorageOperation {
 	
 	/**
 	 * Constructor
 	 * 
 	 * @param filePath_		The path of the saved file(all the user's tasks are stored here).
 	 */
-	protected SaveTasks(String filePath_) {
+	protected TasksSaver(String filePath_) {
 		filePath = filePath_;
 		gson = new Gson();
 	}

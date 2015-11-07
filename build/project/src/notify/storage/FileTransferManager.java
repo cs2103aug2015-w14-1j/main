@@ -40,11 +40,8 @@ public class FileTransferManager {
 				inStream.close();
 				outStream.close();
 
-				// delete the original file
 				oldFile.delete();
-
-				// System.out.println("File is copied successful!");
-
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
