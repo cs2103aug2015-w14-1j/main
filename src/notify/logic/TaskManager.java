@@ -183,7 +183,7 @@ public class TaskManager {
 	 */
 	public ArrayList<Task> getTasks() {
 
-		ArrayList<Task> tempList = new ArrayList<Task>();
+		/*ArrayList<Task> tempList = new ArrayList<Task>();
 
 		for (Task task : taskList) {
 
@@ -196,7 +196,9 @@ public class TaskManager {
 		}
 
 		Collections.sort(tempList);
-		return tempList;
+		return tempList;*/
+		
+		return taskList;
 
 	}
 

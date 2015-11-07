@@ -954,6 +954,10 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Key pressed handler for text box.
+	 * @param keyEvent key event for the button that is being pressed.
+	 */
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
 		String userInput = txtCommand.getText().trim();
 		
@@ -963,63 +967,19 @@ public class MainViewHandler {
 
 			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
-				Result result = logic.processCommand(userInput);
-				processResult(result, userInput);
-				
-				addCommandHistory(userInput);
-
-				txtCommand.setText("");
+				processEnter(userInput);
 				
 			} else if(keyCode == KeyCode.BACK_SPACE) {
 				
-				if(txtCommand.getText().equals("") && isSearchViewVisible()) {
-					
-					hideSearchView();
-					
-				} else if(txtCommand.getText().equals("") && isHelpViewVisible()) {
-					
-					hideHelpView();
-					
-				} else if(txtCommand.getText().equals("") && isCompletedViewVisible()) {
-					
-					hideCompletedView();
-					
-				}
+				processBackspace(userInput);
 				
 			} else if(keyCode == KeyCode.UP) {
-				
-				if(!COMMAND_HISTORY_STACK.isEmpty()) {
-					
-					String previousCommand = COMMAND_HISTORY_STACK.pop();
-					String currentCommand = txtCommand.getText().trim();
-					
-					if(!currentCommand.equals("")) {
-						
-						COMMAND_FUTURE_STACK.push(currentCommand);
-						
-					}
-					
-					txtCommand.setText(previousCommand);
-					
-				}
+
+				processUp(userInput);
 				
 			} else if(keyCode == KeyCode.DOWN) {
 				
-				String currentCommand = txtCommand.getText().trim();
-				
-				if(!COMMAND_FUTURE_STACK.isEmpty()) {
-					
-					String nextCommand = COMMAND_FUTURE_STACK.pop();
-					
-					COMMAND_HISTORY_STACK.push(currentCommand);
-					txtCommand.setText(nextCommand);
-					
-				} else if(!currentCommand.equals("")) {
-					
-					COMMAND_HISTORY_STACK.push(currentCommand);
-					txtCommand.setText("");
-					
-				}
+				processDown(userInput);
 				
 			} else {
 
@@ -1046,6 +1006,91 @@ public class MainViewHandler {
 		}
 		
 		
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the enter button.
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processEnter(String userInput) {
+		
+		Result result = logic.processCommand(userInput);
+		processResult(result, userInput);
+		
+		addCommandHistory(userInput);
+
+		txtCommand.setText("");
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the backspace button.
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processBackspace(String userInput) {
+
+		if(userInput.equals("") && isSearchViewVisible()) {
+			
+			hideSearchView();
+			
+		} else if(userInput.equals("") && isHelpViewVisible()) {
+			
+			hideHelpView();
+			
+		} else if(userInput.equals("") && isCompletedViewVisible()) {
+			
+			hideCompletedView();
+			
+		}
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the up button.
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processUp(String userInput) {
+
+		if(!COMMAND_HISTORY_STACK.isEmpty()) {
+			
+			String previousCommand = COMMAND_HISTORY_STACK.pop();
+			
+			if(!userInput.equals("")) {
+				
+				COMMAND_FUTURE_STACK.push(userInput);
+				
+			}
+			
+			txtCommand.setText(previousCommand);
+			
+		}
+		
+		txtCommand.positionCaret(txtCommand.getText().length());
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the down button.
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processDown(String userInput) {
+		
+		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			String nextCommand = COMMAND_FUTURE_STACK.pop();
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			txtCommand.setText(nextCommand);
+			
+		} else if(!userInput.equals("")) {
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			txtCommand.setText("");
+			
+		}
+		
+		txtCommand.positionCaret(txtCommand.getText().length());
 		
 	}
 	
