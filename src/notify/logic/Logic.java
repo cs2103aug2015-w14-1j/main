@@ -43,7 +43,7 @@ public class Logic {
 	
 	public void save() {
 		
-		this.storage.saveTasks(taskManager.getTask());
+		this.storage.saveTasks(taskManager.getTasks());
 		
 	}
 	
@@ -74,7 +74,7 @@ public class Logic {
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
 		
-		return taskManager.getTask(date, isCompleted);
+		return taskManager.getTasks(date, isCompleted);
 		
 	}
 	 
@@ -87,7 +87,7 @@ public class Logic {
 		int dateYear = date.get(Calendar.YEAR);
 		int dateDay = date.get(Calendar.DAY_OF_YEAR);
 		
-		ArrayList<Task> tasks = this.taskManager.getTask(date, isCompleted);
+		ArrayList<Task> tasks = this.taskManager.getTasks(date, isCompleted);
 		
 		for(Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
 			
@@ -188,7 +188,13 @@ public class Logic {
 	
 	public ArrayList<Task> getFloatingTasks() {
 		
-		return this.taskManager.getTask(TaskType.FLOATING, false);
+		return this.taskManager.getTasks(TaskType.FLOATING, false);
+		
+	}
+	
+	public ArrayList<Task> getCompletedTasks() {
+		
+		return this.taskManager.getTasks(true);
 		
 	}
 

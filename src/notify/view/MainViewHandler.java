@@ -159,8 +159,8 @@ public class MainViewHandler {
 	private ArrayList<Task> overdueTasks;
 	private ArrayList<Task> floatingTasks;
 	private ArrayList<Task> comingTasks;
+	private ArrayList<Task> completedTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
-
 	
 	
 	@FXML private VBox vboxFloating;
@@ -175,6 +175,7 @@ public class MainViewHandler {
 	@FXML private VBox vboxSeven;
 	@FXML private VBox vboxSearchCompleted;
 	@FXML private VBox vboxSearchUncompleted;
+	@FXML private VBox vboxCompletedTask;
 	
 	
 	
@@ -185,6 +186,7 @@ public class MainViewHandler {
 	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private BorderPane bpnCompleted;
 	@FXML private GridPane gpnHelp;
 	@FXML private Label lblSearchTitle;
 	
@@ -239,7 +241,7 @@ public class MainViewHandler {
 	
 	public boolean isCompletedViewVisible() {
 		
-		return false;
+		return bpnCompleted.isVisible();
 		
 	}
 	
@@ -353,16 +355,43 @@ public class MainViewHandler {
 		
 	}
 	
+	public void loadCompletedTasks() {
+		
+		completedTasks = logic.getCompletedTasks();
+		
+		ArrayList<HBox> hboxes = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		
+		vboxCompletedTask.getChildren().clear();
+		vboxCompletedTask.getChildren().addAll(hboxes);
+		
+	}
+	
 	public void showSearchView(String searchTerm) {
 		
 		lblSearchTitle.setText(String.format(SEARCH_RESULT_MESSAGE, searchTerm));
+		
+		hideCompletedView();
+		hideHelpView();
 		
 		pnOverlay.setVisible(true);
 		bpnSearch.setVisible(true);
 		
 	}
 	
+	public void showCompletedView() {
+		
+		hideSearchView();
+		hideHelpView();
+		
+		pnOverlay.setVisible(true);
+		bpnCompleted.setVisible(true);
+		
+	}
+	
 	public void showHelpView() {
+		
+		hideSearchView();
+		hideCompletedView();
 		
 		pnOverlay.setVisible(true);
 		gpnHelp.setVisible(true);
@@ -373,6 +402,13 @@ public class MainViewHandler {
 		
 		pnOverlay.setVisible(false);
 		bpnSearch.setVisible(false);
+		
+	}
+	
+	public void hideCompletedView() {
+		
+		pnOverlay.setVisible(false);
+		bpnCompleted.setVisible(false);
 		
 	}
 	
@@ -836,6 +872,7 @@ public class MainViewHandler {
 			case SEARCH:
 				
 				String searchTerm = userInput.replaceFirst("search", "").trim();
+				SEARCH_INPUT = userInput;
 				
 				loadSearchResult(result.getResults());
 				showSearchView(searchTerm);
@@ -847,22 +884,24 @@ public class MainViewHandler {
 				
 				hideSearchView();
 				hideHelpView();
+				hideCompletedView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
 			case DISPLAY:
 				
-				System.out.println("MainViewHandler: display command");
+				loadCompletedTasks();
+				showCompletedView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
-			/*case HELP:
+			case HELP:
 				
 				showHelpView();
 				
-				break;*/
+				break;
 				
 			case EXIT:
 
@@ -879,12 +918,18 @@ public class MainViewHandler {
 					
 				}
 				
+				if(isCompletedViewVisible()) {
+					
+					loadCompletedTasks();
+					
+				}
+				
 				Task task = result.getFirstResult();
 				
 				if(actionPerformed == Action.ADD) {
 					
 					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
-
+					
 				} else if(actionPerformed == Action.EDIT) {
 
 					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
@@ -945,6 +990,10 @@ public class MainViewHandler {
 				} else if(txtCommand.getText().equals("") && isHelpViewVisible()) {
 					
 					hideHelpView();
+					
+				} else if(txtCommand.getText().equals("") && isCompletedViewVisible()) {
+					
+					hideCompletedView();
 					
 				}
 				
