@@ -11,14 +11,14 @@ import com.google.gson.reflect.TypeToken;
 import notify.Task;
 
 
-public class LoadTasks extends StorageOperation{
+public class TasksLoader extends StorageOperation{
 	
 	/**
 	 * Constructor
 	 * 
 	 * @param filePath_		The path of the saved file(all the user's tasks are stored here).
 	 */
-	protected LoadTasks(String filePath_) {
+	protected TasksLoader(String filePath_) {
 		filePath = filePath_;
 		taskList = new ArrayList<Task>();
 		gson = new Gson();
