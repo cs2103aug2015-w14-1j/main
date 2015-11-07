@@ -8,9 +8,9 @@ package notify.logic.parser;
 
 import java.util.Calendar;
 
-import notify.DateRange;
-
 import org.apache.commons.lang3.StringUtils;
+
+import notify.DateRange;
 
 /**
  * This DateTimeParser class handles both date and time parsing from raw inputs
