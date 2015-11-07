@@ -41,6 +41,11 @@ public class Logic {
 		
 	}
 	
+	public Stack<ReversibleCommand> getHistory(){
+		
+		return this.history;
+	}
+	
 	/**
 	 * Writes the changes into the file.
 	 */
