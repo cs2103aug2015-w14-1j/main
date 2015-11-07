@@ -55,12 +55,12 @@ public class FileGenerator {
 		}
 	}
 
-	private void writeIntoFile(File file, String dataToWrite) {
+	private void writeIntoFile(File file_, String dataToWrite_) {
 		try {
-			FileWriter fileWriter = new FileWriter(file);
+			FileWriter fileWriter = new FileWriter(file_);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-			bufferedWriter.write(dataToWrite);
+			bufferedWriter.write(dataToWrite_);
 
 			bufferedWriter.close();
 			fileWriter.close();

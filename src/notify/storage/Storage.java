@@ -9,27 +9,21 @@ import notify.logic.command.Action;
 
 public class Storage {
 	
-	//private static final String[] commandFiles = {"ADD.txt", "DELETE.txt", "EDIT.txt", "SEARCH.txt", "MARK.txt", "DISPLAY.txt", "UNDO.txt", "SET.txt", "EXIT.txt"};
-
-	private static final String PATHFILELINK = "notify.config/data/.filePath.txt";
-	private static final String DATAFILE = "/tasks.txt";
-
 	private FileGenerator fileGenerator;
 	private DataDirectoryManager dataDirectoryManager;
 	private FileTransferManager fileTransferManager;
 	private TasksSaver save;
 	private TasksLoader load;
-	private LoadCommands loadCommand;
-	private String filePath;
+	private CommandsLoader loadCommand;
+	private String dataFilePath;
 	
 	public Storage() {
 		fileGenerator = new FileGenerator();
 		dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
-		filePath = dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE;
-		//System.out.println(filePath);
-		save = new TasksSaver(filePath);
-		load = new TasksLoader(filePath);
-		loadCommand = new LoadCommands();
+		dataFilePath = dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE;
+		save = new TasksSaver(dataFilePath);
+		load = new TasksLoader(dataFilePath);
+		loadCommand = new CommandsLoader();
 	}
 	
 	public ArrayList<Task> loadTasks(){
@@ -38,7 +32,7 @@ public class Storage {
 
 	public void saveTasks(ArrayList<Task> taskList_) {	
 		save.execute(taskList_);
-		fileTransferManager = new FileTransferManager(filePath, dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE);
+		fileTransferManager = new FileTransferManager(dataFilePath, dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE);
 		fileTransferManager.transferData();
 	}
 	

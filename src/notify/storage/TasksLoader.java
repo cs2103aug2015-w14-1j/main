@@ -18,8 +18,8 @@ public class TasksLoader extends StorageOperation{
 	 * 
 	 * @param filePath_		The path of the saved file(all the user's tasks are stored here).
 	 */
-	protected TasksLoader(String filePath_) {
-		filePath = filePath_;
+	protected TasksLoader(String filePath) {
+		this.filePath = filePath;
 		taskList = new ArrayList<Task>();
 		gson = new Gson();
 	}
