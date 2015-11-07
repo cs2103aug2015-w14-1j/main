@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+[{"id":0,"name":"meeting with john cena","dateRange":{"startDate":{"year":2016,"month":10,"dayOfMonth":5,"hourOfDay":2,"minute":19,"second":38},"startTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":15,"minute":0,"second":0},"endDate":{"year":2016,"month":10,"dayOfMonth":5,"hourOfDay":2,"minute":19,"second":38},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":17,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"}]
+=======
+<<<<<<< HEAD
 [{"id":0,"name":"john cena","isCompleted":true,"isDeleted":false,"taskType":"FLOATING"},{"id":1,"name":"john cena","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":10,"hourOfDay":23,"minute":8,"second":7}},"isCompleted":true,"isDeleted":false,"taskType":"DEADLINE"}]
 =======
 <<<<<<< HEAD
@@ -7,3 +10,4 @@
 [{"id":0,"name":"User guide submission","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":7,"hourOfDay":17,"minute":2,"second":31},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":23,"minute":59,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":1,"name":"meeting at 7pm","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"},{"id":2,"name":"meeting at 12pm","isCompleted":false,"isDeleted":false,"taskType":"FLOATING"}]
 >>>>>>> 2846752a617c5f61f0326206dcd7c725e0ab5e56
 >>>>>>> origin/master
+>>>>>>> 0ce89e949140d8d115265895d28f8f3c5dbc7d02

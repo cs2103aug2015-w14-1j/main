@@ -1,3 +1,5 @@
+//@@author A0125471L
+
 /**
  * Author: Chua Si Hao
  * Matric No: A0125471L
@@ -353,6 +355,9 @@ public class DateTimeParser {
 	
 	}
 	
+	/**
+	 * Validates and return the day if is in correct format
+	 */
 	private static int retrieveDay(String day) {
 		
 		boolean isNumeric = StringUtils.isNumeric(day);
@@ -374,6 +379,9 @@ public class DateTimeParser {
 		return result;		
 	}
 	
+	/**
+	 * Validates and return the month if is in correct format
+	 */
 	private static int retrieveMonth(String month) {
 		
 		int result = -1;
@@ -400,6 +408,45 @@ public class DateTimeParser {
 	
 	}
 	
+	/**
+	 * Validates and return the year if is in correct format
+	 */
+	private static int retrieveYear(String year) {
+		
+		int result = Constants.INVALID_YEAR;
+		
+		if(year == null) { 
+		
+			result = Calendar.getInstance().get(Calendar.YEAR);
+			year = String.valueOf(result);
+		
+		}
+
+		boolean isNumeric = StringUtils.isNumeric(year);
+		
+		if(isNumeric == true) {
+		
+			result = Integer.parseInt(year);
+		
+		} else { 
+		
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
+		
+		}
+		
+		if(result < Constants.DATE_YEAR_MIN || result > Constants.DATE_YEAR_MAX) {
+		
+			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
+		
+		}
+		
+		return result;
+	
+	}
+
+	/**
+	 * Search for the corresponding Calendar's Day with the keyword provided
+	 */
 	private static int retrieveDayIndex(String day) { 
 		
 		int dayOfWeek = Constants.INT_ZERO;
@@ -479,6 +526,16 @@ public class DateTimeParser {
 		
 	}
 	
+	/**
+	 * Find the following corresponding day or the day on the next week
+	 * Information is parsed and a Calendar object with the values is populated
+	 * 
+	 * @param day the closest day that matches request
+	 * 
+	 * @returns Calendar values are populated into the Calendar
+	 * 				Fields within the Calendar object that is not specified will be defaulted
+	 * 
+	 */
 	private static Calendar retrieveNext(String day) {
 		
 		Calendar results = null;
@@ -521,39 +578,6 @@ public class DateTimeParser {
 		
 		return results;
 		
-	}
-	
-	private static int retrieveYear(String year) {
-		
-		int result = Constants.INVALID_YEAR;
-		
-		if(year == null) { 
-		
-			result = Calendar.getInstance().get(Calendar.YEAR);
-			year = String.valueOf(result);
-		
-		}
-
-		boolean isNumeric = StringUtils.isNumeric(year);
-		
-		if(isNumeric == true) {
-		
-			result = Integer.parseInt(year);
-		
-		} else { 
-		
-			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
-		
-		}
-		
-		if(result < Constants.DATE_YEAR_MIN || result > Constants.DATE_YEAR_MAX) {
-		
-			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
-		
-		}
-		
-		return result;
-	
 	}
 	
 	/**
