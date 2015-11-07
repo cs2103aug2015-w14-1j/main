@@ -36,7 +36,42 @@ public class AddCommand extends ReversibleCommand {
 		this.category = category;
 	}
 	
-	public String getTaskName() {
+	
+    @Override
+	public Result execute(){
+		
+		assertions();
+		
+		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(addTask);
+		Result result = new Result(Action.ADD, listOfResults);
+		this.task = addTask;
+		pushToStack();
+		return result;
+	}
+
+	
+	@Override
+	public Result undo(){
+		
+		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+		
+		Task temptask = manager.deleteTask(task.getTaskId()); 
+		ArrayList<Task> listOfResults = new ArrayList<Task>();
+		listOfResults.add(temptask);
+		Result result = new Result(Action.UNDO, listOfResults);
+		return result;
+	}
+	
+	private void assertions() {
+		assert taskName != null;
+		assert dateRange!= null;
+		assert category != null;
+		assert taskType != null;
+	}
+	
+public String getTaskName() {
 		
 		return this.taskName;
 	}
@@ -55,35 +90,7 @@ public class AddCommand extends ReversibleCommand {
 		
 		return this.dateRange;
 	}
-
-	@Override
-	public Result execute(){
-		
-		assert taskName != null;
-		assert dateRange!= null;
-		assert category != null;
-		assert taskType != null;
-		
-		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(addTask);
-		Result result = new Result(Action.ADD, listOfResults);
-		this.task = addTask;
-		pushToStack();
-		return result;
-	}
 	
-	@Override
-	public Result undo(){
-		
-		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
-		
-		Task temptask = manager.deleteTask(task.getTaskId()); 
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.UNDO, listOfResults);
-		return result;
-	}
 	
 	
 }

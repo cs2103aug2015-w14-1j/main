@@ -18,18 +18,11 @@ public class MarkCommand extends ReversibleCommand {
 	private int id;
 	
 	public MarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){
+		
 		super(commandAction, historyStack);
 		this.manager = manager;
 	}
 	
-	public void addValues(int id){
-		this.id = id;
-	}
-	
-	public int getId(){
-		return this.id;
-	}
-
 	@Override
 	public Result execute() {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
@@ -51,6 +44,16 @@ public class MarkCommand extends ReversibleCommand {
 		listOfResults.add(tempTask);
 		Result result = new Result(Action.UNDO, listOfResults);
 		return result;
+	}
+	
+public void addValues(int id){
+		
+		this.id = id;
+	}
+	
+	public int getId(){
+		
+		return this.id;
 	}
 
 }

@@ -25,17 +25,8 @@ public class DeleteCommand extends ReversibleCommand {
 
 	}
 
-	public void addValues(int id) {
-		
-		this.id = id;
-	}
-
-	public int getId() {
-		
-		return this.id;
-	}
-
-	@Override
+	
+    @Override
 	public Result execute() {
 		
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
@@ -60,6 +51,16 @@ public class DeleteCommand extends ReversibleCommand {
 		Result result = new Result(Action.UNDO, listOfResults);
 		this.task = temptask;
 		return result;
+	}
+	
+public void addValues(int id) {
+		
+		this.id = id;
+	}
+
+	public int getId() {
+		
+		return this.id;
 	}
 
 }
