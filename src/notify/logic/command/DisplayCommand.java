@@ -23,7 +23,7 @@ public class DisplayCommand extends Command {
 	@Override
 	public Result execute() {
 		
-		ArrayList<Task> completedTasks = manager.getTask(true);
+		ArrayList<Task> completedTasks = manager.getTasks(true);
 		Result result = new Result(Action.DISPLAY, completedTasks);
 		return result;
 	}

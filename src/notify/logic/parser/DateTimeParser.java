@@ -1,3 +1,5 @@
+//@@author A0125471L
+
 /**
  * Author: Chua Si Hao
  * Matric No: A0125471L
@@ -242,9 +244,23 @@ public class DateTimeParser {
 		
 		}
 		
+		//check for days keyword
+		if(dateFound == false) {
+	
+			result = retrieveNext(rawDate);
+			
+			if(result != null) {
+				
+				dateFound = true;
+
+			}
+
+		}
+		
 		//if date entered is not a keyword, check if date is separated by slashes
 		if(dateFound == false) {
 		
+			Calendar today = Calendar.getInstance();
 			String[] split = rawDate.split(Constants.DATE_SEPERATOR_SLASH);
 	
 			if(split.length >= Constants.DATE_SEPERATOR_MIN) {
@@ -268,6 +284,17 @@ public class DateTimeParser {
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);
 				
+				//indicates that year is not added
+				if(split.length < Constants.DATE_SEPERATOR_MAX) {
+					
+					if(result.before(today)) {
+						
+						result.set(Calendar.YEAR, year + Constants.OFFSET_YEAR);
+						
+					}
+					
+				}
+				
 				dateFound = true;
 			
 			}
@@ -277,6 +304,7 @@ public class DateTimeParser {
 		//check if date is separated by spaces
 		if(dateFound == false) {
 		
+			Calendar today = Calendar.getInstance();
 			String[] split = rawDate.split(Constants.DATE_SEPERATOR_SPACE);
 	
 			if(split.length >= Constants.DATE_SEPERATOR_MIN) {
@@ -300,6 +328,17 @@ public class DateTimeParser {
 				result.set(Calendar.MONTH, month);
 				result.set(Calendar.YEAR, year);
 				
+				//indicates that year is not added
+				if(split.length < Constants.DATE_SEPERATOR_MAX) {
+					
+					if(result.before(today)) {
+						
+						result.set(Calendar.YEAR, year + Constants.OFFSET_YEAR);
+						
+					}
+					
+				}
+				
 				dateFound = true;
 				
 			}
@@ -316,6 +355,9 @@ public class DateTimeParser {
 	
 	}
 	
+	/**
+	 * Validates and return the day if is in correct format
+	 */
 	private static int retrieveDay(String day) {
 		
 		boolean isNumeric = StringUtils.isNumeric(day);
@@ -337,6 +379,9 @@ public class DateTimeParser {
 		return result;		
 	}
 	
+	/**
+	 * Validates and return the month if is in correct format
+	 */
 	private static int retrieveMonth(String month) {
 		
 		int result = -1;
@@ -363,6 +408,9 @@ public class DateTimeParser {
 	
 	}
 	
+	/**
+	 * Validates and return the year if is in correct format
+	 */
 	private static int retrieveYear(String year) {
 		
 		int result = Constants.INVALID_YEAR;
@@ -394,6 +442,181 @@ public class DateTimeParser {
 		
 		return result;
 	
+	}
+
+	/**
+	 * Search for the corresponding Calendar's Day with the keyword provided
+	 */
+	private static int retrieveDayIndex(String day) { 
+		
+		int dayOfWeek = Constants.INT_ZERO;
+		day = day.toUpperCase();
+		
+		for(int i = 0; i < Constants.KEYWORD_MONDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_MONDAY[i])) {
+			
+				dayOfWeek = Calendar.MONDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_TUESDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_TUESDAY[i])) {
+			
+				dayOfWeek = Calendar.TUESDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_WEDNESDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_WEDNESDAY[i])) {
+			
+				dayOfWeek = Calendar.WEDNESDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_THURSDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_THURSDAY[i])) {
+			
+				dayOfWeek = Calendar.THURSDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_FRIDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_FRIDAY[i])) {
+			
+				dayOfWeek = Calendar.FRIDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_SATURDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_SATURDAY[i])) {
+			
+				dayOfWeek = Calendar.SATURDAY;
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < Constants.KEYWORD_SUNDAY.length; i++) {
+			
+			if(day.contains(Constants.KEYWORD_SUNDAY[i])) {
+			
+				dayOfWeek = Calendar.SUNDAY;
+				
+			}
+			
+		}
+		
+		return dayOfWeek;
+		
+	}
+	
+	/**
+	 * Find the following corresponding day or the day on the next week
+	 * Information is parsed and a Calendar object with the values is populated
+	 * 
+	 * @param day the closest day that matches request
+	 * 
+	 * @returns Calendar values are populated into the Calendar
+	 * 				Fields within the Calendar object that is not specified will be defaulted
+	 * 
+	 */
+	private static Calendar retrieveNext(String day) {
+		
+		Calendar results = null;
+		Calendar today = Calendar.getInstance();
+		int dayIndex = retrieveDayIndex(day);
+		boolean found = false;
+		
+		day = day.toUpperCase();
+		
+		int offset;
+		int current = today.get(Calendar.DAY_OF_WEEK);
+		
+		for(offset = 0; offset < Constants.OFFSET_WEEK; offset++) { 
+			
+			if(current == dayIndex) {
+				
+				found = true;
+				break;
+				
+			}
+			
+			current++;
+			
+		}
+		
+		if(day.contains(Constants.KEYWORD_NEXT) == true) {
+			
+			offset += Constants.OFFSET_WEEK;
+			
+		}
+		
+		offset = today.get(Calendar.DAY_OF_YEAR) + offset;
+		today.set(Calendar.DAY_OF_YEAR, offset);
+		
+		if(found == true) { 
+			
+			results = today;
+			
+		}
+		
+		return results;
+		
+	}
+	
+	/**
+	 * Handles the analyzing of time range from its raw input
+	 * Information is parsed and a Calendar object with only start and end time
+	 * 
+	 * @param rawRange unprocessed string of information to be parsed
+	 * 
+	 * @returns DateRange values are populated into the Calendar
+	 * 				Fields within the Calendar object that is not specified will be defaulted
+	 * 
+	 */
+	public static DateRange parseTimeRange(String rawRange) {
+		
+		assert rawRange != null;
+
+		rawRange = rawRange.trim();
+		rawRange = rawRange.toUpperCase();
+		rawRange = rawRange.replaceAll(Constants.KEYWORD_FROM, Constants.STRING_EMPTY);
+		
+		String[] split = rawRange.split(Constants.KEYWORD_TO);
+		
+		DateRange dateRange = null;
+		
+		if(split.length == Constants.PARAM_RESULT_SIZE) { 
+			
+			String startTime = split[Constants.PARAM_FROM];
+			String endTime = split[Constants.PARAM_TO];
+			
+			if(startTime.length() <= Constants.TIME_FORMAT_MAX 
+					&& endTime.length() <= Constants.TIME_FORMAT_MAX) {
+				
+				dateRange = new DateRange(null, startTime, null, endTime);
+				
+			}
+		}
+		
+		return dateRange;
+
 	}
 
 	/**
@@ -466,9 +689,15 @@ public class DateTimeParser {
 		
 		}
 		
-		
 		// handle the meridiem offset, from meridiem format to 24 hours time format
-		hour = (isPostMeridiem) ? hour + Constants.TIME_DIFFERENCE : hour;
+		if(isPostMeridiem == true) {
+			
+			if(hour != Constants.TIME_DIFFERENCE) {
+				
+				hour = hour + Constants.TIME_DIFFERENCE;
+				
+			}
+		}
 		
 		if(hour < Constants.TIME_HOUR_MIN || hour > Constants.TIME_HOUR_MAX) { 
 		

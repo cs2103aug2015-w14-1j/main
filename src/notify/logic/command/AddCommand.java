@@ -43,9 +43,9 @@ public class AddCommand extends ReversibleCommand {
 		assertions();
 		
 		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(addTask);
-		Result result = new Result(Action.ADD, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(addTask);
+		Result result = new Result(Action.ADD, list);
 		this.task = addTask;
 		pushToStack();
 		return result;
@@ -58,9 +58,9 @@ public class AddCommand extends ReversibleCommand {
 		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(task.getTaskId()); 
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(temptask);
+		Result result = new Result(Action.UNDO, list);
 		return result;
 	}
 	
