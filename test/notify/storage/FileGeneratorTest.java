@@ -52,7 +52,7 @@ public class FileGeneratorTest {
 	@Test
 	public void testFileContent() {
 		File fileToRead = fileGenerator.getDirectoryFile();
-		String expectedResult = Constants.FOLDER_CONFIG+File.separator+Constants.FOLDER_DATA;
+		String expectedResult = Constants.FOLDER_CONFIG+Constants.FOLDER_DATA;
 		String actualResult = fileGenerator.getFileContent(fileToRead);
 		assertEquals(expectedResult, actualResult);
 		

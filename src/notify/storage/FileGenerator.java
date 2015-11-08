@@ -19,9 +19,9 @@ public class FileGenerator {
 	private File dataFile;
 	
 	public FileGenerator() {
-		this.configFolder = new File(Constants.FOLDER_CONFIG);
-		this.dataFolder = new File(String.format(Constants.PATH_SUB_FOLDER , Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA));
-		this.commandsFolder = new File(String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_COMMANDS));
+		this.configFolder = new File(Constants.NAME_FOLDER_CONFIG);
+		this.dataFolder = new File(String.format(Constants.PATH_SUB_FOLDER , Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
+		this.commandsFolder = new File(String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS));
 		generateConfigFolder();
 		generateSystemFiles();
 	}
@@ -47,7 +47,7 @@ public class FileGenerator {
 	}
 	
 	public File getCommandFile(Action command_) {
-		File file = new File(String.format(Constants.PATH_VISIBLE_FILE, Constants.FOLDER_CONFIG+File.separator+Constants.FOLDER_COMMANDS, File.separator, command_.toString().toLowerCase(), Constants.EXTENSION_FILE));
+		File file = new File(String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS, command_.toString().toLowerCase(), Constants.EXTENSION_FILE));
 		return file;
 	}
 	
@@ -69,23 +69,27 @@ public class FileGenerator {
 		}
 
 		if (!this.dataFolder.exists()) {
+			//configFolder must exist
 			this.dataFolder.mkdir();
 		}
 
 		if (!this.commandsFolder.exists()) {
+			//configFolder must exist
 			this.commandsFolder.mkdir();
 		}
 	}
 
 	private void generateDirectoryFile() {
-		this.directoryFile = new File(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
+		//notify.config must exist
+		//data folder must exist
+		this.directoryFile = new File(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
 		if (!this.directoryFile.exists()) {
-			writeIntoFile(this.directoryFile, String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA));
+			writeIntoFile(this.directoryFile, String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
 		}
 	}
 	
 	private void generateDataFile() {
-		this.dataFile = new File(String.format(Constants.PATH_VISIBLE_FILE, readFromFile(directoryFile), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE));
+		this.dataFile = new File(String.format(Constants.PATH_FILE, readFromFile(this.directoryFile), Constants.FILE_DATA, Constants.EMPTY_STRING));
 		if (!this.dataFile.exists()) {
 			writeIntoFile(this.dataFile, Constants.SQURE_BRACKETS);
 		}
@@ -93,7 +97,7 @@ public class FileGenerator {
 
 	private void generateCommandFiles() {
 		for (Action command : Action.values()) {
-			this.commandFile = new File(String.format(Constants.PATH_VISIBLE_FILE, Constants.FOLDER_CONFIG+File.separator+Constants.FOLDER_COMMANDS, File.separator, command.toString().toLowerCase(), Constants.EXTENSION_FILE));
+			this.commandFile = new File(String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS, command.toString().toLowerCase(), Constants.EXTENSION_FILE));
 			if (!this.commandFile.exists()) {
 				writeIntoFile(this.commandFile, Constants.EMPTY_STRING);
 			}

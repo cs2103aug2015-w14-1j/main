@@ -1,6 +1,5 @@
 package notify.storage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,11 +17,11 @@ public class Storage {
 	
 	public Storage() {
 		this.fileGenerator = new FileGenerator();
-		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
-		this.dataFilePath = String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE);
+		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+		this.dataFilePath = String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING);
 		this.load = new TasksLoader(dataFilePath);
 		this.loadCommand = new CommandsLoader();
-		save = new TasksSaver(dataFilePath);
+		this.save = new TasksSaver(dataFilePath);
 	}
 	
 	public ArrayList<Task> loadTasks(){
@@ -30,7 +29,7 @@ public class Storage {
 	}
 
 	public void saveTasks(ArrayList<Task> taskList_) {
-		save.setFilePath(String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE));
+		save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING));
 		save.execute(taskList_);
 	}
 	

@@ -32,7 +32,7 @@ public class CommandsLoader extends StorageOperation {
 		
 		for(Action command : Action.values()) {
 			try {
-				filePath = String.format(Constants.PATH_VISIBLE_FILE, Constants.FOLDER_CONFIG+File.separator+Constants.FOLDER_COMMANDS, File.separator, command.toString().toLowerCase(), Constants.EXTENSION_FILE);
+				filePath = String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS, command.toString().toLowerCase(), Constants.EXTENSION_FILE);
 				File file = new File(filePath);
 				FileReader fileReader = new FileReader(file);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
