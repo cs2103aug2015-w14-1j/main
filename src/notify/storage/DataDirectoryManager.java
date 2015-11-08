@@ -6,11 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import com.google.gson.reflect.TypeToken;
-
-import notify.Task;
 
 public class DataDirectoryManager extends StorageOperation{
 
@@ -29,13 +24,20 @@ public class DataDirectoryManager extends StorageOperation{
 	protected Boolean execute(Object newDataFilePath) {
 		if(isValidFilePath((String)newDataFilePath)) {
 			FileTransferManager fileTrsMngr = new FileTransferManager(String.format(Constants.PATH_VISIBLE_FILE, getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE), String.format(Constants.PATH_VISIBLE_FILE, (String)newDataFilePath, File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE));
-			dataFilePath = (String)newDataFilePath;
-			this.writeIntoFile((String)newDataFilePath);
 			fileTrsMngr.transferData();
+			
+			this.dataFilePath = (String)newDataFilePath;
+			this.writeIntoFile((String)newDataFilePath);
+			
 			return true;
 		} else {
+			
 			return false;
 		}
+	}
+	
+	protected void setFilePath(String filePath_) {
+		this.filePath = filePath_;
 	}
 	
 	public String getDataFilePath() {

@@ -39,6 +39,11 @@ public class TasksLoader extends StorageOperation{
 		}
 	}
 	
+	@Override
+	protected void setFilePath(String filePath_) {
+		this.filePath = filePath_;
+	}
+	
 	/*
 	protected boolean execute(String emptyString) {
 		return false;

@@ -15,7 +15,7 @@ public final class Constants {
 	public static final String EXTENSION_FILE = ".txt";
 	
 	public static final String EMPTY_STRING = "";
-	public static final String EMPTY_ARRAY = "[]";
+	public static final String SQURE_BRACKETS = "[]";
 	public static final String PERIOD = ".";
 	public static final String SPACE = " ";
 	

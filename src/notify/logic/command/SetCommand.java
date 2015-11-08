@@ -29,7 +29,7 @@ public class SetCommand extends Command {
 	public Result execute(){
 		
 		Result result = null;
-		if(storage.setFilePath(this.newFilePath)){
+		if(storage.setFileDestination(this.newFilePath)){
 			
 			result = new Result(Action.SET, new ArrayList<Task>(), true);
 		}

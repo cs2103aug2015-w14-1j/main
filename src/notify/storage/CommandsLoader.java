@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import notify.logic.command.Action;
-import notify.Task;
 
 public class CommandsLoader extends StorageOperation {	
 	protected CommandsLoader() {
@@ -23,6 +21,10 @@ public class CommandsLoader extends StorageOperation {
 		} else {
 			return null;
 		}
+	}
+	
+	protected void setFilePath(String filePath_) {
+		this.filePath = filePath_;
 	}
 	
 	private boolean readFromFile() {

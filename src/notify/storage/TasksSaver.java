@@ -35,6 +35,10 @@ public class TasksSaver extends StorageOperation {
 		return null;
 	}
 	
+	protected void setFilePath(String filePath_) {
+		this.filePath = filePath_;
+	}
+	
 	/*
 	protected boolean execute(String emptyString) {
 		return false;

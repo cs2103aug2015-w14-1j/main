@@ -16,8 +16,8 @@ public class FileTransferManager {
 	public FileTransferManager(String oldFilePath, String newFilePath) {
 		this.oldFilePath = oldFilePath;
 		this.newFilePath = newFilePath;
-		inStream = null;
-		outStream = null;
+		this.inStream = null;
+		this.outStream = null;
 	}
 
 	public void transferData() {

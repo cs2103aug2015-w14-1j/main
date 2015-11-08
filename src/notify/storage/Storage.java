@@ -17,11 +17,12 @@ public class Storage {
 	private String dataFilePath;
 	
 	public Storage() {
-		fileGenerator = new FileGenerator();
-		dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
-		dataFilePath = String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE);
-		load = new TasksLoader(dataFilePath);
-		loadCommand = new CommandsLoader();
+		this.fileGenerator = new FileGenerator();
+		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
+		this.dataFilePath = String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE);
+		this.load = new TasksLoader(dataFilePath);
+		this.loadCommand = new CommandsLoader();
+		save = new TasksSaver(dataFilePath);
 	}
 	
 	public ArrayList<Task> loadTasks(){
@@ -29,8 +30,7 @@ public class Storage {
 	}
 
 	public void saveTasks(ArrayList<Task> taskList_) {
-		updateDataFilePath();
-		save = new TasksSaver(dataFilePath);
+		save.setFilePath(String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE));
 		save.execute(taskList_);
 	}
 	
@@ -38,11 +38,7 @@ public class Storage {
 		return loadCommand.execute(new ArrayList<Task>());
 	}
 	
-	public boolean setFilePath(String newFilePath) {
+	public boolean setFileDestination(String newFilePath) {
 		return dataDirectoryManager.execute(newFilePath);
-	}
-	
-	private void updateDataFilePath() {
-		dataFilePath = String.format(Constants.PATH_VISIBLE_FILE, dataDirectoryManager.getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE);
 	}
 }
