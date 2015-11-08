@@ -1,8 +1,5 @@
-/**
- * Author: Sadhika Billa
- * Matric No: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import java.util.ArrayList;
