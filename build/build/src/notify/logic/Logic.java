@@ -1,9 +1,4 @@
-/**
- * Author: Kenneth Ho Chee Chong
- * Matric No: A0125364J
- * For CS2103T - Notify
- */
-
+//@@author A0125364J
 package notify.logic;
 
 import java.util.ArrayList;
@@ -21,7 +16,7 @@ import notify.storage.Storage;
 
 public class Logic {
 	
-	private CommandParser parser;
+	private CommandParser commandParser;
 	private Storage storage;
 	private TaskManager taskManager;
 	private Stack<ReversibleCommand> history;
@@ -31,19 +26,27 @@ public class Logic {
 		this.storage = new Storage();
 		this.history = new Stack<ReversibleCommand>();
 		this.taskManager = new TaskManager(this.storage);
-		this.parser = new CommandParser(this.storage, this.taskManager, this.history);
+		this.commandParser = new CommandParser(this.storage, this.taskManager, this.history);
 		
 	}
 	
 	public CommandParser getCommandParser() {
 		
-		return this.parser;
+		return this.commandParser;
 		
 	}
 	
+	public Stack<ReversibleCommand> getHistory(){
+		
+		return this.history;
+	}
+	
+	/**
+	 * Writes the changes into the file.
+	 */
 	public void save() {
 		
-		this.storage.saveTasks(taskManager.getTask());
+		this.storage.saveTasks(taskManager.getTasks());
 		
 	}
 	
@@ -65,8 +68,14 @@ public class Logic {
 	 */
 	public Result processCommand(String input) {
 		
-		Command command = this.parser.parse(input);
+		Command command = this.commandParser.parse(input);
 		Result result = command.execute();
+		
+		if(command.isPersistable()) {
+			
+			save();
+			
+		}
 		
 		return result;
 		
@@ -74,7 +83,7 @@ public class Logic {
 	
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
 		
-		return taskManager.getTask(date, isCompleted);
+		return taskManager.getTasks(date, isCompleted);
 		
 	}
 	 
@@ -87,13 +96,14 @@ public class Logic {
 		int dateYear = date.get(Calendar.YEAR);
 		int dateDay = date.get(Calendar.DAY_OF_YEAR);
 		
-		ArrayList<Task> tasks = this.taskManager.getTask(date, isCompleted);
+		ArrayList<Task> tasks = this.taskManager.getTasks(date, isCompleted);
 		
 		for(Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
 			
 			Task task = iterator.next();
 			
 			if(task.getTaskType() == TaskType.RANGE) {
+				
 				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
 				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
 				
@@ -119,57 +129,6 @@ public class Logic {
 			
 		}
 		
-		/*for(int i = 0; i < tasks.size(); i++) {
-			
-			Task task = tasks.get(i);
-			
-			assert task.getTaskType() != TaskType.FLOATING;
-			
-			if(task.getTaskType() == TaskType.RANGE) {
-				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
-				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
-				
-				if(task.isStarted()) {
-					
-					if(!(todayYear == dateYear && todayDay == dateDay)) {
-						
-						tasks.remove(i);
-						
-					}
-					
-				} else {
-					
-					if(!(taskStartYear == dateYear && taskStartDay == dateDay)) {
-						
-						tasks.remove(i);
-						
-					}
-					
-				}*/
-				
-				/*if(taskStartYear < todayYear || (taskStartYear == todayYear && taskStartDay < todayDay)) {
-					
-					if(dateYear > todayYear || (dateYear == todayYear && dateDay > todayDay)) {
-						
-						tasks.remove(i);
-						
-					}
-					
-				
-				} else {
-					
-					if(dateYear > taskStartYear || (dateYear == taskStartYear && dateDay > taskStartDay)) {
-						
-						tasks.remove(i);
-						
-					}
-					
-				} */
-				
-			/*}
-			
-		}*/
-		
 		return tasks;
 		
 	}
@@ -188,7 +147,13 @@ public class Logic {
 	
 	public ArrayList<Task> getFloatingTasks() {
 		
-		return this.taskManager.getTask(TaskType.FLOATING, false);
+		return this.taskManager.getTasks(TaskType.FLOATING, false);
+		
+	}
+	
+	public ArrayList<Task> getCompletedTasks() {
+		
+		return this.taskManager.getTasks(true);
 		
 	}
 

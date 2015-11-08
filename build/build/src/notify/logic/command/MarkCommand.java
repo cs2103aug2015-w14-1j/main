@@ -1,8 +1,5 @@
-/**
- * Author: Sadhika Billa
- * Matric number: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import java.util.ArrayList;
@@ -28,9 +25,9 @@ public class MarkCommand extends ReversibleCommand {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task markTask = manager.markTask(id, true);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(markTask);
-		Result result = new Result(Action.MARK, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(markTask);
+		Result result = new Result(Action.MARK, list);
 		pushToStack();
 		return result;
 	}
@@ -40,9 +37,9 @@ public class MarkCommand extends ReversibleCommand {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task tempTask = manager.markTask(id, false);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(tempTask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(tempTask);
+		Result result = new Result(Action.UNDO, list);
 		return result;
 	}
 	

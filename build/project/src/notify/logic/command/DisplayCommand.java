@@ -1,8 +1,5 @@
-/**
- * Author: Sadhika Billa
- * Matric No: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import java.util.ArrayList;
@@ -23,7 +20,7 @@ public class DisplayCommand extends Command {
 	@Override
 	public Result execute() {
 		
-		ArrayList<Task> completedTasks = manager.getTask(true);
+		ArrayList<Task> completedTasks = manager.getTasks(true);
 		Result result = new Result(Action.DISPLAY, completedTasks);
 		return result;
 	}

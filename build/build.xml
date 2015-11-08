@@ -167,7 +167,7 @@
 			includeDT="false"
 			offlineAllowed="true"
 			outdir="${basedir}/deploy"
-			outfile="Notify" nativeBundles="exe"
+			outfile="Notify" nativeBundles="dmg"
 			updatemode="background" >
 	
 			<fx:platform basedir="${java.home}"/>

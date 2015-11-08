@@ -1,3 +1,5 @@
+//@@author A0125471L
+
 /**
  * Author: Chua Si Hao
  * Matric No: A0125471L
@@ -21,6 +23,7 @@ import notify.logic.command.DeleteCommand;
 import notify.logic.command.DisplayCommand;
 import notify.logic.command.EditCommand;
 import notify.logic.command.ExitCommand;
+import notify.logic.command.HelpCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
@@ -115,6 +118,10 @@ public class CommandParser {
 			case SET: 
 				command = handleSetCommand(commandAction, storage, input); 
 				break;
+			
+			case HELP:
+				command = handleHelpCommand(commandAction, taskManager);
+				break;
 				
 			case EXIT: 
 				command = handleExitCommand(commandAction, taskManager, input); 
@@ -149,31 +156,76 @@ public class CommandParser {
 		
 		//check if command contains any keywords
 		String datePrompt = containsKeyword(input, Constants.DATETIME_PROMPT_KEYWORDS);
+		String timePrompt = containsKeyword(input, Constants.DATETIME_KEYWORDS);
+		String today = Constants.KEYWORD_TODAY[Constants.PARAM_FIRST_INDEX].toLowerCase();
+		String[] results = null;
 		
 		if(datePrompt != null) { 
-		
-			String[] results = parseDate(input);
-			name = results[Constants.PARAM_RESULT_NAME];
-			dateRange = DateTimeParser.parseDateRange(results[Constants.PARAM_RESULT_DATE]);
 			
+			results = parseDate(input);
+						
 			if(datePrompt.equalsIgnoreCase(Constants.KEYWORD_FROM)) {
 				
-				if(dateRange.isSameDay()) {
+				DateRange timeRange = DateTimeParser.parseTimeRange(results[Constants.PARAM_RESULT_DATE]);
 				
-					taskType = TaskType.DEADLINE;
+				if(timeRange != null) {
+					
+					String processedInput = preProcessDate(input, today);
+					datePrompt = containsKeyword(processedInput, Constants.DATETIME_PROMPT_KEYWORDS);
+					results = parseDate(processedInput);
+					
+				} 
 				
-				} else {
-				
-					taskType = TaskType.RANGE;
-				
-				}
-				
-			} else {
-			
-				taskType = TaskType.DEADLINE;
-			
 			}
 			
+		} else if(timePrompt != null) {
+			
+			String processedInput = preProcessDate(input, today);
+			datePrompt = containsKeyword(processedInput, Constants.DATETIME_PROMPT_KEYWORDS);
+			results = parseDate(processedInput);
+		
+		}
+		
+		String processedInput = handleShortHand(input, name, results);
+		
+		if(processedInput != null) {
+			
+			datePrompt = containsKeyword(processedInput, Constants.DATETIME_PROMPT_KEYWORDS);
+			results = parseDate(processedInput);
+			
+		}
+	
+		if(datePrompt != null || timePrompt != null) {
+
+			if(results != null) {
+
+				name = results[Constants.PARAM_RESULT_NAME];
+				dateRange = DateTimeParser.parseDateRange(results[Constants.PARAM_RESULT_DATE]);
+			
+				if(datePrompt.equalsIgnoreCase(Constants.KEYWORD_FROM)) {
+					
+					if(dateRange.isSameDay()) {
+						
+						taskType = TaskType.DEADLINE;
+				
+					} else {
+						
+						taskType = TaskType.RANGE;
+				
+					}
+				
+				} else {
+			
+					taskType = TaskType.DEADLINE;
+				
+				}
+			
+			} else {
+				
+				throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);	
+				
+			}
+		
 		}
 		
 		if(name.equalsIgnoreCase(Constants.STRING_EMPTY)) { 
@@ -314,7 +366,7 @@ public class CommandParser {
 		
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
-		
+
 		return command;
 		
 	}
@@ -411,6 +463,20 @@ public class CommandParser {
 	}
 	
 	/**
+	 * This method handles the set command parsing and calls the SetCommand class to process
+	 * The file path will be extracted and passed to the SetCommand
+	 */
+	private Command handleHelpCommand(Action commandAction, TaskManager taskManager) {
+		
+		HelpCommand command = null;
+	
+		command = new HelpCommand(commandAction, taskManager);
+
+		return command;
+		
+	}
+	
+	/**
 	 * This method handles the exit command parsing and calls the ExitCommand class to process
 	 */
 	private Command handleExitCommand(Action commandAction, TaskManager taskManager, String input) {
@@ -421,6 +487,139 @@ public class CommandParser {
 		
 		return command;
 		
+	}
+	
+	/**
+	 * This method checks if the input has been added in a shorthand manner
+	 * Where some keywords may be removed to increase efficiency
+	 * Method corrects the command to the full form
+	 * 
+	 * @param input original input received by the parser
+	 * 
+	 * @param name original name from the earlier parsing
+	 * 
+	 * @param results results from the earlier parsing
+	 * 
+	 * @returns String full command that will be system recognized if input is correct
+	 * 			returns null if invalid input is given
+	 * 
+	 */
+	private String handleShortHand(String input, String name, String[] results) {
+		
+		String result = null;
+		
+		if(results != null) {
+			
+			name = results[Constants.PARAM_RESULT_NAME];
+			
+		}
+		
+		String[] params = name.split(Constants.COMMAND_SEPERATOR);
+		String secondLastItem = Constants.STRING_EMPTY;
+		String lastItem = Constants.STRING_EMPTY;
+		
+		if(params.length >= 2 * Constants.OFFSET_ARRAY) {
+		
+			secondLastItem = params[params.length - 2 * Constants.OFFSET_ARRAY];
+		
+		}
+		
+		if(params.length >= Constants.OFFSET_ARRAY) {
+		
+			lastItem = params[params.length - Constants.OFFSET_ARRAY];
+			
+		}
+		
+		if(secondLastItem.equalsIgnoreCase(Constants.KEYWORD_NEXT) || secondLastItem.equalsIgnoreCase(Constants.KEYWORD_THIS)) {
+			
+			lastItem = String.format(Constants.FORMAT_NEXT_KEYWORD, secondLastItem, lastItem);
+			
+		}
+		
+		String[] keywords = Helper.combineArrays(Constants.KEYWORD_ALL_SIZE, Constants.KEYWORD_TODAY, 
+										Constants.KEYWORD_TOMORROW, Constants.KEYWORD_NEXT_WEEK, 
+										Constants.KEYWORD_NEXT_MONTH, Constants.KEYWORD_NEXT_YEAR, 
+										Constants.KEYWORD_MONDAY, Constants.KEYWORD_TUESDAY, 
+										Constants.KEYWORD_WEDNESDAY, Constants.KEYWORD_THURSDAY, 
+										Constants.KEYWORD_FRIDAY, Constants.KEYWORD_SATURDAY, 
+										Constants.KEYWORD_SUNDAY);
+		
+		String keyword = containsKeyword(lastItem, keywords);
+		
+		if(keyword != null) {
+		
+			result = preProcessDate(input, keyword);
+			
+		}
+		 
+		return result;
+
+	}
+	
+	/**
+	 * This method checks if the input has been added in a shorthand manner
+	 * Where some keywords may be removed to increase efficiency
+	 * Method corrects the command to the full form
+	 * 
+	 * @param input original input received by the parser
+	 * 
+	 * @param keyword keyword that will be appended into the command
+	 * 
+	 * @returns String full command that will be system recognized if input is correct
+	 * 			returns null if invalid input is given
+	 * 
+	 */
+	private String preProcessDate(String input, String keyword) { 
+		
+		String compare = input.toUpperCase();
+		keyword = keyword.toUpperCase();
+		
+		String atKeyword = formatKeyword(Constants.KEYWORD_AT, Constants.OPTION_KEYWORD_BOTH);
+		String fromKeyword = formatKeyword(Constants.KEYWORD_FROM, Constants.OPTION_KEYWORD_BOTH);
+		
+		int atIndex = compare.indexOf(atKeyword);
+		int fromIndex = compare.indexOf(fromKeyword);
+		
+		if(atIndex == Constants.KEYWORD_NOT_FOUND) {
+			
+			atIndex = Integer.MAX_VALUE;
+		
+		}
+		
+		if(fromIndex == Constants.KEYWORD_NOT_FOUND) {
+		
+			fromIndex = Integer.MAX_VALUE;
+		
+		}
+		
+		int startIndex = Math.min(atIndex, fromIndex);
+		
+		String result = Constants.STRING_EMPTY;
+		String name = input;
+		String rawDate = Constants.STRING_EMPTY;
+		
+		if(startIndex != Integer.MAX_VALUE) {
+			
+			name = input.substring(0, startIndex);
+			compare = name.toUpperCase();
+			
+			rawDate = input.substring(startIndex, input.length());
+			rawDate = rawDate.trim();
+
+		}
+		
+		String delete = compare.substring(compare.length() - keyword.length() , compare.length());
+		
+		if(delete.equalsIgnoreCase(keyword) == true) {
+			
+			name = name.substring(0, compare.length() - keyword.length());
+				
+		}
+		
+		result = String.format(Constants.PARAM_PREPROCESS, name, keyword, rawDate);
+		
+		return result;	
+
 	}
 	
 	/**
@@ -465,17 +664,16 @@ public class CommandParser {
 		
 		}
 		
+		String[] results = null;
 		int startIndex = Math.min(Math.min(byIndex, onIndex), fromIndex);
-	
-		if(startIndex == Integer.MAX_VALUE) { 
 		
-			throw new IllegalArgumentException(Constants.ERROR_INVALID_PARAMS);		
+		if(startIndex != Integer.MAX_VALUE) { 
+		
+			results = new String[Constants.PARAM_RESULT_SIZE];
+			results[Constants.PARAM_RESULT_NAME] = input.substring(0, startIndex);
+			results[Constants.PARAM_RESULT_DATE] = input.substring(startIndex, input.length());
 		
 		}
-		
-		String[] results = new String[Constants.PARAM_RESULT_SIZE];
-		results[Constants.PARAM_RESULT_NAME] = input.substring(0, startIndex);
-		results[Constants.PARAM_RESULT_DATE] = input.substring(startIndex, input.length());
 		
 		return results;	
 	
@@ -492,22 +690,28 @@ public class CommandParser {
 	 *           
 	 */
 	private String containsKeyword(String input, String[] list) {
-		
+			
 		String result = null;
 		
 		for(int i = 0; i < list.length && result == null; i++) {
 
 			input = input.toUpperCase();
-			input = formatKeyword(input, Constants.OPTION_KEYWORD_FRONT);
+			input = formatKeyword(input, Constants.OPTION_KEYWORD_BOTH);
 			
 			list[i] = list[i].trim();
 			list[i] = formatKeyword(list[i], Constants.OPTION_KEYWORD_BOTH);
-			
+						
 			int index = input.indexOf(list[i]);
 			
 			if(index != Constants.KEYWORD_NOT_FOUND) {
-			
-				String escape = input.substring(index - Constants.STRING_ESCAPE.length(), index);
+				
+				String escape = Constants.STRING_EMPTY;
+				
+				if(index != Constants.KEYWORD_NOT_ESCAPED) {
+					
+					escape = input.substring(index - Constants.STRING_ESCAPE.length(), index);
+					
+				}
 				
 				if(escape.equalsIgnoreCase(Constants.STRING_ESCAPE) == false) {
 				
@@ -536,6 +740,7 @@ public class CommandParser {
 	public static String formatKeyword(String keyword, int options) {
 		
 		String result = null;
+		keyword = keyword.trim();
 		
 		switch(options) {
 		

@@ -1,8 +1,5 @@
-/**
- * Author: Sadhika Billa
- * Matric No: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import java.util.ArrayList;
@@ -40,15 +37,26 @@ public class EditCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute(){
+		Result result = null;
+		ArrayList<Task> list = new ArrayList<Task>();
+		
+		
+		if(oldTask == null){
+			result = new Result(Action.INVALID, list);
+		}
+		
+		
+		else{
+		
 		checkNull();
-		
-		assertions();
-		
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(updatedTask);
-		Result result = new Result(Action.EDIT, listOfResults);
+		list.add(updatedTask);
+		result = new Result(Action.EDIT, list);
 		pushToStack();
+		
+		}
+		
+		
 		return result;
 	}
 
@@ -58,9 +66,9 @@ public class EditCommand extends ReversibleCommand {
 	public Result undo(){
 		
 		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(beforeUpdatedTask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(beforeUpdatedTask);
+		Result result = new Result(Action.UNDO, list);
 		return result;
 	}
 	
@@ -100,13 +108,6 @@ public class EditCommand extends ReversibleCommand {
 		}
 	}
 	
-	private void assertions() {
-		
-		assert taskName != null;
-		assert dateRange!= null;
-		assert category != null;
-		assert taskType != null;
-	}
 	
 
 }
