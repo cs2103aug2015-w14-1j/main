@@ -6,6 +6,21 @@
  * Methods: getTasks() and it's corresponding overload.
  * 			getOverdueTasks()
  * 			getComingSoonTasks()
+ * 
+ * Author: Ye Kyaw Swa Aung Joshua
+ * Matric No: A0124072U
+ * For CS2103T - Notify
+ * 
+ * Constructor: TaskManager(Storage)
+ * Methods: addTask(String, DateRange, String, TaskType)
+ * 			deleteTask(int)
+ * 			undeleteTask(int)
+ * 			updateTask(int, String, DateRange, String, TaskType)
+ * 			markTask(int, boolean)
+ * 			searchTask(String)
+ * 			exit
+ * 			updatelatestId
+ * 			
  */
 
 package notify.logic;
@@ -31,7 +46,6 @@ public class TaskManager {
 		this.latest_id = 0;
 		this.storage = storage;
 		this.taskList = this.storage.loadTasks();
-		System.out.println(taskList);
 		updateLatestId();
 	}
 
