@@ -19,7 +19,7 @@ public class DataDirectoryManager extends StorageOperation{
 	/**
 	 * Constructor
 	 * 
-	 * @param directoryFile_		The file which contains the absolute path of the data file where all the user's tasks are stored.
+	 * @param filePath		The file which contains the absolute path of the data file where all the user's tasks are stored.
 	 */
 	protected DataDirectoryManager(String filePath) {
 		this.filePath = filePath;
@@ -28,8 +28,10 @@ public class DataDirectoryManager extends StorageOperation{
 	
 	protected Boolean execute(Object newDataFilePath) {
 		if(isValidFilePath((String)newDataFilePath)) {
+			FileTransferManager fileTrsMngr = new FileTransferManager(String.format(Constants.PATH_VISIBLE_FILE, getDataFilePath(), File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE), String.format(Constants.PATH_VISIBLE_FILE, (String)newDataFilePath, File.separator, Constants.FILE_DATA, Constants.EXTENSION_FILE));
 			dataFilePath = (String)newDataFilePath;
 			this.writeIntoFile((String)newDataFilePath);
+			fileTrsMngr.transferData();
 			return true;
 		} else {
 			return false;
