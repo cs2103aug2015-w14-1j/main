@@ -84,7 +84,7 @@ public class EditCommand extends ReversibleCommand {
 	}
 
 	 /**
-	  * This method is responsible for reverting the EDIT action (i.e add the task).
+	  * This method is responsible for reverting the EDIT action (i.e to previous state of the task).
 	  * 
 	  * This method gets the pre-edited Task object by calling the updateTask method of TaskManager.
 	  * It then adds the task to an ArrayList to create the Result object.

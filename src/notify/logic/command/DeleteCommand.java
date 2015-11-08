@@ -43,7 +43,7 @@ import notify.logic.TaskManager;
      * This method is responsible for creating the Result object corresponding to the DELETE action.
      * It also pushes the particular action onto a historyStack, to allow it to be undone in future. 
      * 
-     * This method gets the Task object to be added by calling the addTask method
+     * This method gets the Task object to be deleted by calling the deleteTask method
      * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
      * the Logic class. 
      * 

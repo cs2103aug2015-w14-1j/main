@@ -73,7 +73,7 @@ public class AddCommand extends ReversibleCommand {
     /**
 	 * This method is responsible for reverting the ADD action (i.e delete the task).
 	 * 
-	 * This method creates the Task object to be deleted by calling the deleteTask method of TaskManager.
+	 * This method gets the Task object to be deleted by calling the deleteTask method of TaskManager.
 	 * It then adds the task to an ArrayList to create the Result object.
 	 * 
 	 * This method is called by the UndoCommand class {@see UndoCommand#execute()}
