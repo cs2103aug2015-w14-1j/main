@@ -23,6 +23,7 @@ import notify.logic.command.DeleteCommand;
 import notify.logic.command.DisplayCommand;
 import notify.logic.command.EditCommand;
 import notify.logic.command.ExitCommand;
+import notify.logic.command.HelpCommand;
 import notify.logic.command.MarkCommand;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
@@ -116,6 +117,10 @@ public class CommandParser {
 				
 			case SET: 
 				command = handleSetCommand(commandAction, storage, input); 
+				break;
+			
+			case HELP:
+				command = handleHelpCommand(commandAction, taskManager);
 				break;
 				
 			case EXIT: 
@@ -453,6 +458,20 @@ public class CommandParser {
 		command = new SetCommand(commandAction, storage);
 		command.addValues(newFilePath);
 		
+		return command;
+		
+	}
+	
+	/**
+	 * This method handles the set command parsing and calls the SetCommand class to process
+	 * The file path will be extracted and passed to the SetCommand
+	 */
+	private Command handleHelpCommand(Action commandAction, TaskManager taskManager) {
+		
+		HelpCommand command = null;
+	
+		command = new HelpCommand(commandAction, taskManager);
+
 		return command;
 		
 	}

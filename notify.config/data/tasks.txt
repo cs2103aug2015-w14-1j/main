@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+[{"id":0,"name":"all shit","isCompleted":false,"isDeleted":false}]
+=======
+<<<<<<< HEAD
+[{"id":0,"name":"q","isCompleted":false,"isDeleted":true,"taskType":"FLOATING"},{"id":1,"name":"meeting with john cena","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":8,"hourOfDay":17,"minute":26,"second":34}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":2,"name":"meeting with john cena","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":8,"hourOfDay":17,"minute":26,"second":56},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":15,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":3,"name":"meeting with john cena again next saturday at","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":8,"hourOfDay":17,"minute":29,"second":19}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"},{"id":4,"name":"meeting with john cena again","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":21,"hourOfDay":17,"minute":29,"second":46}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"}]
+=======
+[{"id":0,"name":"something","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":13,"hourOfDay":0,"minute":35,"second":0}},"isCompleted":true,"isDeleted":false,"taskType":"DEADLINE"}]
+>>>>>>> 09b1b23c07e0144a46ca27e41e3f15251b24ff04
+>>>>>>> origin/master
