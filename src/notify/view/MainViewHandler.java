@@ -141,15 +141,7 @@ public class MainViewHandler {
 	
 	@FXML
 	public void initialize() {
-		//initDailyView();
-		//populateOverdueTask();
-		//populateFloatingTask();
-		//populateComingSoonTask();
-
-		/*loadOverdueTask();
-		loadFloatingTask();
-		loadComingTask();
-		loadDailyTask();*/
+		
 	}
 	
 	
@@ -459,15 +451,15 @@ public class MainViewHandler {
 
 		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 		
-		if(task.isComingSoon() || task.isOverdue() || isSearch) {
+		if (task.isComingSoon() || task.isOverdue() || isSearch) {
 
-			if(taskStartTime != null) {
+			if (taskStartTime != null) {
 
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(taskEndTime != null) {
+			} else if (taskEndTime != null) {
 
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
