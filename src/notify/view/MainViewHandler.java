@@ -50,54 +50,14 @@ public class MainViewHandler {
 	private static Pos HBOX_NODE_ALIGNMENT = Pos.TOP_LEFT;
 	private static Insets HEADER_PADDING = new Insets(0, 0, 2, 0);	//top, right, bottom, left
 	
-	// font family settings for different types of text displayed
-	private static String TITLE_FONT_FAMILY = "Roboto Condensed";
-	private static String SUBTITLE_FONT_FAMILY = "Roboto Condensed";
-	private static String CHECKBOX_FONT_FAMILY = "Roboto";
-	private static String TASK_FONT_FAMILY = "Roboto Slab Regular";
-	private static String TASK_SUBTEXT_FONT_FAMILY = "Roboto Condensed";
-	
-	// font weight settings for different types of text displayed
-	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight TASK_SUBTEXT_FONT_WEIGHT = FontWeight.BOLD;
-	
-	// font posture settings for different types of text displayed
-	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture TASK_SUBTEXT_FONT_POSTURE = FontPosture.REGULAR;
-	
-	// font size settings for different types of text displayed
-	private static int TITLE_FONT_SIZE = 17;
-	private static int SUBTITLE_FONT_SIZE = 12;
-	private static int CHECKBOX_FONT_SIZE = 10;
-	private static int TASK_FONT_SIZE = 12;
-	private static int TASK_SUBTEXT_FONT_SIZE = 11;
-
-	// font object that is set up by the settings above
-	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
-	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
-	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
-	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
-	private static Font TASK_SUBTEXT_FONT = Font.font(TASK_SUBTEXT_FONT_FAMILY, TASK_SUBTEXT_FONT_WEIGHT, TASK_SUBTEXT_FONT_POSTURE, TASK_SUBTEXT_FONT_SIZE);
-	
 	// font color for different type of task
-	private static Paint OVERDUE_TEXT_FILL = Paint.valueOf("#5D322E");
-	private static Paint OVERDUE_SUBTEXT_FILL = Paint.valueOf("#B26059");
-	private static Paint FLOATING_TEXT_FILL = Paint.valueOf("#2D4D5A");
-	private static Paint FLOATING_SUBTEXT_FILL = Paint.valueOf("#5997B2");
-	private static Paint COMING_TEXT_FILL = Paint.valueOf("#485A33");
-	private static Paint COMING_SUBTEXT_FILL = Paint.valueOf("#8EB264");
-	private static Paint DAILY_TEXT_FILL = Paint.valueOf("#5D5D33");
-	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
-	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
-	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
 	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
 	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
+	
+	private static String TITLE_CSS_CLASS = "title";
+	private static String SUBTITLE_CSS_CLASS = "subtitle";
+	private static String TASK_NAME_CSS_CLASS = "taskname";
+	private static String TIMESTAMP_CSS_CLASS = "timestamp";
 	
 	// String pattern for dates
 	private static String SHORT_DAY_PATTERN = "EEE";
@@ -246,12 +206,12 @@ public class MainViewHandler {
 		
 		overdueTasks = logic.getOverdueTasks();
 
-		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(overdueTasks, false, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
+		HBox header = generateHeader(OVERDUE_TITLE);
+		ArrayList<HBox> items = generateList(overdueTasks, false);
 		
 		vboxOverdue.getChildren().clear();
-		vboxOverdue.getChildren().add(hboxHeader);
-		vboxOverdue.getChildren().addAll(hboxes);
+		vboxOverdue.getChildren().add(header);
+		vboxOverdue.getChildren().addAll(items);
 		
 	}
 	
@@ -264,12 +224,12 @@ public class MainViewHandler {
 		
 		floatingTasks = logic.getFloatingTasks();
 		
-		HBox hboxHeader = generateListHeader(FLOATING_TITLE, FLOATING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(floatingTasks, false, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
+		HBox header = generateHeader(FLOATING_TITLE);
+		ArrayList<HBox> items = generateList(floatingTasks, false);
 		
 		vboxFloating.getChildren().clear();
-		vboxFloating.getChildren().add(hboxHeader);
-		vboxFloating.getChildren().addAll(hboxes);
+		vboxFloating.getChildren().add(header);
+		vboxFloating.getChildren().addAll(items);
 		
 	}
 	
@@ -282,12 +242,12 @@ public class MainViewHandler {
 		
 		comingTasks = logic.getComingSoonTasks();
 
-		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(comingTasks, false, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
+		HBox header = generateHeader(COMING_TITLE);
+		ArrayList<HBox> items = generateList(comingTasks, false);
 		
 		vboxComing.getChildren().clear();
-		vboxComing.getChildren().add(hboxHeader);
-		vboxComing.getChildren().addAll(hboxes);
+		vboxComing.getChildren().add(header);
+		vboxComing.getChildren().addAll(items);
 		
 	}
 	
@@ -307,12 +267,12 @@ public class MainViewHandler {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
 			
-			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
-			ArrayList<HBox> hboxes = generateListItem(dailyTasks, false, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
+			HBox header = generateHeader(calendar);
+			ArrayList<HBox> items = generateList(dailyTasks, false);
 			
 			vboxes[i].getChildren().clear();
-			vboxes[i].getChildren().add(hboxHeader);
-			vboxes[i].getChildren().addAll(hboxes);
+			vboxes[i].getChildren().add(header);
+			vboxes[i].getChildren().addAll(items);
 			
 			dailyTasksList.add(dailyTasks);		
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -330,8 +290,8 @@ public class MainViewHandler {
 		completedTasks = filterTask(searchResults, true);
 		uncompletedTasks = filterTask(searchResults, false);
 
-		ArrayList<HBox> hboxesCompleted = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
-		ArrayList<HBox> hboxesUncompleted = generateListItem(uncompletedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		ArrayList<HBox> hboxesCompleted = generateList(completedTasks, true);
+		ArrayList<HBox> hboxesUncompleted = generateList(uncompletedTasks, true);
 		
 		vboxSearchCompleted.getChildren().clear();
 		vboxSearchCompleted.getChildren().addAll(hboxesCompleted);
@@ -345,7 +305,7 @@ public class MainViewHandler {
 		
 		completedTasks = logic.getCompletedTasks();
 		
-		ArrayList<HBox> hboxes = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		ArrayList<HBox> hboxes = generateList(completedTasks, true);
 		
 		vboxCompletedTask.getChildren().clear();
 		vboxCompletedTask.getChildren().addAll(hboxes);
@@ -431,9 +391,9 @@ public class MainViewHandler {
 	 * @param titleTextFill the font color of the title
 	 * @return a HBox object (which contains the title)
 	 */
-	public HBox generateListHeader(String title, Paint titleTextFill) {
+	public HBox generateHeader(String title) {
 		
-		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
+		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
 		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle);
 		
 		return hbox;
@@ -627,7 +587,7 @@ public class MainViewHandler {
 	 * @param subtitleTextFill the font color of the subtitle
 	 * @return
 	 */
-	public HBox generateListHeader(Calendar calendar, Paint titleTextFill, Paint subtitleTextFill) {
+	public HBox generateHeader(Calendar calendar) {
 		
 		Calendar today = Calendar.getInstance();
 		Calendar tomorrow = Calendar.getInstance();
@@ -651,15 +611,19 @@ public class MainViewHandler {
 			
 		}
 		
-		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
-		Label lblSubtitle = createLabel(subtitle, SUBTITLE_FONT, subtitleTextFill);
-
+		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
+		Label lblSubtitle = createLabel(subtitle, SUBTITLE_CSS_CLASS);
+		
+		//lblTitle.getStyleClass().add("title");
+		//lblSubtitle.getStyleClass().add("subtitle");
+		//lblTitle.setStyle("-fx-font-family:'Roboto Condensed'");
+		//lblSubtitle.setStyle("-fx-font-family:'Roboto Condensed'");fff
+		
 		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
 		
 		return hbox;
 		
 	}
-	
 	
 	
 	/**
@@ -669,7 +633,7 @@ public class MainViewHandler {
 	 * @param subtextFill the color of the subtext
 	 * @return
 	 */
-	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, boolean isSearch, Paint textFill, Paint subtextFill) {
+	public ArrayList<HBox> generateList(ArrayList<Task> tasks, boolean isSearch) {
 		
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
 		String subtext = "";
@@ -678,8 +642,8 @@ public class MainViewHandler {
 			
 			Task task = tasks.get(i);
 			
-			CheckBox checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
-			Label lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
+			CheckBox checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted());
+			Label lblTaskName = createLabel(task.getTaskName(), TASK_NAME_CSS_CLASS);
 			Label lblTaskTime;
 			HBox hbox;
 			
@@ -694,7 +658,7 @@ public class MainViewHandler {
 				default:
 					
 					subtext = generateTimeStamp(task, isSearch);
-					lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
+					lblTaskTime = createLabel(subtext, TIMESTAMP_CSS_CLASS);
 					hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
 					
 					break;
@@ -717,17 +681,17 @@ public class MainViewHandler {
 	 * @return the HBox which represents a single line of item to be added into the VBox
 	 */
 	public HBox createItem(boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		
 		HBox hbox = new HBox();
 		hbox.setSpacing(HBOX_NODE_SPACING);
 		hbox.setAlignment(HBOX_NODE_ALIGNMENT);
-		
-		//FlowPane flowPane = new FlowPane();
-		//flowPane.setHgap(HBOX_NODE_SPACING);
 
 		int startIndex = 0;
 		if(hasCheckbox) {
+			
 			hbox.getChildren().add(nodes[startIndex]);
 			startIndex = 1;
+			
 		}
 
 		if(isSearch) {
@@ -763,10 +727,12 @@ public class MainViewHandler {
 	}
 	
 	public HBox createItem(Insets insets, boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		
 		HBox hbox = createItem(hasCheckbox, isSearch, nodes);
 		hbox.setPadding(insets);
 		
 		return hbox;
+		
 	}
 	
 	/**
@@ -775,48 +741,20 @@ public class MainViewHandler {
 	 * @param font the font of the label such as font family, font weight, font posture and font size
 	 * @return a label which contains the text and formatting (default text color)
 	 */
-	public Label createLabel(String text, Font font) {
+	public Label createLabel(String text, String cssClass) {
+		
 		Label label = new Label(text);
-		label.setFont(font);
+		label.getStyleClass().add(cssClass);
 		
 		return label;
+		
 	}
 	
-	/**
-	 * Overloading method for creating a label with text color
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
-	 * @param textFill the color of the text fill
-	 * @return a label which contains the text and formatting
-	 */
-	public Label createLabel(String text, Font font, Paint textFill) {
-		Label label = createLabel(text, font);
-		label.setTextFill(textFill);
-		
-		return label;
-	}
-	
-	/**
-	 * Overloading method for creating a label with padding
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
-	 * @param textFill the color of the text fill
-	 * @param insets padding for the label
-	 * @return a label which contains the text and formatting
-	 */
-	/*public Label createLabel(String text, Font font, Paint textFill, Insets insets) {
-		Label label = createLabel(text, font, textFill);
-		label.setPadding(insets);
-		
-		return label;
-	}*/
-	
-	public CheckBox createCheckbox(String text, boolean isChecked, Font font, Paint textFill) {
+	public CheckBox createCheckbox(String text, boolean isChecked) {
 		
 		CheckBox checkbox = new CheckBox(text);
-		checkbox.setFont(font);
-		checkbox.setTextFill(textFill);
 		checkbox.setSelected(isChecked);
+		checkbox.setDisable(isChecked);
 		checkbox.setFocusTraversable(false);
 
 		checkbox.setOnAction(event -> checkboxEventHandler(event, checkbox));
