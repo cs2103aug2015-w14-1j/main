@@ -76,7 +76,7 @@ public class DateTimeParser {
 						
 			if(atIndex != Constants.KEYWORD_NOT_FOUND) {
 				
-				String[] split = rawDateTime.split(Constants.KEYWORD_AT);
+				String[] split = rawDateTime.split(atKeyword);
 				String date = split[Constants.PARAM_DATE].trim();
 				String time = split[Constants.PARAM_TIME].trim();
 						
