@@ -1,0 +1,4 @@
+<<<<<<< HEAD
+=======
+[{"id":0,"name":"oooo","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":9,"hourOfDay":1,"minute":37,"second":17},"endTime":{"year":1,"month":0,"dayOfMonth":1,"hourOfDay":14,"minute":0,"second":0}},"isCompleted":false,"isDeleted":false,"taskType":"DEADLINE"}]
+>>>>>>> origin/master

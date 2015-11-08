@@ -34,7 +34,7 @@ public final class Constants {
 	public static final String FILE_DESTINATION = PERIOD + NAME_FILE_DESTINATION + EXTENSION_FILE;
 	
 	/**
-	   Reference the constants using <tt>Consts.EMPTY_STRING</tt>, etc. 
+	   Reference the constants using <tt>Constants.EMPTY_STRING</tt>, etc. 
 	   By declaring this private constructor, the caller will be prevented from constructing objects of 
 	   this class. 
 	  */
