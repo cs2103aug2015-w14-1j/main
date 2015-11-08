@@ -366,7 +366,7 @@ public class CommandParser {
 		
 		EditCommand command = new EditCommand(commandAction, historyStack, taskManager);
 		command.addValues(name, dateRange, category, id, taskType);
-		
+
 		return command;
 		
 	}

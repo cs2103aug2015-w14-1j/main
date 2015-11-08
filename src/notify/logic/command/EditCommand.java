@@ -37,7 +37,6 @@ public class EditCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute(){
-		
 		Result result = null;
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		ArrayList<Task> list = new ArrayList<Task>();
