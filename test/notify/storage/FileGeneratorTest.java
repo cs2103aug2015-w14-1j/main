@@ -60,7 +60,6 @@ public class FileGeneratorTest {
 		expectedResult = Constants.SQURE_BRACKETS;
 		actualResult = fileGenerator.getFileContent(fileToRead);
 		assertEquals(expectedResult, actualResult);
-		
 	}
 
 }

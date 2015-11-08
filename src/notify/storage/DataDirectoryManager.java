@@ -1,3 +1,4 @@
+/* @@author A0124072 */
 package notify.storage;
 
 import java.io.BufferedReader;
@@ -8,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class DataDirectoryManager extends StorageOperation{
-
 	private String dataFilePath;
 	
 	/**
@@ -17,15 +17,22 @@ public class DataDirectoryManager extends StorageOperation{
 	 * @param filePath_		The file which contains the absolute path of the data file where all the user's tasks are stored.
 	 */
 	protected DataDirectoryManager(String filePath_) {
+		assert (filePath_ != null);
 		this.filePath = filePath_;
 		readFromFile();
 	}
 	
-	protected Boolean execute(Object newDataFilePath_) {
+	protected Boolean execute(Object newDataFilePath_) {		
+		FileTransferManager fileTrsMngr;
+		
+		assert newDataFilePath_ != null;
 		newDataFilePath_ = appendSeperator((String) newDataFilePath_);
 		
-		if(isValidDirectory((String)newDataFilePath_)) {
-			FileTransferManager fileTrsMngr = new FileTransferManager(String.format(Constants.PATH_FILE, getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING), String.format(Constants.PATH_FILE, (String)newDataFilePath_, Constants.FILE_DATA, Constants.EMPTY_STRING));
+		if (isValidDirectory((String) newDataFilePath_)) {
+			fileTrsMngr = new FileTransferManager(String.format(Constants.PATH_FILE,
+			        getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING),
+					String.format(Constants.PATH_FILE, (String)newDataFilePath_,Constants.FILE_DATA,
+					Constants.EMPTY_STRING));
 			fileTrsMngr.transferData();
 			
 			this.dataFilePath = (String)newDataFilePath_;
@@ -33,7 +40,6 @@ public class DataDirectoryManager extends StorageOperation{
 			
 			return true;
 		} else {
-			
 			return false;
 		}
 	}
@@ -47,7 +53,7 @@ public class DataDirectoryManager extends StorageOperation{
 	}
 	
 	private String appendSeperator(String newDataFilePath_) {
-		if(!containsLastSeperator(newDataFilePath_)) {
+		if (!containsLastSeperator(newDataFilePath_)) {
 			newDataFilePath_ = newDataFilePath_ + File.separator;
 		}
 		
@@ -55,7 +61,8 @@ public class DataDirectoryManager extends StorageOperation{
 	}
 	
 	private boolean containsLastSeperator(String newDataFilePath_) {
-		boolean result = newDataFilePath_.substring(newDataFilePath_.length()-1, newDataFilePath_.length()).equals(File.separator);
+		boolean result = newDataFilePath_.substring(newDataFilePath_.length()-1, 
+													newDataFilePath_.length()).equals(File.separator);
 		
 		return result;
 	}
@@ -63,7 +70,7 @@ public class DataDirectoryManager extends StorageOperation{
 	private boolean isValidDirectory(String newFilePath_) {
 	    File file = new File(newFilePath_);
 	    
-	    if(file.isDirectory()) {
+	    if (file.isDirectory()) {
 	    	return true;
 	    } else {
 	    	return false;
@@ -81,8 +88,7 @@ public class DataDirectoryManager extends StorageOperation{
             bufferedWriter.write(newDataFilePath_);
             
             bufferedWriter.close();
-            fileWriter.close();
-            
+            fileWriter.close();   
         } catch (IOException e) {
             e.printStackTrace();
         }

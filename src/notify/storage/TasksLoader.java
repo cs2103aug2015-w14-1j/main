@@ -27,7 +27,7 @@ public class TasksLoader extends StorageOperation{
 	/**
 	 * Execute process to load tasks from text file
 	 * 
-	 * @return			ArrayList of tasks
+	 * @return	ArrayList of tasks
 	 */
 	protected ArrayList<Task> execute(Object emptyList_) {
 		boolean isReadSuccessfully = this.readFromFile();
@@ -43,12 +43,6 @@ public class TasksLoader extends StorageOperation{
 	protected void setFilePath(String filePath_) {
 		this.filePath = filePath_;
 	}
-	
-	/*
-	protected boolean execute(String emptyString) {
-		return false;
-	}
-	*/
 	
 	/**
 	 * Reads from file and saves it line-by-line into taskList.
