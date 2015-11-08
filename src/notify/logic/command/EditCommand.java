@@ -39,21 +39,24 @@ public class EditCommand extends ReversibleCommand {
 	public Result execute(){
 		
 		Result result = null;
-		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		ArrayList<Task> list = new ArrayList<Task>();
 		
-		if(updatedTask != null){
+		
+		if(oldTask == null){
+			result = new Result(Action.INVALID, list);
+		}
+		
+		
+		else{
 		
 		checkNull();
+		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		list.add(updatedTask);
 		result = new Result(Action.EDIT, list);
 		pushToStack();
 		
 		}
-		else{
-			
-			result = new Result(Action.INVALID, list);
-		}
+		
 		
 		return result;
 	}
