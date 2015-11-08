@@ -1,1 +1,1 @@
-[{"id":0,"name":"something","dateRange":{"endDate":{"year":2015,"month":10,"dayOfMonth":13,"hourOfDay":0,"minute":35,"second":0}},"isCompleted":true,"isDeleted":false,"taskType":"DEADLINE"}]
+[{"id":0,"name":"all shit","isCompleted":false,"isDeleted":false}]

@@ -4,6 +4,8 @@
  * For CS2103T - Notify
  */
 
+
+//@@author A0125364J
 package notify.logic;
 
 import java.util.ArrayList;
@@ -108,6 +110,7 @@ public class Logic {
 			Task task = iterator.next();
 			
 			if(task.getTaskType() == TaskType.RANGE) {
+				
 				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
 				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
 				

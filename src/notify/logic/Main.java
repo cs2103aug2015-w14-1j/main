@@ -4,6 +4,7 @@
  * For CS2103T - Notify
  */
 
+//@@author A0125364J
 package notify.logic;
 
 import java.io.IOException;
