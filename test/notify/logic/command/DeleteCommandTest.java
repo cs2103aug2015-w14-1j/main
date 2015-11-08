@@ -41,13 +41,13 @@ public class DeleteCommandTest {
 		assertTrue(result1.getResults().get(0).getTaskId() == 0);
 		assertTrue(history.size() == 2); //the delete commmand has been pushed to the stack
 		
-		String string2 = "delete 3";
+		String string2 = "delete 120";
 		DeleteCommand delCommand2 = (DeleteCommand) this.parser.parse(string2);
 		Result result2 = delCommand2.execute();
 		assertTrue(result2.getActionPerformed().equals(Action.INVALID));
-		//assertTrue(result2.getResults().size() == 1);
-		//assertTrue(result2.getResults().get(0).equals(null));
-		//assertFalse(result2.getResults().get(0).getTaskId() == 1); //the task does not exist as of yet
+		assertTrue(result2.getResults().size() == 0);
+		
+		
 		
 		
 		
