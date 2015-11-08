@@ -28,15 +28,23 @@ public class DeleteCommand extends ReversibleCommand {
 	
     @Override
 	public Result execute() {
-		
+		Result result = null;
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(id);
 		ArrayList<Task> list = new ArrayList<Task>();
+		
+		if(temptask != null){
 		list.add(temptask);
-		Result result = new Result(Action.DELETE, list);
+		 result = new Result(Action.DELETE, list);
 		this.task = temptask;
 		pushToStack();
+		}
+		
+		else{
+			result = new Result(Action.INVALID, list);
+		}
+		
 		return result;
 	}
 
