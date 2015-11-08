@@ -39,7 +39,6 @@ public class DeleteCommandTest {
 		assertTrue(result1.getActionPerformed().equals(Action.DELETE));
 		assertTrue(result1.getResults().size() == 1);
 		assertTrue(result1.getResults().get(0).getTaskId() == 0);
-		assertTrue(result1.getResults().get(0).getTaskName().equals("meeting with jim")); //the correct task has been deleted
 		assertTrue(history.size() == 2); //the delete commmand has been pushed to the stack
 		
 		String string2 = "delete 3";

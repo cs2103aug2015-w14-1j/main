@@ -37,15 +37,24 @@ public class EditCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute(){
-		checkNull();
 		
-		assertions();
-		
+		Result result = null;
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		ArrayList<Task> list = new ArrayList<Task>();
+		
+		if(updatedTask != null){
+		
+		checkNull();
 		list.add(updatedTask);
-		Result result = new Result(Action.EDIT, list);
+		result = new Result(Action.EDIT, list);
 		pushToStack();
+		
+		}
+		else{
+			
+			result = new Result(Action.INVALID, list);
+		}
+		
 		return result;
 	}
 
@@ -97,13 +106,6 @@ public class EditCommand extends ReversibleCommand {
 		}
 	}
 	
-	private void assertions() {
-		
-		assert taskName != null;
-		assert dateRange!= null;
-		assert category != null;
-		assert taskType != null;
-	}
 	
 
 }

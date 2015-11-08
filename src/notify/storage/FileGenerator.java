@@ -1,3 +1,4 @@
+/*@@author A0124072 */
 package notify.storage;
 
 import java.io.BufferedReader;
@@ -8,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import notify.logic.command.Action;
-import notify.logic.command.Command;
 
 public class FileGenerator {
 	private File configFolder;
@@ -20,8 +20,10 @@ public class FileGenerator {
 	
 	public FileGenerator() {
 		this.configFolder = new File(Constants.NAME_FOLDER_CONFIG);
-		this.dataFolder = new File(String.format(Constants.PATH_SUB_FOLDER , Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
-		this.commandsFolder = new File(String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS));
+		this.dataFolder = new File(String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG,
+												 Constants.FOLDER_DATA));
+		this.commandsFolder = new File(String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG,
+													 Constants.FOLDER_COMMANDS));
 		generateConfigFolder();
 		generateSystemFiles();
 	}
@@ -47,7 +49,9 @@ public class FileGenerator {
 	}
 	
 	public File getCommandFile(Action command_) {
-		File file = new File(String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS, command_.toString().toLowerCase(), Constants.EXTENSION_FILE));
+		File file = new File(String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG,
+										   Constants.FOLDER_COMMANDS, command_.toString().toLowerCase(),
+										   Constants.EXTENSION_FILE));
 		return file;
 	}
 	
@@ -69,35 +73,49 @@ public class FileGenerator {
 		}
 
 		if (!this.dataFolder.exists()) {
-			//configFolder must exist
+			assert (this.configFolder.exists() == true);
 			this.dataFolder.mkdir();
 		}
 
 		if (!this.commandsFolder.exists()) {
-			//configFolder must exist
+			assert (this.configFolder.exists() == true);
 			this.commandsFolder.mkdir();
 		}
 	}
 
 	private void generateDirectoryFile() {
-		//notify.config must exist
-		//data folder must exist
-		this.directoryFile = new File(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+		assert (this.configFolder.exists() == true);
+		assert (this.dataFolder.exists() == true);
+		this.directoryFile = new File(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG, 
+													Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+		
 		if (!this.directoryFile.exists()) {
-			writeIntoFile(this.directoryFile, String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
+			writeIntoFile(this.directoryFile, String.format(Constants.PATH_SUB_FOLDER, 
+															Constants.FOLDER_CONFIG, 
+															Constants.FOLDER_DATA));
 		}
 	}
 	
 	private void generateDataFile() {
-		this.dataFile = new File(String.format(Constants.PATH_FILE, readFromFile(this.directoryFile), Constants.FILE_DATA, Constants.EMPTY_STRING));
+		assert (this.configFolder.exists() == true);
+		assert (this.dataFolder.exists() == true);
+		this.dataFile = new File(String.format(Constants.PATH_FILE, readFromFile(this.directoryFile), 
+											   Constants.FILE_DATA, Constants.EMPTY_STRING));
+		
 		if (!this.dataFile.exists()) {
 			writeIntoFile(this.dataFile, Constants.SQURE_BRACKETS);
 		}
 	}
 
 	private void generateCommandFiles() {
+		assert (this.configFolder.exists() == true);
+		assert (this.commandsFolder.exists() == true);
 		for (Action command : Action.values()) {
-			this.commandFile = new File(String.format(Constants.PATH_COMMAND_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS, command.toString().toLowerCase(), Constants.EXTENSION_FILE));
+			this.commandFile = new File(String.format(Constants.PATH_COMMAND_FILE, 
+													  Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS,
+													  command.toString().toLowerCase(),
+													  Constants.EXTENSION_FILE));
+			
 			if (!this.commandFile.exists()) {
 				writeIntoFile(this.commandFile, Constants.EMPTY_STRING);
 			}
@@ -113,7 +131,6 @@ public class FileGenerator {
 
 			bufferedWriter.close();
 			fileWriter.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

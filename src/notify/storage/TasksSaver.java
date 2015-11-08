@@ -39,12 +39,6 @@ public class TasksSaver extends StorageOperation {
 		this.filePath = filePath_;
 	}
 	
-	/*
-	protected boolean execute(String emptyString) {
-		return false;
-	}
-	*/
-	
 	private String jsonizeData(ArrayList<Task> taskList_) {		
 		String jsonDataString = gson.toJson(taskList_);
 		

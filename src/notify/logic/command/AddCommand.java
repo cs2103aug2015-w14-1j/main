@@ -37,9 +37,7 @@ public class AddCommand extends ReversibleCommand {
     @Override
 	public Result execute(){
 		
-		assertions();
-		
-		Task addTask = manager.addTask(taskName, dateRange, category, taskType);
+	    Task addTask = manager.addTask(taskName, dateRange, category, taskType);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list.add(addTask);
 		Result result = new Result(Action.ADD, list);
@@ -61,12 +59,7 @@ public class AddCommand extends ReversibleCommand {
 		return result;
 	}
 	
-	private void assertions() {
-		assert taskName != null: "Task name cannot be null";
-		assert dateRange!= null: "Date range cannot be null";
-		assert category != null: "Category cannot be null";
-		assert taskType != null: "Task type cannot be null";
-	}
+	
 	
 public String getTaskName() {
 		

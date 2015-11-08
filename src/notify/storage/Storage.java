@@ -18,26 +18,26 @@ public class Storage {
 	public Storage() {
 		this.fileGenerator = new FileGenerator();
 		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
-		this.dataFilePath = String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING);
-		this.load = new TasksLoader(dataFilePath);
+		this.dataFilePath = String.format(Constants.PATH_FILE, this.dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING);
+		this.load = new TasksLoader(this.dataFilePath);
 		this.loadCommand = new CommandsLoader();
-		this.save = new TasksSaver(dataFilePath);
+		this.save = new TasksSaver(this.dataFilePath);
 	}
 	
 	public ArrayList<Task> loadTasks(){
-		return load.execute(new ArrayList<Task>());		
+		return this.load.execute(new ArrayList<Task>());		
 	}
 
 	public void saveTasks(ArrayList<Task> taskList_) {
-		save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING));
-		save.execute(taskList_);
+		this.save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING));
+		this.save.execute(taskList_);
 	}
 	
 	public HashMap<String, Action> loadCommands() {
-		return loadCommand.execute(new ArrayList<Task>());
+		return this.loadCommand.execute(new ArrayList<Task>());
 	}
 	
 	public boolean setFileDestination(String newFilePath) {
-		return dataDirectoryManager.execute(newFilePath);
+		return this.dataDirectoryManager.execute(newFilePath);
 	}
 }
