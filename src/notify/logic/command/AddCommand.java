@@ -15,7 +15,7 @@ import notify.logic.TaskManager;
  * The AddCommand class is responsible for creating the Result object, corresponding
  * to the ADD command.
  * 
- * This class contains the undo and execute methods.
+ * This class contains the undo and execute method called by Logic.
  *
  * @author sadhikabilla
  *
@@ -50,7 +50,8 @@ public class AddCommand extends ReversibleCommand {
      * It also pushes the particular action onto a historyStack, to allow it to be undone in future. 
      * 
      * This method creates the Task object to be added by calling the addTask method
-     * of TaskManger. It then adds the Task to an ArrayList to create the Result object.
+     * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
+     * the Logic class.  
      * 
      * @return 'result' object corresponding to the ADD action.
      */
