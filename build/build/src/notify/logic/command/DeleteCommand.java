@@ -1,8 +1,4 @@
-/**
- * Author: Sadhika Billa
- * Matric number: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
 
 package notify.logic.command;
 
@@ -28,15 +24,23 @@ public class DeleteCommand extends ReversibleCommand {
 	
     @Override
 	public Result execute() {
-		
+		Result result = null;
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(id);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.DELETE, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		
+		if(temptask != null){
+		list.add(temptask);
+		 result = new Result(Action.DELETE, list);
 		this.task = temptask;
 		pushToStack();
+		}
+		
+		else{
+			result = new Result(Action.INVALID, list);
+		}
+		
 		return result;
 	}
 
@@ -46,9 +50,9 @@ public class DeleteCommand extends ReversibleCommand {
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.undeleteTask(id);
-		ArrayList<Task> listOfResults = new ArrayList<Task>();
-		listOfResults.add(temptask);
-		Result result = new Result(Action.UNDO, listOfResults);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(temptask);
+		Result result = new Result(Action.UNDO, list);
 		this.task = temptask;
 		return result;
 	}

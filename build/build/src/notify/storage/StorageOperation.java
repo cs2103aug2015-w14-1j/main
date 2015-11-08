@@ -16,7 +16,6 @@ public abstract class StorageOperation {
 	protected ArrayList<Task> taskList;
 	protected HashMap<String, Action> commands;
 	
-	//abstract Object execute(ArrayList<Task> taskList_);
 	abstract Object execute(Object dataObject_);
-	//abstract boolean execute(String filePath);
+	abstract void setFilePath(String filePath_);
 }
