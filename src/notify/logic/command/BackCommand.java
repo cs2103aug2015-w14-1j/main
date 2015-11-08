@@ -8,7 +8,7 @@ import notify.Task;
 import notify.logic.TaskManager;
 
 /**
- * The BackCommand class extends the abstract class ReversibleCommand.
+ * The BackCommand class extends the abstract class Command.
  * 
  * The BackCommand class is responsible for creating the Result object, corresponding
  * to the BACK command.
