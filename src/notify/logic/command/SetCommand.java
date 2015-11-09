@@ -5,7 +5,7 @@ package notify.logic.command;
 import java.util.ArrayList;
 
 import notify.Task;
-import notify.storage.api;
+import notify.storage.api.Storage;
 
 /**
  * The SetCommand class extends the abstract class Command.
