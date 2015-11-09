@@ -43,12 +43,18 @@ public class Storage {
 	public Storage() {
 
 		this.fileGenerator = new FilesGenerator();
+		this.fileGenerator.generate();
+		
 		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG,
-				Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+																Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+		
 		this.dataFileAbsolutePath = String.format(Constants.PATH_FILE, this.dataDirectoryManager.getDataFilePath(),
-				Constants.FILE_DATA, Constants.EMPTY_STRING);
+										Constants.FILE_DATA, Constants.EMPTY_STRING);
+		
 		this.load = new TasksLoader(this.dataFileAbsolutePath);
+		
 		this.loadCommand = new CommandsLoader();
+		
 		this.save = new TasksSaver(this.dataFileAbsolutePath);
 
 	}
@@ -73,15 +79,16 @@ public class Storage {
 	 *            the ArrayList<Task> object which contains the currently added
 	 *            tasks/data which is to be written into the data file
 	 */
-	public void saveTasks(ArrayList<Task> taskList_) {
+	public void saveTasks(ArrayList<Task> taskList) {
 
-		assert(taskList_ != null);
+		assert(taskList != null);
 		assert(save != null);
 		assert(dataDirectoryManager != null);
 
 		this.save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(),
 				Constants.FILE_DATA, Constants.EMPTY_STRING));
-		this.save.execute(taskList_);
+		
+		this.save.execute(taskList);
 
 	}
 
@@ -110,10 +117,11 @@ public class Storage {
 	 * @return 'true' if the specified absolute file path is a valid directory;
 	 *         'false' otherwise
 	 */
-	public boolean setFileDestination(String newFilePath_) {
+	public boolean setFileDestination(String newFilePath) {
 
 		assert(dataDirectoryManager != null);
-		return this.dataDirectoryManager.execute(newFilePath_);
+		return this.dataDirectoryManager.execute(newFilePath);
 
 	}
+	
 }

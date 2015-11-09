@@ -26,8 +26,8 @@ public class UndoCommand extends Command {
 	
 	public UndoCommand(Action commandAction, Stack<ReversibleCommand> history){
 		
-    super(commandAction);
-	this.history = history;
+		super(commandAction);
+		this.history = history;
 	
 	}
 	
@@ -42,14 +42,17 @@ public class UndoCommand extends Command {
 	@Override
 	public Result execute() {
 		
-		if(!history.isEmpty()){
+		if(history.isEmpty() == false) {
 			
 			ReversibleCommand command = history.pop();
 			Result result = command.undo();
+			
 			return result;
+		
 		}
+		
 		return new Result(Action.UNDO, new ArrayList<Task>());
+	
 	}
 	
-
 }

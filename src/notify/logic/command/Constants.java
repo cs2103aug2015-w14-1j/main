@@ -10,5 +10,8 @@ package notify.logic.command;
 public final class Constants {
 	
 	public static final int UNASSIGNED_TASK = -1;
+	
+	public static final String ERROR_TASK_ID_UNASSIGNED = "Task Id cannot be unassigned";
+	public static final String ERROR_TASK_ID_NULL = "Task Id cannot be null";
 
 }

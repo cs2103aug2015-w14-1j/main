@@ -2,13 +2,14 @@
 
 package notify.logic.command;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Stack;
 
 import notify.TaskType;
 import notify.logic.Logic;
 import notify.logic.parser.CommandParser;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,14 +24,15 @@ public class AddCommandTest {
 	
 	private Logic logic;
 	private CommandParser parser;
-	private AddCommand addCommand;
 	private Stack<ReversibleCommand> history;
 	
 	@Before
-	public void setUp(){
+	public void setUp() {
+		
 		this.logic = new Logic();
 		this.parser = logic.getCommandParser();
 		this.history = logic.getHistory();
+		
 	}
 
 	@Test

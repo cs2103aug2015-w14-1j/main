@@ -4,6 +4,7 @@ package notify.logic.command;
 
 import java.util.ArrayList;
 import java.util.Stack;
+
 import notify.Task;
 import notify.logic.TaskManager;
 
@@ -18,9 +19,7 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
-
-	public class DeleteCommand extends ReversibleCommand {
+public class DeleteCommand extends ReversibleCommand {
 	
 	//These are variables that are required to store the fields of each task 
 	private Task task;
@@ -42,6 +41,7 @@ import notify.logic.TaskManager;
 	public void addValues(int id) {
 		
 		this.id = id;
+		
 	}
 
 	/**
@@ -59,28 +59,30 @@ import notify.logic.TaskManager;
      */
 	 @Override
 	public Result execute() {
+		
+		assert id != Constants.UNASSIGNED_TASK: Constants.ERROR_TASK_ID_UNASSIGNED;
+		 
 		Result result = null;
-		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
-			
-		Task temptask = manager.deleteTask(id);
+
 		ArrayList<Task> list = new ArrayList<Task>();
+		this.task = manager.deleteTask(id);
 			
-		if(temptask != null){
+		if (this.task != null) {
 			
-			list.add(temptask);
-			
+			list.add(task);
 			result = new Result(Action.DELETE, list, true);
-			this.task = temptask;
-			
 			pushToStack();
+			
 		}
 			
-			else{
+		else {
 				
 			 result = new Result(Action.DELETE, list, false);
-			}
+		
+		}
 		
 		return result;
+		
 	}
     
     /**
@@ -93,25 +95,27 @@ import notify.logic.TaskManager;
 	 * 
 	 * @return 'result' object corresponding to the UNDO action.  
 	 */
-
 	@Override
 	public Result undo() {
 		
-			assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
-			
-			Task temptask = manager.undeleteTask(id);
-			ArrayList<Task> list = new ArrayList<Task>();
-			list.add(temptask);
-			Result result = new Result(Action.UNDO, list);
-			this.task = temptask;
-			return result;
-	}
+		assert id != Constants.UNASSIGNED_TASK: Constants.ERROR_TASK_ID_UNASSIGNED;
+		
+		this.task = manager.undeleteTask(id);
+		
+		ArrayList<Task> list = new ArrayList<Task>();
+		list.add(task);
+		
+		Result result = new Result(Action.UNDO, list);
+		
+		return result;
 	
+	}
 
-	//method to get the fields of the Task
+	/* This method get the fields of the task */
 	public int getId() {
 		
 		return this.id;
+		
 	}
 
 }

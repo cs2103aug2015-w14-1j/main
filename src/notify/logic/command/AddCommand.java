@@ -76,7 +76,9 @@ public class AddCommand extends ReversibleCommand {
 		this.task = addTask;
 		
 		pushToStack();
+		
 		return result;
+		
 	}
 
 
@@ -101,30 +103,35 @@ public class AddCommand extends ReversibleCommand {
 		list.add(temptask);
 		
 		Result result = new Result(Action.UNDO, list);
+		
 		return result;
 		
 	}
 	
 	
-	//methods to retrieve the details of Task
+	/* methods to retrieve the details of Task */
     public String getTaskName() {
 		
 		return this.taskName;
+		
 	}
 	
 	public TaskType getTaskType() { 
 		
 		return this.taskType;
+		
 	}
 	
 	public String getCategory() {
 		
 		return this.category;
+		
 	}
 	
 	public DateRange getDateRange() {
 		
 		return this.dateRange;	
+		
 	}
 	
 	

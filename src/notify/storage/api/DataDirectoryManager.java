@@ -33,12 +33,12 @@ public class DataDirectoryManager extends StorageOperation {
 	 * 
 	 * @param filePath_
 	 *            The file which contains the absolute path of the data file
-	 *            where all the user's tasks are stored.
+	 *            where all the user's tasks are stored. 
 	 */
-	protected DataDirectoryManager(String filePath_) {
+	protected DataDirectoryManager(String filePath) {
 
-		assert(filePath_ != null);
-		this.filePath = filePath_;
+		assert(filePath != null);
+		this.filePath = filePath;
 		readFromFile();
 
 	}
@@ -55,24 +55,24 @@ public class DataDirectoryManager extends StorageOperation {
 	 * @return a boolean object: 'true' if the new absolutely path of the data
 	 *         file is valid; 'false' otherwise.
 	 */
-	protected Boolean execute(Object newDataFilePath_) {
+	protected Boolean execute(Object newDataFilePath) {
 
 		FileTransferManager fileTrsMngr;
 		boolean result;
 
-		assert newDataFilePath_ != null;
-		newDataFilePath_ = appendSeperator((String) newDataFilePath_);
+		assert newDataFilePath != null;
+		newDataFilePath = appendSeperator((String) newDataFilePath);
 
-		if (isValidDirectory((String) newDataFilePath_)) {
+		if (isValidDirectory((String) newDataFilePath)) {
 
 			fileTrsMngr = new FileTransferManager(
 					String.format(Constants.PATH_FILE, getDataFilePath(), Constants.FILE_DATA, Constants.EMPTY_STRING),
-					String.format(Constants.PATH_FILE, (String) newDataFilePath_, Constants.FILE_DATA,
+					String.format(Constants.PATH_FILE, (String) newDataFilePath, Constants.FILE_DATA,
 							Constants.EMPTY_STRING));
 			fileTrsMngr.transferData();
 
-			this.dataFilePath = (String) newDataFilePath_;
-			this.writeIntoFile((String) newDataFilePath_);
+			this.dataFilePath = (String) newDataFilePath;
+			this.writeIntoFile((String) newDataFilePath);
 
 			result = true;
 
@@ -83,6 +83,7 @@ public class DataDirectoryManager extends StorageOperation {
 		}
 
 		assert(result == true || result == false);
+		
 		return result;
 
 	}
@@ -95,9 +96,9 @@ public class DataDirectoryManager extends StorageOperation {
 	 *            The new file directory/path of the file which is read from or
 	 *            written to.
 	 */
-	protected void setFilePath(String filePath_) {
+	protected void setFilePath(String filePath) {
 
-		this.filePath = filePath_;
+		this.filePath = filePath;
 
 	}
 
@@ -120,17 +121,17 @@ public class DataDirectoryManager extends StorageOperation {
 	 * @return the absolute file path string with the file
 	 *         separator("/") at the last index of the string.
 	 */
-	private String appendSeperator(String newDataFilePath_) {
+	private String appendSeperator(String newDataFilePath) {
 
-		assert(newDataFilePath_ != null);
+		assert(newDataFilePath != null);
 
-		if (!containsLastSeperator(newDataFilePath_)) {
+		if (!containsLastSeperator(newDataFilePath)) {
 
-			newDataFilePath_ = newDataFilePath_ + File.separator;
+			newDataFilePath = newDataFilePath + File.separator;
 
 		}
 
-		return newDataFilePath_;
+		return newDataFilePath;
 
 	}
 
@@ -158,11 +159,11 @@ public class DataDirectoryManager extends StorageOperation {
 	 * @return a boolean object: 'true' if the new absolute path of the
 	 *         data file is a valid directory; 'false' otherwise.
 	 */
-	private boolean isValidDirectory(String newFilePath_) {
+	private boolean isValidDirectory(String newFilePath) {
 
-		File file = new File(newFilePath_);
+		File file = new File(newFilePath);
 
-		if (file.isDirectory()) {
+		if (file.isDirectory() == true) {
 
 			return true;
 
@@ -171,6 +172,7 @@ public class DataDirectoryManager extends StorageOperation {
 			return false;
 
 		}
+		
 	}
 
 	/**
@@ -182,7 +184,7 @@ public class DataDirectoryManager extends StorageOperation {
 	 *            New absolute path of the data file which is to be written into
 	 *            the specified file.
 	 */
-	private void writeIntoFile(String newDataFilePath_) {
+	private void writeIntoFile(String newDataFilePath) {
 
 		FileWriter fileWriter;
 		BufferedWriter bufferedWriter;
@@ -193,7 +195,7 @@ public class DataDirectoryManager extends StorageOperation {
 			fileWriter = new FileWriter(this.filePath);
 			bufferedWriter = new BufferedWriter(fileWriter);
 
-			bufferedWriter.write(newDataFilePath_);
+			bufferedWriter.write(newDataFilePath);
 
 			bufferedWriter.close();
 			fileWriter.close();
@@ -221,7 +223,7 @@ public class DataDirectoryManager extends StorageOperation {
 
 		try {
 			// log.log(Level.INFO, "Read commandStrings from: [{0}]",
-			// fileName_);
+			// fileName);
 
 			file = new File(this.filePath);
 
@@ -243,7 +245,9 @@ public class DataDirectoryManager extends StorageOperation {
 		}
 
 		assert(result == true || result == false);
+		
 		return result;
 
 	}
+	
 }

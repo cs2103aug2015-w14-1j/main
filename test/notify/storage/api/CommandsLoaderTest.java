@@ -1,5 +1,6 @@
 package notify.storage.api;
 
+<<<<<<< HEAD
 import static org.junit.Assert.assertEquals;
 import notify.storage.api.CommandsLoader;
 
@@ -9,6 +10,12 @@ import org.junit.Test;
 
 public class CommandsLoaderTest { 
 	/*
+=======
+public class CommandsLoaderTest { 
+
+	/*
+
+>>>>>>> origin/master
 	private CommandsLoader commandsLoader; 
 	
 	@Before

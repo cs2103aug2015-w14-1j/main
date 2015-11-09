@@ -20,14 +20,15 @@ public class DeleteCommandTest {
 	
 	private Logic logic;
 	private CommandParser parser;
-	private DeleteCommand delCommand;
 	private Stack<ReversibleCommand> history;
 
 	@Before
-	public void setUp(){
+	public void setUp() {
+		
 		this.logic = new Logic();
 		this.parser = logic.getCommandParser();
 		this.history = logic.getHistory();
+		
 	}
 	
 	@Test
@@ -61,8 +62,6 @@ public class DeleteCommandTest {
 		assertTrue(result2.getActionPerformed().equals(Action.DELETE));
 		assertTrue(result2.getResults().size() == 0);
 		assertTrue(result2.isSuccess() == false); //not successfully deleted
-		
-		
 		
 	}
 

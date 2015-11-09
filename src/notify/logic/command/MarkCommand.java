@@ -19,7 +19,6 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
 public class MarkCommand extends ReversibleCommand {
 	
 	//These are variables that are required to store the fields of each task 
@@ -27,10 +26,11 @@ public class MarkCommand extends ReversibleCommand {
 	private Task task;
 	private int id;
 	
-	public MarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){
+	public MarkCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager) {
 		
 		super(commandAction, historyStack);
 		this.manager = manager;
+		
 	}
 	
 	/**
@@ -38,9 +38,10 @@ public class MarkCommand extends ReversibleCommand {
 	 * 
 	 * @param id
 	 */
-	public void addValues(int id){
+	public void addValues(int id) {
 		
 		this.id = id;
+		
 	}
 	
 	/**
@@ -60,23 +61,26 @@ public class MarkCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute() {
+
+		assert id != Constants.UNASSIGNED_TASK: Constants.ERROR_TASK_ID_UNASSIGNED;
 		
 		Result result = null;
-		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task markTask = manager.markTask(id, true);
 		ArrayList<Task> list = new ArrayList<Task>();
 		
-		if(markTask != null){
-		list.add(markTask);
-		result = new Result(Action.MARK, list, true);
+		if(markTask != null) {
+			
+			list.add(markTask);
+			result = new Result(Action.MARK, list, true);
 		
-		pushToStack();
+			pushToStack();
 		
-		}else{
+		} else {
 			
 			result = new Result(Action.MARK, list, false);
 		}
+		
 		return result;
 		
 	}
@@ -96,11 +100,11 @@ public class MarkCommand extends ReversibleCommand {
 	@Override
 	public Result undo() {
 		
-		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+		assert id != Constants.UNASSIGNED_TASK: Constants.ERROR_TASK_ID_UNASSIGNED;
 		
-		Task tempTask = manager.markTask(id, false);
+		this.task = manager.markTask(id, false);
 		ArrayList<Task> list = new ArrayList<Task>();
-		list.add(tempTask);
+		list.add(task);
 		
 		Result result = new Result(Action.UNDO, list);
 		return result;

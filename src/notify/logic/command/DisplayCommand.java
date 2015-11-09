@@ -18,7 +18,6 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
 public class DisplayCommand extends Command {
 	
 	//These are variables that are required to store the fields of each task 
@@ -28,6 +27,7 @@ public class DisplayCommand extends Command {
 		
 		super(commandAction);
 		this.manager = manager;
+		
 	}
 
 	/**
@@ -43,7 +43,9 @@ public class DisplayCommand extends Command {
 		ArrayList<Task> completedTasks = manager.getTasks(true);
 		
 		Result result = new Result(Action.DISPLAY, completedTasks);
+		
 		return result;
+		
 	}
 }
 	

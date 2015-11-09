@@ -96,7 +96,7 @@ public class Task implements Comparable<Task> {
 				} else if (endDateYear == todayYear && endDateDay < todayDay && !isCompleted && !isDeleted) {
 					
 					isOverdue = true;
-					
+					 
 				}
 				
 				break;
@@ -322,18 +322,28 @@ public class Task implements Comparable<Task> {
 	 * 
 	 * @return true if the tasks is a searched task, else false.
 	 */
-	public boolean isSearchedTask(String keyWord) {
+	public boolean isSearchedTask(String keyword) {
+		
 		boolean result = false;
 		
 		if (isNull(this.category)) {
-			if (String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
+			
+			if (String.valueOf(this.id).equals(keyword) || this.name.toLowerCase().contains(keyword.toLowerCase()))
 				result = true;
 		} else {
-			if (String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase())) {
+			
+			if (String.valueOf(this.id).equals(keyword) || 
+					this.name.toLowerCase().contains(keyword.toLowerCase()) ||
+					this.category.toLowerCase().contains(keyword.toLowerCase())) {
+				
 				result = true;
+				
 			}
+			
 		}
+		
 		return result;
+	
 	}
 	
 	private boolean isNull(Object obj) {
@@ -582,10 +592,5 @@ public class Task implements Comparable<Task> {
 		}
 		
 	}
-
-	public String toString() {
-		
-		return name + " " + category;
-		
-	}
+	
 }
