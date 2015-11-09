@@ -26,26 +26,49 @@ public class EditCommand extends ReversibleCommand {
 	
 	//These are variables that are required to store the fields of each task
 	private Task oldTask;
-	private TaskType taskType;
-	private String taskName;
-	private DateRange dateRange;
-	private String category;
+	private TaskType taskType, oldTaskType;
+	private String taskName, oldName;
+	private DateRange dateRange, oldDateRange;
+	private String category, oldCategory;
 	private int id;
 	private TaskManager manager;
-	
+		
 	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
 		super(commandAction, historyStack);
 		this.manager = manager;
 	}
 	
-	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param taskName
+	 * @param dateRange
+	 * @param category
+	 * @param id
+	 * @param taskType
+	 */
 	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType){
 		this.oldTask = manager.getTask(id);
-		this.taskName = taskName;
+		
+		 getOldDetails();
+
+        this.taskName = taskName;
 		this.dateRange = dateRange;
 		this.category = category;
 		this.id = id;
 		this.taskType = taskType;
+	}
+
+
+	/**
+	 * This method gets the task fields of the pre-edited task 
+	 */
+	private void getOldDetails() {
+		
+		 oldName = oldTask.getTaskName();
+	     oldDateRange = oldTask.getDateRange();
+		 oldCategory = oldTask.getCategory();
+		 oldTaskType = oldTask.getTaskType();
 	}
 	
 	/**
@@ -56,9 +79,10 @@ public class EditCommand extends ReversibleCommand {
      * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
      * the Logic class. 
      * 
-     * If the Task object is null, the method creates a result object corresponding to the INVALID action.
+     * If the Task object is null, the method creates a result object by setting the boolean flag to false
+     * to indicate that the task is not successfully edited.
      * 
-     * @return 'result' object corresponding to the EDIT/INVALID action.
+     * @return 'result' object corresponding to the EDIT action.
      */
 	
 	@Override
@@ -68,14 +92,14 @@ public class EditCommand extends ReversibleCommand {
 		
 		if(oldTask == null){
 			
-			result = new Result(Action.INVALID, list);
+			result = new Result(Action.EDIT, list, false);
 		
 		} else{
 		
 		checkNull();
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		list.add(updatedTask);
-		result = new Result(Action.EDIT, list);
+		result = new Result(Action.EDIT, list, true);
 		pushToStack();
 		
 		}
@@ -92,12 +116,12 @@ public class EditCommand extends ReversibleCommand {
 	  * This method is called by the UndoCommand class {@see UndoCommand#execute()}
 	  * 
 	  * @return 'result' object corresponding to the UNDO action.  
-	  */
+	  */ 	
 	
 	@Override
 	public Result undo(){
 		
-		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldTask.getTaskName(), oldTask.getDateRange() , oldTask.getCategory(), oldTask.getTaskType());
+		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldName, oldDateRange , oldCategory, oldTaskType);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list.add(beforeUpdatedTask);
 		Result result = new Result(Action.UNDO, list);

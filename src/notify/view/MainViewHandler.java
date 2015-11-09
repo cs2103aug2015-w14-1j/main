@@ -86,17 +86,27 @@ public class MainViewHandler {
 	private static String TODAY_TITLE = "Today";
 	private static String TOMORROW_TITLE = "Tomorrow";
 	
-	// String for error messages
+	// String for feedback / error messages
 	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
-	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
-	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
-	private static String DELETED_MESSAGE = "Task '%1$s' deleted.";
+	private static String ADDED_MESSAGE = "Task added: '%1$s. %2$s'";
+	private static String ADD_FAIL_MESSAGE = "Failed to add task";
+	private static String DELETED_MESSAGE = "Task '%1$s. %2$s' deleted";
+	private static String DELETE_FAIL_MESSAGE = "Failed to delete task";
+	private static String EDITED_MESSAGE = "Task '%1$s. %2$s' edited";
+	private static String EDIT_FAIL_MESSAGE = "Failed to edit task";
+	private static String MARKED_MESSAGE = "Task: '%1$s. %2$s' marked as completed";
+	private static String MARK_FAIL_MESSAGE = "Failed to mark task";
+	private static String SET_MESSAGE = "Path successfully changed to: '%1$s'";
+	private static String SET_FAIL_MESSAGE = "Fail to change path to: '%1$s'";
 	private static String SEARCH_RESULT_MESSAGE = "Search Result for '%1$s':";
 	
-	private static String SEARCH_INPUT = "";
+	private static String LATEST_SEARCH_TERM = "";
 	
+	private static String SEARCH_COMMAND = "search %1$s";
 	private static String MARK_COMMAND = "mark %1$s";
 	private static String UNDO_COMMAND = "undo";
+	
+	private static int EXIT_STATUS = 0;
 	
 	// stack to store commands history
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
@@ -135,16 +145,14 @@ public class MainViewHandler {
 	@FXML private GridPane gpnHelp;
 	@FXML private Label lblSearchTitle;
 	
-
-	
 	@FXML
 	public void initialize() {
 		
 	}
 	
-	
 	/**
 	 * Setter for logic.
+	 * 
 	 * @param logic the logic object created in the Main class.
 	 */
 	public void setLogic(Logic logic) {
@@ -152,8 +160,6 @@ public class MainViewHandler {
 		this.logic = logic;
 		
 	}
-	
-	
 	
 	/**
 	 * Loads the component of the UI
@@ -169,6 +175,11 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Method to query whether the search view is visible.
+	 * 
+	 * @return true if the search view is on, otherwise false.
+	 */
 	public boolean isSearchViewVisible() {
 		
 		return bpnSearch.isVisible();
@@ -176,19 +187,27 @@ public class MainViewHandler {
 	}
 	
 	
+	/**
+	 * Method to query whether the completed view is visible.
+	 * 
+	 * @return true if the completed view is on, otherwise false.
+	 */
 	public boolean isCompletedViewVisible() {
 		
 		return bpnCompleted.isVisible();
 		
 	}
 	
+	/**
+	 * Method to query whether the help view is visible.
+	 * 
+	 * @return true if the help view is on, otherwise false.
+	 */
 	public boolean isHelpViewVisible() {
 		
 		return gpnHelp.isVisible();
 		
 	}
-	
-	
 	
 	/**
 	 * Loads the tasks that are overdue.
@@ -206,8 +225,6 @@ public class MainViewHandler {
 		
 	}
 	
-	
-	
 	/**
 	 * Loads the tasks that does not have any dates (floating tasks).
 	 */
@@ -224,8 +241,6 @@ public class MainViewHandler {
 		
 	}
 	
-	
-	
 	/**
 	 * Loads the upcoming tasks (tasks that have dates more than 1 week from current date).
 	 */
@@ -241,8 +256,6 @@ public class MainViewHandler {
 		vboxComing.getChildren().addAll(items);
 		
 	}
-	
-	
 	
 	/**
 	 * Loads the tasks that are within the week (current date and 6 days ahead).
@@ -274,6 +287,7 @@ public class MainViewHandler {
 	
 	/**
 	 * Loads the search results and display them correctly.
+	 * 
 	 * @param searchResults the search results
 	 */
 	public void loadSearchResult(ArrayList<Task> searchResults) {
@@ -311,6 +325,7 @@ public class MainViewHandler {
 	
 	/**
 	 * Make the search view visible.
+	 * 
 	 * @param searchTerm the search input that was entered by the user.
 	 */
 	public void showSearchView(String searchTerm) {
@@ -383,8 +398,10 @@ public class MainViewHandler {
 	
 	/**
 	 * Filter the tasks given according to completed or uncompleted tasks.
+	 * 
 	 * @param tasks list of tasks that contains completed and uncompleted tasks
 	 * @param isCompleted true to retrieve completed tasks from the list, otherwise, false.
+	 * 
 	 * @return return a list of completed or uncompleted tasks
 	 */
 	public ArrayList<Task> filterTask(ArrayList<Task> tasks, boolean isCompleted) {
@@ -405,12 +422,12 @@ public class MainViewHandler {
 		
 	}
 	
-	
 	/**
 	 * Generates the header (without subtitle)
 	 * 
 	 * @param title the title of the header
 	 * @param titleTextFill the font color of the title
+	 * 
 	 * @return a HBox object (which contains the title)
 	 */
 	public HBox generateHeader(String title) {
@@ -422,13 +439,13 @@ public class MainViewHandler {
 		
 	}
 
-	
 	/**
 	 * Generates the header by providing the date of the header
 	 * 
 	 * @param calendar the date of the header to be generated
 	 * @param titleTextFill the font color of the title
 	 * @param subtitleTextFill the font color of the subtitle
+	 * 
 	 * @return a HBox object (which contains the title and subtitle)
 	 */
 	public HBox generateHeader(Calendar calendar) {
@@ -463,11 +480,11 @@ public class MainViewHandler {
 		
 	}
 	
-	
 	/**
 	 * Generates the timestamp for all tasks with time.
 	 * 
 	 * @param task the task to have its timestamp generated
+	 * 
 	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
 	 */
 	public String generateTimeStamp(Task task, boolean isSearch) {
@@ -507,6 +524,7 @@ public class MainViewHandler {
 	 * Generates the timestamp for deadline tasks
 	 * 
 	 * @param task the task to have its timestamp generated
+	 * 
 	 * @return timestamp (e.g. 23 Oct 15, 02:00PM)
 	 */
 	public String generateDeadlineTimestamp(Task task, boolean isSearch) {
@@ -567,7 +585,9 @@ public class MainViewHandler {
 	
 	/**
 	 * Generates the timestamp for ranged tasks
+	 * 
 	 * @param task the task to have its timestamp generated
+	 * 
 	 * @return timestamp (e.g. 23 Oct 15, 12:00AM to 12:00PM)
 	 */
 	public String generateRangeTimestamp(Task task, boolean isSearch) {
@@ -652,6 +672,7 @@ public class MainViewHandler {
 	 * 
 	 * @param tasks a list
 	 * @param isSearch to determine if its generated for the search view
+	 * 
 	 * @return a list of HBox objects (each HBox object contains the information of a task)
 	 */
 	public ArrayList<HBox> generateList(ArrayList<Task> tasks, boolean isSearch) {
@@ -659,7 +680,7 @@ public class MainViewHandler {
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
 		String subtext = "";
 		
-		for(int i = 0; i < tasks.size(); i++) {
+		for (int i = 0; i < tasks.size(); i++) {
 			
 			Task task = tasks.get(i);
 			
@@ -668,7 +689,7 @@ public class MainViewHandler {
 			Label lblTaskTime;
 			HBox hbox;
 			
-			switch(task.getTaskType()) {
+			switch (task.getTaskType()) {
 			
 				case FLOATING:
 					
@@ -808,7 +829,7 @@ public class MainViewHandler {
 	 */
 	public void addCommandHistory(String userInput) {
 
-		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+		if (!COMMAND_FUTURE_STACK.isEmpty()) {
 			
 			COMMAND_HISTORY_STACK.push(userInput);
 			
@@ -833,6 +854,35 @@ public class MainViewHandler {
 	}
 	
 	/**
+	 * Refreshes the search view.
+	 */
+	public void refreshSearchView() {
+
+		if (isSearchViewVisible()) {
+			
+			String seacrhCommand = String.format(SEARCH_COMMAND, LATEST_SEARCH_TERM);
+			
+			Result searchResult = logic.processCommand(seacrhCommand);
+			loadSearchResult(searchResult.getResults());
+			
+		}
+		
+	}
+	
+	/**
+	 * Refreshes the completed view.
+	 */
+	public void refreshCompletedView() {
+		
+		if (isCompletedViewVisible()) {
+			
+			loadCompletedTasks();
+			
+		}
+		
+	}
+	
+	/**
 	 * Processes the result after the command is being executed.
 	 * 
 	 * @param result returned after a command is being executed
@@ -841,29 +891,71 @@ public class MainViewHandler {
 	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
+		String feedback = "";
 		
-		switch(actionPerformed) {
+		switch (actionPerformed) {
 		
+			case ADD:
+				
+				display(ADDED_MESSAGE, ADD_FAIL_MESSAGE, result);
+				
+				break;
+				
+			case DELETE:
+
+				display(DELETED_MESSAGE, DELETE_FAIL_MESSAGE, result);
+				
+				break;
+				
+			case EDIT:
+
+				display(EDITED_MESSAGE, EDIT_FAIL_MESSAGE, result);
+				
+				break;
+			
+			case MARK:
+
+				display(MARKED_MESSAGE, MARK_FAIL_MESSAGE, result);
+				
+				break;
+			
+			case UNDO:
+				
+				refreshSearchView();
+				refreshCompletedView();
+				load();
+				
+				break;
+			
+			case SET:
+				
+				String path = userInput.toLowerCase().replaceFirst("set", "").trim();
+				feedback = String.format(SET_MESSAGE, path);
+				
+				if (result.isSuccess()) {
+
+					feedback = String.format(SET_MESSAGE, path);
+					setFeedbackLabel(feedback, FEEDBACK_MESSAGE_FILL);
+					
+				} else {
+
+					feedback = String.format(SET_FAIL_MESSAGE, path);
+					setFeedbackLabel(feedback, ERROR_MESSAGE_FILL);
+					
+				}
+				
+				break;
+			
 			case SEARCH:
 				
-				String searchTerm = userInput.replaceFirst("search", "").trim();
-				SEARCH_INPUT = userInput;
+				LATEST_SEARCH_TERM = userInput.toLowerCase().replaceFirst("search", "").trim();
 				
 				loadSearchResult(result.getResults());
-				showSearchView(searchTerm);
+				showSearchView(LATEST_SEARCH_TERM);
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
-				
-			case BACK:
-				
-				hideSearchView();
-				hideHelpView();
-				hideCompletedView();
-				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
-				
-				break;
-				
+			
 			case DISPLAY:
 				
 				loadCompletedTasks();
@@ -871,59 +963,65 @@ public class MainViewHandler {
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
-				
+			
 			case HELP:
 				
 				showHelpView();
 				
 				break;
+			
+			case BACK:
 				
-			case EXIT:
-
-				System.exit(0);
+				hideSearchView();
+				hideHelpView();
+				hideCompletedView();
 				
 				break;
-			
-			default:
 				
-				if(isSearchViewVisible()) {
-					
-					Result searchResult = logic.processCommand(SEARCH_INPUT);
-					loadSearchResult(searchResult.getResults());
-					
-				}
+			case EXIT:
 				
-				if(isCompletedViewVisible()) {
-					
-					loadCompletedTasks();
-					
-				}
+				System.exit(EXIT_STATUS);
 				
-				Task task = result.getFirstResult();
+				break;
 				
-				if(actionPerformed == Action.ADD) {
-					
-					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
-					
-				} else if(actionPerformed == Action.EDIT) {
+			case INVALID:
 
-					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
-					
-				} else if(actionPerformed == Action.DELETE) {
-					
-					setFeedbackLabel(String.format(DELETED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
-					
-				} else {
-
-					setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
-					
-				}
+				feedback = String.format(INVALID_COMMAND_MESSAGE, userInput);
 				
-				load();
+				setFeedbackLabel(feedback, ERROR_MESSAGE_FILL);
 				
 				break;
 		
 		}
+		
+	}
+	
+	/**
+	 * Displays the relevant result after the execution of the commands
+	 * 
+	 * @param successMessage message to display if the execution has succeeded
+	 * @param failMessage message to display if the execution has failed
+	 * @param result the result object after executing the command
+	 */
+	public void display(String successMessage, String failMessage, Result result) {
+		
+		Task task = result.getFirstResult();
+		String feedback = String.format(successMessage, task.getTaskId(), task.getTaskName());
+		
+		refreshSearchView();
+		refreshCompletedView();
+		
+		if (result.isSuccess()) {
+
+			setFeedbackLabel(feedback, FEEDBACK_MESSAGE_FILL);
+			
+		} else {
+
+			setFeedbackLabel(failMessage, ERROR_MESSAGE_FILL);
+			
+		}
+		
+		load();
 		
 	}
 	
@@ -935,7 +1033,7 @@ public class MainViewHandler {
 	 */
 	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
-		if(checkbox.isSelected()) {
+		if (checkbox.isSelected()) {
 			
 			String userInput = String.format(MARK_COMMAND, checkbox.getText());
 			Result result = logic.processCommand(userInput);
@@ -979,7 +1077,7 @@ public class MainViewHandler {
 
 				KeyCombination keyCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
 				
-				if(keyCombination.match(keyEvent)) {
+				if (keyCombination.match(keyEvent)) {
 					
 					Result result = logic.processCommand(UNDO_COMMAND);
 					
@@ -1028,15 +1126,15 @@ public class MainViewHandler {
 	 */
 	public void processBackspace(String userInput) {
 
-		if(userInput.equals("") && isSearchViewVisible()) {
+		if (userInput.equals("") && isSearchViewVisible()) {
 			
 			hideSearchView();
 			
-		} else if(userInput.equals("") && isHelpViewVisible()) {
+		} else if (userInput.equals("") && isHelpViewVisible()) {
 			
 			hideHelpView();
 			
-		} else if(userInput.equals("") && isCompletedViewVisible()) {
+		} else if (userInput.equals("") && isCompletedViewVisible()) {
 			
 			hideCompletedView();
 			
@@ -1051,11 +1149,11 @@ public class MainViewHandler {
 	 */
 	public void processUp(String userInput) {
 
-		if(!COMMAND_HISTORY_STACK.isEmpty()) {
+		if (!COMMAND_HISTORY_STACK.isEmpty()) {
 			
 			String previousCommand = COMMAND_HISTORY_STACK.pop();
 			
-			if(!userInput.equals("")) {
+			if (!userInput.equals("")) {
 				
 				COMMAND_FUTURE_STACK.push(userInput);
 				
@@ -1076,14 +1174,14 @@ public class MainViewHandler {
 	 */
 	public void processDown(String userInput) {
 		
-		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+		if (!COMMAND_FUTURE_STACK.isEmpty()) {
 			
 			String nextCommand = COMMAND_FUTURE_STACK.pop();
 			
 			COMMAND_HISTORY_STACK.push(userInput);
 			txtCommand.setText(nextCommand);
 			
-		} else if(!userInput.equals("")) {
+		} else if (!userInput.equals("")) {
 			
 			COMMAND_HISTORY_STACK.push(userInput);
 			txtCommand.setText("");

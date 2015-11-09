@@ -47,19 +47,32 @@ public class MarkCommand extends ReversibleCommand {
      * It then adds the Task to an ArrayList to create the Result object which is used by
      * the Logic class.  
      * 
+     * If the task is null it creates the Result object by setting the boolean flag to false.
+     * to indicate that the task is not successfully marked. 
+     * 
      * @return 'result' object corresponding to the MARK action.
      */
 	
 	@Override
 	public Result execute() {
+		
+		Result result = null;
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task markTask = manager.markTask(id, true);
 		ArrayList<Task> list = new ArrayList<Task>();
+		
+		if(markTask != null){
 		list.add(markTask);
-		Result result = new Result(Action.MARK, list);
+		result = new Result(Action.MARK, list, true);
 		pushToStack();
+		
+		}else{
+			
+			result = new Result(Action.MARK, list, false);
+		}
 		return result;
+		
 	}
 
 	/**
@@ -84,6 +97,7 @@ public class MarkCommand extends ReversibleCommand {
 		list.add(tempTask);
 		Result result = new Result(Action.UNDO, list);
 		return result;
+		
 	}
 	
 

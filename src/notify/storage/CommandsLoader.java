@@ -28,7 +28,7 @@ import notify.logic.command.Action;
 public class CommandsLoader extends StorageOperation {
 
 	/**
-	 * This class's Constructor which instantiate the commands object
+	 * The class Constructor which instantiate the commands object
 	 * {@value notify.storage.StorageOperation#commands}
 	 */
 	protected CommandsLoader() {
