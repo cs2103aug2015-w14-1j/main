@@ -38,22 +38,37 @@ public class EditCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
-	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param taskName
+	 * @param dateRange
+	 * @param category
+	 * @param id
+	 * @param taskType
+	 */
 	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType){
 		this.oldTask = manager.getTask(id);
+		
+		 getOldDetails();
+
+        this.taskName = taskName;
+		this.dateRange = dateRange;
+		this.category = category;
+		this.id = id;
+		this.taskType = taskType;
+	}
+
+
+	/**
+	 * This method gets the task fields of the pre-edited task 
+	 */
+	private void getOldDetails() {
 		
 		 oldName = oldTask.getTaskName();
 	     oldDateRange = oldTask.getDateRange();
 		 oldCategory = oldTask.getCategory();
 		 oldTaskType = oldTask.getTaskType();
-
-
-		
-		this.taskName = taskName;
-		this.dateRange = dateRange;
-		this.category = category;
-		this.id = id;
-		this.taskType = taskType;
 	}
 	
 	/**
@@ -67,7 +82,7 @@ public class EditCommand extends ReversibleCommand {
      * If the Task object is null, the method creates a result object by setting the boolean flag to false
      * to indicate that the task is not successfully edited.
      * 
-     * @return 'result' object corresponding to the EDIT/INVALID action.
+     * @return 'result' object corresponding to the EDIT action.
      */
 	
 	@Override
