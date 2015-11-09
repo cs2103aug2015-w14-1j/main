@@ -14,12 +14,12 @@ import notify.logic.command.Action;
  * TasksSaver class {@see notify.storage.TasksSaver}. It is also used to set the
  * absolute file path of the data file via DataDirectoryManager class
  * {@see notify.storage.DataDirectoryManager} and load the command variations
- * via CommandsLoader class {@see notify.storage.CommandsLoader}
+ * via CommandsLoader class {@see notify.storage.CommandsLoader}.
  */
 public class Storage {
 	/**
 	 * These variables are used to interact with other internal classes of the
-	 * storage component
+	 * storage component.
 	 */
 	private FileGenerator fileGenerator;
 	private DataDirectoryManager dataDirectoryManager;
@@ -32,7 +32,7 @@ public class Storage {
 	 * This method is the class's Constructor which is used to instantiate the
 	 * following variables {@link #fileGenerator}, {@link #dataDirectoryManager}
 	 * {@link #save}, {@link #load}, {@link #loadCommand} and
-	 * {@link #dataFileAbsolutePath}
+	 * {@link #dataFileAbsolutePath}.
 	 * 
 	 * It invokes {@see notify.storage.DataDirectoryManager#getDataFilePath()}
 	 * to retrieve the currently saved absolute file path of the data file.
@@ -51,25 +51,30 @@ public class Storage {
 	}
 
 	/**
-	 * This method loads the user's tasks/data from the data file
+	 * This method loads the user's tasks/data from the data file.
 	 * 
 	 * @return the ArrayList<Task> object which contains all the tasks/data
 	 *         stored in the data file
 	 */
 	public ArrayList<Task> loadTasks() {
 		
+		assert (load != null);
 		return this.load.execute(new ArrayList<Task>());
 		
 	}
 
 	/**
-	 * This method saves the user's tasks/data into the data file
+	 * This method saves the user's tasks/data into the data file.
 	 * 
 	 * @param taskList_
 	 *            the ArrayList<Task> object which contains the currently added
 	 *            tasks/data which is to be written into the data file
 	 */
 	public void saveTasks(ArrayList<Task> taskList_) {
+		
+		assert (taskList_ != null);
+		assert (save != null);
+		assert (dataDirectoryManager != null);
 		
 		this.save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(),
 				Constants.FILE_DATA, Constants.EMPTY_STRING));
@@ -78,7 +83,7 @@ public class Storage {
 	}
 
 	/**
-	 * This method loads the command variations from the command files
+	 * This method loads the command variations from the command files.
 	 * 
 	 * @return the HashMap<String, Action> object of which <Key> represents the
 	 *         various command variations and <Value> represents the default
@@ -86,13 +91,14 @@ public class Storage {
 	 */
 	public HashMap<String, Action> loadCommands() {
 		
+		assert (loadCommand != null);
 		return this.loadCommand.execute(new ArrayList<Task>());
 		
 	}
 
 	/**
 	 * This method sets the absolute file path where the data file has to be
-	 * saved/moved to
+	 * saved/moved to.
 	 * 
 	 * @param newFilePath_
 	 *            the String representation of the new absolute file path of the
@@ -103,6 +109,7 @@ public class Storage {
 	 */
 	public boolean setFileDestination(String newFilePath_) {
 		
+		assert (dataDirectoryManager != null);
 		return this.dataDirectoryManager.execute(newFilePath_);
 		
 	}
