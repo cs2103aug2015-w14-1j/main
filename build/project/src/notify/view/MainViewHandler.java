@@ -6,12 +6,13 @@ import notify.TaskType;
 import notify.logic.*;
 import notify.logic.command.Action;
 import notify.logic.command.Result;
+import notify.logic.logger.LogType;
+import notify.logic.logger.Writer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Stack;
-
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -110,6 +111,7 @@ public class MainViewHandler {
 	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
 	
 	private Logic logic;
+	private Writer logger;
 	
 	// arraylist of different types of tasks
 	private ArrayList<Task> overdueTasks;
@@ -156,6 +158,9 @@ public class MainViewHandler {
 		
 		this.logic = logic;
 		
+		this.logger = new Writer(this.getClass().getName(), logic.getStorage().getFileDestination());
+		this.logger.write(LogType.INFO, "Main View Handler Started Successfully");
+
 	}
 	
 	/**
@@ -1090,10 +1095,14 @@ public class MainViewHandler {
 
 			addCommandHistory(userInput);
 			
+			this.logger.write(LogType.ERROR, "Illegal Argument has been entered.");
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 			txtCommand.setText("");
+			
+			this.logger.write(LogType.ERROR, "Illegal Argument has been entered.");
 			
 		}
 		

@@ -38,6 +38,7 @@ public class FileTransferManager {
 		
 	}
 
+	/* @@authorA0124072-reused */
 	/**
 	 * This method reads the data from the old file and writes them into the new
 	 * file. It then delete the old file from the user's computer It uses buffer

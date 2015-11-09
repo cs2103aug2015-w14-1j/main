@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import notify.Task;
 import notify.logic.command.Action;
+import notify.logic.logger.LogType;
+import notify.logic.logger.Writer;
 import notify.storage.operator.Constants;
 import notify.storage.operator.FilesGenerator;
 
@@ -29,6 +31,7 @@ public class Storage {
 	private TasksLoader load;
 	private CommandsLoader loadCommand;
 	private String dataFileAbsolutePath;
+	private Writer logger;
 
 	/**
 	 * The class Constructor which initializes a newly created
@@ -56,6 +59,10 @@ public class Storage {
 		this.loadCommand = new CommandsLoader();
 		
 		this.save = new TasksSaver(this.dataFileAbsolutePath);
+		
+		this.logger = new Writer(this.getClass().getName(), this.getFileDestination());
+		
+		this.logger.write(LogType.INFO, "Storage Component Started Successfully");
 
 	}
 
@@ -102,6 +109,7 @@ public class Storage {
 	public HashMap<String, Action> loadCommands() {
 
 		assert(loadCommand != null);
+		
 		return this.loadCommand.execute(new ArrayList<Task>());
 
 	}
@@ -120,8 +128,18 @@ public class Storage {
 	public boolean setFileDestination(String newFilePath) {
 
 		assert(dataDirectoryManager != null);
+		
 		return this.dataDirectoryManager.execute(newFilePath);
 
+	}
+	
+	/**
+	 * returns the file destination set by user
+	 */
+	public String getFileDestination() {
+		
+		return this.dataDirectoryManager.getDataFilePath();
+		
 	}
 	
 }

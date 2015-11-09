@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="732.0" prefWidth="1100.0" styleClass="main" stylesheets="@../stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notify.view.MainViewHandler">
+<BorderPane prefHeight="732.0" prefWidth="1100.0" styleClass="main" stylesheets="@/notify/stylesheet/default.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notify.view.MainViewHandler">
    <bottom>
       <AnchorPane prefHeight="86.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
          <children>

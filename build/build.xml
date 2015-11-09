@@ -20,45 +20,45 @@
 		<mkdir dir="externalLibs" />
 	
 		<copy todir="externalLibs">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
-				<filename name="gson-2.2.2.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
-				<filename name="commons-lang3-3.4.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
-				<filename name="java-json.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/Applications/Eclipse.app/Contents/Eclipse/plugins/org.junit_4.12.0.v201504281640">
+			<fileset dir="/Applications/Eclipse/plugins/org.junit_4.11.0.v201303080030">
 				<filename name="junit.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/Applications/Eclipse.app/Contents/Eclipse/plugins">
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify/lib">
+				<filename name="gson-2.2.2.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify/lib">
+				<filename name="jackson-all-1.9.0.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify/lib">
+				<filename name="commons-lang3-3.4.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="/Applications/Eclipse/plugins">
 				<filename name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify/lib">
-				<filename name="jackson-all-1.9.0.jar"/>
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify/lib">
+				<filename name="java-json.jar"/>
 			</fileset>
 		</copy>
 	
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
-				<include name="test/**" />
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify">
+				<include name="src/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
-			<fileset dir="/Users/kennho/Documents/NUS/Year 2/Semester 1/CS2103T Software Engineering/Workspace/Notify">
-				<include name="src/**" />
+			<fileset dir="/Users/SihaO/Dropbox/workspace/school/CS2103/Notify">
+				<include name="test/**" />
 			</fileset>
 		</copy>
 	
@@ -154,7 +154,7 @@
 				<attribute name="Implementation-Vendor" value="notify"/>
 				<attribute name="Implementation-Title" value="Notify"/>
 				<attribute name="Implementation-Version" value="0.3"/>
-				<attribute name="Main-Class" value="Main"/>
+				<attribute name="MainClass" value="notify.logic.Main"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>

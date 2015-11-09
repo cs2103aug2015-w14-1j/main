@@ -29,6 +29,8 @@ import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
+import notify.logic.logger.LogType;
+import notify.logic.logger.Writer;
 import notify.storage.api.Storage;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +44,7 @@ public class CommandParser {
 	private Storage storage;
 	private TaskManager taskManager;
 	private Stack<ReversibleCommand> historyStack;
+	private Writer logger;
 	
 	public CommandParser(Storage storage, TaskManager taskManager, Stack<ReversibleCommand> historyStack) {
 	
@@ -52,6 +55,9 @@ public class CommandParser {
 		this.storage = storage;
 		this.taskManager = taskManager;
 		this.historyStack = historyStack;
+		this.logger = new Writer(this.getClass().getName(), storage.getFileDestination());
+		
+		this.logger.write(LogType.INFO, "CommandParser Component Started Successfully");
 	
 	}
 	
@@ -131,6 +137,8 @@ public class CommandParser {
 				throw new IllegalArgumentException(Constants.ERROR_INVALID_COMMAND);			
 		
 		}
+		
+		this.logger.write(LogType.INFO, "Command has been parsed.");
 		
 		return command;
 		

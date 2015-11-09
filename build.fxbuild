@@ -5,5 +5,5 @@
     <info title="Notify" vendor="notify"/>
   </deploy>
   <signjar/>
-  <manifestEntries name="Main-Class" value="Main"/>
+  <manifestEntries name="MainClass" value="notify.logic.Main"/>
 </anttasks:AntTask>

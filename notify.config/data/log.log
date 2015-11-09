@@ -8,3 +8,9 @@
 09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
 09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
 09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
+09/11/2015 23:27:11		INFO		notify.storage.api.Storage		Storage Component Started Successfully
+09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
+09/11/2015 23:27:11		INFO		notify.logic.Logic		Logic Component Started Successfully
+09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
+09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
+09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
