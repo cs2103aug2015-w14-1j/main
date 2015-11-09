@@ -33,7 +33,7 @@ import java.util.logging.Level;
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
-import notify.storage.Storage;
+import notify.storage;
 
 public class TaskManager {
 
