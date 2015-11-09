@@ -31,6 +31,11 @@ public class SetCommand extends Command {
 		this.storage = storage;
 	}
 	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param newFilePath
+	 */
 	public void addValues(String newFilePath){
 		this.newFilePath = newFilePath;
 	}
@@ -41,7 +46,6 @@ public class SetCommand extends Command {
 	 * 
 	 * @return 'result' object corresponding to the SET action. 
 	 */
-	
 	@Override
 	public Result execute(){
 		
