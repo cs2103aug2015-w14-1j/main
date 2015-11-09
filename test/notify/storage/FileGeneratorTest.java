@@ -11,20 +11,25 @@ import org.junit.Test;
 import notify.logic.command.Action;
 
 public class FileGeneratorTest {
-	private FileGenerator fileGenerator;
+	private FilesGenerator fileGenerator;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.fileGenerator = new FileGenerator();
+		
+		this.fileGenerator = new FilesGenerator();
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		
 		this.fileGenerator = null;
+		
 	}
 
 	@Test
 	public void testFolderExistence() {
+		
 		boolean isExist = fileGenerator.getConfigFolder().exists();
 		assertTrue(isExist);
 		
@@ -33,24 +38,29 @@ public class FileGeneratorTest {
 		
 		isExist = fileGenerator.getConfigFolder().exists();
 		assertTrue(isExist);
+		
 	}
 	
 	@Test
 	public void testFileExistence() {
+		
 		boolean isExist = fileGenerator.getDirectoryFile().exists();
 		assertTrue(isExist);
 		
 		isExist = fileGenerator.getDataFile().exists();
 		assertTrue(isExist);
 		
-		for(Action action:Action.values()) {
+		for (Action action:Action.values()) {
+			
 			isExist = fileGenerator.getCommandFile(action).exists();
 			assertTrue(isExist);
+			
 		}
 	}
 	
 	@Test
 	public void testFileContent() {
+		
 		File fileToRead = fileGenerator.getDirectoryFile();
 		String expectedResult = Constants.FOLDER_CONFIG+Constants.FOLDER_DATA;
 		String actualResult = fileGenerator.getFileContent(fileToRead);
@@ -60,6 +70,7 @@ public class FileGeneratorTest {
 		expectedResult = Constants.SQURE_BRACKETS;
 		actualResult = fileGenerator.getFileContent(fileToRead);
 		assertEquals(expectedResult, actualResult);
+		
 	}
 
 }

@@ -23,7 +23,7 @@ public class DataDirectoryManager extends StorageOperation {
 	private String dataFilePath;
 
 	/**
-	 * This class's Constructor which sets the path of the file
+	 * The class Constructor which sets the path of the file
 	 * {@value notify.storage.StorageOperation#filePath} where this class
 	 * supposed to read from and write to. It then invokes the
 	 * {@link #readFromFile() readFromFile} method.

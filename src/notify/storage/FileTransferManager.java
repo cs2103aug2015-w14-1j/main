@@ -1,4 +1,4 @@
-/* @@A0124072 */
+/* @@authorA0124072 */
 package notify.storage;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class FileTransferManager {
 	private OutputStream outStream;
 
 	/**
-	 * This class's Constructor which instantiate the oldFilePath
+	 * The class Constructor which instantiate the oldFilePath
 	 * {@link #oldFilePath} and the newFilePath{@link #newFilePath}
 	 * 
 	 * @param oldFilePath

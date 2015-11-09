@@ -47,6 +47,13 @@ public class MarkCommandTest {
 		assertTrue(result1.getActionPerformed().equals(Action.MARK));
 		assertTrue(result1.isSuccess() == true); //task successfully marked
 		assertTrue(result1.getResults().size() == 1);
+		assertTrue(history.size() == 2); //action pushed to stack
+		
+		//testing undo 
+		Result res1 = markCommand1.undo();
+		assertTrue(res1.getActionPerformed().equals(Action.UNDO));
+		assertTrue(res1.getResults().size() == 1); //task added to list
+		assertTrue(history.size() == 2); //nothing popped from stack
 		
 		//testing mark when the task does not exist
 		String string2 = "mark 100";
