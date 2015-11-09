@@ -1,5 +1,5 @@
 /* @@author A0124072 */
-package notify.storage;
+package notify.storage.api;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import notify.logic.command.Action;
+import notify.storage.operator.Constants;
 
 /**
  * CommandsLoader class extends the abstract class StorageOperation
@@ -15,7 +16,7 @@ import notify.logic.command.Action;
  * 
  * This class is responsible for reading the command text files and storing the
  * content of those files into the HashMap<String, Action> object
- * {@value notify.storage.StorageOperation#commands} which contains the command
+ * {@value notify.storage.api.StorageOperation#commands} which contains the command
  * variations. 
  * 
  * This HashMap<String, Action> object is in turn retrieved and used
@@ -29,7 +30,7 @@ public class CommandsLoader extends StorageOperation {
 
 	/**
 	 * The class Constructor which instantiate the commands object
-	 * {@value notify.storage.StorageOperation#commands}
+	 * {@value notify.storage.api.StorageOperation#commands}
 	 */
 	protected CommandsLoader() {
 
@@ -40,7 +41,7 @@ public class CommandsLoader extends StorageOperation {
 	/**
 	 * This method is the main method invoked by the Storage class
 	 * {@see notify.storage.Storage} in order to pre-populate the commands
-	 * object {@value notify.storage.StorageOperation#commands} which will
+	 * object {@value notify.storage.api.StorageOperation#commands} which will
 	 * contain the command variations.
 	 * 
 	 * @param emptyList_

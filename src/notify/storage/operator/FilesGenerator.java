@@ -1,5 +1,5 @@
 /* @@author A0124072 */
-package notify.storage;
+package notify.storage.operator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -206,7 +206,7 @@ public class FilesGenerator {
 	 * represents the absolute path of the data file. It then creates a data
 	 * file at the destination if it does not exist. It invokes
 	 * {@link #writeIntoFile(File, String)} method to write
-	 * {@value notify.storage.Constants#SQURE_BRACKETS} which represents the
+	 * {@value notify.storage.operator.Constants#SQURE_BRACKETS} which represents the
 	 * empty task list.
 	 */
 	private void generateDataFile() {
@@ -226,7 +226,7 @@ public class FilesGenerator {
 	/**
 	 * This method generate command files where the commands are as of {@see notify.command.Action}
 	 * It invokes {@link #writeIntoFile(File, String)} method to write
-	 * {@value notify.storage.Constants#EMPTY_STRING}.
+	 * {@value notify.storage.operator.Constants#EMPTY_STRING}.
 	 */
 	private void generateCommandFiles() {
 		

@@ -1085,7 +1085,6 @@ public class MainViewHandler {
 			}
 			
 		} catch (IllegalArgumentException e) {
-
 			setFeedbackLabel(String.format(INVALID_COMMAND_MESSAGE, userInput), ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
 

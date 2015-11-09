@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import notify.logic.command.Action;
+import notify.storage.operator.Constants;
+import notify.storage.operator.FilesGenerator;
 
 public class FileGeneratorTest {
 	private FilesGenerator fileGenerator;

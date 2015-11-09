@@ -29,7 +29,7 @@ import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
-import notify.storage.Storage;
+import notify.storage;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -608,7 +608,13 @@ public class CommandParser {
 
 		}
 		
-		String delete = compare.substring(compare.length() - keyword.length() , compare.length());
+		String delete = Constants.STRING_EMPTY;
+		
+		if(compare.contains(keyword)) { 
+		
+			delete = compare.substring(compare.length() - keyword.length() , compare.length());
+		
+		}
 		
 		if(delete.equalsIgnoreCase(keyword) == true) {
 			

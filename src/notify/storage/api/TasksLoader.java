@@ -1,5 +1,5 @@
 /* @@author A0124072 */
-package notify.storage;
+package notify.storage.api;
 
 import java.io.BufferedReader;
 import java.io.File;

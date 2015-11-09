@@ -5,7 +5,7 @@ package notify.logic.command;
 import java.util.ArrayList;
 
 import notify.Task;
-import notify.storage.Storage;
+import notify.storage;
 
 /**
  * The SetCommand class extends the abstract class Command.
@@ -31,17 +31,22 @@ public class SetCommand extends Command {
 		this.storage = storage;
 	}
 	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param newFilePath
+	 */
 	public void addValues(String newFilePath){
 		this.newFilePath = newFilePath;
 	}
 	
 	/**
 	 * This method is responsible for creating the Result object corresponding to the SET action.
-	 *  
+	 *  If the directory has been successfully set, the flag is true and if it is not successfully
+	 *  set, the flag is false. 
 	 * 
 	 * @return 'result' object corresponding to the SET action. 
 	 */
-	
 	@Override
 	public Result execute(){
 		
