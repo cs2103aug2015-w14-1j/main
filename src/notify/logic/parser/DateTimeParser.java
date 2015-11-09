@@ -649,7 +649,7 @@ public class DateTimeParser {
 			
 			if(meridiem.equalsIgnoreCase(am) == true || meridiem.equalsIgnoreCase(pm) == true) {
 			
-				isPostMeridiem = meridiem.equalsIgnoreCase(Meridiem.PM.toString());
+				isPostMeridiem = meridiem.equalsIgnoreCase(pm);
 				rawTime = rawTime.substring(0, rawTime.length() - am.length());
 			
 			}
@@ -697,6 +697,15 @@ public class DateTimeParser {
 				hour = hour + Constants.TIME_DIFFERENCE;
 				
 			}
+		
+		} else {
+
+			if(hour == Constants.TIME_DIFFERENCE) {
+				
+				hour = hour - Constants.TIME_DIFFERENCE;
+			
+			}
+	
 		}
 		
 		if(hour < Constants.TIME_HOUR_MIN || hour > Constants.TIME_HOUR_MAX) { 

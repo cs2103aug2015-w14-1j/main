@@ -1,6 +1,5 @@
-/**
- * Author Sadhika Billa 
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import static org.junit.Assert.*;

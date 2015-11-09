@@ -56,7 +56,8 @@ public class EditCommand extends ReversibleCommand {
      * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
      * the Logic class. 
      * 
-     * If the Task object is null, the method creates a result object corresponding to the INVALID action.
+     * If the Task object is null, the method creates a result object by setting the boolean flag to false
+     * to indicate that the task is not successfully edited.
      * 
      * @return 'result' object corresponding to the EDIT/INVALID action.
      */
@@ -68,14 +69,14 @@ public class EditCommand extends ReversibleCommand {
 		
 		if(oldTask == null){
 			
-			result = new Result(Action.INVALID, list);
+			result = new Result(Action.EDIT, list, false);
 		
 		} else{
 		
 		checkNull();
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
 		list.add(updatedTask);
-		result = new Result(Action.EDIT, list);
+		result = new Result(Action.EDIT, list, true);
 		pushToStack();
 		
 		}

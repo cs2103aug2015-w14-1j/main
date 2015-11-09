@@ -47,9 +47,10 @@ import notify.logic.TaskManager;
      * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
      * the Logic class. 
      * 
-     * If the Task object is null, the method creates a result object corresponding to the INVALID action.
+     * If the Task object is null, the method creates a result object by setting the boolean 
+     * flag to false to indicated that it has not been successfully deleted.
      * 
-     * @return 'result' object corresponding to the DELETE/INVALID action.
+     * @return 'result' object corresponding to the DELETE action.
      */
 	
     @Override
@@ -62,13 +63,13 @@ import notify.logic.TaskManager;
 		
 		if(temptask != null){
 		list.add(temptask);
-		 result = new Result(Action.DELETE, list);
+		 result = new Result(Action.DELETE, list, true);
 		this.task = temptask;
 		pushToStack();
 		}
 		
 		else{
-			result = new Result(Action.INVALID, list);
+		 result = new Result(Action.DELETE, list, false);
 		}
 		
 		return result;
