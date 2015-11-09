@@ -11,6 +11,8 @@ import notify.TaskType;
 import notify.logic.command.Command;
 import notify.logic.command.Result;
 import notify.logic.command.ReversibleCommand;
+import notify.logic.logger.LogType;
+import notify.logic.logger.Writer;
 import notify.logic.parser.CommandParser;
 import notify.storage.api.Storage;
 
@@ -20,6 +22,7 @@ public class Logic {
 	private Storage storage;
 	private TaskManager taskManager;
 	private Stack<ReversibleCommand> history;
+	private Writer logger;
 	
 	public Logic() {
 		
@@ -27,6 +30,9 @@ public class Logic {
 		this.history = new Stack<ReversibleCommand>();
 		this.taskManager = new TaskManager(this.storage);
 		this.commandParser = new CommandParser(this.storage, this.taskManager, this.history);
+		this.logger = new Writer(this.getClass().getName(), storage.getFileDestination());
+		
+		this.logger.write(LogType.INFO, "Logic Component Started Successfully");
 		
 	}
 
@@ -79,6 +85,7 @@ public class Logic {
 	public void save() {
 		
 		this.storage.saveTasks(taskManager.getTasks());
+		this.logger.write(LogType.INFO, "Save Task Operation is Called.");
 		
 	}
 	
