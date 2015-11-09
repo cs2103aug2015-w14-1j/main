@@ -1,11 +1,13 @@
-/**
- * Author: Kenneth Ho Chee Chong
- * Matric No: A0125364J
- * For CS2103T - Notify
- */
+/*@@author A0125364J */
 
 .main {
 	-fx-background-color:#FFFFFF;
+}
+
+.software-title {
+	-fx-font-family:'Roboto Black';	
+	-fx-font-size:24;
+	-fx-font-weight:normal;
 }
 
 .overlay {
@@ -13,11 +15,40 @@
 }
 
 .text-field {
-	-fx-text-box-border:#16A085;
 	-fx-focus-color:#16A085;
+	-fx-font-family:'Roboto';
+	-fx-font-size:14;
+	-fx-text-box-border:#16A085;
 }
 
+.message {
+	-fx-font-family:'Roboto Black';
+	-fx-font-size:12;
+}
 
+.title {
+	-fx-font-family:'Roboto Condensed';	
+	-fx-font-size:17;
+	-fx-font-weight:bold;
+}
+
+.subtitle {
+	-fx-font-family:'Roboto Condensed';
+	-fx-font-size:12;
+	-fx-font-weight:bold;
+}
+
+.taskname {
+	-fx-font-family:'Roboto Slab Regular';	
+	-fx-font-size:12;
+	/*-fx-font-weight:bold;*/
+}
+
+.timestamp {
+	-fx-font-family:'Roboto Condensed';
+	-fx-font-size:11;
+	-fx-font-weight:bold;
+}
 
 /**************** overdue styling ****************/
 .overdue-scrollpane, .overdue-panel {
@@ -33,7 +64,20 @@
 	-fx-border-color:#7E443F;
 }
 
+.overdue-panel .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#5D322E;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
+}
 
+.overdue-panel .title, .overdue-panel .taskname {
+	-fx-text-fill:#5D322E;
+}
+
+.overdue-panel .subtitle, .overdue-panel .timestamp {
+	-fx-text-fill:#B26059;
+}
 
 /**************** floating styling ****************/
 .floating-scrollpane, .floating-panel {
@@ -49,7 +93,20 @@
 	-fx-border-color:#406C7F;
 }
 
+.floating-panel .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#2D4D5A;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
+}
 
+.floating-panel .title, .floating-panel .taskname {
+	-fx-text-fill:#2D4D5A;
+}
+
+.floating-panel .subtitle, .floating-panel .timestamp {
+	-fx-text-fill:#5997B2;
+}
 
 /**************** comingsoon styling ****************/
 .comingsoon-scrollpane, .comingsoon-panel {
@@ -65,7 +122,20 @@
 	-fx-border-color:#657E47;
 }
 
+.comingsoon-panel .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#485A33;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
+}
 
+.comingsoon-panel .title, .comingsoon-panel .taskname {
+	-fx-text-fill:#485A33;
+}
+
+.comingsoon-panel .subtitle, .comingsoon-panel .timestamp {
+	-fx-text-fill:#8EB264;
+}
 
 /**************** daily styling ****************/
 .daily-scrollpane, .daily-panel {
@@ -81,41 +151,76 @@
 	-fx-border-color:#7E7E45;
 }
 
+.daily-panel .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#5D5D33;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
+}
 
+.daily-panel .title, .daily-panel .taskname {
+	-fx-text-fill:#5D5D33;
+}
+
+.daily-panel .subtitle, .daily-panel .timestamp {
+	-fx-text-fill:#B2B262;
+}
+
+/**************** search styling ****************/
+.search-view-title {
+	-fx-font-family:'Roboto Condensed';
+	-fx-font-size:24;
+	-fx-font-weight:normal;
+}
+
+.search-pane .title {
+	-fx-font-family:'Roboto Condensed';
+	-fx-font-size:20;
+	-fx-font-weight:normal;
+}
+
+.search-pane .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#FFFFFF;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
+}
+
+.search-pane .taskname, .search-pane .timestamp {
+	-fx-text-fill:#FFFFFF;
+}
 
 /**************** completed styling ****************/
-.completed-scrollpane, .completed-panel {
-	-fx-background-color:rgb(167, 255, 235);
-	/*-fx-background-color:rgb(204, 255, 144);
-	-fx-background-color:rgb(255, 255, 141);*/
-	-fx-background-color:rgb(128, 216, 255);
+.completed-pane .title {
+	-fx-font-family:'Roboto Condensed';
+	-fx-font-size:24;
+	-fx-font-weight:normal;
 }
 
-.completed-scrollpane > .scroll-bar:horizontal .thumb,
-.completed-scrollpane > .scroll-bar:vertical .thumb {
-	-fx-border-color:#406C7F;
+.completed-pane .check-box {
+	-fx-font-family:'Roboto';
+	-fx-text-fill:#FFFFFF;
+	-fx-font-size:10;
+	-fx-font-weight:bold;
 }
 
-.completed-panel .check-box > .box {
-	-fx-border-color:#406C7F;
+.completed-pane .taskname, .completed-pane .timestamp {
+	-fx-text-fill:#FFFFFF;
 }
 
-
-
-/**************** uncompleted styling ****************/
-.uncompleted-scrollpane, .uncompleted-panel {
-	-fx-background-color:rgb(255, 209, 128);
-	-fx-background-color:rgb(255, 138, 128);
+/**************** help styling ****************/
+.help-pane .title {
+	-fx-font-family:'Roboto Black';
+	-fx-font-size:48;
+	-fx-font-weight:normal;
 }
 
-.uncompleted-scrollpane > .scroll-bar:horizontal .thumb,
-.uncompleted-scrollpane > .scroll-bar:vertical .thumb {
-	-fx-background-color:#99534D;
+.help-pane .subtitle {
+	-fx-font-family:'Roboto';
+	-fx-font-size:13;
+	-fx-font-weight:bold;
 }
 
-.uncompleted-panel .check-box > .box {
-	-fx-border-color:#7E443F;
-}
 
 
 

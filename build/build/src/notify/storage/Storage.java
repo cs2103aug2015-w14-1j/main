@@ -1,52 +1,109 @@
+/* @@author A0124072 */
 package notify.storage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import notify.Task;
 import notify.logic.command.Action;
 
+/**
+ * This Storage class is used to generate the system folders and files via
+ * FileGenerator class {@see notify.storage.FileGenerator}, load and save the
+ * user's tasks/data via TasksLoader class {@see notify.storage.TasksLoader} and
+ * TasksSaver class {@see notify.storage.TasksSaver}. It is also used to set the
+ * absolute file path of the data file via DataDirectoryManager class
+ * {@see notify.storage.DataDirectoryManager} and load the command variations
+ * via CommandsLoader class {@see notify.storage.CommandsLoader}
+ */
 public class Storage {
-	
-	//private static final String[] commandFiles = {"ADD.txt", "DELETE.txt", "EDIT.txt", "SEARCH.txt", "MARK.txt", "DISPLAY.txt", "UNDO.txt", "SET.txt", "EXIT.txt"};
-
-	private static final String PATHFILELINK = "notify.config/data/.filePath.txt";
-	private static final String DATAFILE = "/tasks.txt";
-
+	/**
+	 * These variables are used to interact with other internal classes of the
+	 * storage component
+	 */
 	private FileGenerator fileGenerator;
 	private DataDirectoryManager dataDirectoryManager;
-	private FileTransferManager fileTransferManager;
 	private TasksSaver save;
 	private TasksLoader load;
-	private LoadCommands loadCommand;
-	private String filePath;
-	
+	private CommandsLoader loadCommand;
+	private String dataFileAbsolutePath;
+
+	/**
+	 * This method is the class's Constructor which is used to instantiate the
+	 * following variables {@link #fileGenerator}, {@link #dataDirectoryManager}
+	 * {@link #save}, {@link #load}, {@link #loadCommand} and
+	 * {@link #dataFileAbsolutePath}
+	 * 
+	 * It invokes {@see notify.storage.DataDirectoryManager#getDataFilePath()}
+	 * to retrieve the currently saved absolute file path of the data file.
+	 */
 	public Storage() {
-		fileGenerator = new FileGenerator();
-		dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_HIDDEN_FILE, Constants.FOLDER_CONFIG, File.separator, Constants.FOLDER_DATA, File.separator, Constants.PERIOD, Constants.FILE_DIRECTORY, Constants.EXTENSION_FILE));
-		filePath = dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE;
-		//System.out.println(filePath);
-		save = new TasksSaver(filePath);
-		load = new TasksLoader(filePath);
-		loadCommand = new LoadCommands();
-	}
-	
-	public ArrayList<Task> loadTasks(){
-		return load.execute(new ArrayList<Task>());		
+		
+		this.fileGenerator = new FileGenerator();
+		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG,
+				Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
+		this.dataFileAbsolutePath = String.format(Constants.PATH_FILE, this.dataDirectoryManager.getDataFilePath(),
+				Constants.FILE_DATA, Constants.EMPTY_STRING);
+		this.load = new TasksLoader(this.dataFileAbsolutePath);
+		this.loadCommand = new CommandsLoader();
+		this.save = new TasksSaver(this.dataFileAbsolutePath);
+		
 	}
 
-	public void saveTasks(ArrayList<Task> taskList_) {	
-		save.execute(taskList_);
-		fileTransferManager = new FileTransferManager(filePath, dataDirectoryManager.getDataFilePath()+File.separator+Constants.FILE_DATA+Constants.EXTENSION_FILE);
-		fileTransferManager.transferData();
+	/**
+	 * This method loads the user's tasks/data from the data file
+	 * 
+	 * @return the ArrayList<Task> object which contains all the tasks/data
+	 *         stored in the data file
+	 */
+	public ArrayList<Task> loadTasks() {
+		
+		return this.load.execute(new ArrayList<Task>());
+		
 	}
-	
+
+	/**
+	 * This method saves the user's tasks/data into the data file
+	 * 
+	 * @param taskList_
+	 *            the ArrayList<Task> object which contains the currently added
+	 *            tasks/data which is to be written into the data file
+	 */
+	public void saveTasks(ArrayList<Task> taskList_) {
+		
+		this.save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(),
+				Constants.FILE_DATA, Constants.EMPTY_STRING));
+		this.save.execute(taskList_);
+		
+	}
+
+	/**
+	 * This method loads the command variations from the command files
+	 * 
+	 * @return the HashMap<String, Action> object of which <Key> represents the
+	 *         various command variations and <Value> represents the default
+	 *         system commands {@see notify.logic.command.Action}
+	 */
 	public HashMap<String, Action> loadCommands() {
-		return loadCommand.execute(new ArrayList<Task>());
+		
+		return this.loadCommand.execute(new ArrayList<Task>());
+		
 	}
-	
-	public boolean setFilePath(String newFilePath) {
-		return dataDirectoryManager.execute(newFilePath);
+
+	/**
+	 * This method sets the absolute file path where the data file has to be
+	 * saved/moved to
+	 * 
+	 * @param newFilePath_
+	 *            the String representation of the new absolute file path of the
+	 *            data file
+	 * 
+	 * @return 'true' if the specified absolute file path is a valid directory;
+	 *         'false' otherwise
+	 */
+	public boolean setFileDestination(String newFilePath_) {
+		
+		return this.dataDirectoryManager.execute(newFilePath_);
+		
 	}
 }

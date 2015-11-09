@@ -1,9 +1,4 @@
-/**
- * Author: Kenneth Ho Chee Chong
- * Matric No: A0125364J
- * For CS2103T - Notify
- */
-
+//@@author A0125364J
 package notify.view;
 
 import notify.Task;
@@ -43,106 +38,55 @@ import javafx.scene.text.FontWeight;
 
 public class MainViewHandler {
 	
-	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-	private static String SHORT_DAY_PATTERN = "EEE";
-	private static String LONG_DAY_PATTERN = "EEEE";
-	private static String SHORT_DATE_PATTERN = "dd MMM yy";
-	private static String LONG_DATE_PATTERN = "dd MMMM yy";
-	private static String TIME_PATTERN = "hh:mm a";
-	
-	
+	private static String[] DAYS_OF_WEEK = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };	
 	
 	// styling for container containing each line of item
 	private static double HBOX_NODE_SPACING = 3.5;
 	private static Pos HBOX_NODE_ALIGNMENT = Pos.TOP_LEFT;
 	private static Insets HEADER_PADDING = new Insets(0, 0, 2, 0);	//top, right, bottom, left
 	
-	
-	
-	// font family settings for different types of text displayed
-	private static String TITLE_FONT_FAMILY = "Roboto Condensed";
-	private static String SUBTITLE_FONT_FAMILY = "Roboto Condensed";
-	private static String CHECKBOX_FONT_FAMILY = "Roboto";
-	private static String TASK_FONT_FAMILY = "Roboto Slab Regular";
-	private static String TASK_SUBTEXT_FONT_FAMILY = "Roboto Condensed";
-	
-	
-	
-	// font weight settings for different types of text displayed
-	private static FontWeight TITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight SUBTITLE_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight CHECKBOX_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight TASK_FONT_WEIGHT = FontWeight.BOLD;
-	private static FontWeight TASK_SUBTEXT_FONT_WEIGHT = FontWeight.BOLD;
-	
-	
-	
-	// font posture settings for different types of text displayed
-	private static FontPosture TITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture SUBTITLE_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture CHECKBOX_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture TASK_FONT_POSTURE = FontPosture.REGULAR;
-	private static FontPosture TASK_SUBTEXT_FONT_POSTURE = FontPosture.REGULAR;
-	
-	
-	
-	// font size settings for different types of text displayed
-	private static int TITLE_FONT_SIZE = 17;
-	private static int SUBTITLE_FONT_SIZE = 12;
-	private static int CHECKBOX_FONT_SIZE = 10;
-	private static int TASK_FONT_SIZE = 12;
-	private static int TASK_SUBTEXT_FONT_SIZE = 11;
-	
-
-	
-	// font object that is set up by the settings above
-	private static Font TITLE_FONT = Font.font(TITLE_FONT_FAMILY, TITLE_FONT_WEIGHT, TITLE_FONT_POSTURE, TITLE_FONT_SIZE);
-	private static Font SUBTITLE_FONT = Font.font(SUBTITLE_FONT_FAMILY, SUBTITLE_FONT_WEIGHT, SUBTITLE_FONT_POSTURE, SUBTITLE_FONT_SIZE);
-	private static Font CHECKBOX_FONT = Font.font(CHECKBOX_FONT_FAMILY, CHECKBOX_FONT_WEIGHT, CHECKBOX_FONT_POSTURE, CHECKBOX_FONT_SIZE);
-	private static Font TASK_FONT = new Font (TASK_FONT_FAMILY, TASK_FONT_SIZE);
-	private static Font TASK_SUBTEXT_FONT = Font.font(TASK_SUBTEXT_FONT_FAMILY, TASK_SUBTEXT_FONT_WEIGHT, TASK_SUBTEXT_FONT_POSTURE, TASK_SUBTEXT_FONT_SIZE);
-	
-	
-	
 	// font color for different type of task
-	private static Paint OVERDUE_TEXT_FILL = Paint.valueOf("#5D322E");
-	private static Paint OVERDUE_SUBTEXT_FILL = Paint.valueOf("#B26059");
-	private static Paint FLOATING_TEXT_FILL = Paint.valueOf("#2D4D5A");
-	private static Paint FLOATING_SUBTEXT_FILL = Paint.valueOf("#5997B2");
-	private static Paint COMING_TEXT_FILL = Paint.valueOf("#485A33");
-	private static Paint COMING_SUBTEXT_FILL = Paint.valueOf("#8EB264");
-	private static Paint DAILY_TEXT_FILL = Paint.valueOf("#5D5D33");
-	private static Paint DAILY_SUBTEXT_FILL = Paint.valueOf("#B2B262");
-	private static Paint SEARCH_TEXT_FILL = Paint.valueOf("#FFFFFF");
-	private static Paint SEARCH_SUBTEXT_FILL = Paint.valueOf("#FFFFFF");
 	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
 	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
 	
+	// String for the css class names
+	private static String TITLE_CSS_CLASS = "title";
+	private static String SUBTITLE_CSS_CLASS = "subtitle";
+	private static String TASK_NAME_CSS_CLASS = "taskname";
+	private static String TIMESTAMP_CSS_CLASS = "timestamp";
 	
-
+	// String pattern for dates
+	private static String SHORT_DAY_PATTERN = "EEE";
+	private static String LONG_DAY_PATTERN = "EEEE";
+	private static String SHORT_DATE_PATTERN = "dd MMM yy";
+	private static String LONG_DATE_PATTERN = "dd MMMM yy";
+	private static String TIME_PATTERN = "hh:mm a";
+	
+	// String format for deadline tasks timestamp
 	private static String DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s";
 	private static String DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s";
 	private static String DEADLINE_END_DATE_TIMESTAMP_FORMAT = "%1$s";
 	private static String DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT = "from %1$s to %2$s";
 	private static String DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT = "at %1$s";
 	
-	
-
+	// String format for ranged tasks timestamp
 	private static String RANGE_START_DATE_TIME_TO_END_DATE_TIME_TIMESTAMP_FORMAT = "%1$s, %2$s to %3$s, %4$s";
 	private static String RANGE_START_DATE_TO_END_DATE_TIMESTAMP_FORMAT = "%1$s to %2$s";
 	private static String RANGE_FROM_START_TIME_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "from %1$s till %2$s, %3$s";
 	private static String RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT = "till %1$s, %2$s";
 	private static String RANGE_TILL_END_DATE_TIMESTAMP_FORMAT = "till %1$s";
 	
+	// String format for title timestamp
+	private static String LONG_DAY_DATE_FORMAT = "%1$s, %2$s";
 	
-	
+	// String for title of different tasks status
 	private static String OVERDUE_TITLE = "Overdue";
 	private static String FLOATING_TITLE = "Floating";
 	private static String COMING_TITLE = "Coming Soon...";
+	private static String TODAY_TITLE = "Today";
+	private static String TOMORROW_TITLE = "Tomorrow";
 	
-	
-	
+	// String for error messages
 	private static String INVALID_COMMAND_MESSAGE = "Invalid command '%1$s'. Please try again.";
 	private static String ADDED_MESSAGE = "Task added: '%1$s'.";
 	private static String EDITED_MESSAGE = "Task '%1$s' edited.";
@@ -151,18 +95,23 @@ public class MainViewHandler {
 	
 	private static String SEARCH_INPUT = "";
 	
+	private static String MARK_COMMAND = "mark %1$s";
+	private static String UNDO_COMMAND = "undo";
+	
+	// stack to store commands history
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
 	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
 	
 	private Logic logic;
 	
+	// arraylist of different types of tasks
 	private ArrayList<Task> overdueTasks;
 	private ArrayList<Task> floatingTasks;
 	private ArrayList<Task> comingTasks;
+	private ArrayList<Task> completedTasks;
 	private ArrayList<ArrayList<Task>> dailyTasksList;
-
 	
-	
+	// fxml controls
 	@FXML private VBox vboxFloating;
 	@FXML private VBox vboxOverdue;
 	@FXML private VBox vboxComing;
@@ -175,16 +124,14 @@ public class MainViewHandler {
 	@FXML private VBox vboxSeven;
 	@FXML private VBox vboxSearchCompleted;
 	@FXML private VBox vboxSearchUncompleted;
-	
-	
+	@FXML private VBox vboxCompletedTask;
 	
 	@FXML private TextField txtCommand;
 	@FXML private Label lblFeedback;
 	
-	
-	
 	@FXML private Pane pnOverlay;
 	@FXML private BorderPane bpnSearch;
+	@FXML private BorderPane bpnCompleted;
 	@FXML private GridPane gpnHelp;
 	@FXML private Label lblSearchTitle;
 	
@@ -192,15 +139,7 @@ public class MainViewHandler {
 	
 	@FXML
 	public void initialize() {
-		//initDailyView();
-		//populateOverdueTask();
-		//populateFloatingTask();
-		//populateComingSoonTask();
-
-		/*loadOverdueTask();
-		loadFloatingTask();
-		loadComingTask();
-		loadDailyTask();*/
+		
 	}
 	
 	
@@ -239,7 +178,7 @@ public class MainViewHandler {
 	
 	public boolean isCompletedViewVisible() {
 		
-		return false;
+		return bpnCompleted.isVisible();
 		
 	}
 	
@@ -258,12 +197,12 @@ public class MainViewHandler {
 		
 		overdueTasks = logic.getOverdueTasks();
 
-		HBox hboxHeader = generateListHeader(OVERDUE_TITLE, OVERDUE_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(overdueTasks, false, OVERDUE_TEXT_FILL, OVERDUE_SUBTEXT_FILL);
+		HBox header = generateHeader(OVERDUE_TITLE);
+		ArrayList<HBox> items = generateList(overdueTasks, false);
 		
 		vboxOverdue.getChildren().clear();
-		vboxOverdue.getChildren().add(hboxHeader);
-		vboxOverdue.getChildren().addAll(hboxes);
+		vboxOverdue.getChildren().add(header);
+		vboxOverdue.getChildren().addAll(items);
 		
 	}
 	
@@ -276,12 +215,12 @@ public class MainViewHandler {
 		
 		floatingTasks = logic.getFloatingTasks();
 		
-		HBox hboxHeader = generateListHeader(FLOATING_TITLE, FLOATING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(floatingTasks, false, FLOATING_TEXT_FILL, FLOATING_SUBTEXT_FILL);
+		HBox header = generateHeader(FLOATING_TITLE);
+		ArrayList<HBox> items = generateList(floatingTasks, false);
 		
 		vboxFloating.getChildren().clear();
-		vboxFloating.getChildren().add(hboxHeader);
-		vboxFloating.getChildren().addAll(hboxes);
+		vboxFloating.getChildren().add(header);
+		vboxFloating.getChildren().addAll(items);
 		
 	}
 	
@@ -294,12 +233,12 @@ public class MainViewHandler {
 		
 		comingTasks = logic.getComingSoonTasks();
 
-		HBox hboxHeader = generateListHeader(COMING_TITLE, COMING_TEXT_FILL);
-		ArrayList<HBox> hboxes = generateListItem(comingTasks, false, COMING_TEXT_FILL, COMING_SUBTEXT_FILL);
+		HBox header = generateHeader(COMING_TITLE);
+		ArrayList<HBox> items = generateList(comingTasks, false);
 		
 		vboxComing.getChildren().clear();
-		vboxComing.getChildren().add(hboxHeader);
-		vboxComing.getChildren().addAll(hboxes);
+		vboxComing.getChildren().add(header);
+		vboxComing.getChildren().addAll(items);
 		
 	}
 	
@@ -315,16 +254,16 @@ public class MainViewHandler {
 		
 		dailyTasksList = new ArrayList<ArrayList<Task>>();
 		
-		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
+		for (int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
 			
-			HBox hboxHeader = generateListHeader(calendar, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
-			ArrayList<HBox> hboxes = generateListItem(dailyTasks, false, DAILY_TEXT_FILL, DAILY_SUBTEXT_FILL);
+			HBox header = generateHeader(calendar);
+			ArrayList<HBox> items = generateList(dailyTasks, false);
 			
 			vboxes[i].getChildren().clear();
-			vboxes[i].getChildren().add(hboxHeader);
-			vboxes[i].getChildren().addAll(hboxes);
+			vboxes[i].getChildren().add(header);
+			vboxes[i].getChildren().addAll(items);
 			
 			dailyTasksList.add(dailyTasks);		
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -333,7 +272,10 @@ public class MainViewHandler {
 		
 	}
 	
-	
+	/**
+	 * Loads the search results and display them correctly.
+	 * @param searchResults the search results
+	 */
 	public void loadSearchResult(ArrayList<Task> searchResults) {
 		
 		ArrayList<Task> completedTasks = new ArrayList<Task>();
@@ -342,8 +284,8 @@ public class MainViewHandler {
 		completedTasks = filterTask(searchResults, true);
 		uncompletedTasks = filterTask(searchResults, false);
 
-		ArrayList<HBox> hboxesCompleted = generateListItem(completedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
-		ArrayList<HBox> hboxesUncompleted = generateListItem(uncompletedTasks, true, SEARCH_TEXT_FILL, SEARCH_SUBTEXT_FILL);
+		ArrayList<HBox> hboxesCompleted = generateList(completedTasks, true);
+		ArrayList<HBox> hboxesUncompleted = generateList(uncompletedTasks, true);
 		
 		vboxSearchCompleted.getChildren().clear();
 		vboxSearchCompleted.getChildren().addAll(hboxesCompleted);
@@ -353,22 +295,65 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Loads the list of completed tasks and display.
+	 */
+	public void loadCompletedTasks() {
+		
+		completedTasks = logic.getCompletedTasks();
+		
+		ArrayList<HBox> hboxes = generateList(completedTasks, true);
+		
+		vboxCompletedTask.getChildren().clear();
+		vboxCompletedTask.getChildren().addAll(hboxes);
+		
+	}
+	
+	/**
+	 * Make the search view visible.
+	 * @param searchTerm the search input that was entered by the user.
+	 */
 	public void showSearchView(String searchTerm) {
 		
 		lblSearchTitle.setText(String.format(SEARCH_RESULT_MESSAGE, searchTerm));
+		
+		hideCompletedView();
+		hideHelpView();
 		
 		pnOverlay.setVisible(true);
 		bpnSearch.setVisible(true);
 		
 	}
 	
+	/**
+	 * Make the completed view visible.
+	 */
+	public void showCompletedView() {
+		
+		hideSearchView();
+		hideHelpView();
+		
+		pnOverlay.setVisible(true);
+		bpnCompleted.setVisible(true);
+		
+	}
+	
+	/**
+	 * Make the help view visible.
+	 */
 	public void showHelpView() {
+		
+		hideSearchView();
+		hideCompletedView();
 		
 		pnOverlay.setVisible(true);
 		gpnHelp.setVisible(true);
 		
 	}
 	
+	/**
+	 * Hide the search view.
+	 */
 	public void hideSearchView() {
 		
 		pnOverlay.setVisible(false);
@@ -376,6 +361,19 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Hide the completed view.
+	 */
+	public void hideCompletedView() {
+		
+		pnOverlay.setVisible(false);
+		bpnCompleted.setVisible(false);
+		
+	}
+	
+	/**
+	 * Hide the help view.
+	 */
 	public void hideHelpView() {
 		
 		pnOverlay.setVisible(false);
@@ -383,13 +381,19 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Filter the tasks given according to completed or uncompleted tasks.
+	 * @param tasks list of tasks that contains completed and uncompleted tasks
+	 * @param isCompleted true to retrieve completed tasks from the list, otherwise, false.
+	 * @return return a list of completed or uncompleted tasks
+	 */
 	public ArrayList<Task> filterTask(ArrayList<Task> tasks, boolean isCompleted) {
 		
 		ArrayList<Task> results = new ArrayList<Task>();
 		
-		for(Task task: tasks) {
+		for (Task task: tasks) {
 			
-			if(task.isCompleted() == isCompleted) {
+			if (task.isCompleted() == isCompleted) {
 				
 				results.add(task);
 				
@@ -409,19 +413,60 @@ public class MainViewHandler {
 	 * @param titleTextFill the font color of the title
 	 * @return a HBox object (which contains the title)
 	 */
-	public HBox generateListHeader(String title, Paint titleTextFill) {
+	public HBox generateHeader(String title) {
 		
-		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
+		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
 		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle);
+		
+		return hbox;
+		
+	}
+
+	
+	/**
+	 * Generates the header by providing the date of the header
+	 * 
+	 * @param calendar the date of the header to be generated
+	 * @param titleTextFill the font color of the title
+	 * @param subtitleTextFill the font color of the subtitle
+	 * @return a HBox object (which contains the title and subtitle)
+	 */
+	public HBox generateHeader(Calendar calendar) {
+		
+		Calendar today = Calendar.getInstance();
+		Calendar tomorrow = Calendar.getInstance();
+		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+		
+		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
+		
+		String title = dayFormatter.format(calendar.getTime());
+		String subtitle = dateFormatter.format(calendar.getTime());
+		
+		if (calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
+			
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TODAY_TITLE; 
+			
+		} else if (calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
+
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TOMORROW_TITLE;
+			
+		}
+		
+		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
+		Label lblSubtitle = createLabel(subtitle, SUBTITLE_CSS_CLASS);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
 		
 		return hbox;
 		
 	}
 	
 	
-	
 	/**
-	 * Generates the timestamp for all tasks with time
+	 * Generates the timestamp for all tasks with time.
+	 * 
 	 * @param task the task to have its timestamp generated
 	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
 	 */
@@ -430,21 +475,24 @@ public class MainViewHandler {
 		TaskType taskType = task.getTaskType();
 		String timeStamp = "";
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case DEADLINE:
 
 				timeStamp = generateDeadlineTimestamp(task, isSearch);
+				
 				break;
 				
 			case RANGE:
 				
 				timeStamp = generateRangeTimestamp(task, isSearch);		
+				
 				break;
 				
 			default:
 				
 				timeStamp = "";
+				
 				break;
 		
 		}
@@ -457,8 +505,9 @@ public class MainViewHandler {
 	
 	/**
 	 * Generates the timestamp for deadline tasks
+	 * 
 	 * @param task the task to have its timestamp generated
-	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 * @return timestamp (e.g. 23 Oct 15, 02:00PM)
 	 */
 	public String generateDeadlineTimestamp(Task task, boolean isSearch) {
 		
@@ -476,15 +525,15 @@ public class MainViewHandler {
 
 		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 		
-		if(task.isComingSoon() || task.isOverdue() || isSearch) {
+		if (task.isComingSoon() || task.isOverdue() || isSearch) {
 
-			if(taskStartTime != null) {
+			if (taskStartTime != null) {
 
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(taskEndTime != null) {
+			} else if (taskEndTime != null) {
 
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
@@ -497,13 +546,13 @@ public class MainViewHandler {
 			
 		} else {
 		
-			if(taskStartTime != null) {
+			if (taskStartTime != null) {
 				
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(taskEndTime != null) {
+			} else if (taskEndTime != null) {
 				
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT, taskEndTimeStamp);
@@ -537,9 +586,9 @@ public class MainViewHandler {
 		String taskEndTimeStamp = "";
 		String timeStamp = "";
 		
-		if(task.isComingSoon() || task.isOverdue() || isSearch) {
+		if (task.isComingSoon() || task.isOverdue() || isSearch) {
 			
-			if(taskStartTime != null && taskEndTime != null) {
+			if (taskStartTime != null && taskEndTime != null) {
 				
 				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
@@ -559,7 +608,7 @@ public class MainViewHandler {
 			
 		} else {
 			
-			if(task.isEndingSoon()) {
+			if (task.isEndingSoon()) {
 				
 				dateFormatter = new SimpleDateFormat(SHORT_DAY_PATTERN);
 				
@@ -571,12 +620,12 @@ public class MainViewHandler {
 			
 			taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 			
-			if(taskStartTime != null && taskEndTime != null) {
+			if (taskStartTime != null && taskEndTime != null) {
 				
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
-				if(task.isStarted()) {
+				if (task.isStarted()) {
 					
 					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 					
@@ -599,82 +648,43 @@ public class MainViewHandler {
 	}
 	
 	/**
-	 * Generates the header by providing the date of the header
-	 * @param calendar the date of the header to be generated
-	 * @param titleTextFill the font color of the title
-	 * @param subtitleTextFill the font color of the subtitle
-	 * @return
-	 */
-	public HBox generateListHeader(Calendar calendar, Paint titleTextFill, Paint subtitleTextFill) {
-		
-		Calendar today = Calendar.getInstance();
-		Calendar tomorrow = Calendar.getInstance();
-		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-		
-		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
-		
-		String title = dayFormatter.format(calendar.getTime());
-		String subtitle = dateFormatter.format(calendar.getTime());
-		
-		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
-			
-			subtitle = title + ", " + subtitle;
-			title = "Today"; 
-			
-		} else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
-
-			subtitle = title + ", " + subtitle;
-			title = "Tomorrow";
-			
-		}
-		
-		Label lblTitle = createLabel(title, TITLE_FONT, titleTextFill);
-		Label lblSubtitle = createLabel(subtitle, SUBTITLE_FONT, subtitleTextFill);
-
-		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
-		
-		return hbox;
-		
-	}
-	
-	
-	
-	/**
 	 * Generates the items in each list.
+	 * 
 	 * @param tasks a list
-	 * @param textFill the color of the main text
-	 * @param subtextFill the color of the subtext
-	 * @return
+	 * @param isSearch to determine if its generated for the search view
+	 * @return a list of HBox objects (each HBox object contains the information of a task)
 	 */
-	public ArrayList<HBox> generateListItem(ArrayList<Task> tasks, boolean isSearch, Paint textFill, Paint subtextFill) {
+	public ArrayList<HBox> generateList(ArrayList<Task> tasks, boolean isSearch) {
 		
 		ArrayList<HBox> hboxes = new ArrayList<HBox>();
-		CheckBox checkBox = new CheckBox();
-		Label lblTaskName = new Label();
-		Label lblTaskTime = new Label();
 		String subtext = "";
 		
 		for(int i = 0; i < tasks.size(); i++) {
 			
 			Task task = tasks.get(i);
 			
-			checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted(), CHECKBOX_FONT, textFill);
-			lblTaskName = createLabel(task.getTaskName(), TASK_FONT, textFill);
+			CheckBox checkBox = createCheckbox(task.getTaskId() + "", task.isCompleted());
+			Label lblTaskName = createLabel(task.getTaskName(), TASK_NAME_CSS_CLASS);
+			Label lblTaskTime;
+			HBox hbox;
 			
-			if(task.getTaskType() == TaskType.DEADLINE) {
-
-				subtext = generateTimeStamp(task, isSearch);
-				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
+			switch(task.getTaskType()) {
+			
+				case FLOATING:
+					
+					hbox = createItem(true, isSearch, checkBox, lblTaskName);
+					
+					break;
 				
-			} else if(task.getTaskType() == TaskType.RANGE) {
-				
-				subtext = generateTimeStamp(task, isSearch);
-				lblTaskTime = createLabel(subtext, TASK_SUBTEXT_FONT, subtextFill);
-				
+				default:
+					
+					subtext = generateTimeStamp(task, isSearch);
+					lblTaskTime = createLabel(subtext, TIMESTAMP_CSS_CLASS);
+					hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
+					
+					break;
+			
 			}
-			
-			HBox hbox = createItem(true, isSearch, checkBox, lblTaskName, lblTaskTime);
 
 			hboxes.add(hbox);
 			
@@ -684,25 +694,25 @@ public class MainViewHandler {
 		
 	}
 	
-	
-	
 	/**
-	 * Creates the HBox with nodes
+	 * Creates the HBox with nodes.
+	 * 
+	 * @param isSearch to determine if its generated for the search view
 	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
 	 * @return the HBox which represents a single line of item to be added into the VBox
 	 */
 	public HBox createItem(boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		
 		HBox hbox = new HBox();
 		hbox.setSpacing(HBOX_NODE_SPACING);
 		hbox.setAlignment(HBOX_NODE_ALIGNMENT);
-		
-		//FlowPane flowPane = new FlowPane();
-		//flowPane.setHgap(HBOX_NODE_SPACING);
 
 		int startIndex = 0;
 		if(hasCheckbox) {
+			
 			hbox.getChildren().add(nodes[startIndex]);
 			startIndex = 1;
+			
 		}
 
 		if(isSearch) {
@@ -737,61 +747,52 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Overloading method for createItem which allows more specifications.
+	 * 
+	 * @param insets padding setting around the item
+	 * @param hasCheckbox indicate whether a checkbox is needed
+	 * @param isSearch indicate whether its a search
+	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
+	 * @return the HBox which represents a single line of item to be added into the VBox
+	 */
 	public HBox createItem(Insets insets, boolean hasCheckbox, boolean isSearch, Node... nodes) {
+		
 		HBox hbox = createItem(hasCheckbox, isSearch, nodes);
 		hbox.setPadding(insets);
 		
 		return hbox;
+		
 	}
 	
 	/**
-	 * Create a label with its formatting
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
+	 * Create a label with its formatting.
+	 * 
+	 * @param text the text to be displayed on the label
+	 * @param cssClass css class that the label belongs to
 	 * @return a label which contains the text and formatting (default text color)
 	 */
-	public Label createLabel(String text, Font font) {
+	public Label createLabel(String text, String cssClass) {
+		
 		Label label = new Label(text);
-		label.setFont(font);
+		label.getStyleClass().add(cssClass);
 		
 		return label;
+		
 	}
 	
 	/**
-	 * Overloading method for creating a label with text color
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
-	 * @param textFill the color of the text fill
-	 * @return a label which contains the text and formatting
+	 * Create a checkbox with its formatting.
+	 * 
+	 * @param text the text to be displayed on the checkbox
+	 * @param isChecked to indicate whether the checkbox is checked or not
+	 * @return a checkbox with the settings specified
 	 */
-	public Label createLabel(String text, Font font, Paint textFill) {
-		Label label = createLabel(text, font);
-		label.setTextFill(textFill);
-		
-		return label;
-	}
-	
-	/**
-	 * Overloading method for creating a label with padding
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
-	 * @param textFill the color of the text fill
-	 * @param insets padding for the label
-	 * @return a label which contains the text and formatting
-	 */
-	/*public Label createLabel(String text, Font font, Paint textFill, Insets insets) {
-		Label label = createLabel(text, font, textFill);
-		label.setPadding(insets);
-		
-		return label;
-	}*/
-	
-	public CheckBox createCheckbox(String text, boolean isChecked, Font font, Paint textFill) {
+	public CheckBox createCheckbox(String text, boolean isChecked) {
 		
 		CheckBox checkbox = new CheckBox(text);
-		checkbox.setFont(font);
-		checkbox.setTextFill(textFill);
 		checkbox.setSelected(isChecked);
+		checkbox.setDisable(isChecked);
 		checkbox.setFocusTraversable(false);
 
 		checkbox.setOnAction(event -> checkboxEventHandler(event, checkbox));
@@ -800,7 +801,11 @@ public class MainViewHandler {
 		
 	}
 	
-	
+	/**
+	 * Adds to the command history.
+	 * 
+	 * @param userInput command entered by the user
+	 */
 	public void addCommandHistory(String userInput) {
 
 		if(!COMMAND_FUTURE_STACK.isEmpty()) {
@@ -827,6 +832,12 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Processes the result after the command is being executed.
+	 * 
+	 * @param result returned after a command is being executed
+	 * @param userInput the input entered by the user
+	 */
 	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
@@ -836,6 +847,7 @@ public class MainViewHandler {
 			case SEARCH:
 				
 				String searchTerm = userInput.replaceFirst("search", "").trim();
+				SEARCH_INPUT = userInput;
 				
 				loadSearchResult(result.getResults());
 				showSearchView(searchTerm);
@@ -847,13 +859,15 @@ public class MainViewHandler {
 				
 				hideSearchView();
 				hideHelpView();
+				hideCompletedView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
 				
 			case DISPLAY:
 				
-				System.out.println("MainViewHandler: display command");
+				loadCompletedTasks();
+				showCompletedView();
 				setFeedbackLabel("", FEEDBACK_MESSAGE_FILL);
 				
 				break;
@@ -879,12 +893,18 @@ public class MainViewHandler {
 					
 				}
 				
+				if(isCompletedViewVisible()) {
+					
+					loadCompletedTasks();
+					
+				}
+				
 				Task task = result.getFirstResult();
 				
 				if(actionPerformed == Action.ADD) {
 					
 					setFeedbackLabel(String.format(ADDED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
-
+					
 				} else if(actionPerformed == Action.EDIT) {
 
 					setFeedbackLabel(String.format(EDITED_MESSAGE, task.getTaskName()), FEEDBACK_MESSAGE_FILL);
@@ -907,11 +927,17 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Event handler for checkbox.
+	 * 
+	 * @param event event received
+	 * @param checkbox the corresponding checkbox that triggered the event
+	 */
 	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
 		if(checkbox.isSelected()) {
 			
-			String userInput = "mark " + checkbox.getText();
+			String userInput = String.format(MARK_COMMAND, checkbox.getText());
 			Result result = logic.processCommand(userInput);
 			
 			processResult(result, userInput);
@@ -920,68 +946,34 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Key pressed handler for text box.
+	 * 
+	 * @param keyEvent key event for the button that is being pressed.
+	 */
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
+		
 		String userInput = txtCommand.getText().trim();
 		
 		try {
 
 			KeyCode keyCode = keyEvent.getCode();
 
-			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
+			if (keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
-				Result result = logic.processCommand(userInput);
-				processResult(result, userInput);
+				processEnter(userInput);
 				
-				addCommandHistory(userInput);
+			} else if (keyCode == KeyCode.BACK_SPACE) {
+				
+				processBackspace(userInput);
+				
+			} else if (keyCode == KeyCode.UP) {
 
-				txtCommand.setText("");
+				processUp(userInput);
 				
-			} else if(keyCode == KeyCode.BACK_SPACE) {
+			} else if (keyCode == KeyCode.DOWN) {
 				
-				if(txtCommand.getText().equals("") && isSearchViewVisible()) {
-					
-					hideSearchView();
-					
-				} else if(txtCommand.getText().equals("") && isHelpViewVisible()) {
-					
-					hideHelpView();
-					
-				}
-				
-			} else if(keyCode == KeyCode.UP) {
-				
-				if(!COMMAND_HISTORY_STACK.isEmpty()) {
-					
-					String previousCommand = COMMAND_HISTORY_STACK.pop();
-					String currentCommand = txtCommand.getText().trim();
-					
-					if(!currentCommand.equals("")) {
-						
-						COMMAND_FUTURE_STACK.push(currentCommand);
-						
-					}
-					
-					txtCommand.setText(previousCommand);
-					
-				}
-				
-			} else if(keyCode == KeyCode.DOWN) {
-				
-				String currentCommand = txtCommand.getText().trim();
-				
-				if(!COMMAND_FUTURE_STACK.isEmpty()) {
-					
-					String nextCommand = COMMAND_FUTURE_STACK.pop();
-					
-					COMMAND_HISTORY_STACK.push(currentCommand);
-					txtCommand.setText(nextCommand);
-					
-				} else if(!currentCommand.equals("")) {
-					
-					COMMAND_HISTORY_STACK.push(currentCommand);
-					txtCommand.setText("");
-					
-				}
+				processDown(userInput);
 				
 			} else {
 
@@ -989,25 +981,116 @@ public class MainViewHandler {
 				
 				if(keyCombination.match(keyEvent)) {
 					
-					userInput = "undo";
-					Result result = logic.processCommand(userInput);
+					Result result = logic.processCommand(UNDO_COMMAND);
 					
-					processResult(result, userInput);
+					processResult(result, UNDO_COMMAND);
 					
 				}
 				
 			}
 			
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 
 			setFeedbackLabel(String.format(INVALID_COMMAND_MESSAGE, userInput), ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
 
 			addCommandHistory(userInput);
 			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			txtCommand.setText("");
+			
 		}
 		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the enter button.
+	 * 
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processEnter(String userInput) {
 		
+		Result result = logic.processCommand(userInput);
+		processResult(result, userInput);
+		
+		addCommandHistory(userInput);
+
+		txtCommand.setText("");
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the backspace button.
+	 * 
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processBackspace(String userInput) {
+
+		if(userInput.equals("") && isSearchViewVisible()) {
+			
+			hideSearchView();
+			
+		} else if(userInput.equals("") && isHelpViewVisible()) {
+			
+			hideHelpView();
+			
+		} else if(userInput.equals("") && isCompletedViewVisible()) {
+			
+			hideCompletedView();
+			
+		}
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the up button.
+	 * 
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processUp(String userInput) {
+
+		if(!COMMAND_HISTORY_STACK.isEmpty()) {
+			
+			String previousCommand = COMMAND_HISTORY_STACK.pop();
+			
+			if(!userInput.equals("")) {
+				
+				COMMAND_FUTURE_STACK.push(userInput);
+				
+			}
+			
+			txtCommand.setText(previousCommand);
+			
+		}
+		
+		txtCommand.positionCaret(txtCommand.getText().length());
+		
+	}
+	
+	/**
+	 * Process the event that occurs after the user presses the down button.
+	 * 
+	 * @param userInput the command keyed in by the user.
+	 */
+	public void processDown(String userInput) {
+		
+		if(!COMMAND_FUTURE_STACK.isEmpty()) {
+			
+			String nextCommand = COMMAND_FUTURE_STACK.pop();
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			txtCommand.setText(nextCommand);
+			
+		} else if(!userInput.equals("")) {
+			
+			COMMAND_HISTORY_STACK.push(userInput);
+			txtCommand.setText("");
+			
+		}
+		
+		txtCommand.positionCaret(txtCommand.getText().length());
 		
 	}
 	

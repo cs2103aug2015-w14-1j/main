@@ -1,14 +1,9 @@
-/**
- * Author: Kenneth Ho Chee Chong
- * Matric No: A0125364J
- * For CS2103T - Notify
- */
-
+//@@author A0125364J
 package notify;
 
 import java.util.Calendar;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
 	public static final int UNASSIGNED_TASK = -1;
 	
@@ -405,6 +400,139 @@ public class Task {
 
 	public TaskType getTaskType() {
 		return this.taskType;
+	}
+	
+	public int compareTo(Task task) {
+		
+		if(dateRange == null) {
+			
+			if(task.getDateRange() == null) {
+				
+				return 0;
+				
+			} else {
+				
+				return 1;
+				
+			}
+			
+		}
+		
+		if(task.getDateRange() == null) {
+			
+			if(dateRange == null) {
+				
+				return 0;
+				
+			} else {
+				
+				return -1;
+				
+			}
+			
+		}
+		
+		Calendar startDate = getStartDate();
+		Calendar endDate = getEndDate();
+		Calendar taskStartDate = task.getStartDate();
+		Calendar taskEndDate = task.getEndDate();
+		
+		if(startDate != null) {
+			
+			int startYear = startDate.get(Calendar.YEAR);
+			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
+			
+			if(taskStartDate != null) {
+				
+				int taskStartYear = taskStartDate.get(Calendar.YEAR);
+				int taskStartDay = taskStartDate.get(Calendar.DAY_OF_YEAR);
+				
+				if(startYear - taskStartYear == 0) {
+					
+					return startDay - taskStartDay;
+					
+				} else {
+					
+					return startYear - taskStartYear;
+					
+				}
+				
+			} else if(taskEndDate != null) {
+				
+				int taskEndYear = taskEndDate.get(Calendar.YEAR);
+				int taskEndDay = taskEndDate.get(Calendar.DAY_OF_YEAR);
+				
+				if(startYear - taskEndYear == 0) {
+					
+					return startDay - taskEndDay;
+					
+				} else {
+					
+					return startYear - taskEndYear;
+					
+				}
+				
+			} else {
+				
+				return -1;
+				
+			}
+			
+		} else if(endDate != null) {
+
+			int endYear = endDate.get(Calendar.YEAR);
+			int endDay = endDate.get(Calendar.DAY_OF_YEAR);
+			
+			if(taskStartDate != null) {
+				
+				int taskStartYear = taskStartDate.get(Calendar.YEAR);
+				int taskStartDay = taskStartDate.get(Calendar.DAY_OF_YEAR);
+				
+				if(endYear - taskStartYear == 0) {
+					
+					return endDay - taskStartDay;
+					
+				} else {
+					
+					return endYear - taskStartYear;
+					
+				}
+				
+			} else if(taskEndDate != null) {
+				
+				int taskEndYear = taskEndDate.get(Calendar.YEAR);
+				int taskEndDay = taskEndDate.get(Calendar.DAY_OF_YEAR);
+				
+				if(endYear - taskEndYear == 0) {
+					
+					return endDay - taskEndDay;
+					
+				} else {
+					
+					return endYear - taskEndYear;
+					
+				}
+				
+			} else {
+				
+				return -1;
+			
+			}
+			
+		} else {
+			
+			if(taskStartDate != null || taskEndDate != null) {
+				
+				return 1;
+				
+			} else {
+				
+				return 0;
+				
+			}
+			
+		}
+		
 	}
 
 	public String toString() {

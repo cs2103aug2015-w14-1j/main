@@ -1,8 +1,5 @@
-/**
- * Author: Sadhika Billa
- * Matric number: A0130319R
- * For CS2103 - Notify
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class SetCommand extends Command {
 	public Result execute(){
 		
 		Result result = null;
-		if(storage.setFilePath(this.newFilePath)){
+		if(storage.setFileDestination(this.newFilePath)){
 			
 			result = new Result(Action.SET, new ArrayList<Task>(), true);
 		}
