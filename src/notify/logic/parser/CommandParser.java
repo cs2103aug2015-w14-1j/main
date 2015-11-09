@@ -608,7 +608,13 @@ public class CommandParser {
 
 		}
 		
-		String delete = compare.substring(compare.length() - keyword.length() , compare.length());
+		String delete = Constants.STRING_EMPTY;
+		
+		if(compare.contains(keyword)) { 
+		
+			delete = compare.substring(compare.length() - keyword.length() , compare.length());
+		
+		}
 		
 		if(delete.equalsIgnoreCase(keyword) == true) {
 			

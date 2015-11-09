@@ -548,7 +548,13 @@ public class DateTimeParser {
 		int offset;
 		int current = today.get(Calendar.DAY_OF_WEEK);
 		
-		for(offset = 0; offset < Constants.OFFSET_WEEK; offset++) { 
+		for(offset = 0; offset <= Constants.OFFSET_WEEK; offset++) { 
+			
+			if(current >= Constants.OFFSET_WEEK + Constants.OFFSET_DAY) { 
+				
+				current = Constants.OFFSET_RESET; 
+			
+			}  
 			
 			if(current == dayIndex) {
 				

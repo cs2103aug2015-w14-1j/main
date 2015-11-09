@@ -42,6 +42,7 @@ public class ExitCommand extends Command {
 	public Result execute(){
 		
 		manager.exit();
+		
 		Result result = new Result(Action.EXIT, new ArrayList<Task>());
 		return result;
 	}
