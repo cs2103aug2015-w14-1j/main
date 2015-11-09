@@ -1,9 +1,3 @@
-/**
- * Author: Kenneth Ho Chee Chong
- * Matric No: A0125364J
- * For CS2103T - Notify
- */
-
 //@@author A0125364J
 package notify.view;
 
@@ -55,6 +49,7 @@ public class MainViewHandler {
 	private static Paint ERROR_MESSAGE_FILL = Paint.valueOf("#CC181E");
 	private static Paint FEEDBACK_MESSAGE_FILL = Paint.valueOf("#16A085");
 	
+	// String for the css class names
 	private static String TITLE_CSS_CLASS = "title";
 	private static String SUBTITLE_CSS_CLASS = "subtitle";
 	private static String TASK_NAME_CSS_CLASS = "taskname";
@@ -100,6 +95,9 @@ public class MainViewHandler {
 	
 	private static String SEARCH_INPUT = "";
 	
+	private static String MARK_COMMAND = "mark %1$s";
+	private static String UNDO_COMMAND = "undo";
+	
 	// stack to store commands history
 	private static Stack<String> COMMAND_HISTORY_STACK = new Stack<String>();
 	private static Stack<String> COMMAND_FUTURE_STACK = new Stack<String>();
@@ -141,15 +139,7 @@ public class MainViewHandler {
 	
 	@FXML
 	public void initialize() {
-		//initDailyView();
-		//populateOverdueTask();
-		//populateFloatingTask();
-		//populateComingSoonTask();
-
-		/*loadOverdueTask();
-		loadFloatingTask();
-		loadComingTask();
-		loadDailyTask();*/
+		
 	}
 	
 	
@@ -264,7 +254,7 @@ public class MainViewHandler {
 		
 		dailyTasksList = new ArrayList<ArrayList<Task>>();
 		
-		for(int i = 0; i < DAYS_OF_WEEK.length; i++) {
+		for (int i = 0; i < DAYS_OF_WEEK.length; i++) {
 			
 			ArrayList<Task> dailyTasks = logic.getDailyTasks(calendar, false);
 			
@@ -282,7 +272,10 @@ public class MainViewHandler {
 		
 	}
 	
-	
+	/**
+	 * Loads the search results and display them correctly.
+	 * @param searchResults the search results
+	 */
 	public void loadSearchResult(ArrayList<Task> searchResults) {
 		
 		ArrayList<Task> completedTasks = new ArrayList<Task>();
@@ -302,6 +295,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Loads the list of completed tasks and display.
+	 */
 	public void loadCompletedTasks() {
 		
 		completedTasks = logic.getCompletedTasks();
@@ -313,6 +309,10 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Make the search view visible.
+	 * @param searchTerm the search input that was entered by the user.
+	 */
 	public void showSearchView(String searchTerm) {
 		
 		lblSearchTitle.setText(String.format(SEARCH_RESULT_MESSAGE, searchTerm));
@@ -325,6 +325,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Make the completed view visible.
+	 */
 	public void showCompletedView() {
 		
 		hideSearchView();
@@ -335,6 +338,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Make the help view visible.
+	 */
 	public void showHelpView() {
 		
 		hideSearchView();
@@ -345,6 +351,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Hide the search view.
+	 */
 	public void hideSearchView() {
 		
 		pnOverlay.setVisible(false);
@@ -352,6 +361,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Hide the completed view.
+	 */
 	public void hideCompletedView() {
 		
 		pnOverlay.setVisible(false);
@@ -359,6 +371,9 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Hide the help view.
+	 */
 	public void hideHelpView() {
 		
 		pnOverlay.setVisible(false);
@@ -366,13 +381,19 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Filter the tasks given according to completed or uncompleted tasks.
+	 * @param tasks list of tasks that contains completed and uncompleted tasks
+	 * @param isCompleted true to retrieve completed tasks from the list, otherwise, false.
+	 * @return return a list of completed or uncompleted tasks
+	 */
 	public ArrayList<Task> filterTask(ArrayList<Task> tasks, boolean isCompleted) {
 		
 		ArrayList<Task> results = new ArrayList<Task>();
 		
-		for(Task task: tasks) {
+		for (Task task: tasks) {
 			
-			if(task.isCompleted() == isCompleted) {
+			if (task.isCompleted() == isCompleted) {
 				
 				results.add(task);
 				
@@ -400,11 +421,52 @@ public class MainViewHandler {
 		return hbox;
 		
 	}
+
 	
+	/**
+	 * Generates the header by providing the date of the header
+	 * 
+	 * @param calendar the date of the header to be generated
+	 * @param titleTextFill the font color of the title
+	 * @param subtitleTextFill the font color of the subtitle
+	 * @return a HBox object (which contains the title and subtitle)
+	 */
+	public HBox generateHeader(Calendar calendar) {
+		
+		Calendar today = Calendar.getInstance();
+		Calendar tomorrow = Calendar.getInstance();
+		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+		
+		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
+		
+		String title = dayFormatter.format(calendar.getTime());
+		String subtitle = dateFormatter.format(calendar.getTime());
+		
+		if (calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
+			
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TODAY_TITLE; 
+			
+		} else if (calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
+
+			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
+			title = TOMORROW_TITLE;
+			
+		}
+		
+		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
+		Label lblSubtitle = createLabel(subtitle, SUBTITLE_CSS_CLASS);
+		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
+		
+		return hbox;
+		
+	}
 	
 	
 	/**
-	 * Generates the timestamp for all tasks with time
+	 * Generates the timestamp for all tasks with time.
+	 * 
 	 * @param task the task to have its timestamp generated
 	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
 	 */
@@ -413,21 +475,24 @@ public class MainViewHandler {
 		TaskType taskType = task.getTaskType();
 		String timeStamp = "";
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case DEADLINE:
 
 				timeStamp = generateDeadlineTimestamp(task, isSearch);
+				
 				break;
 				
 			case RANGE:
 				
 				timeStamp = generateRangeTimestamp(task, isSearch);		
+				
 				break;
 				
 			default:
 				
 				timeStamp = "";
+				
 				break;
 		
 		}
@@ -440,8 +505,9 @@ public class MainViewHandler {
 	
 	/**
 	 * Generates the timestamp for deadline tasks
+	 * 
 	 * @param task the task to have its timestamp generated
-	 * @return timestamp (e.g. (23 Oct 15, 02:00PM)
+	 * @return timestamp (e.g. 23 Oct 15, 02:00PM)
 	 */
 	public String generateDeadlineTimestamp(Task task, boolean isSearch) {
 		
@@ -459,15 +525,15 @@ public class MainViewHandler {
 
 		taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 		
-		if(task.isComingSoon() || task.isOverdue() || isSearch) {
+		if (task.isComingSoon() || task.isOverdue() || isSearch) {
 
-			if(taskStartTime != null) {
+			if (taskStartTime != null) {
 
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_START_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(taskEndTime != null) {
+			} else if (taskEndTime != null) {
 
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_DATE_END_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
@@ -480,13 +546,13 @@ public class MainViewHandler {
 			
 		} else {
 		
-			if(taskStartTime != null) {
+			if (taskStartTime != null) {
 				
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_FROM_START_TO_END_TIME_TIMESTAMP_FORMAT, taskStartTimeStamp, taskEndTimeStamp);
 				
-			} else if(taskEndTime != null) {
+			} else if (taskEndTime != null) {
 				
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				timestamp = String.format(DEADLINE_AT_END_TIME_TIMESTAMP_FORMAT, taskEndTimeStamp);
@@ -520,9 +586,9 @@ public class MainViewHandler {
 		String taskEndTimeStamp = "";
 		String timeStamp = "";
 		
-		if(task.isComingSoon() || task.isOverdue() || isSearch) {
+		if (task.isComingSoon() || task.isOverdue() || isSearch) {
 			
-			if(taskStartTime != null && taskEndTime != null) {
+			if (taskStartTime != null && taskEndTime != null) {
 				
 				taskStartDateStamp = dateFormatter.format(taskStartDate.getTime());
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
@@ -542,7 +608,7 @@ public class MainViewHandler {
 			
 		} else {
 			
-			if(task.isEndingSoon()) {
+			if (task.isEndingSoon()) {
 				
 				dateFormatter = new SimpleDateFormat(SHORT_DAY_PATTERN);
 				
@@ -554,12 +620,12 @@ public class MainViewHandler {
 			
 			taskEndDateStamp = dateFormatter.format(taskEndDate.getTime());
 			
-			if(taskStartTime != null && taskEndTime != null) {
+			if (taskStartTime != null && taskEndTime != null) {
 				
 				taskStartTimeStamp = timeFormatter.format(taskStartTime.getTime());
 				taskEndTimeStamp = timeFormatter.format(taskEndTime.getTime());
 				
-				if(task.isStarted()) {
+				if (task.isStarted()) {
 					
 					timeStamp = String.format(RANGE_TILL_END_DATE_TIME_TIMESTAMP_FORMAT, taskEndDateStamp, taskEndTimeStamp);
 					
@@ -582,57 +648,11 @@ public class MainViewHandler {
 	}
 	
 	/**
-	 * Generates the header by providing the date of the header
-	 * @param calendar the date of the header to be generated
-	 * @param titleTextFill the font color of the title
-	 * @param subtitleTextFill the font color of the subtitle
-	 * @return
-	 */
-	public HBox generateHeader(Calendar calendar) {
-		
-		Calendar today = Calendar.getInstance();
-		Calendar tomorrow = Calendar.getInstance();
-		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-		
-		SimpleDateFormat dayFormatter = new SimpleDateFormat(LONG_DAY_PATTERN);
-		SimpleDateFormat dateFormatter = new SimpleDateFormat(LONG_DATE_PATTERN);
-		
-		String title = dayFormatter.format(calendar.getTime());
-		String subtitle = dateFormatter.format(calendar.getTime());
-		
-		if(calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
-			
-			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
-			title = TODAY_TITLE; 
-			
-		} else if(calendar.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH)) {
-
-			subtitle = String.format(LONG_DAY_DATE_FORMAT, title, subtitle);
-			title = TOMORROW_TITLE;
-			
-		}
-		
-		Label lblTitle = createLabel(title, TITLE_CSS_CLASS);
-		Label lblSubtitle = createLabel(subtitle, SUBTITLE_CSS_CLASS);
-		
-		//lblTitle.getStyleClass().add("title");
-		//lblSubtitle.getStyleClass().add("subtitle");
-		//lblTitle.setStyle("-fx-font-family:'Roboto Condensed'");
-		//lblSubtitle.setStyle("-fx-font-family:'Roboto Condensed'");fff
-		
-		HBox hbox = createItem(HEADER_PADDING, false, false, lblTitle, lblSubtitle);
-		
-		return hbox;
-		
-	}
-	
-	
-	/**
 	 * Generates the items in each list.
+	 * 
 	 * @param tasks a list
-	 * @param textFill the color of the main text
-	 * @param subtextFill the color of the subtext
-	 * @return
+	 * @param isSearch to determine if its generated for the search view
+	 * @return a list of HBox objects (each HBox object contains the information of a task)
 	 */
 	public ArrayList<HBox> generateList(ArrayList<Task> tasks, boolean isSearch) {
 		
@@ -674,10 +694,10 @@ public class MainViewHandler {
 		
 	}
 	
-	
-	
 	/**
-	 * Creates the HBox with nodes
+	 * Creates the HBox with nodes.
+	 * 
+	 * @param isSearch to determine if its generated for the search view
 	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
 	 * @return the HBox which represents a single line of item to be added into the VBox
 	 */
@@ -688,18 +708,18 @@ public class MainViewHandler {
 		hbox.setAlignment(HBOX_NODE_ALIGNMENT);
 
 		int startIndex = 0;
-		if(hasCheckbox) {
+		if (hasCheckbox) {
 			
 			hbox.getChildren().add(nodes[startIndex]);
 			startIndex = 1;
 			
 		}
 
-		if(isSearch) {
+		if (isSearch) {
 			
 			VBox vbox = new VBox();
 			
-			for(int i = startIndex; i< nodes.length; i++) {
+			for (int i = startIndex; i< nodes.length; i++) {
 				
 				vbox.getChildren().add(nodes[i]);
 				
@@ -712,7 +732,7 @@ public class MainViewHandler {
 			FlowPane flowPane = new FlowPane();
 			flowPane.setHgap(HBOX_NODE_SPACING);
 			
-			for(int i = startIndex; i < nodes.length; i++) {
+			for (int i = startIndex; i < nodes.length; i++) {
 				
 				flowPane.getChildren().add(nodes[i]);
 				
@@ -727,6 +747,15 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Overloading method for createItem which allows more specifications.
+	 * 
+	 * @param insets padding setting around the item
+	 * @param hasCheckbox indicate whether a checkbox is needed
+	 * @param isSearch indicate whether its a search
+	 * @param nodes the nodes to be added to the hbox (labels, checkboxes, etc.)
+	 * @return the HBox which represents a single line of item to be added into the VBox
+	 */
 	public HBox createItem(Insets insets, boolean hasCheckbox, boolean isSearch, Node... nodes) {
 		
 		HBox hbox = createItem(hasCheckbox, isSearch, nodes);
@@ -737,9 +766,10 @@ public class MainViewHandler {
 	}
 	
 	/**
-	 * Create a label with its formatting
-	 * @param text the text of the label
-	 * @param font the font of the label such as font family, font weight, font posture and font size
+	 * Create a label with its formatting.
+	 * 
+	 * @param text the text to be displayed on the label
+	 * @param cssClass css class that the label belongs to
 	 * @return a label which contains the text and formatting (default text color)
 	 */
 	public Label createLabel(String text, String cssClass) {
@@ -751,6 +781,13 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Create a checkbox with its formatting.
+	 * 
+	 * @param text the text to be displayed on the checkbox
+	 * @param isChecked to indicate whether the checkbox is checked or not
+	 * @return a checkbox with the settings specified
+	 */
 	public CheckBox createCheckbox(String text, boolean isChecked) {
 		
 		CheckBox checkbox = new CheckBox(text);
@@ -764,7 +801,11 @@ public class MainViewHandler {
 		
 	}
 	
-	
+	/**
+	 * Adds to the command history.
+	 * 
+	 * @param userInput command entered by the user
+	 */
 	public void addCommandHistory(String userInput) {
 
 		if(!COMMAND_FUTURE_STACK.isEmpty()) {
@@ -791,6 +832,12 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Processes the result after the command is being executed.
+	 * 
+	 * @param result returned after a command is being executed
+	 * @param userInput the input entered by the user
+	 */
 	public void processResult(Result result, String userInput) {
 		
 		Action actionPerformed = result.getActionPerformed();
@@ -880,11 +927,17 @@ public class MainViewHandler {
 		
 	}
 	
+	/**
+	 * Event handler for checkbox.
+	 * 
+	 * @param event event received
+	 * @param checkbox the corresponding checkbox that triggered the event
+	 */
 	public void checkboxEventHandler(ActionEvent event, CheckBox checkbox) {
 		
 		if(checkbox.isSelected()) {
 			
-			String userInput = "mark " + checkbox.getText();
+			String userInput = String.format(MARK_COMMAND, checkbox.getText());
 			Result result = logic.processCommand(userInput);
 			
 			processResult(result, userInput);
@@ -895,28 +948,30 @@ public class MainViewHandler {
 	
 	/**
 	 * Key pressed handler for text box.
+	 * 
 	 * @param keyEvent key event for the button that is being pressed.
 	 */
 	public void txtCommandOnKeyPressedHandler(KeyEvent keyEvent) {
+		
 		String userInput = txtCommand.getText().trim();
 		
 		try {
 
 			KeyCode keyCode = keyEvent.getCode();
 
-			if(keyCode == KeyCode.ENTER && !userInput.equals("")) {
+			if (keyCode == KeyCode.ENTER && !userInput.equals("")) {
 				
 				processEnter(userInput);
 				
-			} else if(keyCode == KeyCode.BACK_SPACE) {
+			} else if (keyCode == KeyCode.BACK_SPACE) {
 				
 				processBackspace(userInput);
 				
-			} else if(keyCode == KeyCode.UP) {
+			} else if (keyCode == KeyCode.UP) {
 
 				processUp(userInput);
 				
-			} else if(keyCode == KeyCode.DOWN) {
+			} else if (keyCode == KeyCode.DOWN) {
 				
 				processDown(userInput);
 				
@@ -926,30 +981,33 @@ public class MainViewHandler {
 				
 				if(keyCombination.match(keyEvent)) {
 					
-					userInput = "undo";
-					Result result = logic.processCommand(userInput);
+					Result result = logic.processCommand(UNDO_COMMAND);
 					
-					processResult(result, userInput);
+					processResult(result, UNDO_COMMAND);
 					
 				}
 				
 			}
 			
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 
 			setFeedbackLabel(String.format(INVALID_COMMAND_MESSAGE, userInput), ERROR_MESSAGE_FILL);
 			txtCommand.setText("");
 
 			addCommandHistory(userInput);
 			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			txtCommand.setText("");
+			
 		}
-		
-		
 		
 	}
 	
 	/**
 	 * Process the event that occurs after the user presses the enter button.
+	 * 
 	 * @param userInput the command keyed in by the user.
 	 */
 	public void processEnter(String userInput) {
@@ -965,6 +1023,7 @@ public class MainViewHandler {
 	
 	/**
 	 * Process the event that occurs after the user presses the backspace button.
+	 * 
 	 * @param userInput the command keyed in by the user.
 	 */
 	public void processBackspace(String userInput) {
@@ -987,6 +1046,7 @@ public class MainViewHandler {
 	
 	/**
 	 * Process the event that occurs after the user presses the up button.
+	 * 
 	 * @param userInput the command keyed in by the user.
 	 */
 	public void processUp(String userInput) {
@@ -1011,6 +1071,7 @@ public class MainViewHandler {
 	
 	/**
 	 * Process the event that occurs after the user presses the down button.
+	 * 
 	 * @param userInput the command keyed in by the user.
 	 */
 	public void processDown(String userInput) {

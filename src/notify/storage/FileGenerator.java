@@ -39,6 +39,7 @@ public class FileGenerator {
 				String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
 		this.commandsFolder = new File(
 				String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS));
+		
 		generateConfigFolder();
 		generateSystemFiles();
 		
@@ -46,9 +47,9 @@ public class FileGenerator {
 
 	/**
 	 * This method returns the File object which represents the notify.config
-	 * folder
+	 * folder.
 	 * 
-	 * @return the File object which represents the notify.config folder
+	 * @return a File object which represents the notify.config folder
 	 */
 	public File getConfigFolder() {
 		
@@ -57,9 +58,9 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method returns the File object which represents the data folder
+	 * This method returns the File object which represents the data folder.
 	 * 
-	 * @return the File object which represents the data folder
+	 * @return a File object which represents the data folder
 	 */
 	public File getDataFolder() {
 		
@@ -68,9 +69,9 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method returns the File object which represents the commands folder
+	 * This method returns the File object which represents the commands folder.
 	 * 
-	 * @return the File object which represents the commands folder
+	 * @return a File object which represents the commands folder
 	 */
 	public File getCommandsFolder() {
 		
@@ -79,9 +80,9 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method returns the File object which represents the path file
+	 * This method returns the File object which represents the path file.
 	 * 
-	 * @return the File object which represents the path file
+	 * @return a File object which represents the path file
 	 */
 	public File getDirectoryFile() {
 		
@@ -90,9 +91,9 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method returns the File object which represents the data file
+	 * This method returns the File object which represents the data file.
 	 * 
-	 * @return the File object which represents the data file
+	 * @return a File object which represents the data file
 	 */
 	public File getDataFile() {
 		
@@ -102,12 +103,12 @@ public class FileGenerator {
 
 	/**
 	 * This method returns the File object which represents the specified
-	 * command file
+	 * command file.
 	 * 
 	 * @param command_
 	 *            the Action object which corresponds to the command file
 	 * 
-	 * @return the File object which represents the specified command file
+	 * @return a File object which represents the specified command file
 	 */
 	public File getCommandFile(Action command_) {
 		
@@ -121,12 +122,12 @@ public class FileGenerator {
 
 	/**
 	 * This method returns the contents of the specified command file as a
-	 * String object
+	 * String object.
 	 * 
 	 * @param file_
 	 *            the file to be read
 	 * 
-	 * @return the String object which represents the content of the first line
+	 * @return a String object which represents the content of the first line
 	 *         in the specified file
 	 */
 	public String getFileContent(File file_) {
@@ -141,7 +142,7 @@ public class FileGenerator {
 	/**
 	 * This method generates the system files: data file, path file and various
 	 * commands files. It invokes {@link #generateDirectoryFile()
-	 * #generateDataFile() #generateCommandFiles()} methods
+	 * #generateDataFile() #generateCommandFiles()} methods.
 	 */
 	private void generateSystemFiles() {
 		
@@ -152,7 +153,7 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method creates the system folders
+	 * This method creates the system folders.
 	 */
 	private void generateConfigFolder() {
 		
@@ -182,7 +183,7 @@ public class FileGenerator {
 	 * the path file does not exist, it creates new path file. It then invokes
 	 * {@link #writeIntoFile(File, String)} method to write the default absolute
 	 * path of the data file which is <tt>notify.config/data/</tt> into the path
-	 * file
+	 * file.
 	 */
 	private void generateDirectoryFile() {
 		
@@ -222,6 +223,11 @@ public class FileGenerator {
 		}
 	}
 
+	/**
+	 * This method generate command files where the commands are as of {@see notify.command.Action}
+	 * It invokes {@link #writeIntoFile(File, String)} method to write
+	 * {@value notify.storage.Constants#EMPTY_STRING}.
+	 */
 	private void generateCommandFiles() {
 		
 		assert(this.configFolder.exists() == true);
@@ -241,7 +247,7 @@ public class FileGenerator {
 	}
 
 	/**
-	 * This method writes specified data into the specified file
+	 * This method writes specified data into the specified file.
 	 */
 	private void writeIntoFile(File file_, String dataToWrite_) {
 		

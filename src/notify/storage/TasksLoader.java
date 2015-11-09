@@ -22,13 +22,13 @@ public class TasksLoader extends StorageOperation {
 	protected TasksLoader(String filePath) {
 
 		this.filePath = filePath;
-		taskList = new ArrayList<Task>();
-		gson = new Gson();
+		this.taskList = new ArrayList<Task>();
+		this.gson = new Gson();
 
 	}
 
 	/**
-	 * Execute process to load tasks from text file
+	 * Execute process to load tasks from text file.
 	 * 
 	 * @return ArrayList of tasks
 	 */
@@ -38,8 +38,8 @@ public class TasksLoader extends StorageOperation {
 
 		if (isReadSuccessfully) {
 			
-			assert (taskList != null);
-			return taskList;
+			assert (this.taskList != null);
+			return this.taskList;
 			
 		} else {
 			
@@ -48,7 +48,6 @@ public class TasksLoader extends StorageOperation {
 		}
 	}
 
-	@Override
 	protected void setFilePath(String filePath_) {
 		
 		this.filePath = filePath_;
@@ -58,7 +57,7 @@ public class TasksLoader extends StorageOperation {
 	/**
 	 * Reads from file and saves it line-by-line into taskList.
 	 * 
-	 * @return True for successful operation. False for unsuccessful operation.
+	 * @return 'true' for successful operation; 'false' for unsuccessful operation.
 	 */
 	private Boolean readFromFile() {
 		
@@ -71,14 +70,14 @@ public class TasksLoader extends StorageOperation {
 			// log.log(Level.INFO, "Read commandStrings from: [{0}]",
 			// fileName_);
 
-			file = new File(filePath);
+			file = new File(this.filePath);
 			
 			assert (file.exists() == true);
 			fileReader = new FileReader(file);
 			bufferedReader = new BufferedReader(fileReader);
 
-			assert (gson != null);
-			taskList = gson.fromJson(bufferedReader, new TypeToken<ArrayList<Task>>() {}.getType());
+			assert (this.gson != null);
+			this.taskList = this.gson.fromJson(bufferedReader, new TypeToken<ArrayList<Task>>() {}.getType());
 
 			bufferedReader.close();
 			fileReader.close();

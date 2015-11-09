@@ -31,8 +31,7 @@ public class TasksSaver extends StorageOperation {
 	 * 
 	 * @param taskList_
 	 *            List of Tasks
-	 * @return Returns null as logic does not require confirmation of successful
-	 *         save
+	 * @return null as logic does not require confirmation of successful save
 	 */
 	protected ArrayList<Task> execute(Object taskList_) {
 		
@@ -55,7 +54,7 @@ public class TasksSaver extends StorageOperation {
 	private String jsonizeData(ArrayList<Task> taskList_) {
 		
 		assert (taskList_ != null);
-		String jsonDataString = gson.toJson(taskList_);
+		String jsonDataString = this.gson.toJson(taskList_);
 
 		return jsonDataString;
 		
@@ -76,7 +75,7 @@ public class TasksSaver extends StorageOperation {
 			fileWriter = new FileWriter(this.filePath);
 			bufferedWriter = new BufferedWriter(fileWriter);
 
-			bufferedWriter.write(jsonString);
+			bufferedWriter.write(this.jsonString);
 
 			bufferedWriter.close();
 			fileWriter.close();

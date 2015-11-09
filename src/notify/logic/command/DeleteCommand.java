@@ -7,9 +7,22 @@ import java.util.Stack;
 import notify.Task;
 import notify.logic.TaskManager;
 
+/**
+ * The DeleteCommand class extends the abstract class ReversibleCommand.
+ * 
+ * The DeleteCommand class is responsible for creating the Result object, corresponding
+ * to the DELETE command.
+ * 
+ * This class contains the undo and execute method called by Logic.
+ *
+ * @author sadhikabilla
+ *
+ */
 
-public class DeleteCommand extends ReversibleCommand {
 
+	public class DeleteCommand extends ReversibleCommand {
+	
+	//These are variables that are required to store the fields of each task 
 	private Task task;
 	private int id;
 	private TaskManager manager;
@@ -20,7 +33,24 @@ public class DeleteCommand extends ReversibleCommand {
 		this.manager = manager;
 
 	}
+	
+	public void addValues(int id) {
+		
+		this.id = id;
+	}
 
+	/**
+     * This method is responsible for creating the Result object corresponding to the DELETE action.
+     * It also pushes the particular action onto a historyStack, to allow it to be undone in future. 
+     * 
+     * This method gets the Task object to be deleted by calling the deleteTask method
+     * of TaskManger. It then adds the Task to an ArrayList to create the Result object which is used by
+     * the Logic class. 
+     * 
+     * If the Task object is null, the method creates a result object corresponding to the INVALID action.
+     * 
+     * @return 'result' object corresponding to the DELETE/INVALID action.
+     */
 	
     @Override
 	public Result execute() {
@@ -43,6 +73,17 @@ public class DeleteCommand extends ReversibleCommand {
 		
 		return result;
 	}
+    
+    /**
+	 * This method is responsible for reverting the DELETE action (i.e add the task).
+	 * 
+	 * This method gets the Task object to be added by calling the undeleteTask method of TaskManager.
+	 * It then adds the task to an ArrayList to create the Result object.
+	 * 
+	 * This method is called by the UndoCommand class {@see UndoCommand#execute()}
+	 * 
+	 * @return 'result' object corresponding to the UNDO action.  
+	 */
 
 	@Override
 	public Result undo() {
@@ -57,11 +98,8 @@ public class DeleteCommand extends ReversibleCommand {
 		return result;
 	}
 	
-public void addValues(int id) {
-		
-		this.id = id;
-	}
 
+	//method to get the fields of the Task
 	public int getId() {
 		
 		return this.id;

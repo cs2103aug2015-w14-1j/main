@@ -15,8 +15,15 @@
 }
 
 .text-field {
-	-fx-text-box-border:#16A085;
 	-fx-focus-color:#16A085;
+	-fx-font-family:'Roboto';
+	-fx-font-size:14;
+	-fx-text-box-border:#16A085;
+}
+
+.message {
+	-fx-font-family:'Roboto Black';
+	-fx-font-size:12;
 }
 
 .title {
@@ -42,8 +49,6 @@
 	-fx-font-size:11;
 	-fx-font-weight:bold;
 }
-
-
 
 /**************** overdue styling ****************/
 .overdue-scrollpane, .overdue-panel {
@@ -74,8 +79,6 @@
 	-fx-text-fill:#B26059;
 }
 
-
-
 /**************** floating styling ****************/
 .floating-scrollpane, .floating-panel {
 	-fx-background-color:rgb(128, 216, 255);
@@ -104,8 +107,6 @@
 .floating-panel .subtitle, .floating-panel .timestamp {
 	-fx-text-fill:#5997B2;
 }
-
-
 
 /**************** comingsoon styling ****************/
 .comingsoon-scrollpane, .comingsoon-panel {
@@ -136,8 +137,6 @@
 	-fx-text-fill:#8EB264;
 }
 
-
-
 /**************** daily styling ****************/
 .daily-scrollpane, .daily-panel {
 	-fx-background-color:rgb(255, 255, 141);
@@ -167,8 +166,6 @@
 	-fx-text-fill:#B2B262;
 }
 
-
-
 /**************** search styling ****************/
 .search-view-title {
 	-fx-font-family:'Roboto Condensed';
@@ -193,8 +190,6 @@
 	-fx-text-fill:#FFFFFF;
 }
 
-
-
 /**************** completed styling ****************/
 .completed-pane .title {
 	-fx-font-family:'Roboto Condensed';
@@ -212,8 +207,6 @@
 .completed-pane .taskname, .completed-pane .timestamp {
 	-fx-text-fill:#FFFFFF;
 }
-
-
 
 /**************** help styling ****************/
 .help-pane .title {

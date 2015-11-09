@@ -10,9 +10,15 @@ import java.util.Stack;
 import notify.TaskType;
 import notify.logic.Logic;
 import notify.logic.parser.CommandParser;
-
 import org.junit.Before;
 import org.junit.Test;
+
+/**
+ * Test cases for AddCommand
+ * 
+ * @author sadhikabilla
+ *
+ */
 
 public class AddCommandTest {
 	

@@ -37,11 +37,11 @@ import notify.storage.Storage;
 
 public class TaskManager {
 
+	//@@author A0124072
 	private int latest_id;
 	private ArrayList<Task> taskList;
 	private Storage storage;
 
-	//@@author A0124072U
 	public TaskManager(Storage storage) {
 
 		this.latest_id = 0;
@@ -193,6 +193,7 @@ public class TaskManager {
 		return null;
 		
 	}
+	//@@author
 
 	//@@author A0125364J
 	/**
@@ -224,21 +225,6 @@ public class TaskManager {
 	 * @return a list of all the tasks
 	 */
 	public ArrayList<Task> getTasks() {
-
-		/*ArrayList<Task> tempList = new ArrayList<Task>();
-
-		for (Task task : taskList) {
-
-			if (!task.isDeleted()) {
-
-				tempList.add(task);
-
-			}
-
-		}
-
-		Collections.sort(tempList);
-		return tempList;*/
 		
 		return taskList;
 
@@ -377,4 +363,5 @@ public class TaskManager {
 		return tempList;
 
 	}
+	//@@author
 }

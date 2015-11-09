@@ -6,12 +6,28 @@
  * Methods: getTasks() and it's corresponding overload.
  * 			getOverdueTasks()
  * 			getComingSoonTasks()
+ * 
+ * Author: Ye Kyaw Swa Aung Joshua
+ * Matric No: A0124072U
+ * For CS2103T - Notify
+ * 
+ * Constructor: TaskManager(Storage)
+ * Methods: addTask(String, DateRange, String, TaskType)
+ * 			deleteTask(int)
+ * 			undeleteTask(int)
+ * 			updateTask(int, String, DateRange, String, TaskType)
+ * 			markTask(int, boolean)
+ * 			searchTask(String)
+ * 			exit
+ * 			updatelatestId
+ * 			
  */
 
 package notify.logic;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 
 import notify.DateRange;
@@ -21,6 +37,7 @@ import notify.storage.Storage;
 
 public class TaskManager {
 
+	//@@author A0124072
 	private int latest_id;
 	private ArrayList<Task> taskList;
 	private Storage storage;
@@ -30,8 +47,9 @@ public class TaskManager {
 		this.latest_id = 0;
 		this.storage = storage;
 		this.taskList = this.storage.loadTasks();
-		System.out.println(taskList);
+		
 		updateLatestId();
+		
 	}
 
 	public Task addTask(String name, DateRange timespan, String category, TaskType taskType) {
@@ -44,6 +62,7 @@ public class TaskManager {
 
 		// logger.log(Level.WARNING, "TASK CANNOT BE ADDED");
 		return task;
+		
 	}
 
 	public Task deleteTask(int id) {
@@ -51,11 +70,15 @@ public class TaskManager {
 		Task task = getTask(id);
 
 		if (task != null) {
+			
 			task.setDeleted(true);
+			
 			return task;
-		} else {
-			return null;
-		}
+			
+		} 
+
+		return null;
+				
 	}
 
 	public Task undeleteTask(int id) {
@@ -65,9 +88,10 @@ public class TaskManager {
 		if (task != null) {
 			task.setDeleted(false);
 			return task;
-		} else {
-			return null;
-		}
+		} 
+
+		return null;
+		
 	}
 
 	public Task updateTask(int id, String newName, DateRange newDateRange, String category, TaskType newType) {
@@ -77,15 +101,18 @@ public class TaskManager {
 		Task task = getTask(id);
 
 		if (task != null) {
+			
 			task.setTaskName(newName);
 			task.setDateRange(newDateRange);
 			task.setCategory(category);
 			task.setTaskType(newType);
 
 			return task;
-		} else {
-			return null;
-		}
+			
+		} 
+		
+		return null;
+		
 	}
 
 	public Task markTask(int id, boolean isCompleted) {
@@ -93,27 +120,42 @@ public class TaskManager {
 		Task task = getTask(id);
 
 		if (task != null) {
+			
 			task.setCompleted(isCompleted);
+			
 			return task;
+			
 		} else {
+			
 			return null;
+			
 		}
+		
 	}
 	
 	public ArrayList<Task> searchTask(String keyWord) {
+		
 		ArrayList<Task> tempList = new ArrayList<Task>();
 		
 		for(Task task : taskList) {
+			
 			if(task.isSearchedTask(keyWord) && !task.isDeleted()) {
+				
 				tempList.add(task);
+				
 			}
+			
 		}
 		
+		Collections.sort(tempList);
 		return tempList;
+		
 	}
 
 	public void exit() {
+		
 		storage.saveTasks(taskList);
+		
 	}
 
 	private void updateLatestId() {
@@ -138,29 +180,32 @@ public class TaskManager {
 
 	public Task getTask(int taskId) {
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
+			
 			if (task.getTaskId() == taskId) {
+				
 				return task;
+				
 			}
+			
 		}
 
 		return null;
+		
 	}
+	//@@author
 
+	//@@author A0125364J
 	/**
-	 * Retrieve the task that is not deleted with the id specified or null if
-	 * there are no task with the id specified.
+	 * Retrieve the task that is not deleted with the id specified or null if there are no task with the id specified.
 	 * 
-	 * @param taskId
-	 *            task id of the task to be retrieved
-	 * @param isCompleted
-	 *            true to retrieve only completed tasks, false to retrieve only
-	 *            uncompleted task
+	 * @param taskId task id of the task to be retrieved
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
 	 * @return a task object of the task is found, otherwise return null
 	 */
 	public Task getTask(int taskId, boolean isCompleted) {
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.getTaskId() == taskId && !task.isDeleted() && task.isCompleted() == isCompleted) {
 
@@ -175,45 +220,28 @@ public class TaskManager {
 	}
 
 	/**
-	 * Retrieve all the tasks that are not deleted.
+	 * Retrieve all the tasks (including tasks that are deleted).
 	 * 
-	 * @return a list of all the tasks that are not deleted.
+	 * @return a list of all the tasks
 	 */
-	public ArrayList<Task> getTask() {
-
-		ArrayList<Task> tempList = new ArrayList<Task>();
-
-		for (Task task : taskList) {
-
-			if (!task.isDeleted()) {
-
-				tempList.add(task);
-
-			}
-
-		}
-
-		return tempList;
+	public ArrayList<Task> getTasks() {
+		
+		return taskList;
 
 	}
 
 	/**
-	 * Retrieve all the tasks where its task type is equals to the task type
-	 * specified.
+	 * Retrieve all the tasks where its task type is equals to the task type specified.
 	 * 
-	 * @param taskType
-	 *            type of task to retrieve
-	 * @param isCompleted
-	 *            true to retrieve only completed tasks, false to retrieve only
-	 *            uncompleted task
-	 * @return a list of task where task type is equals to the task type
-	 *         specified.
+	 * @param taskType type of task to retrieve
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
+	 * @return a list of task where task type is equals to the task type specified.
 	 */
-	public ArrayList<Task> getTask(TaskType taskType, boolean isCompleted) {
+	public ArrayList<Task> getTasks(TaskType taskType, boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.getTaskType() == taskType && !task.isDeleted() && task.isCompleted() == isCompleted) {
 
@@ -223,6 +251,7 @@ public class TaskManager {
 
 		}
 
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -231,19 +260,15 @@ public class TaskManager {
 	 * Retrieve all the tasks where its date falls on the date specified or the
 	 * date specified is within its range.
 	 * 
-	 * @param date
-	 *            date of the task to retrieve
-	 * @param isCompleted
-	 *            true to retrieve only completed tasks, false to retrieve only
-	 *            uncompleted task
-	 * @return a list of task where its date falls on the date specified or the
-	 *         date specified is within its range.
+	 * @param date date of the task to retrieve
+	 * @param isCompleted true to retrieve only completed tasks, false to retrieve only uncompleted task
+	 * @return a list of task where its date falls on the date specified or the date specified is within its range.
 	 */
-	public ArrayList<Task> getTask(Calendar date, boolean isCompleted) {
+	public ArrayList<Task> getTasks(Calendar date, boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.isOn(date) && !task.isDeleted() && task.isCompleted() == isCompleted) {
 
@@ -253,6 +278,7 @@ public class TaskManager {
 
 		}
 
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -261,17 +287,14 @@ public class TaskManager {
 	 * Retrieve all the tasks that are not deleted and its completed status
 	 * matches the completed status specified.
 	 * 
-	 * @param isCompleted
-	 *            true to retrieve completed tasks. false to retrieve
-	 *            uncompleted tasks
-	 * @return a list of completed task or uncompleted task depending on the
-	 *         value passed in.
+	 * @param isCompleted true to retrieve completed tasks. false to retrieve uncompleted tasks
+	 * @return a list of completed task or uncompleted task depending on the value passed in.
 	 */
-	public ArrayList<Task> getTask(boolean isCompleted) {
+	public ArrayList<Task> getTasks(boolean isCompleted) {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.isCompleted() == isCompleted && !task.isDeleted()) {
 
@@ -281,14 +304,21 @@ public class TaskManager {
 
 		}
 
+		Collections.sort(tempList);
 		return tempList;
 	}
 
+	/**
+	 * Retrieve all the tasks that are overdue. 
+	 * Overdue tasks are tasks that have its end date earlier than todays date.
+	 * 
+	 * @return a list of tasks that are overdue
+	 */
 	public ArrayList<Task> getOverdueTasks() {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.isOverdue()) {
 
@@ -301,6 +331,7 @@ public class TaskManager {
 
 		}
 
+		Collections.sort(tempList);
 		return tempList;
 
 	}
@@ -315,7 +346,7 @@ public class TaskManager {
 
 		ArrayList<Task> tempList = new ArrayList<Task>();
 
-		for (Task task : taskList) {
+		for (Task task: taskList) {
 
 			if (task.isComingSoon()) {
 
@@ -328,7 +359,9 @@ public class TaskManager {
 
 		}
 
+		Collections.sort(tempList);
 		return tempList;
 
 	}
+	//@@author
 }
