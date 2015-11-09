@@ -12,7 +12,7 @@ import notify.logic.command.Command;
 import notify.logic.command.Result;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.parser.CommandParser;
-import notify.storage;
+import notify.storage.api.Storage;
 
 public class Logic {
 	

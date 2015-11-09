@@ -29,7 +29,7 @@ import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
-import notify.storage;
+import notify.storage.api.Storage;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -151,7 +151,10 @@ public class CommandParser {
 			
 			int length = category.length() + Constants.KEYWORD_HASHTAG.length();
 			input = input.substring(0, input.length() - length);
-		
+			
+			input = input.trim();
+			name = input.trim();
+			
 		}
 		
 		//check if command contains any keywords
