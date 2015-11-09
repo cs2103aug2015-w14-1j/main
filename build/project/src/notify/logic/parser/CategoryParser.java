@@ -21,7 +21,8 @@ public class CategoryParser {
 	 */
 	public static String parse(String input) { 
 		
-		return parse(input.split(Constants.COMMAND_SEPERATOR));
+		String[] params = input.split(Constants.COMMAND_SEPERATOR);
+		return parse(params);
 	
 	}
 	

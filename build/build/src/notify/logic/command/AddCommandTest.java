@@ -1,9 +1,8 @@
-/**
- * Author Sadhika Billa 
- */
+//@@author A0130319R
+
 package notify.logic.command;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Stack;
 
@@ -14,18 +13,26 @@ import notify.logic.parser.CommandParser;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test cases for AddCommand
+ * 
+ * @author sadhikabilla
+ *
+ */
+
 public class AddCommandTest {
 	
 	private Logic logic;
 	private CommandParser parser;
-	private AddCommand addCommand;
 	private Stack<ReversibleCommand> history;
 	
 	@Before
-	public void setUp(){
+	public void setUp() {
+		
 		this.logic = new Logic();
 		this.parser = logic.getCommandParser();
 		this.history = logic.getHistory();
+		
 	}
 
 	@Test

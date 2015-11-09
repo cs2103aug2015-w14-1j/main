@@ -12,7 +12,7 @@ import notify.logic.command.Command;
 import notify.logic.command.Result;
 import notify.logic.command.ReversibleCommand;
 import notify.logic.parser.CommandParser;
-import notify.storage.Storage;
+import notify.storage.api.Storage;
 
 public class Logic {
 	
@@ -29,16 +29,48 @@ public class Logic {
 		this.commandParser = new CommandParser(this.storage, this.taskManager, this.history);
 		
 	}
-	
+
+	/**
+	 * Retrieve the command parser object.
+	 * 
+	 * @return returns the command parser object
+	 */
 	public CommandParser getCommandParser() {
 		
 		return this.commandParser;
 		
 	}
 	
+	/**
+	 * Retrieve the history stack object.
+	 * 
+	 * @return returns the history stack object
+	 */
 	public Stack<ReversibleCommand> getHistory(){
 		
 		return this.history;
+	}
+	
+	/**
+	 * Retrieve the storage object.
+	 * 
+	 * @return returns the storage object.
+	 */
+	public Storage getStorage() {
+		
+		return this.storage;
+		
+	}
+	
+	/**
+	 * Retrieve the task manager object.
+	 * 
+	 * @return returns the task manager object
+	 */
+	public TaskManager getTaskManager() {
+		
+		return this.taskManager;
+		
 	}
 	
 	/**
@@ -50,28 +82,19 @@ public class Logic {
 		
 	}
 	
-	public Storage getStorage() {
-		
-		return this.storage;
-		
-	}
-	
-	public TaskManager getTaskManager() {
-		
-		return this.taskManager;
-		
-	}
-	
 	/**
 	 * Process the input entered by the user.
+	 * 
 	 * @param input input entered by the user.
 	 */
 	public Result processCommand(String input) {
 		
+		assert (!input.equals(""));
+		
 		Command command = this.commandParser.parse(input);
 		Result result = command.execute();
 		
-		if(command.isPersistable()) {
+		if (command.isPersistable()) {
 			
 			save();
 			
@@ -81,13 +104,34 @@ public class Logic {
 		
 	}
 	
+	/**
+	 * Retrieve completed or uncompleted tasks on the date specified.
+	 * 
+	 * @param date date to retrieve the tasks
+	 * @param isCompleted determine whether to retrieve completed or uncompleted tasks
+	 * 
+	 * @return returns a list of tasks on the date specified
+	 */
 	public ArrayList<Task> getTasksOn(Calendar date, boolean isCompleted) {
+		
+		assert (date != null);
 		
 		return taskManager.getTasks(date, isCompleted);
 		
 	}
 	 
+	/**
+	 * Retrieve daily tasks on the date specified.
+	 * Remove duplicates if the tasks is a range class.
+	 * 
+	 * @param date date to retrieve the tasks
+	 * @param isCompleted determine whether to retrieve completed or uncompleted tasks
+	 * 
+	 * @return returns a list of daily tasks on the date specified
+	 */
 	public ArrayList<Task> getDailyTasks(Calendar date, boolean isCompleted) {
+		
+		assert (date != null);
 		
 		Calendar today = Calendar.getInstance();
 		
@@ -98,18 +142,18 @@ public class Logic {
 		
 		ArrayList<Task> tasks = this.taskManager.getTasks(date, isCompleted);
 		
-		for(Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
+		for (Iterator<Task> iterator = tasks.iterator(); iterator.hasNext(); ) {
 			
 			Task task = iterator.next();
 			
-			if(task.getTaskType() == TaskType.RANGE) {
+			if (task.getTaskType() == TaskType.RANGE) {
 				
 				int taskStartYear = task.getStartDate().get(Calendar.YEAR);
 				int taskStartDay = task.getStartDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(task.isStarted()) {
+				if (task.isStarted()) {
 
-					if(!(todayYear == dateYear && todayDay == dateDay)) {
+					if (!(todayYear == dateYear && todayDay == dateDay)) {
 						
 						iterator.remove();
 						
@@ -117,7 +161,7 @@ public class Logic {
 					
 				} else {
 					
-					if(!(taskStartYear == dateYear && taskStartDay == dateDay)) {
+					if (!(taskStartYear == dateYear && taskStartDay == dateDay)) {
 						
 						iterator.remove();
 						
@@ -133,24 +177,48 @@ public class Logic {
 		
 	}
 	
+	/**
+	 * Retrieves the list of coming soon tasks.
+	 * Coming soon tasks are tasks that starts after 7 days from today.
+	 * 
+	 * @return returns a list of coming soon tasks
+	 */
 	public ArrayList<Task> getComingSoonTasks() {
 		
 		return this.taskManager.getComingSoonTasks();
 		
 	}
 	
+	/**
+	 * Retrieves the list of overdue tasks.
+	 * Overdue tasks are tasks that were due before today and is not completed.
+	 * 
+	 * @return returns a list of overdue tasks
+	 */
 	public ArrayList<Task> getOverdueTasks() {
 		
 		return this.taskManager.getOverdueTasks();
 		
 	}
 	
+	/**
+	 * Retrieves the list of floating tasks.
+	 * Floating tasks are tasks that do not have any deadlines or range of date.
+	 * 
+	 * @return returns a list of floating tasks
+	 */
 	public ArrayList<Task> getFloatingTasks() {
 		
 		return this.taskManager.getTasks(TaskType.FLOATING, false);
 		
 	}
 	
+	/**
+	 * Retrieves the list of completed tasks.
+	 * Completed tasks are tasks that have been completed.
+	 * 
+	 * @return returns a list of completed tasks
+	 */
 	public ArrayList<Task> getCompletedTasks() {
 		
 		return this.taskManager.getTasks(true);

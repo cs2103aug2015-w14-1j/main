@@ -114,6 +114,7 @@ public class Constants {
 	public static final int OFFSET_MONTH = 1;
 	public static final int OFFSET_YEAR = 1;
 	public static final int OFFSET_DOUBLE = 2;
+	public static final int OFFSET_RESET = 1;
 	
 	public static final int DEFAULT_YEAR = 0;
 	public static final int DEFAULT_MONTH = 0;
