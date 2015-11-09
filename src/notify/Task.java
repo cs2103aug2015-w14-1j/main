@@ -55,6 +55,7 @@ public class Task implements Comparable<Task> {
 		this.dateRange = dateRange;
 		this.category = category;
 		this.isCompleted = isCompleted;
+		
 	}
 
 	/**
@@ -64,7 +65,6 @@ public class Task implements Comparable<Task> {
 	 * 
 	 * @return true if this task is overdue
 	 */
-	
 	public boolean isOverdue() {
 		
 		Calendar today = Calendar.getInstance();
@@ -75,7 +75,7 @@ public class Task implements Comparable<Task> {
 		
 		boolean isOverdue = false;
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case FLOATING:
 				
@@ -89,11 +89,11 @@ public class Task implements Comparable<Task> {
 				endDateYear = getEndDate().get(Calendar.YEAR);
 				endDateDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(endDateYear < todayYear && !isCompleted && !isDeleted) {
+				if (endDateYear < todayYear && !isCompleted && !isDeleted) {
 					
 					isOverdue = true;
 					
-				} else if(endDateYear == todayYear && endDateDay < todayDay && !isCompleted && !isDeleted) {
+				} else if (endDateYear == todayYear && endDateDay < todayDay && !isCompleted && !isDeleted) {
 					
 					isOverdue = true;
 					
@@ -111,7 +111,9 @@ public class Task implements Comparable<Task> {
 	 * Check whether the task is on the date specified (for deadline tasks)
 	 * Check whether the date specified is within the range of date the task (for range tasks)
 	 * Includes task that are completed.
+	 * 
 	 * @param date day to be checked against 
+	 * 
 	 * @return true if the task is on the date specified, or within the range of date of the task. else return false
 	 */
 	public boolean isOn(Calendar date) {
@@ -123,14 +125,14 @@ public class Task implements Comparable<Task> {
 		
 		boolean isOnDate = false;
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case DEADLINE:
 
 				taskEndYear = getEndDate().get(Calendar.YEAR);
 				taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(dateYear == taskEndYear && dateDay == taskEndDay && !isDeleted) {
+				if (dateYear == taskEndYear && dateDay == taskEndDay && !isDeleted) {
 					
 					isOnDate = true;
 					
@@ -145,33 +147,26 @@ public class Task implements Comparable<Task> {
 				taskStartYear = getStartDate().get(Calendar.YEAR);
 				taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
 				
-				if(taskStartYear < dateYear && dateYear < taskEndYear) {
+				if (taskStartYear < dateYear && dateYear < taskEndYear) {
 					
 					isOnDate = true;
 					
-				} else if(taskStartYear == dateYear && dateYear < taskEndYear
+				} else if (taskStartYear == dateYear && dateYear < taskEndYear
 						&& taskStartDay <= dateDay) {
 					
 					isOnDate = true;
 					
-				} else if(taskStartYear < dateYear && dateYear == taskEndYear
+				} else if (taskStartYear < dateYear && dateYear == taskEndYear
 						&& dateDay <= taskEndDay) {
 					
 					isOnDate = true;
 					
-				} else if(taskStartYear == dateYear && dateYear == taskEndYear
+				} else if (taskStartYear == dateYear && dateYear == taskEndYear
 						&& taskStartDay <= dateDay && dateDay <= taskEndDay) {
 
 					isOnDate = true;
 					
-				}
-				
-				/*if(taskStartYear <= dateYear && dateYear <= taskEndYear
-						&& taskStartDay <= dateDay && dateDay <= taskEndDay && !isDeleted) {
-					
-					isOnDate = true;
-					
-				}	*/		
+				}	
 				
 				break;
 			
@@ -190,6 +185,7 @@ public class Task implements Comparable<Task> {
 	/**
 	 * Check whether the task is coming soon.
 	 * A coming soon task is a task that will happen after than seven days or more
+	 * 
 	 * @return true if the task is a coming soon task, else false
 	 */
 	public boolean isComingSoon() {
@@ -197,7 +193,7 @@ public class Task implements Comparable<Task> {
 		Calendar today = Calendar.getInstance();
 		boolean isComingSoon = true;
 		
-		switch(taskType) {
+		switch (taskType) {
 			
 			case FLOATING:
 				
@@ -207,9 +203,9 @@ public class Task implements Comparable<Task> {
 				
 			default:
 
-				for(int i = 0; i < DAYS_A_WEEK; i++) {
+				for (int i = 0; i < DAYS_A_WEEK; i++) {
 					
-					if(isOn(today) || isOverdue() || isCompleted || isDeleted) {
+					if (isOn(today) || isOverdue() || isCompleted || isDeleted) {
 						
 						isComingSoon = false;
 						
@@ -232,6 +228,7 @@ public class Task implements Comparable<Task> {
 	/**
 	 * Check whether the ranged task ends within the week .
 	 * A ending soon task is a task that will end within seven days.
+	 * 
 	 * @return true if the task is a ending soon task, else false
 	 */
 	public boolean isEndingSoon() {
@@ -239,19 +236,19 @@ public class Task implements Comparable<Task> {
 		Calendar today = Calendar.getInstance();
 		boolean isEndingSoon = false;
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case RANGE:
 				
 				int taskEndYear = getEndDate().get(Calendar.YEAR);
 				int taskEndDay = getEndDate().get(Calendar.DAY_OF_YEAR);
 				
-				for(int i = 0; i < DAYS_A_WEEK; i++) {
+				for (int i = 0; i < DAYS_A_WEEK; i++) {
 
 					int todayYear = today.get(Calendar.YEAR);
 					int todayDay = today.get(Calendar.DAY_OF_YEAR);
 					
-					if(todayYear == taskEndYear && todayDay == taskEndDay && !isCompleted && !isDeleted && !isOverdue()) {
+					if (todayYear == taskEndYear && todayDay == taskEndDay && !isCompleted && !isDeleted && !isOverdue()) {
 						
 						isEndingSoon = true;
 						
@@ -278,6 +275,12 @@ public class Task implements Comparable<Task> {
 		
 	}
 	
+	/**
+	 * Checks whether this task has already started.
+	 * Started tasks means a task that has its start date earlier than today.
+	 * 
+	 * @return true if the range task has already started, else false.
+	 */
 	public boolean isStarted() {
 
 		Calendar today = Calendar.getInstance();
@@ -288,11 +291,11 @@ public class Task implements Comparable<Task> {
 		int taskStartYear = getStartDate().get(Calendar.YEAR);
 		int taskStartDay = getStartDate().get(Calendar.DAY_OF_YEAR);
 		
-		switch(taskType) {
+		switch (taskType) {
 		
 			case RANGE:
 				
-				if(!isCompleted && !isDeleted && !isOverdue()) {
+				if (!isCompleted && !isDeleted && !isOverdue()) {
 					
 					isStarted = (taskStartYear < todayYear) || (taskStartYear == todayYear && taskStartDay < todayDay);
 					
@@ -312,14 +315,21 @@ public class Task implements Comparable<Task> {
 		return isStarted;
 	}
 	
+	/**
+	 * Check whether this task is a searched task.
+	 * 
+	 * @param keyWord the search keyword
+	 * 
+	 * @return true if the tasks is a searched task, else false.
+	 */
 	public boolean isSearchedTask(String keyWord) {
 		boolean result = false;
 		
-		if(isNull(this.category)) {
-			if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
+		if (isNull(this.category)) {
+			if (String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()))
 				result = true;
 		} else {
-			if(String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase())) {
+			if (String.valueOf(this.id).equals(keyWord) || this.name.toLowerCase().contains(keyWord.toLowerCase()) || this.category.toLowerCase().contains(keyWord.toLowerCase())) {
 				result = true;
 			}
 		}
@@ -327,86 +337,124 @@ public class Task implements Comparable<Task> {
 	}
 	
 	private boolean isNull(Object obj) {
-		return obj==null;
+		
+		return obj == null;
+		
 	}
 	
 	public int getTaskId() {
+		
 		return this.id;
+		
 	}
 
 	public void setTaskId(int id) {
+		
 		this.id = id;
+		
 	}
 
 	public String getTaskName() {
+		
 		return this.name;
+		
 	}
 
 	public void setTaskName(String name) {
+		
 		this.name = name;
+		
 	}
 
 	public String getCategory() {
+		
 		return this.category;
+		
 	}
 
 	public void setCategory(String category) {
+		
 		this.category = category;
+		
 	}
 
 	public DateRange getDateRange() {
+		
 		return this.dateRange;
+		
 	}
 
 	public void setDateRange(DateRange dateRange) {
+		
 		this.dateRange = dateRange;
+		
 	}
 	
 	public Calendar getStartDate() {
+		
 		return this.dateRange.getStartDate();
+		
 	}
 	
 	public Calendar getEndDate() {
+		
 		return this.dateRange.getEndDate();
+		
 	}
 	
 	public Calendar getStartTime() {
+		
 		return this.dateRange.getStartTime();
+		
 	}
 	
 	public Calendar getEndTime() {
+		
 		return this.dateRange.getEndTime();
+		
 	}
 
 	public boolean isDeleted() {
+		
 		return this.isDeleted;
+		
 	}
 
 	public void setDeleted(boolean isDeleted) {
+		
 		this.isDeleted = isDeleted;
+		
 	}
 
 	public boolean isCompleted() {
+		
 		return this.isCompleted;
+		
 	}
 
 	public void setCompleted(boolean isCompleted) {
+		
 		this.isCompleted = isCompleted;
+		
 	}
 	
 	public void setTaskType(TaskType taskType) {
+		
 		this.taskType = taskType;
+		
 	}
 
 	public TaskType getTaskType() {
+		
 		return this.taskType;
+		
 	}
 	
 	public int compareTo(Task task) {
 		
-		if(dateRange == null) {
+		if (dateRange == null) {
 			
-			if(task.getDateRange() == null) {
+			if (task.getDateRange() == null) {
 				
 				return 0;
 				
@@ -418,9 +466,9 @@ public class Task implements Comparable<Task> {
 			
 		}
 		
-		if(task.getDateRange() == null) {
+		if (task.getDateRange() == null) {
 			
-			if(dateRange == null) {
+			if (dateRange == null) {
 				
 				return 0;
 				
@@ -437,17 +485,17 @@ public class Task implements Comparable<Task> {
 		Calendar taskStartDate = task.getStartDate();
 		Calendar taskEndDate = task.getEndDate();
 		
-		if(startDate != null) {
+		if (startDate != null) {
 			
 			int startYear = startDate.get(Calendar.YEAR);
 			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
 			
-			if(taskStartDate != null) {
+			if (taskStartDate != null) {
 				
 				int taskStartYear = taskStartDate.get(Calendar.YEAR);
 				int taskStartDay = taskStartDate.get(Calendar.DAY_OF_YEAR);
 				
-				if(startYear - taskStartYear == 0) {
+				if (startYear - taskStartYear == 0) {
 					
 					return startDay - taskStartDay;
 					
@@ -457,12 +505,12 @@ public class Task implements Comparable<Task> {
 					
 				}
 				
-			} else if(taskEndDate != null) {
+			} else if (taskEndDate != null) {
 				
 				int taskEndYear = taskEndDate.get(Calendar.YEAR);
 				int taskEndDay = taskEndDate.get(Calendar.DAY_OF_YEAR);
 				
-				if(startYear - taskEndYear == 0) {
+				if (startYear - taskEndYear == 0) {
 					
 					return startDay - taskEndDay;
 					
@@ -478,17 +526,17 @@ public class Task implements Comparable<Task> {
 				
 			}
 			
-		} else if(endDate != null) {
+		} else if (endDate != null) {
 
 			int endYear = endDate.get(Calendar.YEAR);
 			int endDay = endDate.get(Calendar.DAY_OF_YEAR);
 			
-			if(taskStartDate != null) {
+			if (taskStartDate != null) {
 				
 				int taskStartYear = taskStartDate.get(Calendar.YEAR);
 				int taskStartDay = taskStartDate.get(Calendar.DAY_OF_YEAR);
 				
-				if(endYear - taskStartYear == 0) {
+				if (endYear - taskStartYear == 0) {
 					
 					return endDay - taskStartDay;
 					
@@ -498,12 +546,12 @@ public class Task implements Comparable<Task> {
 					
 				}
 				
-			} else if(taskEndDate != null) {
+			} else if (taskEndDate != null) {
 				
 				int taskEndYear = taskEndDate.get(Calendar.YEAR);
 				int taskEndDay = taskEndDate.get(Calendar.DAY_OF_YEAR);
 				
-				if(endYear - taskEndYear == 0) {
+				if (endYear - taskEndYear == 0) {
 					
 					return endDay - taskEndDay;
 					
@@ -521,7 +569,7 @@ public class Task implements Comparable<Task> {
 			
 		} else {
 			
-			if(taskStartDate != null || taskEndDate != null) {
+			if (taskStartDate != null || taskEndDate != null) {
 				
 				return 1;
 				
@@ -536,6 +584,8 @@ public class Task implements Comparable<Task> {
 	}
 
 	public String toString() {
+		
 		return name + " " + category;
+		
 	}
 }
