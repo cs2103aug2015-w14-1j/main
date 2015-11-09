@@ -1,11 +1,13 @@
 /* @@author A0124072 */
-package notify.storage;
+package notify.storage.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import notify.Task;
 import notify.logic.command.Action;
+import notify.storage.operator.Constants;
+import notify.storage.operator.FilesGenerator;
 
 /**
  * This Storage class is used to generate the system folders and files via

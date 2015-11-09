@@ -1,5 +1,5 @@
 /* @@author A0124072 */
-package notify.storage;
+package notify.storage.api;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import notify.storage.operator.Constants;
+import notify.storage.operator.FileTransferManager;
 
 /**
  * DataDirectoryManager class extends the abstract class StrorageOperation
@@ -24,7 +27,7 @@ public class DataDirectoryManager extends StorageOperation {
 
 	/**
 	 * The class Constructor which sets the path of the file
-	 * {@value notify.storage.StorageOperation#filePath} where this class
+	 * {@value notify.storage.api.StorageOperation#filePath} where this class
 	 * supposed to read from and write to. It then invokes the
 	 * {@link #readFromFile() readFromFile} method.
 	 * 

@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import notify.storage.api.CommandsLoader;
+
 public class CommandsLoaderTest { 
 	private CommandsLoader commandsLoader; 
 	

@@ -29,7 +29,7 @@ import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
-import notify.storage.Storage;
+import notify.storage;
 
 import org.apache.commons.lang3.StringUtils;
 
