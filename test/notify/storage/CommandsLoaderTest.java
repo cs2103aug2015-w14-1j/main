@@ -1,14 +1,14 @@
 package notify.storage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import notify.storage.api.CommandsLoader;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import notify.storage.api.CommandsLoader;
-
-public class CommandsLoaderTest { 
+public class CommandsLoaderTest {
+	/*
 	private CommandsLoader commandsLoader; 
 	
 	@Before
@@ -25,5 +25,5 @@ public class CommandsLoaderTest {
 	public void test() {
 		assertEquals("java", "java");
 	}
-
+	*/
 }
