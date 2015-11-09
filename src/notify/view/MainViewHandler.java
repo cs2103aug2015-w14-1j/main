@@ -929,7 +929,7 @@ public class MainViewHandler {
 			
 			case SET:
 				
-				String path = userInput.replaceFirst("set", "").trim();
+				String path = userInput.toLowerCase().replaceFirst("set", "").trim();
 				feedback = String.format(SET_MESSAGE, path);
 				
 				if (result.isSuccess()) {
@@ -948,7 +948,7 @@ public class MainViewHandler {
 			
 			case SEARCH:
 				
-				LATEST_SEARCH_TERM = userInput.replaceFirst("search", "").trim();
+				LATEST_SEARCH_TERM = userInput.toLowerCase().replaceFirst("search", "").trim();
 				
 				loadSearchResult(result.getResults());
 				showSearchView(LATEST_SEARCH_TERM);
