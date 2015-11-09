@@ -1,0 +1,4 @@
+09/11/2015 22:44:02		INFO		notify.logic.Logic		Logic Component Started Successfully
+09/11/2015 22:49:28		INFO		notify.storage.api.Storage		Storage Component Started Successfully
+09/11/2015 22:49:28		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
+09/11/2015 22:49:28		INFO		notify.logic.Logic		Logic Component Started Successfully
