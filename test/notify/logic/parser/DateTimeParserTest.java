@@ -1,8 +1,8 @@
 package notify.logic.parser;
 
-import java.util.Calendar;
+import static org.junit.Assert.assertEquals;
 
-import notify.logic.parser.DateTimeParser;
+import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,27 +32,27 @@ public class DateTimeParserTest {
 		this.expected = Calendar.getInstance();
 		
 		this.actual = DateTimeParser.parseDate(time);
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #2; Keyword Tdy
 		this.time = "tdy";
 		this.expected = Calendar.getInstance();
 		
 		this.actual = DateTimeParser.parseDate(time);
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #3; Keyword Later
 		this.time = "later";
 		this.expected = Calendar.getInstance();
 			
 		this.actual = DateTimeParser.parseDate(time);
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #4; Keyword Tomorrow
 		this.time = "tomorrow";
@@ -60,29 +60,29 @@ public class DateTimeParserTest {
 		this.expected.add(Calendar.DATE, 1);
 				
 		this.actual = DateTimeParser.parseDate(time);
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #4; Keyword Tmr
 		this.time = "tmr";
 		this.expected = Calendar.getInstance();
-		this.expected.add(Calendar.DATE, 1); 
+		this.expected.add(Calendar.DATE, Constants.OFFSET_DAY); 
 						
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 		
 		//Test Case #5; Keyword Tmrw
 		this.time = "tmrw";
 		this.expected = Calendar.getInstance();
-		this.expected.add(Calendar.DATE, 1);
+		this.expected.add(Calendar.DATE, Constants.OFFSET_DAY);
 						
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #6; Keyword Next Week
 		this.time = "next week";
@@ -90,9 +90,9 @@ public class DateTimeParserTest {
 		this.expected.add(Calendar.DATE, 7);
 						
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #6; Keyword Next Month
 		this.time = "next month";
@@ -100,9 +100,9 @@ public class DateTimeParserTest {
 		this.expected.add(Calendar.MONTH, 1);
 								
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 	
 		//Test Case #7; Keyword Next Year
 		this.time = "next year";
@@ -110,13 +110,17 @@ public class DateTimeParserTest {
 		this.expected.add(Calendar.YEAR, 1);
 								
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+	
 	}
 	
 	@Test
 	public void testParseDate_ValidSplashDateSeperator() {
+		
+		Calendar today = Calendar.getInstance();
+		int year = today.get(Calendar.YEAR);
 		
 		//Test Case #1; Slash Date Seperator (dd/mm)
 		this.time = "01/05";
@@ -124,11 +128,18 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.DATE, 1);
 		this.expected.set(Calendar.MONTH, Calendar.MAY);
 		this.expected.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
-										
+		
+		if(expected.before(today)) { 
+			
+			year = today.get(Calendar.YEAR) + Constants.OFFSET_YEAR;
+			this.expected.set(Calendar.YEAR, year);
+			
+		}
+		
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 		//Test Case #2; Slash Date Seperator (dd/mm/yyyy)
 		this.time = "01/05/2013";
@@ -138,25 +149,41 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.YEAR, 2013);
 												
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		
 	}
 	
 	@Test
 	public void testParseDate_ValidSpaceDateSeperator() {
 		
+		Calendar today = Calendar.getInstance();
+		int year = today.get(Calendar.YEAR);
+		
 		//Test Case #1; Space Date Seperator (dd mm)
 		this.time = "01 05";
 		this.expected = DateTimeParser.getInstance();
-		this.expected.set(Calendar.DATE, 1);
+		this.expected.set(Calendar.DAY_OF_MONTH, 1);
 		this.expected.set(Calendar.MONTH, Calendar.MAY);
 		this.expected.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+
+		if(expected.before(today)) { 
+			
+			year = today.get(Calendar.YEAR) + Constants.OFFSET_YEAR;
+			this.expected.set(Calendar.YEAR, year);
+			
+		}
+		
+		this.actual = DateTimeParser.parseDate(time);	
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 										
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 		//Test Case #2; Space Date Seperator (dd mm yyyy)
 		this.time = "01 05 2013";
@@ -166,33 +193,46 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.YEAR, 2013);
 												
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 		//Test Case #3; Space Date Seperator (dd MMM)
 		this.time = "01 oct";
 		this.expected = DateTimeParser.getInstance();	
 		this.expected.set(Calendar.DATE, 1);
 		this.expected.set(Calendar.MONTH, Calendar.OCTOBER);
-		this.expected.set(Calendar.YEAR, 2015);
+		
+		if(expected.before(today)) { 
+			
+			year = today.get(Calendar.YEAR) + Constants.OFFSET_YEAR;
+			this.expected.set(Calendar.YEAR, year);
+			
+		}
+		
 												
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 		//Test Case #4; Space Date Seperator (dd MMM)
 		this.time = "05 jun";
 		this.expected = DateTimeParser.getInstance();	
 		this.expected.set(Calendar.DATE, 5);
 		this.expected.set(Calendar.MONTH, Calendar.JUNE);
-		this.expected.set(Calendar.YEAR, 2015);
+		
+		if(expected.before(today)) { 
+			
+			year = today.get(Calendar.YEAR) + Constants.OFFSET_YEAR;
+			this.expected.set(Calendar.YEAR, year);
+			
+		}
 												
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 		//Test Case #5; Space Date Seperator (dd MMM yyyy)
 		this.time = "05 jul 2000";
@@ -202,9 +242,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.YEAR, 2000);
 														
 		this.actual = DateTimeParser.parseDate(time);	
-		org.junit.Assert.assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		org.junit.Assert.assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+		assertEquals(expected.get(Calendar.DAY_OF_MONTH), actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
 
 	}
 	
@@ -219,8 +259,8 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
 		
 		//Test Case #2: Post Meridiem
 		this.time = "0759pm";
@@ -229,8 +269,8 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
 		
 		//Test Case #3: Post Meridiem
 		this.time = "5PM";
@@ -239,8 +279,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 0);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -252,8 +293,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
@@ -266,8 +308,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 	
 	@Test
@@ -281,8 +324,8 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
 		
 		//Test Case #2: Post Meridiem
 		this.time = "1959";
@@ -291,8 +334,8 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
 	
 		//Test Case #3: Three Digits
 		this.time = "959";
@@ -301,8 +344,8 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
 
 	}
 	
@@ -315,8 +358,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
@@ -329,8 +373,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -343,8 +388,9 @@ public class DateTimeParserTest {
 		this.expected.set(Calendar.MINUTE, 59);
 
 		this.actual = DateTimeParser.parseTime(time); 
-		org.junit.Assert.assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
-		org.junit.Assert.assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		assertEquals(actual.get(Calendar.HOUR_OF_DAY), expected.get(Calendar.HOUR_OF_DAY));
+		assertEquals(actual.get(Calendar.MINUTE), expected.get(Calendar.MINUTE));
+		
 	}
 	
 }
