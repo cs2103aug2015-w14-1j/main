@@ -16,7 +16,7 @@ import notify.logic.command.Action;
  * path file and various command(as of {@see notify.logic.command.Action})
  * files.
  */
-public class FileGenerator {
+public class FilesGenerator {
 	/** These variables represent the folders and files to be generated */
 	private File configFolder;
 	private File dataFolder;
@@ -26,13 +26,13 @@ public class FileGenerator {
 	private File dataFile;
 
 	/**
-	 * This class's Constructor which instantiate the files and folders that are
+	 * The class Constructor which instantiate the files and folders that are
 	 * to be generated. It then invokes {@link #generateConfigFolder()
 	 * generateConfigFolder} method to create all the necessary folders. After
 	 * which it invokes {@link #generateSystemFiles() generateSystemFiles} to
 	 * create necessary files.
 	 */
-	public FileGenerator() {
+	public FilesGenerator() {
 		
 		this.configFolder = new File(Constants.NAME_FOLDER_CONFIG);
 		this.dataFolder = new File(

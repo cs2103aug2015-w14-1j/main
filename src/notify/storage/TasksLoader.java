@@ -1,3 +1,4 @@
+/* @@author A0124072 */
 package notify.storage;
 
 import java.io.BufferedReader;
@@ -13,7 +14,7 @@ import notify.Task;
 public class TasksLoader extends StorageOperation {
 
 	/**
-	 * Constructor
+	 * The class Constructor
 	 * 
 	 * @param filePath_
 	 *            The path of the saved file(all the user's tasks are stored

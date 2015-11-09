@@ -21,7 +21,7 @@ public class Storage {
 	 * These variables are used to interact with other internal classes of the
 	 * storage component.
 	 */
-	private FileGenerator fileGenerator;
+	private FilesGenerator fileGenerator;
 	private DataDirectoryManager dataDirectoryManager;
 	private TasksSaver save;
 	private TasksLoader load;
@@ -29,17 +29,18 @@ public class Storage {
 	private String dataFileAbsolutePath;
 
 	/**
-	 * This method is the class's Constructor which is used to instantiate the
-	 * following variables {@link #fileGenerator}, {@link #dataDirectoryManager}
-	 * {@link #save}, {@link #load}, {@link #loadCommand} and
-	 * {@link #dataFileAbsolutePath}.
+	 * The class Constructor which initializes a newly created
+	 * Storage object so that it represents an object which is used to store and
+	 * retrieve data. It instantiates the following variables
+	 * {@link #fileGenerator}, {@link #dataDirectoryManager} {@link #save},
+	 * {@link #load}, {@link #loadCommand} and {@link #dataFileAbsolutePath}.
 	 * 
 	 * It invokes {@see notify.storage.DataDirectoryManager#getDataFilePath()}
 	 * to retrieve the currently saved absolute file path of the data file.
 	 */
 	public Storage() {
-		
-		this.fileGenerator = new FileGenerator();
+
+		this.fileGenerator = new FilesGenerator();
 		this.dataDirectoryManager = new DataDirectoryManager(String.format(Constants.PATH_FILE, Constants.FOLDER_CONFIG,
 				Constants.FOLDER_DATA, Constants.FILE_DESTINATION));
 		this.dataFileAbsolutePath = String.format(Constants.PATH_FILE, this.dataDirectoryManager.getDataFilePath(),
@@ -47,7 +48,7 @@ public class Storage {
 		this.load = new TasksLoader(this.dataFileAbsolutePath);
 		this.loadCommand = new CommandsLoader();
 		this.save = new TasksSaver(this.dataFileAbsolutePath);
-		
+
 	}
 
 	/**
@@ -57,10 +58,10 @@ public class Storage {
 	 *         stored in the data file
 	 */
 	public ArrayList<Task> loadTasks() {
-		
-		assert (load != null);
+
+		assert(load != null);
 		return this.load.execute(new ArrayList<Task>());
-		
+
 	}
 
 	/**
@@ -71,15 +72,15 @@ public class Storage {
 	 *            tasks/data which is to be written into the data file
 	 */
 	public void saveTasks(ArrayList<Task> taskList_) {
-		
-		assert (taskList_ != null);
-		assert (save != null);
-		assert (dataDirectoryManager != null);
-		
+
+		assert(taskList_ != null);
+		assert(save != null);
+		assert(dataDirectoryManager != null);
+
 		this.save.setFilePath(String.format(Constants.PATH_FILE, dataDirectoryManager.getDataFilePath(),
 				Constants.FILE_DATA, Constants.EMPTY_STRING));
 		this.save.execute(taskList_);
-		
+
 	}
 
 	/**
@@ -90,10 +91,10 @@ public class Storage {
 	 *         system commands {@see notify.logic.command.Action}
 	 */
 	public HashMap<String, Action> loadCommands() {
-		
-		assert (loadCommand != null);
+
+		assert(loadCommand != null);
 		return this.loadCommand.execute(new ArrayList<Task>());
-		
+
 	}
 
 	/**
@@ -108,9 +109,9 @@ public class Storage {
 	 *         'false' otherwise
 	 */
 	public boolean setFileDestination(String newFilePath_) {
-		
-		assert (dataDirectoryManager != null);
+
+		assert(dataDirectoryManager != null);
 		return this.dataDirectoryManager.execute(newFilePath_);
-		
+
 	}
 }

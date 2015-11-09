@@ -112,9 +112,8 @@ public class AddCommand extends ReversibleCommand {
 	
 	public DateRange getDateRange() {
 		
-		return this.dateRange;
+		return this.dateRange;	
 	}
-	
 	
 	
 }

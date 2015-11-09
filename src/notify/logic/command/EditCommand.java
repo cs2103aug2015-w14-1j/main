@@ -32,7 +32,7 @@ public class EditCommand extends ReversibleCommand {
 	private String category;
 	private int id;
 	private TaskManager manager;
-	
+		
 	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
 		super(commandAction, historyStack);
 		this.manager = manager;
@@ -92,7 +92,7 @@ public class EditCommand extends ReversibleCommand {
 	  * This method is called by the UndoCommand class {@see UndoCommand#execute()}
 	  * 
 	  * @return 'result' object corresponding to the UNDO action.  
-	  */
+	  */ 	
 	
 	@Override
 	public Result undo(){
