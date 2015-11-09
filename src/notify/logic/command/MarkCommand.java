@@ -33,6 +33,11 @@ public class MarkCommand extends ReversibleCommand {
 		this.manager = manager;
 	}
 	
+	/**
+	 * This method assigns the Task fields  
+	 * 
+	 * @param id
+	 */
 	public void addValues(int id){
 		
 		this.id = id;
@@ -65,6 +70,7 @@ public class MarkCommand extends ReversibleCommand {
 		if(markTask != null){
 		list.add(markTask);
 		result = new Result(Action.MARK, list, true);
+		
 		pushToStack();
 		
 		}else{
@@ -95,6 +101,7 @@ public class MarkCommand extends ReversibleCommand {
 		Task tempTask = manager.markTask(id, false);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list.add(tempTask);
+		
 		Result result = new Result(Action.UNDO, list);
 		return result;
 		

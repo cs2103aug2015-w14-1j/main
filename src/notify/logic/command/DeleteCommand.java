@@ -34,6 +34,11 @@ import notify.logic.TaskManager;
 
 	}
 	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param id
+	 */
 	public void addValues(int id) {
 		
 		this.id = id;
@@ -52,25 +57,28 @@ import notify.logic.TaskManager;
      * 
      * @return 'result' object corresponding to the DELETE action.
      */
-	
-    @Override
+	 @Override
 	public Result execute() {
 		Result result = null;
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
-		
+			
 		Task temptask = manager.deleteTask(id);
 		ArrayList<Task> list = new ArrayList<Task>();
-		
+			
 		if(temptask != null){
-		list.add(temptask);
-		 result = new Result(Action.DELETE, list, true);
-		this.task = temptask;
-		pushToStack();
+			
+			list.add(temptask);
+			
+			result = new Result(Action.DELETE, list, true);
+			this.task = temptask;
+			
+			pushToStack();
 		}
-		
-		else{
-		 result = new Result(Action.DELETE, list, false);
-		}
+			
+			else{
+				
+			 result = new Result(Action.DELETE, list, false);
+			}
 		
 		return result;
 	}
@@ -89,14 +97,14 @@ import notify.logic.TaskManager;
 	@Override
 	public Result undo() {
 		
-		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
-		
-		Task temptask = manager.undeleteTask(id);
-		ArrayList<Task> list = new ArrayList<Task>();
-		list.add(temptask);
-		Result result = new Result(Action.UNDO, list);
-		this.task = temptask;
-		return result;
+			assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
+			
+			Task temptask = manager.undeleteTask(id);
+			ArrayList<Task> list = new ArrayList<Task>();
+			list.add(temptask);
+			Result result = new Result(Action.UNDO, list);
+			this.task = temptask;
+			return result;
 	}
 	
 

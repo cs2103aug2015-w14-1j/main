@@ -33,6 +33,11 @@ public class SearchCommand extends Command {
 		
 	}
 	
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param keyword
+	 */
 	public void addValues(String keyword){
 		this.keyword = keyword;
 	}

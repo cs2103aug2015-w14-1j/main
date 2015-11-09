@@ -38,6 +38,14 @@ public class AddCommand extends ReversibleCommand {
 		
 	}
 
+	/**
+	 * This method assigns the Task fields
+	 * 
+	 * @param taskName
+	 * @param taskType
+	 * @param dateRange
+	 * @param category
+	 */
 	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
 		
 		this.taskName = taskName.trim();
@@ -63,8 +71,10 @@ public class AddCommand extends ReversibleCommand {
 	    Task addTask = manager.addTask(taskName, dateRange, category, taskType);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list.add(addTask);
+		
 		Result result = new Result(Action.ADD, list);
 		this.task = addTask;
+		
 		pushToStack();
 		return result;
 	}
@@ -86,8 +96,10 @@ public class AddCommand extends ReversibleCommand {
 		assert task.getTaskId() != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
 		Task temptask = manager.deleteTask(task.getTaskId()); 
+		
 		ArrayList<Task> list = new ArrayList<Task>();
 		list.add(temptask);
+		
 		Result result = new Result(Action.UNDO, list);
 		return result;
 		

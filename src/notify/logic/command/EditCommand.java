@@ -34,6 +34,7 @@ public class EditCommand extends ReversibleCommand {
 	private TaskManager manager;
 		
 	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
+		
 		super(commandAction, historyStack);
 		this.manager = manager;
 	}
@@ -48,9 +49,10 @@ public class EditCommand extends ReversibleCommand {
 	 * @param taskType
 	 */
 	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType){
+		
 		this.oldTask = manager.getTask(id);
 		
-		 getOldDetails();
+		getOldDetails();
 
         this.taskName = taskName;
 		this.dateRange = dateRange;
@@ -84,7 +86,6 @@ public class EditCommand extends ReversibleCommand {
      * 
      * @return 'result' object corresponding to the EDIT action.
      */
-	
 	@Override
 	public Result execute(){
 		Result result = null;
@@ -98,6 +99,7 @@ public class EditCommand extends ReversibleCommand {
 		
 		checkNull();
 		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
+		
 		list.add(updatedTask);
 		result = new Result(Action.EDIT, list, true);
 		pushToStack();
@@ -117,12 +119,12 @@ public class EditCommand extends ReversibleCommand {
 	  * 
 	  * @return 'result' object corresponding to the UNDO action.  
 	  */ 	
-	
 	@Override
 	public Result undo(){
 		
 		Task beforeUpdatedTask = manager.updateTask(oldTask.getTaskId() , oldName, oldDateRange , oldCategory, oldTaskType);
 		ArrayList<Task> list = new ArrayList<Task>();
+		
 		list.add(beforeUpdatedTask);
 		Result result = new Result(Action.UNDO, list);
 		return result;
