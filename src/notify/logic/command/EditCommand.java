@@ -64,7 +64,8 @@ public class EditCommand extends ReversibleCommand {
 
 
 	/**
-	 * This method gets the task fields of the pre-edited task 
+	 * This method gets the task fields of the pre-edited task and 
+	 * assigns them respectively.  
 	 */
 	private void getOldDetails() {
 		
@@ -84,7 +85,8 @@ public class EditCommand extends ReversibleCommand {
      * the Logic class. 
      * 
      * If the Task object is null, the method creates a result object by setting the boolean flag to false
-     * to indicate that the task is not successfully edited.
+     * to indicate that the task is not successfully edited.If the task is successfully edited,
+     * the boolean flag is set to true.
      * 
      * @return 'result' object corresponding to the EDIT action.
      */
