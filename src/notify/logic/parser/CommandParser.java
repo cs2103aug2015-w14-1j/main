@@ -11,6 +11,8 @@ package notify.logic.parser;
 import java.util.HashMap;
 import java.util.Stack;
 
+import org.apache.commons.lang3.StringUtils;
+
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
@@ -29,9 +31,7 @@ import notify.logic.command.ReversibleCommand;
 import notify.logic.command.SearchCommand;
 import notify.logic.command.SetCommand;
 import notify.logic.command.UndoCommand;
-import notify.storage;
-
-import org.apache.commons.lang3.StringUtils;
+import notify.storage.api.Storage;
 
 /**
  * This class is used to handle the inputs given and converts them into system recognized commands

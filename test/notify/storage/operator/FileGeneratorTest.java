@@ -1,4 +1,4 @@
-package notify.storage;
+package notify.storage.operator;
 
 import static org.junit.Assert.*;
 
