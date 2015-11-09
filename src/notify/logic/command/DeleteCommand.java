@@ -53,7 +53,8 @@ public class DeleteCommand extends ReversibleCommand {
      * the Logic class. 
      * 
      * If the Task object is null, the method creates a result object by setting the boolean 
-     * flag to false to indicated that it has not been successfully deleted.
+     * flag to false to indicated that it has not been successfully deleted.If the task has been successfully
+     * deleted the boolean flag is set to true. 
      * 
      * @return 'result' object corresponding to the DELETE action.
      */
