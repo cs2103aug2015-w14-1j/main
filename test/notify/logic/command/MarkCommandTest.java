@@ -1,3 +1,4 @@
+
 //@@author A0130319R
 
 package notify.logic.command;
@@ -21,19 +22,19 @@ public class MarkCommandTest {
 	
 	private Logic logic;
 	private CommandParser parser;
-	private MarkCommand markCommand;
 	private Stack<ReversibleCommand> history;
 	
-
 	@Before
-	public void setUp(){
+	public void setUp() {
+		
 		this.logic = new Logic();
 		this.parser = logic.getCommandParser();
 		this.history = logic.getHistory();
+		
 	}
 	
 	@Test
-	public void test(){
+	public void test() {
 		
 		//adding the task to be marked
 		String addString = "add meeting with tom";
@@ -64,6 +65,4 @@ public class MarkCommandTest {
 		
 	}
 	
-	
-
 }

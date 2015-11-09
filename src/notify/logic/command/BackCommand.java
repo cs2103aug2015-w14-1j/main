@@ -28,6 +28,7 @@ public class BackCommand extends Command {
 		
 		super(commandAction);
 		this.manager = manager;
+		
 	}
 
 	/**
@@ -42,6 +43,7 @@ public class BackCommand extends Command {
 		
 		Result result = new Result(Action.BACK, new ArrayList<Task>());
 		return result;
+		
 	}
 
 }

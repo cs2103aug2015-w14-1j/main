@@ -27,7 +27,6 @@ public class CommandParserTest {
 	private Logic logic;
 	private CommandParser parser;
 	
-	private String date; 
 	private Calendar expected;
 	private Calendar actual;
 	

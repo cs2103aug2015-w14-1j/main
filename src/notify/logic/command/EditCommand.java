@@ -33,7 +33,7 @@ public class EditCommand extends ReversibleCommand {
 	private int id;
 	private TaskManager manager;
 		
-	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager){ 
+	public EditCommand(Action commandAction, Stack<ReversibleCommand> historyStack, TaskManager manager) { 
 		
 		super(commandAction, historyStack);
 		this.manager = manager;
@@ -48,7 +48,7 @@ public class EditCommand extends ReversibleCommand {
 	 * @param id
 	 * @param taskType
 	 */
-	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType){
+	public void addValues(String taskName, DateRange dateRange, String category, int id, TaskType taskType) {
 		
 		this.oldTask = manager.getTask(id);
 		
@@ -59,6 +59,7 @@ public class EditCommand extends ReversibleCommand {
 		this.category = category;
 		this.id = id;
 		this.taskType = taskType;
+		
 	}
 
 
@@ -71,6 +72,7 @@ public class EditCommand extends ReversibleCommand {
 	     oldDateRange = oldTask.getDateRange();
 		 oldCategory = oldTask.getCategory();
 		 oldTaskType = oldTask.getTaskType();
+		 
 	}
 	
 	/**
@@ -87,7 +89,8 @@ public class EditCommand extends ReversibleCommand {
      * @return 'result' object corresponding to the EDIT action.
      */
 	@Override
-	public Result execute(){
+	public Result execute() {
+		
 		Result result = null;
 		ArrayList<Task> list = new ArrayList<Task>();
 		
@@ -95,14 +98,14 @@ public class EditCommand extends ReversibleCommand {
 			
 			result = new Result(Action.EDIT, list, false);
 		
-		} else{
+		} else {
 		
-		checkNull();
-		Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
-		
-		list.add(updatedTask);
-		result = new Result(Action.EDIT, list, true);
-		pushToStack();
+			checkNull();
+			Task updatedTask = manager.updateTask(id, taskName, dateRange, category, taskType);
+			
+			list.add(updatedTask);
+			result = new Result(Action.EDIT, list, true);
+			pushToStack();
 		
 		}
 		
@@ -128,26 +131,31 @@ public class EditCommand extends ReversibleCommand {
 		list.add(beforeUpdatedTask);
 		Result result = new Result(Action.UNDO, list);
 		return result;
+		
 	}
 	
 	public String getTaskName() {
 		
 		return this.taskName;
+		
 	}
 	
 	public TaskType getTaskType() { 
 		
 		return this.taskType;
+		
 	}
 	
 	public String getCategory() {
 		
 		return this.category;
+		
 	}
 	
 	public DateRange getDateRange() {
 		
 		return this.dateRange;
+		
 	}
 	
 	/**
@@ -155,26 +163,34 @@ public class EditCommand extends ReversibleCommand {
 	 * corresponding parameters with the parameters of the pre-edited task. 
 	 * 
 	 */
-	
-	public void checkNull(){
+	public void checkNull() {
 		
-		assert id != Constants.UNASSIGNED_TASK : "Task id cannot be null";
+		assert id != Constants.UNASSIGNED_TASK : Constants.ERROR_TASK_ID_NULL;
 		
-		if(taskName == null){
+		if(taskName == null) {
+			
 			this.taskName = oldTask.getTaskName();
-		}
-		if(dateRange == null){
-			this.dateRange = oldTask.getDateRange();
-		}
-		if(category == null){
-			this.category = oldTask.getCategory();
+		
 		}
 		
-		if(taskType == null){
-			this.taskType = oldTask.getTaskType();
+		if(dateRange == null) {
+			
+			this.dateRange = oldTask.getDateRange();
+		
 		}
+		
+		if(category == null) {
+			
+			this.category = oldTask.getCategory();
+			
+		}
+		
+		if(taskType == null) {
+			
+			this.taskType = oldTask.getTaskType();
+			
+		}
+		
 	}
 	
-	
-
 }

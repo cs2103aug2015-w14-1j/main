@@ -18,7 +18,6 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
 public class HelpCommand extends Command {
 	
 	//These are variables that are required to store the fields of each task 
@@ -42,6 +41,7 @@ public class HelpCommand extends Command {
 		
 		Result result = new Result(Action.HELP, new ArrayList<Task>());
 		return result;
+		
 	}
 
 }

@@ -44,19 +44,20 @@ public class CommandsLoader extends StorageOperation {
 	 * object {@value notify.storage.api.StorageOperation#commands} which will
 	 * contain the command variations.
 	 * 
-	 * @param emptyList_
+	 * @param emptyList
 	 *            An empty list of Tasks.
 	 * 
 	 * @return a HashMap<String, Action> object which contains the
 	 *         command variations
 	 */
-	protected HashMap<String, Action> execute(Object emptyList_) {
+	protected HashMap<String, Action> execute(Object emptyList) {
 
-		assert emptyList_ != null;
+		assert emptyList != null; 
 
 		readFromFile();
 
 		assert(this.commands.isEmpty() == false);
+		
 		return this.commands;
 
 	}
@@ -68,10 +69,10 @@ public class CommandsLoader extends StorageOperation {
 	 * @param filePath_
 	 *            The new file directory/path of the file which is read from.
 	 */
-	protected void setFilePath(String filePath_) {
+	protected void setFilePath(String filePath) {
 
-		assert filePath_ != null;
-		this.filePath = filePath_;
+		assert filePath != null;
+		this.filePath = filePath;
 
 	}
 
@@ -96,11 +97,14 @@ public class CommandsLoader extends StorageOperation {
 				file = new File(this.filePath);
 
 				assert(file.exists() == true);
+				
 				fileReader = new FileReader(file);
 				bufferedReader = new BufferedReader(fileReader);
 
 				assert(this.commands != null);
+				
 				this.commands.put(command.toString().toUpperCase(), command);
+				
 				while ((currentLine = bufferedReader.readLine()) != null) {
 
 					this.commands.put(currentLine.toUpperCase(), command);
@@ -115,6 +119,9 @@ public class CommandsLoader extends StorageOperation {
 				e.printStackTrace();
 
 			}
+		
 		}
+	
 	}
+
 }

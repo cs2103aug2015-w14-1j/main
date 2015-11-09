@@ -2,10 +2,7 @@
 
 package notify.logic.command;
 
-import static org.junit.Assert.*;
-
-import java.util.Stack;
-
+import static org.junit.Assert.assertTrue;
 import notify.logic.Logic;
 import notify.logic.parser.CommandParser;
 
@@ -16,14 +13,11 @@ public class EditCommandTest {
 
 	private Logic logic;
 	private CommandParser parser;
-	private EditCommand edtCommand;
-	private Stack<ReversibleCommand> history;
 	
 	@Before
 	public void setUp(){
 		this.logic = new Logic();
 		this.parser = logic.getCommandParser();
-		this.history = logic.getHistory();
 	}
 	
 	@Test

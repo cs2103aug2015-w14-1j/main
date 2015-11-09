@@ -39,6 +39,10 @@ public class FilesGenerator {
 				String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_DATA));
 		this.commandsFolder = new File(
 				String.format(Constants.PATH_SUB_FOLDER, Constants.FOLDER_CONFIG, Constants.FOLDER_COMMANDS));
+	
+	}
+	
+	public void generate() {
 		
 		generateConfigFolder();
 		generateSystemFiles();

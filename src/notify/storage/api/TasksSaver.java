@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.google.gson.Gson;
-
 import notify.Task;
+
+import com.google.gson.Gson;
 
 public class TasksSaver extends StorageOperation {
 
@@ -34,10 +34,11 @@ public class TasksSaver extends StorageOperation {
 	 *            List of Tasks
 	 * @return null as logic does not require confirmation of successful save
 	 */
-	protected ArrayList<Task> execute(Object taskList_) {
+	@SuppressWarnings("unchecked")
+	protected ArrayList<Task> execute(Object taskList) {
 
-		assert(taskList_ != null);
-		this.taskList = (ArrayList<Task>) taskList_;
+		assert(taskList != null);
+		this.taskList = (ArrayList<Task>) taskList;
 		this.jsonString = this.jsonizeData(this.taskList);
 
 		this.writeIntoFile();
@@ -70,6 +71,7 @@ public class TasksSaver extends StorageOperation {
 	 *         exist or failed in FileWriter io.
 	 */
 	private void writeIntoFile() {
+		
 		File file;
 		FileWriter fileWriter;
 		BufferedWriter bufferedWriter;
@@ -92,5 +94,7 @@ public class TasksSaver extends StorageOperation {
 			e.printStackTrace();
 			
 		}
+
 	}
+
 }

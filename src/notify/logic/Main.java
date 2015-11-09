@@ -18,9 +18,11 @@ public class Main extends Application {
 	private static double MIN_SCREEN_HEIGHT = 732;
 	
 	private static String MAIN_VIEW_PATH = "/notify/view/MainView.fxml";
-	private static String ROBOTO_PATH = "https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100";
+	private static String ROBOTO_PATH = "https://fonts.googleapis.com/css?family=Roboto:400,900"
+												+ "italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100";
 	private static String ROBOTO_SLAB_PATH = "https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700";
-	private static String ROBOTO_CONDENSED_PATH = "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic";
+	private static String ROBOTO_CONDENSED_PATH = "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,"
+												+ "300italic,400italic,700,700italic";
 	
 	private Logic logic;
 	private Stage primaryStage;
@@ -98,4 +100,5 @@ public class Main extends Application {
 		launch(args);
 		
 	}
+	
 }

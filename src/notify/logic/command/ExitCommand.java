@@ -18,17 +18,16 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
-
 public class ExitCommand extends Command {
 	
 	//These are variables that are required to store the fields of each task 
 	TaskManager manager;
 	
-	public ExitCommand(Action commandAction, TaskManager manager){
+	public ExitCommand(Action commandAction, TaskManager manager) {
 		
 		super(commandAction);
 		this.manager = manager;
+		
 	}
 	
 	/**
@@ -39,13 +38,13 @@ public class ExitCommand extends Command {
 	 */
 	
     @Override
-	public Result execute(){
+	public Result execute() {
 		
 		manager.exit();
 		
 		Result result = new Result(Action.EXIT, new ArrayList<Task>());
 		return result;
+		
 	}
 	
-
 }

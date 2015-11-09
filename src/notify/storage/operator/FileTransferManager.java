@@ -13,6 +13,7 @@ import java.io.OutputStream;
  * file to the new file and then deleting the old file from the user's computer.
  */
 public class FileTransferManager {
+	
 	/** These are the local variables used in this class */
 	private String oldFilePath;
 	private String newFilePath;
@@ -74,6 +75,9 @@ public class FileTransferManager {
 				e.printStackTrace();
 				
 			}
+		
 		}
+	
 	}
+
 }

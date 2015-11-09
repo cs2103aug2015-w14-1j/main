@@ -2,9 +2,8 @@
 
 package notify.logic.command;
 
-
 import java.util.ArrayList;
-import java.util.Stack;
+
 import notify.Task;
 import notify.logic.TaskManager;
 
@@ -19,15 +18,14 @@ import notify.logic.TaskManager;
  * @author sadhikabilla
  *
  */
-
-
 public class SearchCommand extends Command {
 	
 	//These are variables that are required to store the fields of each task 
 	private TaskManager manager;
 	private String keyword;
 	
-	public SearchCommand(Action commandAction, TaskManager manager){
+	public SearchCommand(Action commandAction, TaskManager manager) {
+		
 		super(Action.SEARCH);
 		this.manager = manager;
 		
@@ -38,8 +36,10 @@ public class SearchCommand extends Command {
 	 * 
 	 * @param keyword
 	 */
-	public void addValues(String keyword){
+	public void addValues(String keyword) {
+		
 		this.keyword = keyword;
+	
 	}
 	
 	/**
@@ -51,13 +51,13 @@ public class SearchCommand extends Command {
 	 * 
 	 * @return 'result' object corresponding to the SEARCH action. 
 	 */
-	
 	@Override
 	public Result execute() {
 		
 		ArrayList<Task> searchTasks = manager.searchTask(keyword);
 		Result result = new Result(Action.SEARCH, searchTasks);
 		return result;
+		
 	}
 
 }
