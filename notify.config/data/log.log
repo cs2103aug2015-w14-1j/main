@@ -1,16 +1,5 @@
-09/11/2015 22:44:02		INFO		notify.logic.Logic		Logic Component Started Successfully
-09/11/2015 22:49:28		INFO		notify.storage.api.Storage		Storage Component Started Successfully
-09/11/2015 22:49:28		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
-09/11/2015 22:49:28		INFO		notify.logic.Logic		Logic Component Started Successfully
-09/11/2015 23:07:07		INFO		notify.storage.api.Storage		Storage Component Started Successfully
-09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
-09/11/2015 23:07:07		INFO		notify.logic.Logic		Logic Component Started Successfully
-09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
-09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
-09/11/2015 23:07:07		INFO		notify.logic.parser.CommandParser		Command has been parsed.
-09/11/2015 23:27:11		INFO		notify.storage.api.Storage		Storage Component Started Successfully
-09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
-09/11/2015 23:27:11		INFO		notify.logic.Logic		Logic Component Started Successfully
-09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
-09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
-09/11/2015 23:27:11		INFO		notify.logic.parser.CommandParser		Command has been parsed.
+09/11/2015 23:40:06		INFO		notify.storage.api.Storage		Storage Component Started Successfully
+09/11/2015 23:40:06		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
+09/11/2015 23:40:06		INFO		notify.logic.Logic		Logic Component Started Successfully
+09/11/2015 23:40:18		INFO		notify.view.MainViewHandler		Main View Handler Started Successfully
+09/11/2015 23:40:22		INFO		notify.logic.parser.CommandParser		Command has been parsed.

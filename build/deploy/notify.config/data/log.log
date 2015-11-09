@@ -1,0 +1,5 @@
+09/11/2015 23:23:57		INFO		notify.storage.api.Storage		Storage Component Started Successfully
+09/11/2015 23:23:57		INFO		notify.logic.parser.CommandParser		CommandParser Component Started Successfully
+09/11/2015 23:23:57		INFO		notify.logic.Logic		Logic Component Started Successfully
+09/11/2015 23:24:08		INFO		notify.view.MainViewHandler		Main View Handler Started Successfully
+09/11/2015 23:24:11		INFO		notify.logic.Logic		Save Task Operation is Called.
