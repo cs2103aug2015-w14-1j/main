@@ -64,7 +64,7 @@ public class DateTimeParser {
 		int toIndex = rawDateTime.indexOf(toKeyword);
 	
 		//case one: contains 'by' or 'on', check for at (start/time date = today, end/time date = given)
-		if(byIndex == Constants.KEYWORD_PROMPT_INDEX || onIndex == Constants.KEYWORD_PROMPT_INDEX) {
+		if (byIndex == Constants.KEYWORD_PROMPT_INDEX || onIndex == Constants.KEYWORD_PROMPT_INDEX) {
 			rawDateTime = rawDateTime.substring(Constants.KEYWORD_BY.length(), rawDateTime.length());
 			
 			toKeyword = CommandParser.formatKeyword(Constants.KEYWORD_TO, Constants.OPTION_KEYWORD_BOTH);
@@ -74,7 +74,7 @@ public class DateTimeParser {
 			toIndex = rawDateTime.indexOf(toKeyword);
 			fromIndex = rawDateTime.indexOf(fromKeyword); 
 						
-			if(atIndex != Constants.KEYWORD_NOT_FOUND) {
+			if (atIndex != Constants.KEYWORD_NOT_FOUND) {
 				
 				String[] split = rawDateTime.split(atKeyword);
 				String date = split[Constants.PARAM_DATE].trim();
@@ -86,7 +86,7 @@ public class DateTimeParser {
 			//case two: contains 'on', check for from and to 
 			} else if (fromIndex != Constants.KEYWORD_NOT_FOUND && toIndex != Constants.KEYWORD_NOT_FOUND) {
 				
-				if(toIndex <= fromIndex) { 
+				if (toIndex <= fromIndex) { 
 				
 					throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 				
@@ -111,9 +111,9 @@ public class DateTimeParser {
 			}
 			
 		//case three: from and to (search for at in within)	
-		} else if(fromIndex == Constants.KEYWORD_PROMPT_INDEX && toIndex != Constants.KEYWORD_NOT_FOUND) {
+		} else if (fromIndex == Constants.KEYWORD_PROMPT_INDEX && toIndex != Constants.KEYWORD_NOT_FOUND) {
 			
-			if(toIndex <= fromIndex) { 
+			if (toIndex <= fromIndex) { 
 				
 				throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 				
@@ -128,7 +128,7 @@ public class DateTimeParser {
 			
 			int atIndex = startDateTime.indexOf(Constants.KEYWORD_AT);
 			
-			if(atIndex != Constants.KEYWORD_NOT_FOUND) {
+			if (atIndex != Constants.KEYWORD_NOT_FOUND) {
 			
 				split = startDateTime.split(Constants.KEYWORD_AT);
 				dateRange.setStartDate(split[Constants.PARAM_DATE]);
@@ -142,7 +142,7 @@ public class DateTimeParser {
 
 			atIndex = endDateTime.indexOf(Constants.KEYWORD_AT);
 			
-			if(atIndex != Constants.KEYWORD_NOT_FOUND) {
+			if (atIndex != Constants.KEYWORD_NOT_FOUND) {
 			
 				split = endDateTime.split(Constants.KEYWORD_AT);
 				dateRange.setEndDate(split[Constants.PARAM_DATE]);
@@ -182,7 +182,7 @@ public class DateTimeParser {
 		// search for all possible keywords of today
 		for(int i = 0; i < Constants.KEYWORD_TODAY.length; i++) {
 		
-			if(rawDate.equalsIgnoreCase(Constants.KEYWORD_TODAY[i])) {
+			if (rawDate.equalsIgnoreCase(Constants.KEYWORD_TODAY[i])) {
 			
 				result = Calendar.getInstance();
 				dateFound = true;
@@ -195,7 +195,7 @@ public class DateTimeParser {
 		// search for all possible keywords of tomorrow
 		for(int i = 0; i < Constants.KEYWORD_TOMORROW.length; i++) {
 			
-			if(rawDate.equalsIgnoreCase(Constants.KEYWORD_TOMORROW[i])) {
+			if (rawDate.equalsIgnoreCase(Constants.KEYWORD_TOMORROW[i])) {
 			
 				result = Calendar.getInstance();
 				result.add(Calendar.DATE, Constants.OFFSET_DAY);
@@ -208,7 +208,7 @@ public class DateTimeParser {
 		//search for all possible keywords of next week
 		for(int i = 0; i < Constants.KEYWORD_NEXT_WEEK.length; i++) {
 		
-			if(rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_WEEK[i])) {
+			if (rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_WEEK[i])) {
 			
 				result = Calendar.getInstance();
 				result.add(Calendar.DATE, Constants.OFFSET_WEEK);
@@ -221,7 +221,7 @@ public class DateTimeParser {
 		//search for all possible keywords of next month
 		for(int i = 0; i < Constants.KEYWORD_NEXT_MONTH.length; i++) {
 		
-			if(rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_MONTH[i])) {
+			if (rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_MONTH[i])) {
 			
 				result = Calendar.getInstance();
 				result.add(Calendar.MONTH, Constants.OFFSET_MONTH);
@@ -234,7 +234,7 @@ public class DateTimeParser {
 		//search for all possible keywords of next year
 		for(int i = 0; i < Constants.KEYWORD_NEXT_YEAR.length; i++) {
 		
-			if(rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_YEAR[i])) {
+			if (rawDate.equalsIgnoreCase(Constants.KEYWORD_NEXT_YEAR[i])) {
 			
 				result = Calendar.getInstance();
 				result.add(Calendar.YEAR, Constants.OFFSET_YEAR);
@@ -245,11 +245,11 @@ public class DateTimeParser {
 		}
 		
 		//check for days keyword
-		if(dateFound == false) {
+		if (dateFound == false) {
 	
 			result = retrieveNext(rawDate);
 			
-			if(result != null) {
+			if (result != null) {
 				
 				dateFound = true;
 
@@ -258,12 +258,12 @@ public class DateTimeParser {
 		}
 		
 		//if date entered is not a keyword, check if date is separated by slashes
-		if(dateFound == false) {
+		if (dateFound == false) {
 		
 			Calendar today = Calendar.getInstance();
 			String[] split = rawDate.split(Constants.DATE_SEPERATOR_SLASH);
 	
-			if(split.length >= Constants.DATE_SEPERATOR_MIN) {
+			if (split.length >= Constants.DATE_SEPERATOR_MIN) {
 				
 				String dayInput = split[Constants.PARAM_DAY];
 				String monthInput = split[Constants.PARAM_MONTH];
@@ -272,7 +272,7 @@ public class DateTimeParser {
 				int month = retrieveMonth(monthInput);
 				int year = retrieveYear(null);
 			
-				if(split.length == Constants.DATE_SEPERATOR_MAX) {
+				if (split.length == Constants.DATE_SEPERATOR_MAX) {
 					
 					String yearInput = split[Constants.PARAM_YEAR];
 					year = retrieveYear(yearInput);
@@ -285,9 +285,9 @@ public class DateTimeParser {
 				result.set(Calendar.YEAR, year);
 				
 				//indicates that year is not added
-				if(split.length < Constants.DATE_SEPERATOR_MAX) {
+				if (split.length < Constants.DATE_SEPERATOR_MAX) {
 					
-					if(result.before(today)) {
+					if (result.before(today)) {
 						
 						result.set(Calendar.YEAR, year + Constants.OFFSET_YEAR);
 						
@@ -302,12 +302,12 @@ public class DateTimeParser {
 		}
 		
 		//check if date is separated by spaces
-		if(dateFound == false) {
+		if (dateFound == false) {
 		
 			Calendar today = Calendar.getInstance();
 			String[] split = rawDate.split(Constants.DATE_SEPERATOR_SPACE);
 	
-			if(split.length >= Constants.DATE_SEPERATOR_MIN) {
+			if (split.length >= Constants.DATE_SEPERATOR_MIN) {
 				
 				String dayInput = split[Constants.PARAM_DAY];
 				String monthInput = split[Constants.PARAM_MONTH];
@@ -316,7 +316,7 @@ public class DateTimeParser {
 				int month = retrieveMonth(monthInput);
 				int year = retrieveYear(null);
 				
-				if(split.length == Constants.DATE_SEPERATOR_MAX) {
+				if (split.length == Constants.DATE_SEPERATOR_MAX) {
 					
 					String yearInput = split[Constants.PARAM_YEAR];
 					year = retrieveYear(yearInput);
@@ -329,9 +329,9 @@ public class DateTimeParser {
 				result.set(Calendar.YEAR, year);
 				
 				//indicates that year is not added
-				if(split.length < Constants.DATE_SEPERATOR_MAX) {
+				if (split.length < Constants.DATE_SEPERATOR_MAX) {
 					
-					if(result.before(today)) {
+					if (result.before(today)) {
 						
 						result.set(Calendar.YEAR, year + Constants.OFFSET_YEAR);
 						
@@ -345,7 +345,7 @@ public class DateTimeParser {
 			
 		}
 		
-		if(dateFound == false) { 
+		if (dateFound == false) { 
 			
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
@@ -362,7 +362,7 @@ public class DateTimeParser {
 		
 		boolean isNumeric = StringUtils.isNumeric(day);
 		
-		if(isNumeric == false) { 
+		if (isNumeric == false) { 
 		
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
@@ -370,7 +370,7 @@ public class DateTimeParser {
 		
 		int result = Integer.parseInt(day);
 		
-		if(result < Constants.DATE_DAY_MIN || result > Constants.DATE_DAY_MAX) {
+		if (result < Constants.DATE_DAY_MIN || result > Constants.DATE_DAY_MAX) {
 		
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
@@ -388,7 +388,7 @@ public class DateTimeParser {
 		
 		boolean isNumeric = StringUtils.isNumeric(month);
 		
-		if(isNumeric == true) {
+		if (isNumeric == true) {
 		
 			result = Integer.parseInt(month) - Constants.OFFSET_MONTH;
 		
@@ -396,7 +396,7 @@ public class DateTimeParser {
 		
 			result = Month.retrieve(month).getValue();
 			
-			if(result < Constants.DATE_MONTH_MIN || result > Constants.DATE_MONTH_MAX) {
+			if (result < Constants.DATE_MONTH_MIN || result > Constants.DATE_MONTH_MAX) {
 			
 				throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 			
@@ -415,7 +415,7 @@ public class DateTimeParser {
 		
 		int result = Constants.INVALID_YEAR;
 		
-		if(year == null) { 
+		if (year == null) { 
 		
 			result = Calendar.getInstance().get(Calendar.YEAR);
 			year = String.valueOf(result);
@@ -424,7 +424,7 @@ public class DateTimeParser {
 
 		boolean isNumeric = StringUtils.isNumeric(year);
 		
-		if(isNumeric == true) {
+		if (isNumeric == true) {
 		
 			result = Integer.parseInt(year);
 		
@@ -434,7 +434,7 @@ public class DateTimeParser {
 		
 		}
 		
-		if(result < Constants.DATE_YEAR_MIN || result > Constants.DATE_YEAR_MAX) {
+		if (result < Constants.DATE_YEAR_MIN || result > Constants.DATE_YEAR_MAX) {
 		
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
@@ -454,7 +454,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_MONDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_MONDAY[i])) {
+			if (day.contains(Constants.KEYWORD_MONDAY[i])) {
 			
 				dayOfWeek = Calendar.MONDAY;
 				
@@ -464,7 +464,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_TUESDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_TUESDAY[i])) {
+			if (day.contains(Constants.KEYWORD_TUESDAY[i])) {
 			
 				dayOfWeek = Calendar.TUESDAY;
 				
@@ -474,7 +474,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_WEDNESDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_WEDNESDAY[i])) {
+			if (day.contains(Constants.KEYWORD_WEDNESDAY[i])) {
 			
 				dayOfWeek = Calendar.WEDNESDAY;
 				
@@ -484,7 +484,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_THURSDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_THURSDAY[i])) {
+			if (day.contains(Constants.KEYWORD_THURSDAY[i])) {
 			
 				dayOfWeek = Calendar.THURSDAY;
 				
@@ -494,7 +494,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_FRIDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_FRIDAY[i])) {
+			if (day.contains(Constants.KEYWORD_FRIDAY[i])) {
 			
 				dayOfWeek = Calendar.FRIDAY;
 				
@@ -504,7 +504,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_SATURDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_SATURDAY[i])) {
+			if (day.contains(Constants.KEYWORD_SATURDAY[i])) {
 			
 				dayOfWeek = Calendar.SATURDAY;
 				
@@ -514,7 +514,7 @@ public class DateTimeParser {
 		
 		for(int i = 0; i < Constants.KEYWORD_SUNDAY.length; i++) {
 			
-			if(day.contains(Constants.KEYWORD_SUNDAY[i])) {
+			if (day.contains(Constants.KEYWORD_SUNDAY[i])) {
 			
 				dayOfWeek = Calendar.SUNDAY;
 				
@@ -548,9 +548,15 @@ public class DateTimeParser {
 		int offset;
 		int current = today.get(Calendar.DAY_OF_WEEK);
 		
-		for(offset = 0; offset < Constants.OFFSET_WEEK; offset++) { 
+		for(offset = 0; offset <= Constants.OFFSET_WEEK; offset++) { 
 			
-			if(current == dayIndex) {
+			if (current >= Constants.OFFSET_WEEK + Constants.OFFSET_DAY) { 
+				
+				current = Constants.OFFSET_RESET; 
+			
+			}  
+			
+			if (current == dayIndex) {
 				
 				found = true;
 				break;
@@ -561,7 +567,7 @@ public class DateTimeParser {
 			
 		}
 		
-		if(day.contains(Constants.KEYWORD_NEXT) == true) {
+		if (day.contains(Constants.KEYWORD_NEXT) == true) {
 			
 			offset += Constants.OFFSET_WEEK;
 			
@@ -570,7 +576,7 @@ public class DateTimeParser {
 		offset = today.get(Calendar.DAY_OF_YEAR) + offset;
 		today.set(Calendar.DAY_OF_YEAR, offset);
 		
-		if(found == true) { 
+		if (found == true) { 
 			
 			results = today;
 			
@@ -602,12 +608,12 @@ public class DateTimeParser {
 		
 		DateRange dateRange = null;
 		
-		if(split.length == Constants.PARAM_RESULT_SIZE) { 
+		if (split.length == Constants.PARAM_RESULT_SIZE) { 
 			
 			String startTime = split[Constants.PARAM_FROM];
 			String endTime = split[Constants.PARAM_TO];
 			
-			if(startTime.length() <= Constants.TIME_FORMAT_MAX 
+			if (startTime.length() <= Constants.TIME_FORMAT_MAX 
 					&& endTime.length() <= Constants.TIME_FORMAT_MAX) {
 				
 				dateRange = new DateRange(null, startTime, null, endTime);
@@ -640,16 +646,16 @@ public class DateTimeParser {
 		boolean isPostMeridiem = false;
 		Calendar calendar = getInstance();
 		
-		if(rawTime.length() >= Constants.TIME_FORMAT_THREE) {
+		if (rawTime.length() >= Constants.TIME_FORMAT_THREE) {
 			
 			String am = Meridiem.AM.toString();
 			String pm = Meridiem.PM.toString();
 			
 			String meridiem = rawTime.substring(rawTime.length() - am.length(), rawTime.length());
 			
-			if(meridiem.equalsIgnoreCase(am) == true || meridiem.equalsIgnoreCase(pm) == true) {
+			if (meridiem.equalsIgnoreCase(am) == true || meridiem.equalsIgnoreCase(pm) == true) {
 			
-				isPostMeridiem = meridiem.equalsIgnoreCase(Meridiem.PM.toString());
+				isPostMeridiem = meridiem.equalsIgnoreCase(pm);
 				rawTime = rawTime.substring(0, rawTime.length() - am.length());
 			
 			}
@@ -658,26 +664,26 @@ public class DateTimeParser {
 		
 		boolean isNumeric = StringUtils.isNumeric(rawTime);
 		
-		if(isNumeric == false) {
+		if (isNumeric == false) {
 			
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
 		}
 
 		// Used to handle time format such as 9am, 12pm
-		if(rawTime.length() == Constants.TIME_FORMAT_ONE || rawTime.length() == Constants.TIME_FORMAT_TWO) {
+		if (rawTime.length() == Constants.TIME_FORMAT_ONE || rawTime.length() == Constants.TIME_FORMAT_TWO) {
 		
 			hour = Integer.parseInt(rawTime);
 			minute = Constants.DEFAULT_MINUTE;
 		
 		// Used to handle time format such as 930am
-		} else if(rawTime.length() == Constants.TIME_FORMAT_THREE) {
+		} else if (rawTime.length() == Constants.TIME_FORMAT_THREE) {
 		
 			hour = Integer.parseInt(rawTime.substring(Constants.PARAM_FIRST_INDEX, Constants.PARAM_SECOND_INDEX));
 			minute = Integer.parseInt(rawTime.substring(Constants.PARAM_SECOND_INDEX, rawTime.length()));
 	
 		// Used to handle time format such as 1030pm, 2359
-		} else if(rawTime.length() == Constants.TIME_FORMAT_FOUR) {
+		} else if (rawTime.length() == Constants.TIME_FORMAT_FOUR) {
 		
 			hour = Integer.parseInt(rawTime.substring(Constants.PARAM_FIRST_INDEX, Constants.PARAM_THIRD_INDEX));
 			minute = Integer.parseInt(rawTime.substring(Constants.PARAM_THIRD_INDEX, rawTime.length()));
@@ -690,22 +696,31 @@ public class DateTimeParser {
 		}
 		
 		// handle the meridiem offset, from meridiem format to 24 hours time format
-		if(isPostMeridiem == true) {
+		if (isPostMeridiem == true) {
 			
-			if(hour != Constants.TIME_DIFFERENCE) {
+			if (hour != Constants.TIME_DIFFERENCE) {
 				
 				hour = hour + Constants.TIME_DIFFERENCE;
 				
 			}
+		
+		} else {
+
+			if (hour == Constants.TIME_DIFFERENCE) {
+				
+				hour = hour - Constants.TIME_DIFFERENCE;
+			
+			}
+	
 		}
 		
-		if(hour < Constants.TIME_HOUR_MIN || hour > Constants.TIME_HOUR_MAX) { 
+		if (hour < Constants.TIME_HOUR_MIN || hour > Constants.TIME_HOUR_MAX) { 
 		
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		
 		}
 		
-		if(minute < Constants.TIME_MINUTE_MIN || minute > Constants.TIME_MINUTE_MAX) {
+		if (minute < Constants.TIME_MINUTE_MIN || minute > Constants.TIME_MINUTE_MAX) {
 		
 			throw new IllegalArgumentException(Constants.ERROR_INVALID_DATE);
 		

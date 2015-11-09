@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Notify.jar" size="103273" download="eager" />
+    <jar href="Notify.jar" size="110809" download="eager" />
     <jar href="libs/commons-lang3-3.4.jar" size="434678" download="eager" />
     <jar href="libs/gson-2.2.2.jar" size="189285" download="eager" />
     <jar href="libs/jackson-all-1.9.0.jar" size="1105958" download="eager" />

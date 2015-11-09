@@ -28,12 +28,11 @@ package notify.logic;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.logging.Level;
 
 import notify.DateRange;
 import notify.Task;
 import notify.TaskType;
-import notify.storage.Storage;
+import notify.storage.api.Storage;
 
 public class TaskManager {
 
@@ -137,9 +136,9 @@ public class TaskManager {
 		
 		ArrayList<Task> tempList = new ArrayList<Task>();
 		
-		for(Task task : taskList) {
+		for (Task task : taskList) {
 			
-			if(task.isSearchedTask(keyWord) && !task.isDeleted()) {
+			if (task.isSearchedTask(keyWord) && !task.isDeleted()) {
 				
 				tempList.add(task);
 				

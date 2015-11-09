@@ -1,4 +1,4 @@
-//@@author A0125471L
+//@@author A0125471L-reused
 
 /**
  * Author: Chua Si Hao
@@ -89,4 +89,5 @@ public class Result {
 		return isSuccess;
 	
 	}
+	
 }
