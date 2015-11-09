@@ -35,6 +35,7 @@ public class AddCommand extends ReversibleCommand {
 		
 		super(commandAction, historyStack);
 		this.manager = manager;
+		
 	}
 
 	public void addValues(String taskName, TaskType taskType, DateRange dateRange, String category) {
@@ -43,6 +44,7 @@ public class AddCommand extends ReversibleCommand {
 		this.taskType = taskType;
 		this.dateRange = dateRange;
 		this.category = category;
+		
 	}
 	
 	/**
@@ -55,9 +57,7 @@ public class AddCommand extends ReversibleCommand {
      * 
      * @return 'result' object corresponding to the ADD action.
      */
-
-	
-    @Override
+	@Override
 	public Result execute(){
 		
 	    Task addTask = manager.addTask(taskName, dateRange, category, taskType);
@@ -80,7 +80,6 @@ public class AddCommand extends ReversibleCommand {
 	 * 
 	 * @return 'result' object corresponding to the UNDO action.  
 	 */
-	
 	@Override
 	public Result undo(){
 		
@@ -91,6 +90,7 @@ public class AddCommand extends ReversibleCommand {
 		list.add(temptask);
 		Result result = new Result(Action.UNDO, list);
 		return result;
+		
 	}
 	
 	

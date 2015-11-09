@@ -55,6 +55,7 @@ public class MarkCommand extends ReversibleCommand {
 	
 	@Override
 	public Result execute() {
+		
 		Result result = null;
 		assert id != Constants.UNASSIGNED_TASK: "Task id cannot be unassigned";
 		
@@ -65,12 +66,13 @@ public class MarkCommand extends ReversibleCommand {
 		list.add(markTask);
 		result = new Result(Action.MARK, list, true);
 		pushToStack();
-		}
 		
-		else{
+		}else{
+			
 			result = new Result(Action.MARK, list, false);
 		}
 		return result;
+		
 	}
 
 	/**
@@ -95,6 +97,7 @@ public class MarkCommand extends ReversibleCommand {
 		list.add(tempTask);
 		Result result = new Result(Action.UNDO, list);
 		return result;
+		
 	}
 	
 
