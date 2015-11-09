@@ -42,7 +42,8 @@ public class SetCommand extends Command {
 	
 	/**
 	 * This method is responsible for creating the Result object corresponding to the SET action.
-	 *  
+	 *  If the directory has been successfully set, the flag is true and if it is not successfully
+	 *  set, the flag is false. 
 	 * 
 	 * @return 'result' object corresponding to the SET action. 
 	 */
